@@ -1608,3 +1608,75 @@ body.menu-open {
     animation: none !important;
   }
 }
+
+/* ---------- MOBILE BLOCKER ---------- */
+
+.mobile-block {
+  display: none;
+}
+
+@media (max-width: 860px) {
+  .mobile-block {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    padding: 32px;
+    background:
+      radial-gradient(720px 480px at 50% 28%, rgba(255, 97, 44, 0.22), transparent 70%),
+      radial-gradient(640px 480px at 50% 110%, rgba(255, 168, 110, 0.16), transparent 70%),
+      rgba(4, 6, 12, 0.96);
+    backdrop-filter: blur(28px) saturate(1.4);
+    -webkit-backdrop-filter: blur(28px) saturate(1.4);
+    color: var(--light);
+    text-align: center;
+    animation: mobile-block-in 600ms var(--ease-out) both;
+  }
+
+  .mobile-block__panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    max-width: 320px;
+  }
+
+  .mobile-block__eyebrow {
+    margin: 0;
+    color: rgba(255, 168, 110, 0.8);
+    font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .mobile-block__title {
+    margin: 0;
+    color: var(--light);
+    font: 500 clamp(22px, 6.4vw, 28px) / 1.25 "Urbanist", system-ui, sans-serif;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+  }
+
+  .mobile-block__hint {
+    margin: 0;
+    color: var(--light-60);
+    font: 400 15px / 1.45 "Outfit", system-ui, sans-serif;
+  }
+
+  html,
+  body {
+    overflow: hidden;
+  }
+}
+
+@keyframes mobile-block-in {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
