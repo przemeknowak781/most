@@ -278,7 +278,7 @@ function updateScroll() {
 }
 
 function setupSectionReveal() {
-  const targets = document.querySelectorAll(".mission, .basecamp");
+  const targets = document.querySelectorAll(".mission, .basecamp, .route-stage");
   if (!targets.length) return;
 
   if (!("IntersectionObserver" in window)) {
@@ -398,55 +398,6 @@ function setupRouteMap() {
   }
 }
 
-function setupRoutesSwitcher() {
-  const tabs = Array.from(document.querySelectorAll(".routes__tab"));
-  const scenes = Array.from(document.querySelectorAll(".routes__scene"));
-  const section = document.querySelector(".routes");
-  if (!tabs.length || !scenes.length || !section) return;
-
-  function activate(target) {
-    tabs.forEach((tab) => {
-      const isActive = tab.dataset.route === target;
-      tab.classList.toggle("is-active", isActive);
-      tab.setAttribute("aria-selected", String(isActive));
-      tab.setAttribute("tabindex", isActive ? "0" : "-1");
-    });
-    scenes.forEach((scene) => {
-      const isActive = scene.dataset.scene === target;
-      scene.hidden = !isActive;
-      scene.classList.toggle("is-active", isActive);
-      if (isActive) {
-        // Restart animation by re-toggling
-        const path = scene.querySelector(".routes__path");
-        if (path) {
-          path.style.animation = "none";
-          path.getBoundingClientRect();
-          path.style.animation = "";
-        }
-      }
-    });
-    section.className = section.className.replace(/routes--\w+/g, "").trim() + ` routes--${target}`;
-  }
-
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => activate(tab.dataset.route));
-    tab.addEventListener("keydown", (event) => {
-      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
-      event.preventDefault();
-      const direction = event.key === "ArrowRight" ? 1 : -1;
-      const currentIndex = tabs.indexOf(tab);
-      const nextIndex = (currentIndex + direction + tabs.length) % tabs.length;
-      tabs[nextIndex].focus();
-      activate(tabs[nextIndex].dataset.route);
-    });
-  });
-
-  // Initialize accent
-  const initial = tabs.find((t) => t.classList.contains("is-active")) || tabs[0];
-  if (initial) {
-    section.classList.add(`routes--${initial.dataset.route}`);
-  }
-}
 
 function setupTransitionMarker() {
   const marker = document.querySelector(".transition-marker");
@@ -533,7 +484,6 @@ updateScroll();
 setupSectionReveal();
 setupMissionPhrases();
 setupRouteMap();
-setupRoutesSwitcher();
 setupTransitionMarker();
 setupMobileMenu();
 setupHeroTrail();
