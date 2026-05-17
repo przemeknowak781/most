@@ -967,122 +967,261 @@ body.menu-open {
   }
 }
 
-/* ---------- ABOUT (story) ---------- */
+/* ---------- CHAPTER (narrative beats) ---------- */
 
-.about {
+.chapter {
   position: relative;
   isolation: isolate;
-  padding: clamp(120px, 16vh, 200px) var(--container-x);
-  background:
-    radial-gradient(900px 600px at 14% 12%, rgba(255, 97, 44, 0.12), transparent 70%),
-    radial-gradient(800px 540px at 88% 88%, rgba(48, 62, 89, 0.18), transparent 72%),
-    linear-gradient(180deg, #070912 0%, #0a0d18 100%);
+  padding: clamp(110px, 14vh, 180px) var(--container-x);
+  background: linear-gradient(180deg, #07090f 0%, #0a0d18 100%);
   overflow: hidden;
 }
 
-.about__contours {
+.chapter--intro {
+  background:
+    radial-gradient(960px 640px at 14% 18%, rgba(255, 97, 44, 0.16), transparent 70%),
+    linear-gradient(180deg, var(--navy-deep) 0%, #07090f 100%);
+}
+
+.chapter--metrics {
+  background:
+    radial-gradient(900px 600px at 86% 14%, rgba(255, 97, 44, 0.16), transparent 70%),
+    radial-gradient(700px 480px at 8% 88%, rgba(48, 62, 89, 0.18), transparent 72%),
+    linear-gradient(180deg, #0a0d18 0%, #070912 100%);
+}
+
+.chapter--mission {
+  background:
+    radial-gradient(900px 600px at 92% 90%, rgba(255, 176, 119, 0.14), transparent 70%),
+    linear-gradient(180deg, #070912 0%, #050810 100%);
+}
+
+.chapter--overview {
+  background:
+    linear-gradient(180deg, #0a0d18 0%, #07090f 100%);
+}
+
+.chapter--audience-intro {
+  background:
+    radial-gradient(960px 620px at 50% 12%, rgba(255, 97, 44, 0.18), transparent 70%),
+    linear-gradient(180deg, #070912 0%, #161822 100%);
+}
+
+.chapter__rail {
   position: absolute;
-  inset: 0;
+  top: clamp(80px, 12vh, 140px);
+  bottom: clamp(80px, 12vh, 140px);
+  left: clamp(40px, 6vw, 96px);
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(255, 97, 44, 0.45), rgba(255, 176, 119, 0.32), transparent);
   z-index: 0;
-  pointer-events: none;
 }
 
-.about__contours svg {
-  width: 100%;
-  height: 100%;
+.chapter__rail::before,
+.chapter__rail::after {
+  content: "";
+  position: absolute;
+  left: -4px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 14px rgba(255, 97, 44, 0.6);
 }
 
-.about__inner {
+.chapter__rail::before { top: -4px; }
+.chapter__rail::after { bottom: -4px; }
+
+.chapter__inner {
   position: relative;
   z-index: 1;
-  max-width: 1280px;
+  max-width: 960px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: minmax(0, 0.4fr) minmax(0, 0.6fr);
-  gap: clamp(48px, 7vw, 120px);
-  align-items: start;
+  padding-left: clamp(0px, 8vw, 120px);
 }
 
-.about__intro {
-  position: sticky;
-  top: calc(var(--nav-height) + 56px);
+.chapter--audience-intro .chapter__inner,
+.chapter--overview .chapter__inner {
+  text-align: center;
+  padding-left: 0;
+  max-width: 1080px;
 }
 
-.about__eyebrow {
+.chapter__eyebrow {
+  display: inline-block;
   margin: 0 0 24px;
-  color: rgba(255, 168, 110, 0.78);
+  color: rgba(255, 168, 110, 0.82);
   font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
   letter-spacing: 0.24em;
   text-transform: uppercase;
 }
 
-.about__title {
+.chapter__step {
+  margin: 0 0 24px;
+  color: rgba(255, 168, 110, 0.75);
+  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.chapter__title {
   margin: 0 0 32px;
   color: var(--light);
-  font: 500 clamp(32px, 4.2vw, 60px) / 1.06 "Urbanist", system-ui, sans-serif;
+  font: 500 clamp(32px, 4.4vw, 56px) / 1.08 "Urbanist", system-ui, sans-serif;
   letter-spacing: -0.005em;
   text-wrap: balance;
 }
 
-.about__lede {
-  margin: 0;
-  color: rgba(240, 235, 233, 0.7);
-  font: 400 clamp(15px, 1.2vw, 18px) / 1.6 "Outfit", system-ui, sans-serif;
+.chapter__title--display {
+  font-size: clamp(36px, 5.2vw, 72px);
+  line-height: 1.04;
+}
+
+.chapter__lede {
+  max-width: 720px;
+  margin: 0 0 24px;
+  color: rgba(240, 235, 233, 0.84);
+  font: 400 clamp(17px, 1.4vw, 22px) / 1.5 "Outfit", system-ui, sans-serif;
   text-wrap: pretty;
 }
 
-.about__story {
+.chapter--audience-intro .chapter__lede,
+.chapter--overview .chapter__lede {
+  margin-inline: auto;
+}
+
+.chapter__body {
+  max-width: 680px;
+  margin: 0 0 20px;
+  color: var(--light-80);
+  font: 400 clamp(15px, 1.15vw, 17px) / 1.65 "Outfit", system-ui, sans-serif;
+  text-wrap: pretty;
+}
+
+.chapter__body:last-child {
+  margin-bottom: 0;
+}
+
+/* metrics inside chapter--metrics */
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 3vw, 40px);
+  margin: clamp(40px, 6vh, 64px) 0 clamp(32px, 5vh, 48px);
+  padding: clamp(28px, 4vh, 44px) clamp(28px, 4vw, 48px);
+  background: rgba(240, 235, 233, 0.035);
+  border: 1px solid rgba(240, 235, 233, 0.08);
+  border-radius: 14px;
+}
+
+.metrics__item {
   display: flex;
   flex-direction: column;
-  gap: clamp(40px, 6vh, 72px);
+  gap: 10px;
 }
 
-.about__chapter {
-  position: relative;
-  padding-left: clamp(24px, 3vw, 40px);
-  border-left: 1px solid rgba(255, 168, 110, 0.22);
-}
-
-.about__chapter::before {
-  content: "";
-  position: absolute;
-  left: -5px;
-  top: 8px;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--orange);
-  box-shadow: 0 0 14px rgba(255, 97, 44, 0.65);
-}
-
-.about__chapter-step {
-  margin: 0 0 14px;
-  color: rgba(255, 168, 110, 0.78);
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-}
-
-.about__chapter p:not(.about__chapter-step) {
+.metrics__num {
   margin: 0;
-  color: var(--light-80);
-  font: 400 clamp(15px, 1.1vw, 17px) / 1.6 "Outfit", system-ui, sans-serif;
-  text-wrap: pretty;
+  color: var(--light);
+  font: 500 clamp(40px, 5vw, 72px) / 0.95 "Urbanist", system-ui, sans-serif;
+  letter-spacing: -0.015em;
 }
 
-.about__chapter strong {
-  color: var(--light);
+.metrics__num span {
+  color: rgba(255, 168, 110, 0.85);
+  font-size: 0.42em;
+  margin-left: 6px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   font-weight: 500;
 }
 
-@media (max-width: 960px) {
-  .about__inner {
+.metrics__label {
+  margin: 0;
+  color: var(--light-60);
+  font: 500 12px / 1.3 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 860px) {
+  .metrics {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 24px;
   }
-  .about__intro {
-    position: relative;
-    top: auto;
+  .chapter__inner {
+    padding-left: 0;
+  }
+}
+
+/* overview list (six expertise areas) */
+
+.overview-list {
+  list-style: none;
+  margin: clamp(40px, 6vh, 64px) auto 0;
+  padding: 0;
+  max-width: 720px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 32px;
+  text-align: left;
+}
+
+.overview-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(240, 235, 233, 0.08);
+  color: var(--light);
+  font: 500 clamp(15px, 1.2vw, 18px) / 1.3 "Urbanist", system-ui, sans-serif;
+}
+
+.overview-list li span {
+  color: rgba(255, 168, 110, 0.85);
+  font: 500 12px / 1 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.16em;
+}
+
+/* audience-nav (jump anchors in audience-intro chapter) */
+
+.audience-nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(16px, 3vw, 40px);
+  margin-top: clamp(40px, 6vh, 64px);
+}
+
+.audience-nav a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 12px 22px;
+  border: 1px solid rgba(240, 235, 233, 0.18);
+  border-radius: 999px;
+  color: var(--light);
+  font: 500 14px / 1.2 "Urbanist", system-ui, sans-serif;
+  text-decoration: none;
+  transition: border-color 240ms ease, background 240ms ease, transform 240ms ease;
+}
+
+.audience-nav a span {
+  color: rgba(255, 168, 110, 0.85);
+  font: 500 11px / 1 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.18em;
+}
+
+.audience-nav a:hover {
+  border-color: rgba(255, 168, 110, 0.55);
+  background: rgba(255, 97, 44, 0.08);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 720px) {
+  .overview-list {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1515,238 +1654,87 @@ body.menu-open {
   text-transform: uppercase;
 }
 
-/* ---------- CLIENT ROUTES ---------- */
+/* ---------- ROUTE STAGES (per-audience standalone sections) ---------- */
 
-.routes {
+.route-stage {
   position: relative;
   padding: clamp(120px, 16vh, 200px) var(--container-x);
   background:
-    radial-gradient(900px 600px at 12% 16%, var(--routes-glow, rgba(209, 126, 95, 0.18)), transparent 70%),
-    linear-gradient(180deg, var(--routes-bg-top, #161822) 0%, var(--routes-bg-bottom, #0a0d15) 100%);
+    radial-gradient(900px 600px at 12% 16%, var(--stage-glow, rgba(255, 97, 44, 0.16)), transparent 70%),
+    linear-gradient(180deg, var(--stage-bg-top, #161822) 0%, var(--stage-bg-bottom, #0a0d15) 100%);
   overflow: hidden;
-  transition: background 700ms var(--ease-out);
 }
 
-.routes--founders {
-  --routes-glow: rgba(209, 126, 95, 0.22);
-  --routes-bg-top: #2A1E18;
-  --routes-bg-bottom: #161822;
-  --routes-accent: #D17E5F;
+.route-stage--founders {
+  --stage-glow: rgba(209, 126, 95, 0.22);
+  --stage-bg-top: #2A1E18;
+  --stage-bg-bottom: #161822;
+  --stage-accent: #D17E5F;
 }
 
-.routes--companies {
-  --routes-glow: rgba(155, 139, 149, 0.18);
-  --routes-bg-top: #211D20;
-  --routes-bg-bottom: #161822;
-  --routes-accent: #9B8B95;
+.route-stage--companies {
+  --stage-glow: rgba(155, 139, 149, 0.18);
+  --stage-bg-top: #211D20;
+  --stage-bg-bottom: #161822;
+  --stage-accent: #9B8B95;
 }
 
-.routes--investors {
-  --routes-glow: rgba(91, 122, 176, 0.2);
-  --routes-bg-top: #161D2A;
-  --routes-bg-bottom: #0B1018;
-  --routes-accent: #5B7AB0;
+.route-stage--investors {
+  --stage-glow: rgba(91, 122, 176, 0.2);
+  --stage-bg-top: #161D2A;
+  --stage-bg-bottom: #0B1018;
+  --stage-accent: #5B7AB0;
 }
 
-.routes__inner {
+.route-stage__inner {
   max-width: 1320px;
   margin: 0 auto;
-  display: grid;
-  gap: clamp(40px, 6vh, 72px);
-}
-
-.routes__tabs {
-  display: flex;
-  gap: clamp(28px, 4vw, 64px);
-  border-bottom: 1px solid rgba(240, 235, 233, 0.12);
-  padding-bottom: 18px;
-}
-
-.routes__tab {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-  background: transparent;
-  border: 0;
-  padding: 0 0 6px;
-  margin: 0;
-  font-family: inherit;
-  color: rgba(240, 235, 233, 0.4);
-  cursor: pointer;
-  position: relative;
-  transition: color 320ms var(--ease-out);
-}
-
-.routes__tab::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -19px;
-  height: 2px;
-  background: currentColor;
-  opacity: 0;
-  transform: scaleX(0.4);
-  transform-origin: left;
-  transition: opacity 320ms var(--ease-out), transform 320ms var(--ease-out);
-}
-
-.routes__tab:hover {
-  color: rgba(240, 235, 233, 0.8);
-}
-
-.routes__tab.is-active {
-  color: var(--routes-accent, #FF612C);
-}
-
-.routes__tab.is-active::after {
-  opacity: 1;
-  transform: scaleX(1);
-}
-
-.routes__tab-step {
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  opacity: 0.7;
-}
-
-.routes__tab-name {
-  font: 500 clamp(22px, 2.4vw, 32px) / 1 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.005em;
-}
-
-.routes__stage {
-  position: relative;
-  min-height: clamp(540px, 70vh, 720px);
-}
-
-.routes__scene {
   display: flex;
   flex-direction: column;
   gap: clamp(56px, 8vh, 96px);
-  animation: routes-fade 600ms var(--ease-out);
 }
 
-.routes__scene[hidden] {
-  display: none;
-}
-
-.routes__top {
+.route-stage__top {
   display: grid;
   grid-template-columns: minmax(0, 0.44fr) minmax(0, 0.56fr);
   gap: clamp(40px, 5vw, 96px);
   align-items: center;
 }
 
-.routes__lists {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(28px, 4vw, 56px);
-  padding-top: clamp(32px, 5vh, 56px);
-  border-top: 1px solid rgba(240, 235, 233, 0.1);
-}
-
-.routes__list h4 {
-  margin: 0 0 18px;
-  color: rgba(255, 168, 110, 0.85);
-  font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-.routes__list ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 12px;
-}
-
-.routes__list li {
-  position: relative;
-  padding-left: 22px;
-  color: var(--light-80);
-  font: 400 14px / 1.5 "Outfit", system-ui, sans-serif;
-}
-
-.routes__list li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 10px;
-  width: 10px;
-  height: 1px;
-  background: rgba(255, 168, 110, 0.55);
-}
-
-.routes__list--check li {
-  padding-left: 24px;
-}
-
-.routes__list--check li::before {
-  content: "✓";
-  top: 0;
-  width: auto;
-  height: auto;
-  background: none;
-  color: rgba(255, 168, 110, 0.95);
-  font-weight: 600;
-  font-size: 14px;
-}
-
-@keyframes routes-fade {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.routes__copy {
+.route-stage__copy {
   position: relative;
   z-index: 2;
 }
 
-.routes__eyebrow {
-  margin: 0 0 20px;
-  color: rgba(240, 235, 233, 0.5);
+.route-stage__step {
+  margin: 0 0 24px;
+  color: var(--stage-accent, rgba(240, 235, 233, 0.5));
   font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
   letter-spacing: 0.24em;
   text-transform: uppercase;
 }
 
-.routes__title {
-  margin: 0 0 32px;
+.route-stage__title {
+  margin: 0 0 28px;
   color: var(--light);
-  font: 500 clamp(48px, 7vw, 96px) / 0.96 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.015em;
-}
-
-.routes__lead {
-  margin: 0 0 18px;
-  color: var(--light);
-  font: 500 clamp(20px, 1.6vw, 24px) / 1.35 "Urbanist", system-ui, sans-serif;
+  font: 500 clamp(38px, 5.4vw, 72px) / 1.04 "Urbanist", system-ui, sans-serif;
+  letter-spacing: -0.01em;
   text-wrap: balance;
 }
 
-.routes__body {
+.route-stage__body {
   margin: 0 0 36px;
-  color: rgba(240, 235, 233, 0.74);
-  font: 400 clamp(16px, 1.15vw, 18px) / 1.6 "Outfit", system-ui, sans-serif;
+  color: rgba(240, 235, 233, 0.78);
+  font: 400 clamp(16px, 1.2vw, 19px) / 1.6 "Outfit", system-ui, sans-serif;
   text-wrap: pretty;
 }
 
-.routes__cta {
+.route-stage__cta {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   padding: 14px 26px;
-  border: 1px solid var(--routes-accent, rgba(240, 235, 233, 0.5));
+  border: 1px solid var(--stage-accent, rgba(240, 235, 233, 0.5));
   border-radius: 999px;
   background: transparent;
   color: var(--light);
@@ -1757,23 +1745,23 @@ body.menu-open {
   transition: background 240ms ease, color 240ms ease, transform 240ms ease;
 }
 
-.routes__cta svg {
+.route-stage__cta svg {
   width: 18px;
   height: 18px;
   transition: transform 240ms ease;
 }
 
-.routes__cta:hover {
-  background: var(--routes-accent, var(--light));
+.route-stage__cta:hover {
+  background: var(--stage-accent, var(--light));
   color: var(--navy);
   transform: translateY(-2px);
 }
 
-.routes__cta:hover svg {
+.route-stage__cta:hover svg {
   transform: translateX(3px);
 }
 
-.routes__bg {
+.route-stage__bg {
   position: relative;
   display: flex;
   align-items: center;
@@ -1781,7 +1769,7 @@ body.menu-open {
   min-height: 480px;
 }
 
-.routes__ghost {
+.route-stage__ghost {
   position: absolute;
   inset: 0;
   display: grid;
@@ -1794,7 +1782,7 @@ body.menu-open {
   z-index: 0;
 }
 
-.routes__route {
+.route-stage__route {
   position: relative;
   z-index: 1;
   width: 100%;
@@ -1803,27 +1791,84 @@ body.menu-open {
   overflow: visible;
 }
 
-.routes__path {
+.route-stage__path {
   stroke-dasharray: 1400;
   stroke-dashoffset: 1400;
-  animation: routes-draw 1600ms var(--ease-out) 200ms forwards;
-  filter: drop-shadow(0 0 10px var(--routes-accent, rgba(255, 97, 44, 0.4)));
+  transition: stroke-dashoffset 1800ms var(--ease-out);
+  filter: drop-shadow(0 0 10px var(--stage-accent, rgba(255, 97, 44, 0.4)));
 }
 
-@keyframes routes-draw {
-  to { stroke-dashoffset: 0; }
+.route-stage.is-visible .route-stage__path {
+  stroke-dashoffset: 0;
+}
+
+.route-stage__lists {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(28px, 4vw, 56px);
+  padding-top: clamp(32px, 5vh, 56px);
+  border-top: 1px solid rgba(240, 235, 233, 0.1);
+}
+
+.route-stage__list h3 {
+  margin: 0 0 18px;
+  color: var(--stage-accent, rgba(255, 168, 110, 0.85));
+  font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.route-stage__list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.route-stage__list li {
+  position: relative;
+  padding-left: 22px;
+  color: var(--light-80);
+  font: 400 14px / 1.55 "Outfit", system-ui, sans-serif;
+}
+
+.route-stage__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 10px;
+  height: 1px;
+  background: var(--stage-accent, rgba(255, 168, 110, 0.55));
+  opacity: 0.7;
+}
+
+.route-stage__list--check li {
+  padding-left: 24px;
+}
+
+.route-stage__list--check li::before {
+  content: "✓";
+  top: 0;
+  width: auto;
+  height: auto;
+  background: none;
+  color: var(--stage-accent, rgba(255, 168, 110, 0.95));
+  font-weight: 600;
+  font-size: 14px;
 }
 
 @media (max-width: 1024px) {
-  .routes__top {
+  .route-stage__top {
     grid-template-columns: 1fr;
     gap: 40px;
   }
-  .routes__bg {
+  .route-stage__bg {
     order: -1;
     min-height: 320px;
   }
-  .routes__lists {
+  .route-stage__lists {
     grid-template-columns: 1fr;
     gap: 32px;
   }
@@ -2461,7 +2506,7 @@ body.menu-open {
   .hero-stat__copy,
   .mission__phrase,
   .mission__rail-node,
-  .routes__path,
+  .route-stage__path,
   .basecamp__route-point {
     transform: none !important;
     opacity: 1 !important;
