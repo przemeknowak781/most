@@ -46,10 +46,10 @@
       </a>
 
       <nav class="top-nav__menu" aria-label="Sections">
-        <a href="#about">About us</a>
-        <a href="#expertise">Our Expertise</a>
-        <a href="#team">Our Team</a>
-        <a href="#contact">Contact us</a>
+        <a href="#about">About</a>
+        <a href="#expertise">Expertise</a>
+        <a href="#team">Team</a>
+        <a href="#contact">Contact</a>
       </nav>
 
       <a class="nav-cta" href="#contact">Contact</a>
@@ -76,10 +76,10 @@
           </button>
         </div>
         <nav class="mobile-menu__links" aria-label="Expanded mobile navigation">
-          <a href="#about">About us</a>
-          <a href="#expertise">Our Expertise</a>
-          <a href="#team">Our Team</a>
-          <a href="#contact">Contact us</a>
+          <a href="#about">About</a>
+          <a href="#expertise">Expertise</a>
+          <a href="#team">Team</a>
+          <a href="#contact">Contact</a>
         </nav>
         <a class="nav-cta" href="#contact">Contact</a>
       </div>
@@ -169,139 +169,515 @@
 
       <div class="hero-trail-labels" aria-hidden="true"></div>
 
-      <section class="advisors" aria-labelledby="advisors-title">
-        <div class="advisors__head">
-          <p class="eyebrow">strategic advisors. trusted partners.</p>
-          <h2 id="advisors-title">
-            We walk every founder, company, and investor through the four
-            stages that define the ascent.
-          </h2>
+      <section class="audience" id="for-you" aria-label="Who we partner with">
+        <div class="section-head">
+          <p class="eyebrow">who we partner with</p>
+          <h2>We take over the legal aspects of running your business&nbsp;— so you can focus on building and growing&nbsp;it.</h2>
         </div>
 
-        <ol class="stage-grid">
-          <li class="stage-card" style="--i: 1">
-            <div class="stage-card__icon" aria-hidden="true">
-              <svg viewBox="0 0 48 48">
-                <path d="M8 38V22l16-14 16 14v16" />
-                <path d="M18 38V28h12v10" />
-                <path d="M3 22 24 4l21 18" />
-              </svg>
+        <div class="audience__tabs" role="tablist" aria-label="Audience">
+          <button class="audience__tab" role="tab" data-tab="founders" aria-selected="true" id="tab-founders" aria-controls="panel-founders">
+            <span class="audience__tab-label">Founders</span>
+            <span class="audience__tab-hint">building from zero</span>
+          </button>
+          <button class="audience__tab" role="tab" data-tab="companies" aria-selected="false" id="tab-companies" aria-controls="panel-companies" tabindex="-1">
+            <span class="audience__tab-label">Companies</span>
+            <span class="audience__tab-hint">scaling with confidence</span>
+          </button>
+          <button class="audience__tab" role="tab" data-tab="investors" aria-selected="false" id="tab-investors" aria-controls="panel-investors" tabindex="-1">
+            <span class="audience__tab-label">Investors</span>
+            <span class="audience__tab-hint">deploying capital</span>
+          </button>
+        </div>
+
+        <div class="audience__panels">
+          <article class="audience__panel is-active" role="tabpanel" id="panel-founders" aria-labelledby="tab-founders" data-panel="founders">
+            <header class="audience__intro">
+              <p class="audience__lead">Legal support that grows with your&nbsp;business.</p>
+              <p class="audience__body">As a founder, you make decisions quickly and carry the weight of building something from zero. We make sure the legal side keeps pace&nbsp;— giving you clarity, confidence, and space to focus on what you are building. From day one, we help you set the right foundations, attract talent, close clients, raise capital, and scale globally.</p>
+            </header>
+            <div class="audience__lists">
+              <div class="audience__list">
+                <h3>What we help you achieve</h3>
+                <ul>
+                  <li>Choose the right legal structure and form your company correctly</li>
+                  <li>Raise funding and negotiate fair, predictable terms</li>
+                  <li>Sign clients, partners, and suppliers with well-built, balanced contracts</li>
+                  <li>Hire and incentivise the right team (employment, contractors, ESOPs)</li>
+                  <li>Protect your IP, technology, and product</li>
+                  <li>Expand into new markets and work with foreign partners</li>
+                  <li>Prepare for exits, acquisitions, reorganisations and strategic transactions</li>
+                </ul>
+              </div>
+              <div class="audience__list audience__list--check">
+                <h3>How we work with founders</h3>
+                <ul>
+                  <li>Practical, business-ready guidance&nbsp;— clear, actionable, free from unnecessary complexity</li>
+                  <li>Deal-savvy support from lawyers who understand investors, term sheets, and deal dynamics</li>
+                  <li>Consistent partnership&nbsp;— we stay by your side as your company grows and enters new stages</li>
+                  <li>Cross-border expertise across Polish, US, and UK markets</li>
+                </ul>
+              </div>
+              <div class="audience__list">
+                <h3>Our expertise</h3>
+                <ul>
+                  <li>Company formation, founders' agreements, cap table planning</li>
+                  <li>Funding rounds (pre-seed, seed, Series A, B, C and on)</li>
+                  <li>Commercial contracts and customer/supplier agreements</li>
+                  <li>Hiring documentation, contractor agreements, ESOPs</li>
+                  <li>IP strategy, licensing, technology agreements</li>
+                  <li>Cross-border expansion and subsidiaries</li>
+                  <li>M&amp;A, exits, and due diligence support</li>
+                </ul>
+              </div>
             </div>
-            <p class="stage-card__step">Stage 01</p>
-            <h3>Formation</h3>
-            <p class="stage-card__copy">
-              Company setup, founders' agreements, and the structures that make
-              future rounds clean.
-            </p>
+          </article>
+
+          <article class="audience__panel" role="tabpanel" id="panel-companies" aria-labelledby="tab-companies" data-panel="companies" hidden>
+            <header class="audience__intro">
+              <p class="audience__lead">Legal foundations that support your organisation's&nbsp;growth.</p>
+              <p class="audience__body">As your company grows, the legal challenges grow with it&nbsp;— more clients, more people, more markets, more complexity. We help you build the structures, processes, and protections that keep your organisation running smoothly, investment-ready, and prepared for what comes next.</p>
+            </header>
+            <div class="audience__lists">
+              <div class="audience__list">
+                <h3>What we help you achieve</h3>
+                <ul>
+                  <li>Build strong legal foundations for operations and scale</li>
+                  <li>Become investment-ready with clean structures and clear governance</li>
+                  <li>Raise capital (equity, debt, and venture debt) with investor-aligned documentation</li>
+                  <li>Sign clients, partners, and suppliers with clear, well-structured contracts</li>
+                  <li>Manage employment, contractor relationships, and incentive programs</li>
+                  <li>Support product launches, partnerships, and platform development</li>
+                  <li>Navigate cross-border expansion and compliance</li>
+                  <li>Execute M&amp;A, strategic transactions, and reorganisations</li>
+                </ul>
+              </div>
+              <div class="audience__list audience__list--check">
+                <h3>How we work with companies</h3>
+                <ul>
+                  <li>Clear, scalable legal frameworks for operations, investment readiness, and growth</li>
+                  <li>Commercial and product-minded guidance aligned with your business model</li>
+                  <li>Cross-border capability across Poland, the UK, the US, and beyond</li>
+                  <li>Collaboration with leadership, finance, HR, and in-house legal teams</li>
+                  <li>Consistent, ongoing support as your organisation grows</li>
+                </ul>
+              </div>
+              <div class="audience__list">
+                <h3>Our expertise</h3>
+                <ul>
+                  <li>Equity and debt financing&nbsp;— Seed through Series A/B/C, SAFEs, convertibles, venture debt</li>
+                  <li>Commercial contracts&nbsp;— MSAs, licensing, strategic partnership arrangements</li>
+                  <li>Employment documentation, executive contracts, and ESOP design</li>
+                  <li>Product, platform, data, and privacy documentation</li>
+                  <li>Group structuring, reorganisations and adjusted set-ups</li>
+                  <li>Corporate housekeeping and governance</li>
+                  <li>International expansion and subsidiary setup</li>
+                  <li>IP protection, licensing, and technology agreements</li>
+                  <li>M&amp;A, corporate transactions, and due diligence</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+
+          <article class="audience__panel" role="tabpanel" id="panel-investors" aria-labelledby="tab-investors" data-panel="investors" hidden>
+            <header class="audience__intro">
+              <p class="audience__lead">Legal support that protects value and keeps deals&nbsp;moving.</p>
+              <p class="audience__body">As an investor, your focus is on finding opportunities, assessing risk, and generating returns. We manage the legal side of structuring, negotiating, and closing deals&nbsp;— giving you clarity, speed, and confidence at every step. From early-stage to follow-ons, secondaries, and exits, we help you move efficiently and maximise long-term value.</p>
+            </header>
+            <div class="audience__lists">
+              <div class="audience__list">
+                <h3>What we help you achieve</h3>
+                <ul>
+                  <li>Structure deals clearly, efficiently, and with future scalability in mind</li>
+                  <li>Negotiate balanced, investor-aligned terms that protect your position</li>
+                  <li>Conduct and respond to due diligence with precision and speed</li>
+                  <li>Protect downside risk and secure governance and economic rights</li>
+                  <li>Close investments smoothly across borders and time zones</li>
+                  <li>Manage follow-ons, SAFEs, convertibles, and equity rounds</li>
+                  <li>Support secondaries and exit transactions</li>
+                </ul>
+              </div>
+              <div class="audience__list audience__list--check">
+                <h3>How we work with investors</h3>
+                <ul>
+                  <li>Deal-savvy legal support grounded in years of VC, M&amp;A, and cross-border experience</li>
+                  <li>Clear, decisive guidance designed to keep deals moving and protect your position</li>
+                  <li>Alignment with your investment strategy and risk profile</li>
+                  <li>Cross-border capability across Poland, the UK, the US, and other key markets</li>
+                  <li>Reliable long-term partnership across your portfolio and investment cycle</li>
+                </ul>
+              </div>
+              <div class="audience__list">
+                <h3>Our expertise</h3>
+                <ul>
+                  <li>Deal structuring, term sheets, and negotiation</li>
+                  <li>Convertible instruments, SAFEs, venture debt, and equity rounds</li>
+                  <li>Shareholders' agreements, governance frameworks, and investor rights</li>
+                  <li>Due diligence, risk assessment, and investment readiness reviews</li>
+                  <li>Follow-ons, secondaries, and recapitalisations</li>
+                  <li>Cross-border transactions and multi-jurisdictional coordination</li>
+                  <li>Exits, SPAs, and post-closing matters</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="expertise" id="expertise" aria-label="Expertise">
+        <div class="section-head">
+          <p class="eyebrow">expertise</p>
+          <h2>Legal solutions built to support growth, funding, and expansion&nbsp;— across markets and stages.</h2>
+          <p class="section-lead">We integrate legal considerations into business strategy, helping you operate with clarity, navigate complexity confidently, and unlock opportunities from day one through exit.</p>
+        </div>
+
+        <ol class="expertise__list">
+          <li class="expertise__item">
+            <span class="expertise__num">01</span>
+            <div class="expertise__copy">
+              <h3>Company Incorporation and Structuring</h3>
+              <p>We help set up and structure businesses&nbsp;— locally and internationally&nbsp;— so you are ready to scale and raise capital.</p>
+              <ul>
+                <li>Company incorporation (local and international)</li>
+                <li>Founders' agreements</li>
+                <li>Cap table planning</li>
+                <li>Group structuring and reorganisation</li>
+                <li>Legal frameworks for operational scalability and investor-readiness</li>
+              </ul>
+            </div>
           </li>
-          <li class="stage-card" style="--i: 2">
-            <div class="stage-card__icon" aria-hidden="true">
-              <svg viewBox="0 0 48 48">
-                <path d="M8 36V12l16 12 16-12v24" />
-                <path d="M24 24v16" />
-                <circle cx="24" cy="42" r="2.4" />
-              </svg>
+          <li class="expertise__item">
+            <span class="expertise__num">02</span>
+            <div class="expertise__copy">
+              <h3>Funding and Investment Rounds</h3>
+              <p>We support you through every stage of fundraising&nbsp;— from term sheets to closing&nbsp;— so your deals are clear, fair, and future-proof.</p>
+              <ul>
+                <li>Term sheets planning and structuring</li>
+                <li>SAFE and convertible instruments</li>
+                <li>Equity rounds (pre-seed to Series A/B+)</li>
+                <li>Debt structuring (venture debt, loans and credit facilities)</li>
+                <li>Due diligence preparation and investor readiness checks</li>
+                <li>Shareholders' and investment agreements</li>
+                <li>Investor negotiations</li>
+                <li>Governance design and post-investment structure</li>
+              </ul>
             </div>
-            <p class="stage-card__step">Stage 02</p>
-            <h3>Funding</h3>
-            <p class="stage-card__copy">
-              SAFEs, term sheets, convertibles, VC and venture debt — closed
-              with clarity, speed, and confidence.
-            </p>
           </li>
-          <li class="stage-card stage-card--active" style="--i: 3">
-            <div class="stage-card__icon" aria-hidden="true">
-              <svg viewBox="0 0 48 48">
-                <path d="M6 38h36" />
-                <path d="M10 30l8-10 8 6 12-16" />
-                <path d="M30 8h8v8" />
-              </svg>
+          <li class="expertise__item">
+            <span class="expertise__num">03</span>
+            <div class="expertise__copy">
+              <h3>Hiring and Talent</h3>
+              <p>We cover the legal side of hiring, equity plans, and working with contractors&nbsp;— so you can build the right team with confidence.</p>
+              <ul>
+                <li>Engagement terms planning and structuring</li>
+                <li>Employment law and employment contracts</li>
+                <li>Contractor, advisor, and consultant agreements</li>
+                <li>Structuring and implementation of incentive plans</li>
+                <li>Cross-border hiring and compliance alignment</li>
+                <li>Policies, handbooks, onboarding documentation</li>
+              </ul>
             </div>
-            <p class="stage-card__step">Stage 03</p>
-            <h3>Growth</h3>
-            <p class="stage-card__copy">
-              Commercial contracts, hiring, ESOPs, IP, and the day-to-day legal
-              infrastructure for scaling teams.
-            </p>
           </li>
-          <li class="stage-card" style="--i: 4">
-            <div class="stage-card__icon" aria-hidden="true">
-              <svg viewBox="0 0 48 48">
-                <circle cx="24" cy="24" r="17" />
-                <path d="M7 24h34" />
-                <path d="M24 7c5 5 8 11 8 17s-3 12-8 17c-5-5-8-11-8-17s3-12 8-17Z" />
-              </svg>
+          <li class="expertise__item">
+            <span class="expertise__num">04</span>
+            <div class="expertise__copy">
+              <h3>Commercial Contracts and Day-to-Day Operations</h3>
+              <p>From everyday agreements to commercial partnerships, we draft and negotiate contracts that support your product, platform, and operations.</p>
+              <ul>
+                <li>Day-to-day corporate affairs and governance</li>
+                <li>Services agreements, licensing, and commercial contracts</li>
+                <li>Terms of use, privacy policies, and user-facing documents</li>
+                <li>Legal support for product development and go-to-market</li>
+                <li>Client, partner, and supplier agreements</li>
+                <li>Joint ventures and strategic collaborations</li>
+                <li>Data protection and GDPR compliance</li>
+              </ul>
             </div>
-            <p class="stage-card__step">Stage 04</p>
-            <h3>Global Expansion</h3>
-            <p class="stage-card__copy">
-              Cross-border structures, subsidiaries, M&amp;A and exits across
-              Poland, the UK, the US, and beyond.
-            </p>
+          </li>
+          <li class="expertise__item">
+            <span class="expertise__num">05</span>
+            <div class="expertise__copy">
+              <h3>IP and Technology</h3>
+              <p>We help you protect what you build&nbsp;— covering IP ownership, licensing, confidentiality, and open-source risk.</p>
+              <ul>
+                <li>IP strategy and ownership structuring (founder, team, contractors)</li>
+                <li>Software licensing, IP assignment, and confidentiality agreements (NDAs)</li>
+                <li>Trademark filings and brand protection (via partners if needed)</li>
+                <li>Support in tech transfer or open-source risk analysis</li>
+              </ul>
+            </div>
+          </li>
+          <li class="expertise__item">
+            <span class="expertise__num">06</span>
+            <div class="expertise__copy">
+              <h3>Cross-Border Expansion</h3>
+              <p>We guide your international growth, helping structure foreign entities, review global contracts, and manage compliance.</p>
+              <ul>
+                <li>Legal structuring for international growth</li>
+                <li>Establishment of foreign entities or subsidiaries</li>
+                <li>Coordination with local counsel and cross-border compliance</li>
+                <li>Review of cross-border contracts and risk allocation</li>
+                <li>Employment, tax, and commercial alignment with local regulations</li>
+                <li>Market entry strategies and operational frameworks</li>
+              </ul>
+            </div>
+          </li>
+          <li class="expertise__item">
+            <span class="expertise__num">07</span>
+            <div class="expertise__copy">
+              <h3>M&amp;A, Exits and Strategic Transactions</h3>
+              <p>We support buy- and sell-side deals, drafting and negotiating documents and managing post-deal transitions.</p>
+              <ul>
+                <li>Legal due diligence (buy-side or sell-side)</li>
+                <li>Asset deals (acquiring or selling assets)</li>
+                <li>Share deals (acquiring or selling companies)</li>
+                <li>Transaction document drafting and negotiation</li>
+                <li>SPAs, shareholders' agreements, earn-outs, and warranties</li>
+                <li>Coordination with financial, tax, and regulatory teams</li>
+                <li>Post-deal integration (employment, IP, governance, operations)</li>
+                <li>Corporate restructurings ahead of sale or acquisition</li>
+              </ul>
+            </div>
+          </li>
+          <li class="expertise__item">
+            <span class="expertise__num">08</span>
+            <div class="expertise__copy">
+              <h3>Ongoing Legal Support</h3>
+              <p>As your business evolves, we stay with you&nbsp;— offering fast, practical, tailored advice without unnecessary complexity.</p>
+              <ul>
+                <li>Legal support that adapts as your business scales</li>
+                <li>Business-driven solutions for daily operations</li>
+                <li>Practical guidance balancing risk and momentum</li>
+                <li>Available when needed&nbsp;— without unnecessary overhead</li>
+              </ul>
+            </div>
           </li>
         </ol>
       </section>
 
-      <section class="mission" id="about" aria-labelledby="mission-title">
-        <div class="mission-rail" aria-hidden="true">
-          <svg viewBox="0 0 168 780">
-            <defs>
-              <linearGradient id="missionGradient" x1="0" x2="0" y1="0" y2="1">
-                <stop offset="0" stop-color="#ff612c" stop-opacity="0" />
-                <stop offset="0.22" stop-color="#ff612c" stop-opacity="0.9" />
-                <stop offset="0.76" stop-color="#ffb077" stop-opacity="0.6" />
-                <stop offset="1" stop-color="#ff612c" stop-opacity="0" />
-              </linearGradient>
-            </defs>
-            <path class="mission-rail__path" d="M84 0v122c0 78-58 102-58 178 0 82 116 96 116 182 0 80-58 104-58 176v122" />
-            <circle cx="84" cy="122" r="6" />
-            <circle cx="26" cy="300" r="6" />
-            <circle cx="142" cy="482" r="6" />
-            <circle cx="84" cy="658" r="6" />
-          </svg>
+      <section class="how-we-work" id="how-we-work" aria-label="How we work">
+        <div class="section-head">
+          <p class="eyebrow">how we work</p>
+          <h2>Driven by a passion for making things&nbsp;happen.</h2>
         </div>
 
-        <div class="mission-copy">
-          <p class="eyebrow">about us</p>
-          <h2 id="mission-title">
-            At MOST, we accompany founders, tech companies, and investors as long-term partners in law and business.
-          </h2>
-          <p>
-            Helping them protect what matters most, move forward with confidence, and unlock opportunity.
-          </p>
+        <ol class="hww__list">
+          <li class="hww__item">
+            <span class="hww__num">01</span>
+            <div class="hww__copy">
+              <h3>Deliver business-driven legal solutions</h3>
+              <p>Always thinking two steps ahead. We focus on what matters now, while anticipating what comes next to protect your future and support your momentum.</p>
+            </div>
+          </li>
+          <li class="hww__item">
+            <span class="hww__num">02</span>
+            <div class="hww__copy">
+              <h3>Structure legal frameworks to unlock lasting value</h3>
+              <p>We ensure your legal setup works for your business&nbsp;— enabling smooth operations, informed decisions, and sustainable growth.</p>
+            </div>
+          </li>
+          <li class="hww__item">
+            <span class="hww__num">03</span>
+            <div class="hww__copy">
+              <h3>Draft with clarity, precision, and purpose</h3>
+              <p>Always driven by what matters most. Our documents are designed to be understood, used, and focused on the underlying objectives of your team, your partners, your investors&nbsp;— whoever needs to act on them.</p>
+            </div>
+          </li>
+          <li class="hww__item">
+            <span class="hww__num">04</span>
+            <div class="hww__copy">
+              <h3>Negotiate with focus on what matters most</h3>
+              <p>We stay focused on your priorities and outcomes&nbsp;— creating value, protecting your interests, and keeping deals on track.</p>
+            </div>
+          </li>
+          <li class="hww__item">
+            <span class="hww__num">05</span>
+            <div class="hww__copy">
+              <h3>Close deals seamlessly</h3>
+              <p>We coordinate across borders, time zones, and teams to keep transactions moving smoothly from negotiation to closing.</p>
+            </div>
+          </li>
+          <li class="hww__item">
+            <span class="hww__num">06</span>
+            <div class="hww__copy">
+              <h3>Stay by your side</h3>
+              <p>Your business evolves, and so does our support. We are not just here for the deal&nbsp;— we are your long-term partner in law and business.</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section class="about" id="about" aria-label="About MOST Partners">
+        <div class="about__head">
+          <p class="eyebrow">about most partners</p>
+          <h2>A law firm built for tech, venture, and cross-border&nbsp;growth.</h2>
+          <p class="about__lead">At MOST, we focus on helping founders, companies, and investors make deals happen, avoid costly mistakes, and unlock business opportunities with clarity and confidence. We work alongside our clients as long-term partners in law and business&nbsp;— supporting them as they build, scale, and invest across markets.</p>
         </div>
 
-        <div class="expertise-strip" id="expertise" aria-label="Selected support areas">
-          <article>
-            <span>01</span>
-            <h3>Company setup and structuring</h3>
+        <div class="about__grid">
+          <article class="about__block">
+            <h3>Our perspective</h3>
+            <p>We combine legal expertise, multijurisdictional experience in Europe, the US, and the UK, and an investment-driven understanding of how companies raise capital, hire, scale, and make strategic decisions. This allows us to advise on cross-border matters with a perspective that strengthens decision-making, reduces friction, and supports momentum at every stage of growth.</p>
           </article>
-          <article>
-            <span>02</span>
-            <h3>Hiring and incentive programs</h3>
+
+          <article class="about__block">
+            <h3>Our experience</h3>
+            <p>Since 2016, we have been working with emerging companies, founders, and investors expanding across Europe, the US, and the UK. Over the years, we have closed 200+ funding rounds, supported 300+ businesses in scaling internationally, and advised on numerous venture, commercial, and M&amp;A transactions. We bring practical insight into what helps companies and investors succeed&nbsp;— and what helps them avoid the kinds of mistakes that slow growth or weaken deals.</p>
           </article>
-          <article>
-            <span>03</span>
-            <h3>Fundraising, VC &amp; M&amp;A</h3>
+
+          <article class="about__block">
+            <h3>Our approach</h3>
+            <p>Whether you are forming your first company, hiring talent, protecting IP, raising capital, acquiring a business, or making an investment, we help build the legal foundations that support your strategy. We integrate legal considerations into a broader business context, enabling smoother decision-making, clearer communication, and forward momentum.</p>
           </article>
-          <article>
-            <span>04</span>
-            <h3>Commercial contracts and operations</h3>
+
+          <article class="about__block">
+            <h3>Our mission</h3>
+            <p>Our mission is to transform ideas and investment opportunities into legally sound businesses and transactions. We accompany clients through every stage of growth&nbsp;— helping them protect what matters most, minimise risk and avoid costly mistakes, make better decisions faster, and unlock opportunities across markets.</p>
           </article>
-          <article>
-            <span>05</span>
-            <h3>IP protecting</h3>
-          </article>
-          <article>
-            <span>06</span>
-            <h3>Global expansion</h3>
+
+          <article class="about__block">
+            <h3>Our commitment</h3>
+            <p>Your business will evolve&nbsp;— and so will our support. We are here to guide, structure, and enable what comes next, with advice grounded in experience across jurisdictions, markets, and stages of growth. MOST Partners exists to help you make better decisions, reduce friction, and build lasting value&nbsp;— wherever your next step takes you.</p>
           </article>
         </div>
-        <span id="contact" class="anchor-target" aria-hidden="true"></span>
-        <span id="founders" class="anchor-target" aria-hidden="true"></span>
-        <span id="companies" class="anchor-target" aria-hidden="true"></span>
-        <span id="investors" class="anchor-target" aria-hidden="true"></span>
-        <span id="team" class="anchor-target" aria-hidden="true"></span>
+      </section>
+
+      <section class="team" id="team" aria-label="Team">
+        <div class="section-head">
+          <p class="eyebrow">team</p>
+          <h2>Over 20 years of experience across Polish, English, and US&nbsp;law.</h2>
+          <p class="section-lead">What connects us is our shared belief that law may be a catalyst for innovation and growth&nbsp;— not just a set of rules and limitations.</p>
+        </div>
+
+        <div class="team__grid">
+          <article class="team__card team__card--lead">
+            <div class="team__avatar" aria-hidden="true">BS</div>
+            <div class="team__meta">
+              <h3>Barbara Sobowska</h3>
+              <p class="team__role">Founder &amp; Partner</p>
+            </div>
+            <p class="team__bio">Cross-border transactional lawyer advising tech companies, founders, and investors on venture capital, M&amp;A, and growth transactions across the US, UK, and Europe. Qualified in New York and in England and Wales. Before founding MOST Partners in 2016, Barbara worked at Weil, Gotshal &amp; Manges, White &amp; Case, and Wilmer Hale in London. LL.M. from Harvard Law School and Jagiellonian University.</p>
+            <ul class="team__focus">
+              <li>Venture Capital &amp; Growth Financing</li>
+              <li>M&amp;A and Strategic Transactions</li>
+              <li>Shareholder Agreements and Joint Ventures</li>
+              <li>Corporate Structuring</li>
+              <li>Cross-Border Expansion</li>
+              <li>Venture Debt</li>
+              <li>Incentive Programs (ESOPs &amp; VSOPs)</li>
+            </ul>
+          </article>
+
+          <article class="team__card">
+            <div class="team__avatar" aria-hidden="true">JB</div>
+            <div class="team__meta">
+              <h3>Jacek Balicki</h3>
+              <p class="team__role">Partner</p>
+            </div>
+            <p class="team__bio">Transactional attorney advising on M&amp;A, corporate structuring, and complex cross-border transactions for private equity, venture capital, corporate clients, and high-net-worth individuals. Recognised by Chambers Global for "truly excellent execution capabilities". Previously at Weil, Gotshal &amp; Manges, Baker McKenzie, and PwC Warsaw. LL.M. from Catholic University of America.</p>
+            <ul class="team__focus">
+              <li>M&amp;A and Strategic Transactions</li>
+              <li>Corporate Structuring</li>
+              <li>Reorganisations and Restructuring</li>
+              <li>Venture Capital</li>
+              <li>Corporate and Commercial Advisory</li>
+              <li>Transaction Insurance (W&amp;I)</li>
+            </ul>
+          </article>
+
+          <article class="team__card">
+            <div class="team__avatar" aria-hidden="true">KB</div>
+            <div class="team__meta">
+              <h3>Karolina Bressa</h3>
+              <p class="team__role">Transactional Counsel</p>
+            </div>
+            <p class="team__bio">Transactional attorney advising companies, founders, and investors on venture capital, M&amp;A, and corporate reorganisations. Several years of experience supporting entrepreneurs both as external counsel and in-house lawyer. Strong banking and finance background. Previously at Coast2Coast Capital, CMS, and DLA Piper.</p>
+            <ul class="team__focus">
+              <li>Venture Capital</li>
+              <li>Corporate Structuring</li>
+              <li>Corporate Governance &amp; Commercial Advisory</li>
+              <li>Due Diligence</li>
+              <li>Incentive Programs (ESOPs &amp; VSOPs)</li>
+              <li>Banking and Finance</li>
+            </ul>
+          </article>
+
+          <article class="team__card">
+            <div class="team__avatar" aria-hidden="true">JS</div>
+            <div class="team__meta">
+              <h3>Justyna Szuprowska</h3>
+              <p class="team__role">Corporate Counsel</p>
+            </div>
+            <p class="team__bio">Corporate attorney focused on structuring, reorganisations, regulatory compliance, and day-to-day governance. Over a decade as in-house counsel within a major multinational group. Combines deep corporate knowledge with a practical, business-oriented approach shaped by operational legal environments. Previously 10+ years at Pelion.</p>
+            <ul class="team__focus">
+              <li>Corporate Structuring</li>
+              <li>Reorganisations and Transformations</li>
+              <li>Governance &amp; Commercial Advisory</li>
+              <li>Regulatory and Compliance</li>
+              <li>Due Diligence</li>
+              <li>M&amp;A and Transaction Support</li>
+            </ul>
+          </article>
+
+          <article class="team__card">
+            <div class="team__avatar" aria-hidden="true">DJ</div>
+            <div class="team__meta">
+              <h3>Dominika Jakuszewska</h3>
+              <p class="team__role">Associate</p>
+            </div>
+            <p class="team__bio">Transaction-focused associate advising on private M&amp;A, venture capital, and corporate matters, with strong emphasis on IP and technology. Supports clients through the entire transaction process&nbsp;— from due diligence to drafting and negotiating key agreements. Studied at Jagiellonian University, University of Warsaw, and Sciences Po Paris.</p>
+            <ul class="team__focus">
+              <li>Venture Capital</li>
+              <li>Corporate and Commercial Advisory</li>
+              <li>IP and Technology Transactions</li>
+              <li>Competition and Consumer Law</li>
+              <li>Due Diligence</li>
+              <li>M&amp;A and Transaction Support</li>
+            </ul>
+          </article>
+
+          <article class="team__card">
+            <div class="team__avatar" aria-hidden="true">WM</div>
+            <div class="team__meta">
+              <h3>Wojciech Młodawski</h3>
+              <p class="team__role">Associate</p>
+            </div>
+            <p class="team__bio">Transaction-focused associate combining legal expertise with a strong financial background and hands-on VC industry experience. Three+ years inside a VC fund (Arkley Brinc VC as COO &amp; Investment Manager), coordinating deals end-to-end. Previously at CMS and Greenberg Traurig. Degrees in Law, Business Administration, and Finance.</p>
+            <ul class="team__focus">
+              <li>Venture Capital</li>
+              <li>Corporate and Commercial Advisory</li>
+              <li>Due Diligence</li>
+              <li>M&amp;A and Transaction Support</li>
+              <li>Governance &amp; Commercial Advisory</li>
+            </ul>
+          </article>
+
+          <article class="team__card">
+            <div class="team__avatar" aria-hidden="true">AZ</div>
+            <div class="team__meta">
+              <h3>Anna Zięba</h3>
+              <p class="team__role">Tax Counsel</p>
+            </div>
+            <p class="team__bio">Tax counsel with over a decade of experience advising domestic and international clients on tax aspects of M&amp;A, financing, reorganisations, compensation structures, and cross-border operations. Author and speaker on tax matters. Previously at leading Polish law firms and PwC Warsaw. LL.M. from UC Berkeley School of Law.</p>
+            <ul class="team__focus">
+              <li>Tax support in M&amp;A transactions</li>
+              <li>Tax structuring of reorganisations</li>
+              <li>Management and employee compensation</li>
+              <li>Financial transactions tax advisory</li>
+              <li>MDR reporting, CRS &amp; FATCA compliance</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="contact" id="contact" aria-label="Contact">
+        <div class="contact__inner">
+          <p class="eyebrow">contact</p>
+          <h2>Let's talk about your next&nbsp;move.</h2>
+          <p class="contact__lead">Whether you are forming your first company, preparing a round, or closing a deal&nbsp;— we are here to help you make it happen.</p>
+          <a class="contact__mail" href="mailto:hello@mostpartners.pl">hello@mostpartners.pl</a>
+          <p class="contact__meta">MOST Partners&nbsp;· Warsaw, Poland · serving clients across Europe, the US, and the UK</p>
+        </div>
       </section>
     </main>
 

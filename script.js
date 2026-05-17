@@ -279,8 +279,10 @@ function updateScroll() {
 
 function revealOnScroll() {
   const groups = [
-    { selector: ".expertise-strip article", stagger: 70 },
-    { selector: ".stage-card", stagger: 0 },
+    { selector: ".expertise__item", stagger: 60 },
+    { selector: ".hww__item", stagger: 80 },
+    { selector: ".about__block", stagger: 60 },
+    { selector: ".team__card", stagger: 60 },
   ];
 
   if (!("IntersectionObserver" in window)) {
@@ -306,6 +308,39 @@ function revealOnScroll() {
     items.forEach((item, index) => {
       if (stagger) item.style.transitionDelay = `${index * stagger}ms`;
       observer.observe(item);
+    });
+  });
+}
+
+function setupAudienceTabs() {
+  const tabs = Array.from(document.querySelectorAll(".audience__tab"));
+  const panels = Array.from(document.querySelectorAll(".audience__panel"));
+  if (!tabs.length || !panels.length) return;
+
+  function activate(targetTab) {
+    const target = targetTab.dataset.tab;
+    tabs.forEach((tab) => {
+      const isActive = tab === targetTab;
+      tab.setAttribute("aria-selected", String(isActive));
+      tab.setAttribute("tabindex", isActive ? "0" : "-1");
+    });
+    panels.forEach((panel) => {
+      const isActive = panel.dataset.panel === target;
+      panel.hidden = !isActive;
+      panel.classList.toggle("is-active", isActive);
+    });
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => activate(tab));
+    tab.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      event.preventDefault();
+      const direction = event.key === "ArrowRight" ? 1 : -1;
+      const currentIndex = tabs.indexOf(tab);
+      const nextIndex = (currentIndex + direction + tabs.length) % tabs.length;
+      tabs[nextIndex].focus();
+      activate(tabs[nextIndex]);
     });
   });
 }
@@ -373,5 +408,6 @@ if (document.fonts) {
 updateScroll();
 revealOnScroll();
 setupMobileMenu();
+setupAudienceTabs();
 setupHeroTrail();
 window.addEventListener("load", () => scheduleTrailOverlay(true));
