@@ -46,9 +46,9 @@
       </a>
 
       <nav class="top-nav__menu" aria-label="Sections">
-        <a href="#about">About</a>
+        <a href="#mission">About</a>
         <a href="#expertise">Expertise</a>
-        <a href="#team">Team</a>
+        <a href="#for-you">Routes</a>
         <a href="#contact">Contact</a>
       </nav>
 
@@ -76,9 +76,9 @@
           </button>
         </div>
         <nav class="mobile-menu__links" aria-label="Expanded mobile navigation">
-          <a href="#about">About</a>
+          <a href="#mission">About</a>
           <a href="#expertise">Expertise</a>
-          <a href="#team">Team</a>
+          <a href="#for-you">Routes</a>
           <a href="#contact">Contact</a>
         </nav>
         <a class="nav-cta" href="#contact">Contact</a>
@@ -169,517 +169,342 @@
 
       <div class="hero-trail-labels" aria-hidden="true"></div>
 
-      <section class="audience" id="for-you" aria-label="Who we partner with">
-        <div class="section-head">
-          <p class="eyebrow">who we partner with</p>
-          <h2>We take over the legal aspects of running your business&nbsp;— so you can focus on building and growing&nbsp;it.</h2>
+      <section class="mission" id="mission" aria-labelledby="mission-title">
+        <div class="mission__rail" aria-hidden="true">
+          <svg viewBox="0 0 24 720" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="missionRailGrad" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0" stop-color="#ff612c" stop-opacity="0" />
+                <stop offset="0.25" stop-color="#ff612c" stop-opacity="0.85" />
+                <stop offset="0.78" stop-color="#ffb077" stop-opacity="0.65" />
+                <stop offset="1" stop-color="#ff612c" stop-opacity="0" />
+              </linearGradient>
+            </defs>
+            <path class="mission__rail-path" d="M12 0 V720" stroke="url(#missionRailGrad)" stroke-width="1.5" fill="none" />
+            <circle class="mission__rail-node" cx="12" cy="688" r="6" fill="#ff612c" />
+          </svg>
         </div>
 
-        <div class="audience__tabs" role="tablist" aria-label="Audience">
-          <button class="audience__tab" role="tab" data-tab="founders" aria-selected="true" id="tab-founders" aria-controls="panel-founders">
-            <span class="audience__tab-label">Founders</span>
-            <span class="audience__tab-hint">building from zero</span>
-          </button>
-          <button class="audience__tab" role="tab" data-tab="companies" aria-selected="false" id="tab-companies" aria-controls="panel-companies" tabindex="-1">
-            <span class="audience__tab-label">Companies</span>
-            <span class="audience__tab-hint">scaling with confidence</span>
-          </button>
-          <button class="audience__tab" role="tab" data-tab="investors" aria-selected="false" id="tab-investors" aria-controls="panel-investors" tabindex="-1">
-            <span class="audience__tab-label">Investors</span>
-            <span class="audience__tab-hint">deploying capital</span>
-          </button>
+        <p class="mission__ghost" aria-hidden="true">MOST</p>
+
+        <div class="mission__contours" aria-hidden="true">
+          <svg viewBox="0 0 1440 600" preserveAspectRatio="none">
+            <path d="M0 180 Q360 160 720 175 T1440 180" stroke="rgba(240,235,233,0.045)" stroke-width="1" fill="none" />
+            <path d="M0 320 Q360 340 720 330 T1440 320" stroke="rgba(240,235,233,0.04)" stroke-width="1" fill="none" />
+            <path d="M0 460 Q360 440 720 450 T1440 455" stroke="rgba(240,235,233,0.035)" stroke-width="1" fill="none" />
+          </svg>
         </div>
 
-        <div class="audience__panels">
-          <article class="audience__panel is-active" role="tabpanel" id="panel-founders" aria-labelledby="tab-founders" data-panel="founders">
-            <header class="audience__intro">
-              <p class="audience__lead">Legal support that grows with your&nbsp;business.</p>
-              <p class="audience__body">As a founder, you make decisions quickly and carry the weight of building something from zero. We make sure the legal side keeps pace&nbsp;— giving you clarity, confidence, and space to focus on what you are building. From day one, we help you set the right foundations, attract talent, close clients, raise capital, and scale globally.</p>
-            </header>
-            <div class="audience__lists">
-              <div class="audience__list">
-                <h3>What we help you achieve</h3>
-                <ul>
-                  <li>Choose the right legal structure and form your company correctly</li>
-                  <li>Raise funding and negotiate fair, predictable terms</li>
-                  <li>Sign clients, partners, and suppliers with well-built, balanced contracts</li>
-                  <li>Hire and incentivise the right team (employment, contractors, ESOPs)</li>
-                  <li>Protect your IP, technology, and product</li>
-                  <li>Expand into new markets and work with foreign partners</li>
-                  <li>Prepare for exits, acquisitions, reorganisations and strategic transactions</li>
-                </ul>
-              </div>
-              <div class="audience__list audience__list--check">
-                <h3>How we work with founders</h3>
-                <ul>
-                  <li>Practical, business-ready guidance&nbsp;— clear, actionable, free from unnecessary complexity</li>
-                  <li>Deal-savvy support from lawyers who understand investors, term sheets, and deal dynamics</li>
-                  <li>Consistent partnership&nbsp;— we stay by your side as your company grows and enters new stages</li>
-                  <li>Cross-border expertise across Polish, US, and UK markets</li>
-                </ul>
-              </div>
-              <div class="audience__list">
-                <h3>Our expertise</h3>
-                <ul>
-                  <li>Company formation, founders' agreements, cap table planning</li>
-                  <li>Funding rounds (pre-seed, seed, Series A, B, C and on)</li>
-                  <li>Commercial contracts and customer/supplier agreements</li>
-                  <li>Hiring documentation, contractor agreements, ESOPs</li>
-                  <li>IP strategy, licensing, technology agreements</li>
-                  <li>Cross-border expansion and subsidiaries</li>
-                  <li>M&amp;A, exits, and due diligence support</li>
-                </ul>
-              </div>
-            </div>
-          </article>
-
-          <article class="audience__panel" role="tabpanel" id="panel-companies" aria-labelledby="tab-companies" data-panel="companies" hidden>
-            <header class="audience__intro">
-              <p class="audience__lead">Legal foundations that support your organisation's&nbsp;growth.</p>
-              <p class="audience__body">As your company grows, the legal challenges grow with it&nbsp;— more clients, more people, more markets, more complexity. We help you build the structures, processes, and protections that keep your organisation running smoothly, investment-ready, and prepared for what comes next.</p>
-            </header>
-            <div class="audience__lists">
-              <div class="audience__list">
-                <h3>What we help you achieve</h3>
-                <ul>
-                  <li>Build strong legal foundations for operations and scale</li>
-                  <li>Become investment-ready with clean structures and clear governance</li>
-                  <li>Raise capital (equity, debt, and venture debt) with investor-aligned documentation</li>
-                  <li>Sign clients, partners, and suppliers with clear, well-structured contracts</li>
-                  <li>Manage employment, contractor relationships, and incentive programs</li>
-                  <li>Support product launches, partnerships, and platform development</li>
-                  <li>Navigate cross-border expansion and compliance</li>
-                  <li>Execute M&amp;A, strategic transactions, and reorganisations</li>
-                </ul>
-              </div>
-              <div class="audience__list audience__list--check">
-                <h3>How we work with companies</h3>
-                <ul>
-                  <li>Clear, scalable legal frameworks for operations, investment readiness, and growth</li>
-                  <li>Commercial and product-minded guidance aligned with your business model</li>
-                  <li>Cross-border capability across Poland, the UK, the US, and beyond</li>
-                  <li>Collaboration with leadership, finance, HR, and in-house legal teams</li>
-                  <li>Consistent, ongoing support as your organisation grows</li>
-                </ul>
-              </div>
-              <div class="audience__list">
-                <h3>Our expertise</h3>
-                <ul>
-                  <li>Equity and debt financing&nbsp;— Seed through Series A/B/C, SAFEs, convertibles, venture debt</li>
-                  <li>Commercial contracts&nbsp;— MSAs, licensing, strategic partnership arrangements</li>
-                  <li>Employment documentation, executive contracts, and ESOP design</li>
-                  <li>Product, platform, data, and privacy documentation</li>
-                  <li>Group structuring, reorganisations and adjusted set-ups</li>
-                  <li>Corporate housekeeping and governance</li>
-                  <li>International expansion and subsidiary setup</li>
-                  <li>IP protection, licensing, and technology agreements</li>
-                  <li>M&amp;A, corporate transactions, and due diligence</li>
-                </ul>
-              </div>
-            </div>
-          </article>
-
-          <article class="audience__panel" role="tabpanel" id="panel-investors" aria-labelledby="tab-investors" data-panel="investors" hidden>
-            <header class="audience__intro">
-              <p class="audience__lead">Legal support that protects value and keeps deals&nbsp;moving.</p>
-              <p class="audience__body">As an investor, your focus is on finding opportunities, assessing risk, and generating returns. We manage the legal side of structuring, negotiating, and closing deals&nbsp;— giving you clarity, speed, and confidence at every step. From early-stage to follow-ons, secondaries, and exits, we help you move efficiently and maximise long-term value.</p>
-            </header>
-            <div class="audience__lists">
-              <div class="audience__list">
-                <h3>What we help you achieve</h3>
-                <ul>
-                  <li>Structure deals clearly, efficiently, and with future scalability in mind</li>
-                  <li>Negotiate balanced, investor-aligned terms that protect your position</li>
-                  <li>Conduct and respond to due diligence with precision and speed</li>
-                  <li>Protect downside risk and secure governance and economic rights</li>
-                  <li>Close investments smoothly across borders and time zones</li>
-                  <li>Manage follow-ons, SAFEs, convertibles, and equity rounds</li>
-                  <li>Support secondaries and exit transactions</li>
-                </ul>
-              </div>
-              <div class="audience__list audience__list--check">
-                <h3>How we work with investors</h3>
-                <ul>
-                  <li>Deal-savvy legal support grounded in years of VC, M&amp;A, and cross-border experience</li>
-                  <li>Clear, decisive guidance designed to keep deals moving and protect your position</li>
-                  <li>Alignment with your investment strategy and risk profile</li>
-                  <li>Cross-border capability across Poland, the UK, the US, and other key markets</li>
-                  <li>Reliable long-term partnership across your portfolio and investment cycle</li>
-                </ul>
-              </div>
-              <div class="audience__list">
-                <h3>Our expertise</h3>
-                <ul>
-                  <li>Deal structuring, term sheets, and negotiation</li>
-                  <li>Convertible instruments, SAFEs, venture debt, and equity rounds</li>
-                  <li>Shareholders' agreements, governance frameworks, and investor rights</li>
-                  <li>Due diligence, risk assessment, and investment readiness reviews</li>
-                  <li>Follow-ons, secondaries, and recapitalisations</li>
-                  <li>Cross-border transactions and multi-jurisdictional coordination</li>
-                  <li>Exits, SPAs, and post-closing matters</li>
-                </ul>
-              </div>
-            </div>
-          </article>
+        <div class="mission__inner">
+          <p class="mission__eyebrow">about us</p>
+          <h2 class="mission__statement" id="mission-title">
+            <span class="mission__phrase">At MOST, we accompany founders, tech companies, and investors</span>
+            <span class="mission__phrase">as long-term partners in law and business</span>
+            <span class="mission__phrase">— helping them protect what matters most,</span>
+            <span class="mission__phrase">move forward with confidence, and unlock&nbsp;opportunity.</span>
+          </h2>
         </div>
       </section>
 
-      <section class="expertise" id="expertise" aria-label="Expertise">
-        <div class="section-head">
-          <p class="eyebrow">expertise</p>
-          <h2>Legal solutions built to support growth, funding, and expansion&nbsp;— across markets and stages.</h2>
-          <p class="section-lead">We integrate legal considerations into business strategy, helping you operate with clarity, navigate complexity confidently, and unlock opportunities from day one through exit.</p>
-        </div>
+      <section class="route-map" id="expertise" aria-labelledby="route-map-title">
+        <div class="route-map__inner">
+          <div class="route-map__copy">
+            <p class="route-map__eyebrow">our expertise</p>
+            <h2 class="route-map__title" id="route-map-title">
+              We integrate legal considerations into business&nbsp;strategy
+            </h2>
+            <p class="route-map__lead">supporting our clients in:</p>
+            <p class="route-map__progress">
+              <span class="route-map__progress-num" data-active-num>01</span>
+              <span class="route-map__progress-sep">/</span>
+              <span class="route-map__progress-total">06</span>
+            </p>
+            <p class="route-map__active-label" data-active-label>Company setup and structuring</p>
+          </div>
 
-        <ol class="expertise__list">
-          <li class="expertise__item">
-            <span class="expertise__num">01</span>
-            <div class="expertise__copy">
-              <h3>Company Incorporation and Structuring</h3>
-              <p>We help set up and structure businesses&nbsp;— locally and internationally&nbsp;— so you are ready to scale and raise capital.</p>
-              <ul>
-                <li>Company incorporation (local and international)</li>
-                <li>Founders' agreements</li>
-                <li>Cap table planning</li>
-                <li>Group structuring and reorganisation</li>
-                <li>Legal frameworks for operational scalability and investor-readiness</li>
-              </ul>
-            </div>
-          </li>
-          <li class="expertise__item">
-            <span class="expertise__num">02</span>
-            <div class="expertise__copy">
-              <h3>Funding and Investment Rounds</h3>
-              <p>We support you through every stage of fundraising&nbsp;— from term sheets to closing&nbsp;— so your deals are clear, fair, and future-proof.</p>
-              <ul>
-                <li>Term sheets planning and structuring</li>
-                <li>SAFE and convertible instruments</li>
-                <li>Equity rounds (pre-seed to Series A/B+)</li>
-                <li>Debt structuring (venture debt, loans and credit facilities)</li>
-                <li>Due diligence preparation and investor readiness checks</li>
-                <li>Shareholders' and investment agreements</li>
-                <li>Investor negotiations</li>
-                <li>Governance design and post-investment structure</li>
-              </ul>
-            </div>
-          </li>
-          <li class="expertise__item">
-            <span class="expertise__num">03</span>
-            <div class="expertise__copy">
-              <h3>Hiring and Talent</h3>
-              <p>We cover the legal side of hiring, equity plans, and working with contractors&nbsp;— so you can build the right team with confidence.</p>
-              <ul>
-                <li>Engagement terms planning and structuring</li>
-                <li>Employment law and employment contracts</li>
-                <li>Contractor, advisor, and consultant agreements</li>
-                <li>Structuring and implementation of incentive plans</li>
-                <li>Cross-border hiring and compliance alignment</li>
-                <li>Policies, handbooks, onboarding documentation</li>
-              </ul>
-            </div>
-          </li>
-          <li class="expertise__item">
-            <span class="expertise__num">04</span>
-            <div class="expertise__copy">
-              <h3>Commercial Contracts and Day-to-Day Operations</h3>
-              <p>From everyday agreements to commercial partnerships, we draft and negotiate contracts that support your product, platform, and operations.</p>
-              <ul>
-                <li>Day-to-day corporate affairs and governance</li>
-                <li>Services agreements, licensing, and commercial contracts</li>
-                <li>Terms of use, privacy policies, and user-facing documents</li>
-                <li>Legal support for product development and go-to-market</li>
-                <li>Client, partner, and supplier agreements</li>
-                <li>Joint ventures and strategic collaborations</li>
-                <li>Data protection and GDPR compliance</li>
-              </ul>
-            </div>
-          </li>
-          <li class="expertise__item">
-            <span class="expertise__num">05</span>
-            <div class="expertise__copy">
-              <h3>IP and Technology</h3>
-              <p>We help you protect what you build&nbsp;— covering IP ownership, licensing, confidentiality, and open-source risk.</p>
-              <ul>
-                <li>IP strategy and ownership structuring (founder, team, contractors)</li>
-                <li>Software licensing, IP assignment, and confidentiality agreements (NDAs)</li>
-                <li>Trademark filings and brand protection (via partners if needed)</li>
-                <li>Support in tech transfer or open-source risk analysis</li>
-              </ul>
-            </div>
-          </li>
-          <li class="expertise__item">
-            <span class="expertise__num">06</span>
-            <div class="expertise__copy">
-              <h3>Cross-Border Expansion</h3>
-              <p>We guide your international growth, helping structure foreign entities, review global contracts, and manage compliance.</p>
-              <ul>
-                <li>Legal structuring for international growth</li>
-                <li>Establishment of foreign entities or subsidiaries</li>
-                <li>Coordination with local counsel and cross-border compliance</li>
-                <li>Review of cross-border contracts and risk allocation</li>
-                <li>Employment, tax, and commercial alignment with local regulations</li>
-                <li>Market entry strategies and operational frameworks</li>
-              </ul>
-            </div>
-          </li>
-          <li class="expertise__item">
-            <span class="expertise__num">07</span>
-            <div class="expertise__copy">
-              <h3>M&amp;A, Exits and Strategic Transactions</h3>
-              <p>We support buy- and sell-side deals, drafting and negotiating documents and managing post-deal transitions.</p>
-              <ul>
-                <li>Legal due diligence (buy-side or sell-side)</li>
-                <li>Asset deals (acquiring or selling assets)</li>
-                <li>Share deals (acquiring or selling companies)</li>
-                <li>Transaction document drafting and negotiation</li>
-                <li>SPAs, shareholders' agreements, earn-outs, and warranties</li>
-                <li>Coordination with financial, tax, and regulatory teams</li>
-                <li>Post-deal integration (employment, IP, governance, operations)</li>
-                <li>Corporate restructurings ahead of sale or acquisition</li>
-              </ul>
-            </div>
-          </li>
-          <li class="expertise__item">
-            <span class="expertise__num">08</span>
-            <div class="expertise__copy">
-              <h3>Ongoing Legal Support</h3>
-              <p>As your business evolves, we stay with you&nbsp;— offering fast, practical, tailored advice without unnecessary complexity.</p>
-              <ul>
-                <li>Legal support that adapts as your business scales</li>
-                <li>Business-driven solutions for daily operations</li>
-                <li>Practical guidance balancing risk and momentum</li>
-                <li>Available when needed&nbsp;— without unnecessary overhead</li>
-              </ul>
-            </div>
-          </li>
-        </ol>
-      </section>
+          <div class="route-map__visual">
+            <svg class="route-map__svg" viewBox="0 0 640 720" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+              <defs>
+                <linearGradient id="routeMapActiveGrad" x1="0" x2="1" y1="1" y2="0">
+                  <stop offset="0" stop-color="#FF612C" />
+                  <stop offset="1" stop-color="#FFB077" />
+                </linearGradient>
+              </defs>
 
-      <section class="how-we-work" id="how-we-work" aria-label="How we work">
-        <div class="section-head">
-          <p class="eyebrow">how we work</p>
-          <h2>Driven by a passion for making things&nbsp;happen.</h2>
-        </div>
+              <path d="M0 220 C160 200 320 240 640 200" stroke="rgba(48,62,89,0.1)" stroke-width="1" fill="none" />
+              <path d="M0 380 C200 360 400 410 640 360" stroke="rgba(48,62,89,0.08)" stroke-width="1" fill="none" />
+              <path d="M0 540 C200 520 400 560 640 520" stroke="rgba(48,62,89,0.07)" stroke-width="1" fill="none" />
 
-        <ol class="hww__list">
-          <li class="hww__item">
-            <span class="hww__num">01</span>
-            <div class="hww__copy">
-              <h3>Deliver business-driven legal solutions</h3>
-              <p>Always thinking two steps ahead. We focus on what matters now, while anticipating what comes next to protect your future and support your momentum.</p>
-            </div>
-          </li>
-          <li class="hww__item">
-            <span class="hww__num">02</span>
-            <div class="hww__copy">
-              <h3>Structure legal frameworks to unlock lasting value</h3>
-              <p>We ensure your legal setup works for your business&nbsp;— enabling smooth operations, informed decisions, and sustainable growth.</p>
-            </div>
-          </li>
-          <li class="hww__item">
-            <span class="hww__num">03</span>
-            <div class="hww__copy">
-              <h3>Draft with clarity, precision, and purpose</h3>
-              <p>Always driven by what matters most. Our documents are designed to be understood, used, and focused on the underlying objectives of your team, your partners, your investors&nbsp;— whoever needs to act on them.</p>
-            </div>
-          </li>
-          <li class="hww__item">
-            <span class="hww__num">04</span>
-            <div class="hww__copy">
-              <h3>Negotiate with focus on what matters most</h3>
-              <p>We stay focused on your priorities and outcomes&nbsp;— creating value, protecting your interests, and keeping deals on track.</p>
-            </div>
-          </li>
-          <li class="hww__item">
-            <span class="hww__num">05</span>
-            <div class="hww__copy">
-              <h3>Close deals seamlessly</h3>
-              <p>We coordinate across borders, time zones, and teams to keep transactions moving smoothly from negotiation to closing.</p>
-            </div>
-          </li>
-          <li class="hww__item">
-            <span class="hww__num">06</span>
-            <div class="hww__copy">
-              <h3>Stay by your side</h3>
-              <p>Your business evolves, and so does our support. We are not just here for the deal&nbsp;— we are your long-term partner in law and business.</p>
-            </div>
-          </li>
-        </ol>
-      </section>
+              <path class="route-map__base" d="M60 650 C 140 620, 180 560, 240 510 S 340 380, 400 320 S 520 200, 580 110" stroke="rgba(106,110,134,0.4)" stroke-width="2" fill="none" stroke-linecap="round" />
+              <path class="route-map__active-path" d="M60 650 C 140 620, 180 560, 240 510 S 340 380, 400 320 S 520 200, 580 110" stroke="url(#routeMapActiveGrad)" stroke-width="2.4" fill="none" stroke-linecap="round" />
 
-      <section class="about" id="about" aria-label="About MOST Partners">
-        <div class="about__head">
-          <p class="eyebrow">about most partners</p>
-          <h2>A law firm built for tech, venture, and cross-border&nbsp;growth.</h2>
-          <p class="about__lead">At MOST, we focus on helping founders, companies, and investors make deals happen, avoid costly mistakes, and unlock business opportunities with clarity and confidence. We work alongside our clients as long-term partners in law and business&nbsp;— supporting them as they build, scale, and invest across markets.</p>
-        </div>
+              <g class="route-map__node" data-node="1">
+                <circle class="route-map__halo" cx="60" cy="650" r="20" fill="none" stroke="rgba(255,97,44,0.32)" stroke-width="1.5" />
+                <circle class="route-map__dot" cx="60" cy="650" r="9" fill="#161822" stroke="#FFB077" stroke-width="2.4" />
+              </g>
+              <g class="route-map__node" data-node="2">
+                <circle class="route-map__halo" cx="180" cy="555" r="18" fill="none" stroke="rgba(255,97,44,0.0)" stroke-width="1.5" />
+                <circle class="route-map__dot" cx="180" cy="555" r="7" fill="#F0EBE9" stroke="#6A6E86" stroke-width="2" />
+              </g>
+              <g class="route-map__node" data-node="3">
+                <circle class="route-map__halo" cx="280" cy="450" r="18" fill="none" stroke="rgba(255,97,44,0)" stroke-width="1.5" />
+                <circle class="route-map__dot" cx="280" cy="450" r="7" fill="#F0EBE9" stroke="#6A6E86" stroke-width="2" />
+              </g>
+              <g class="route-map__node" data-node="4">
+                <circle class="route-map__halo" cx="370" cy="360" r="18" fill="none" stroke="rgba(255,97,44,0)" stroke-width="1.5" />
+                <circle class="route-map__dot" cx="370" cy="360" r="7" fill="#F0EBE9" stroke="#6A6E86" stroke-width="2" />
+              </g>
+              <g class="route-map__node" data-node="5">
+                <circle class="route-map__halo" cx="470" cy="240" r="18" fill="none" stroke="rgba(255,97,44,0)" stroke-width="1.5" />
+                <circle class="route-map__dot" cx="470" cy="240" r="7" fill="#F0EBE9" stroke="#6A6E86" stroke-width="2" />
+              </g>
+              <g class="route-map__node" data-node="6">
+                <circle class="route-map__halo" cx="580" cy="110" r="18" fill="none" stroke="rgba(255,97,44,0)" stroke-width="1.5" />
+                <circle class="route-map__dot" cx="580" cy="110" r="7" fill="#F0EBE9" stroke="#6A6E86" stroke-width="2" />
+              </g>
+            </svg>
 
-        <div class="about__grid">
-          <article class="about__block">
-            <h3>Our perspective</h3>
-            <p>We combine legal expertise, multijurisdictional experience in Europe, the US, and the UK, and an investment-driven understanding of how companies raise capital, hire, scale, and make strategic decisions. This allows us to advise on cross-border matters with a perspective that strengthens decision-making, reduces friction, and supports momentum at every stage of growth.</p>
-          </article>
-
-          <article class="about__block">
-            <h3>Our experience</h3>
-            <p>Since 2016, we have been working with emerging companies, founders, and investors expanding across Europe, the US, and the UK. Over the years, we have closed 200+ funding rounds, supported 300+ businesses in scaling internationally, and advised on numerous venture, commercial, and M&amp;A transactions. We bring practical insight into what helps companies and investors succeed&nbsp;— and what helps them avoid the kinds of mistakes that slow growth or weaken deals.</p>
-          </article>
-
-          <article class="about__block">
-            <h3>Our approach</h3>
-            <p>Whether you are forming your first company, hiring talent, protecting IP, raising capital, acquiring a business, or making an investment, we help build the legal foundations that support your strategy. We integrate legal considerations into a broader business context, enabling smoother decision-making, clearer communication, and forward momentum.</p>
-          </article>
-
-          <article class="about__block">
-            <h3>Our mission</h3>
-            <p>Our mission is to transform ideas and investment opportunities into legally sound businesses and transactions. We accompany clients through every stage of growth&nbsp;— helping them protect what matters most, minimise risk and avoid costly mistakes, make better decisions faster, and unlock opportunities across markets.</p>
-          </article>
-
-          <article class="about__block">
-            <h3>Our commitment</h3>
-            <p>Your business will evolve&nbsp;— and so will our support. We are here to guide, structure, and enable what comes next, with advice grounded in experience across jurisdictions, markets, and stages of growth. MOST Partners exists to help you make better decisions, reduce friction, and build lasting value&nbsp;— wherever your next step takes you.</p>
-          </article>
+            <ol class="route-map__list" aria-label="Expertise areas">
+              <li>
+                <button class="route-map__item is-active" type="button" data-target="1" aria-pressed="true">
+                  <span class="route-map__item-num">01</span>
+                  <span class="route-map__item-name">Company setup and structuring</span>
+                </button>
+              </li>
+              <li>
+                <button class="route-map__item" type="button" data-target="2" aria-pressed="false">
+                  <span class="route-map__item-num">02</span>
+                  <span class="route-map__item-name">Hiring and incentive programs</span>
+                </button>
+              </li>
+              <li>
+                <button class="route-map__item" type="button" data-target="3" aria-pressed="false">
+                  <span class="route-map__item-num">03</span>
+                  <span class="route-map__item-name">Fundraising, VC &amp; M&amp;A</span>
+                </button>
+              </li>
+              <li>
+                <button class="route-map__item" type="button" data-target="4" aria-pressed="false">
+                  <span class="route-map__item-num">04</span>
+                  <span class="route-map__item-name">Commercial contracts and operations</span>
+                </button>
+              </li>
+              <li>
+                <button class="route-map__item" type="button" data-target="5" aria-pressed="false">
+                  <span class="route-map__item-num">05</span>
+                  <span class="route-map__item-name">IP protecting</span>
+                </button>
+              </li>
+              <li>
+                <button class="route-map__item" type="button" data-target="6" aria-pressed="false">
+                  <span class="route-map__item-num">06</span>
+                  <span class="route-map__item-name">Global expansion</span>
+                </button>
+              </li>
+            </ol>
+          </div>
         </div>
       </section>
 
-      <section class="team" id="team" aria-label="Team">
-        <div class="section-head">
-          <p class="eyebrow">team</p>
-          <h2>Over 20 years of experience across Polish, English, and US&nbsp;law.</h2>
-          <p class="section-lead">What connects us is our shared belief that law may be a catalyst for innovation and growth&nbsp;— not just a set of rules and limitations.</p>
-        </div>
+      <div class="transition-marker" aria-hidden="true">
+        <svg class="transition-marker__svg" viewBox="0 0 1200 80" preserveAspectRatio="none">
+          <line class="transition-marker__base" x1="0" y1="40" x2="1200" y2="40" stroke="rgba(240,235,233,0.18)" stroke-width="1" />
+          <line class="transition-marker__active" x1="0" y1="40" x2="200" y2="40" stroke="#ff612c" stroke-width="2.4" stroke-linecap="round" />
+          <g class="transition-marker__ticks">
+            <line x1="200" y1="30" x2="200" y2="50" stroke="rgba(240,235,233,0.45)" stroke-width="1" />
+            <line x1="400" y1="30" x2="400" y2="50" stroke="rgba(240,235,233,0.45)" stroke-width="1" />
+            <line x1="600" y1="30" x2="600" y2="50" stroke="rgba(240,235,233,0.45)" stroke-width="1" />
+            <line x1="800" y1="30" x2="800" y2="50" stroke="rgba(240,235,233,0.45)" stroke-width="1" />
+            <line x1="1000" y1="30" x2="1000" y2="50" stroke="rgba(240,235,233,0.45)" stroke-width="1" />
+          </g>
+          <circle class="transition-marker__head" cx="200" cy="40" r="5" fill="#ff612c" />
+        </svg>
+        <p class="transition-marker__text">for every stage</p>
+      </div>
 
-        <div class="team__grid">
-          <article class="team__card team__card--lead">
-            <div class="team__avatar" aria-hidden="true">BS</div>
-            <div class="team__meta">
-              <h3>Barbara Sobowska</h3>
-              <p class="team__role">Founder &amp; Partner</p>
-            </div>
-            <p class="team__bio">Cross-border transactional lawyer advising tech companies, founders, and investors on venture capital, M&amp;A, and growth transactions across the US, UK, and Europe. Qualified in New York and in England and Wales. Before founding MOST Partners in 2016, Barbara worked at Weil, Gotshal &amp; Manges, White &amp; Case, and Wilmer Hale in London. LL.M. from Harvard Law School and Jagiellonian University.</p>
-            <ul class="team__focus">
-              <li>Venture Capital &amp; Growth Financing</li>
-              <li>M&amp;A and Strategic Transactions</li>
-              <li>Shareholder Agreements and Joint Ventures</li>
-              <li>Corporate Structuring</li>
-              <li>Cross-Border Expansion</li>
-              <li>Venture Debt</li>
-              <li>Incentive Programs (ESOPs &amp; VSOPs)</li>
-            </ul>
-          </article>
+      <section class="routes" id="for-you" aria-labelledby="routes-title">
+        <h2 id="routes-title" class="sr-only">Three routes: founders, companies, investors</h2>
 
-          <article class="team__card">
-            <div class="team__avatar" aria-hidden="true">JB</div>
-            <div class="team__meta">
-              <h3>Jacek Balicki</h3>
-              <p class="team__role">Partner</p>
-            </div>
-            <p class="team__bio">Transactional attorney advising on M&amp;A, corporate structuring, and complex cross-border transactions for private equity, venture capital, corporate clients, and high-net-worth individuals. Recognised by Chambers Global for "truly excellent execution capabilities". Previously at Weil, Gotshal &amp; Manges, Baker McKenzie, and PwC Warsaw. LL.M. from Catholic University of America.</p>
-            <ul class="team__focus">
-              <li>M&amp;A and Strategic Transactions</li>
-              <li>Corporate Structuring</li>
-              <li>Reorganisations and Restructuring</li>
-              <li>Venture Capital</li>
-              <li>Corporate and Commercial Advisory</li>
-              <li>Transaction Insurance (W&amp;I)</li>
-            </ul>
-          </article>
+        <div class="routes__inner">
+          <div class="routes__tabs" role="tablist" aria-label="Client routes">
+            <button class="routes__tab is-active" role="tab" type="button" data-route="founders" aria-selected="true" id="route-tab-founders" aria-controls="route-panel-founders">
+              <span class="routes__tab-step">01</span>
+              <span class="routes__tab-name">Founders</span>
+            </button>
+            <button class="routes__tab" role="tab" type="button" data-route="companies" aria-selected="false" tabindex="-1" id="route-tab-companies" aria-controls="route-panel-companies">
+              <span class="routes__tab-step">02</span>
+              <span class="routes__tab-name">Companies</span>
+            </button>
+            <button class="routes__tab" role="tab" type="button" data-route="investors" aria-selected="false" tabindex="-1" id="route-tab-investors" aria-controls="route-panel-investors">
+              <span class="routes__tab-step">03</span>
+              <span class="routes__tab-name">Investors</span>
+            </button>
+          </div>
 
-          <article class="team__card">
-            <div class="team__avatar" aria-hidden="true">KB</div>
-            <div class="team__meta">
-              <h3>Karolina Bressa</h3>
-              <p class="team__role">Transactional Counsel</p>
-            </div>
-            <p class="team__bio">Transactional attorney advising companies, founders, and investors on venture capital, M&amp;A, and corporate reorganisations. Several years of experience supporting entrepreneurs both as external counsel and in-house lawyer. Strong banking and finance background. Previously at Coast2Coast Capital, CMS, and DLA Piper.</p>
-            <ul class="team__focus">
-              <li>Venture Capital</li>
-              <li>Corporate Structuring</li>
-              <li>Corporate Governance &amp; Commercial Advisory</li>
-              <li>Due Diligence</li>
-              <li>Incentive Programs (ESOPs &amp; VSOPs)</li>
-              <li>Banking and Finance</li>
-            </ul>
-          </article>
+          <div class="routes__stage">
+            <article class="routes__scene routes__scene--founders is-active" role="tabpanel" id="route-panel-founders" aria-labelledby="route-tab-founders" data-scene="founders">
+              <div class="routes__bg" aria-hidden="true">
+                <span class="routes__ghost">FOUNDERS</span>
+                <svg class="routes__route" viewBox="0 0 820 600" preserveAspectRatio="xMidYMid meet">
+                  <path d="M0 240 C160 220 320 260 820 220" stroke="rgba(255,255,255,0.05)" stroke-width="1" fill="none" />
+                  <path d="M0 400 C200 380 400 430 820 380" stroke="rgba(255,255,255,0.04)" stroke-width="1" fill="none" />
+                  <path class="routes__path" d="M40 540 C 200 540, 260 460, 340 380 S 500 220, 780 80" stroke="#D17E5F" stroke-width="2.6" fill="none" stroke-linecap="round" />
+                  <circle cx="40" cy="540" r="9" fill="#D17E5F" />
+                  <circle cx="240" cy="450" r="6" fill="rgba(209,126,95,0.7)" />
+                  <circle cx="420" cy="320" r="6" fill="rgba(209,126,95,0.7)" />
+                  <circle cx="600" cy="200" r="6" fill="rgba(209,126,95,0.7)" />
+                  <circle cx="780" cy="80" r="9" fill="#D17E5F" />
+                </svg>
+              </div>
+              <div class="routes__copy">
+                <p class="routes__eyebrow">for every stage</p>
+                <h3 class="routes__title">Founders</h3>
+                <p class="routes__lead">We take over the legal aspects of running your business so that you can focus on building and growing&nbsp;it.</p>
+                <p class="routes__body">Have us as your legal partner at every stage of the business cycle&nbsp;– from formation and hiring to funding, expansion, and&nbsp;exit.</p>
+                <a class="routes__cta" href="#contact">
+                  <span>read more</span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10M11 6l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </a>
+              </div>
+            </article>
 
-          <article class="team__card">
-            <div class="team__avatar" aria-hidden="true">JS</div>
-            <div class="team__meta">
-              <h3>Justyna Szuprowska</h3>
-              <p class="team__role">Corporate Counsel</p>
-            </div>
-            <p class="team__bio">Corporate attorney focused on structuring, reorganisations, regulatory compliance, and day-to-day governance. Over a decade as in-house counsel within a major multinational group. Combines deep corporate knowledge with a practical, business-oriented approach shaped by operational legal environments. Previously 10+ years at Pelion.</p>
-            <ul class="team__focus">
-              <li>Corporate Structuring</li>
-              <li>Reorganisations and Transformations</li>
-              <li>Governance &amp; Commercial Advisory</li>
-              <li>Regulatory and Compliance</li>
-              <li>Due Diligence</li>
-              <li>M&amp;A and Transaction Support</li>
-            </ul>
-          </article>
+            <article class="routes__scene routes__scene--companies" role="tabpanel" id="route-panel-companies" aria-labelledby="route-tab-companies" data-scene="companies" hidden>
+              <div class="routes__bg" aria-hidden="true">
+                <span class="routes__ghost">COMPANIES</span>
+                <svg class="routes__route" viewBox="0 0 820 600" preserveAspectRatio="xMidYMid meet">
+                  <path d="M40 300 L 780 300" stroke="rgba(127,114,121,0.18)" stroke-width="1" fill="none" />
+                  <path d="M40 380 L 780 380" stroke="rgba(127,114,121,0.18)" stroke-width="1" fill="none" />
+                  <path class="routes__path" d="M40 340 C 200 340, 240 320, 380 320 S 540 360, 780 340" stroke="#9B8B95" stroke-width="2.6" fill="none" stroke-linecap="round" />
+                  <rect x="32" y="334" width="14" height="14" rx="2" fill="#9B8B95" />
+                  <rect x="240" y="314" width="10" height="10" rx="2" fill="rgba(155,139,149,0.75)" />
+                  <rect x="400" y="314" width="10" height="10" rx="2" fill="rgba(155,139,149,0.75)" />
+                  <rect x="560" y="354" width="10" height="10" rx="2" fill="rgba(155,139,149,0.75)" />
+                  <rect x="772" y="334" width="14" height="14" rx="2" fill="#9B8B95" />
+                </svg>
+              </div>
+              <div class="routes__copy">
+                <p class="routes__eyebrow">for every stage</p>
+                <h3 class="routes__title">Companies</h3>
+                <p class="routes__lead">We take care of the legal processes that each business needs, so you can scale and expand with&nbsp;confidence.</p>
+                <p class="routes__body">From commercial contracts to cross-border transactions and complex deals&nbsp;– we support operational, structural, and international growth at every&nbsp;stage.</p>
+                <a class="routes__cta" href="#contact">
+                  <span>read more</span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10M11 6l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </a>
+              </div>
+            </article>
 
-          <article class="team__card">
-            <div class="team__avatar" aria-hidden="true">DJ</div>
-            <div class="team__meta">
-              <h3>Dominika Jakuszewska</h3>
-              <p class="team__role">Associate</p>
-            </div>
-            <p class="team__bio">Transaction-focused associate advising on private M&amp;A, venture capital, and corporate matters, with strong emphasis on IP and technology. Supports clients through the entire transaction process&nbsp;— from due diligence to drafting and negotiating key agreements. Studied at Jagiellonian University, University of Warsaw, and Sciences Po Paris.</p>
-            <ul class="team__focus">
-              <li>Venture Capital</li>
-              <li>Corporate and Commercial Advisory</li>
-              <li>IP and Technology Transactions</li>
-              <li>Competition and Consumer Law</li>
-              <li>Due Diligence</li>
-              <li>M&amp;A and Transaction Support</li>
-            </ul>
-          </article>
-
-          <article class="team__card">
-            <div class="team__avatar" aria-hidden="true">WM</div>
-            <div class="team__meta">
-              <h3>Wojciech Młodawski</h3>
-              <p class="team__role">Associate</p>
-            </div>
-            <p class="team__bio">Transaction-focused associate combining legal expertise with a strong financial background and hands-on VC industry experience. Three+ years inside a VC fund (Arkley Brinc VC as COO &amp; Investment Manager), coordinating deals end-to-end. Previously at CMS and Greenberg Traurig. Degrees in Law, Business Administration, and Finance.</p>
-            <ul class="team__focus">
-              <li>Venture Capital</li>
-              <li>Corporate and Commercial Advisory</li>
-              <li>Due Diligence</li>
-              <li>M&amp;A and Transaction Support</li>
-              <li>Governance &amp; Commercial Advisory</li>
-            </ul>
-          </article>
-
-          <article class="team__card">
-            <div class="team__avatar" aria-hidden="true">AZ</div>
-            <div class="team__meta">
-              <h3>Anna Zięba</h3>
-              <p class="team__role">Tax Counsel</p>
-            </div>
-            <p class="team__bio">Tax counsel with over a decade of experience advising domestic and international clients on tax aspects of M&amp;A, financing, reorganisations, compensation structures, and cross-border operations. Author and speaker on tax matters. Previously at leading Polish law firms and PwC Warsaw. LL.M. from UC Berkeley School of Law.</p>
-            <ul class="team__focus">
-              <li>Tax support in M&amp;A transactions</li>
-              <li>Tax structuring of reorganisations</li>
-              <li>Management and employee compensation</li>
-              <li>Financial transactions tax advisory</li>
-              <li>MDR reporting, CRS &amp; FATCA compliance</li>
-            </ul>
-          </article>
+            <article class="routes__scene routes__scene--investors" role="tabpanel" id="route-panel-investors" aria-labelledby="route-tab-investors" data-scene="investors" hidden>
+              <div class="routes__bg" aria-hidden="true">
+                <span class="routes__ghost">INVESTORS</span>
+                <svg class="routes__route" viewBox="0 0 820 600" preserveAspectRatio="xMidYMid meet">
+                  <path class="routes__path" d="M40 460 L 200 460 L 280 380 L 480 380 L 560 280 L 780 280" stroke="#5B7AB0" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M280 380 L 360 320" stroke="rgba(91,122,176,0.45)" stroke-width="1" fill="none" stroke-dasharray="3 5" />
+                  <path d="M480 380 L 550 440" stroke="rgba(91,122,176,0.45)" stroke-width="1" fill="none" stroke-dasharray="3 5" />
+                  <circle cx="40" cy="460" r="6" fill="#5B7AB0" />
+                  <circle cx="200" cy="460" r="4" fill="rgba(91,122,176,0.85)" />
+                  <circle cx="280" cy="380" r="4" fill="rgba(91,122,176,0.85)" />
+                  <circle cx="480" cy="380" r="4" fill="rgba(91,122,176,0.85)" />
+                  <circle cx="560" cy="280" r="4" fill="rgba(91,122,176,0.85)" />
+                  <circle cx="780" cy="280" r="8" fill="#5B7AB0">
+                    <animate attributeName="r" values="8;10;8" dur="2.4s" repeatCount="indefinite" />
+                  </circle>
+                </svg>
+              </div>
+              <div class="routes__copy">
+                <p class="routes__eyebrow">for every stage</p>
+                <h3 class="routes__title">Investors</h3>
+                <p class="routes__lead">We structure, negotiate, and close deals so you can focus on sourcing opportunities and maximising&nbsp;value.</p>
+                <p class="routes__body">Partner with us to turn potential into performance&nbsp;– and investments into lasting&nbsp;returns.</p>
+                <a class="routes__cta" href="#contact">
+                  <span>read more</span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10M11 6l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </a>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
-      <section class="contact" id="contact" aria-label="Contact">
-        <div class="contact__inner">
-          <p class="eyebrow">contact</p>
-          <h2>Let's talk about your next&nbsp;move.</h2>
-          <p class="contact__lead">Whether you are forming your first company, preparing a round, or closing a deal&nbsp;— we are here to help you make it happen.</p>
-          <a class="contact__mail" href="mailto:hello@mostpartners.pl">hello@mostpartners.pl</a>
-          <p class="contact__meta">MOST Partners&nbsp;· Warsaw, Poland · serving clients across Europe, the US, and the UK</p>
+      <section class="basecamp" id="contact" aria-labelledby="basecamp-title">
+        <div class="basecamp__mark" aria-hidden="true">
+          <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+            <path d="M160 500 L 160 140 L 400 400 L 640 140 L 640 500" stroke="rgba(8,11,19,0.4)" stroke-width="86" fill="none" stroke-linejoin="miter" />
+          </svg>
         </div>
+
+        <div class="basecamp__inner">
+          <p class="basecamp__eyebrow">contact</p>
+          <h2 id="basecamp-title" class="basecamp__title">Want to Grow&nbsp;Together?</h2>
+          <a class="basecamp__cta" href="mailto:bemost@mostpartners.com">
+            <span>contact us</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10M11 6l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </a>
+        </div>
+
+        <svg class="basecamp__route" viewBox="0 0 1000 200" preserveAspectRatio="none" aria-hidden="true">
+          <path class="basecamp__route-path" d="M0 30 Q 240 70 480 110 T 940 170" stroke="rgba(240,235,233,0.42)" stroke-width="1.5" fill="none" stroke-linecap="round" />
+          <circle class="basecamp__route-point" cx="940" cy="170" r="7" fill="#ff612c" />
+        </svg>
       </section>
     </main>
+
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <div class="site-footer__top">
+          <div class="site-footer__brand">
+            <a class="wordmark" href="/" aria-label="MOST Partners home">
+              <svg class="wordmark__logo" viewBox="0 0 160 58" role="img" aria-label="MOST Partners">
+                <use href="#most-logo" />
+              </svg>
+            </a>
+            <p>Long-term partners in law and business.</p>
+          </div>
+
+          <nav class="site-footer__col" aria-label="Pages">
+            <p class="site-footer__col-title">Pages</p>
+            <ul>
+              <li><a href="#mission">About us</a></li>
+              <li><a href="#expertise">Our Expertise</a></li>
+              <li><a href="#for-you">Our Team</a></li>
+              <li><a href="#contact">Contact us</a></li>
+            </ul>
+          </nav>
+
+          <nav class="site-footer__col" aria-label="Segments">
+            <p class="site-footer__col-title">Segments</p>
+            <ul>
+              <li><a href="#for-you">For Founders</a></li>
+              <li><a href="#for-you">For Companies</a></li>
+              <li><a href="#for-you">For Investors</a></li>
+            </ul>
+          </nav>
+
+          <div class="site-footer__col">
+            <p class="site-footer__col-title">Contact</p>
+            <ul>
+              <li><a href="mailto:bemost@mostpartners.com">bemost@mostpartners.com</a></li>
+              <li>Bracka 20, 00-028 Warsaw, Poland</li>
+              <li><a class="site-footer__social" href="#" aria-label="LinkedIn"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 6h3v11H3V6Zm1.5-3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM8 6h3v1.5c.5-1 1.6-1.7 3-1.7 2.2 0 3 1.4 3 3.8V17h-3v-6c0-1.4-.4-2-1.4-2-1 0-1.6.7-1.6 2v6H8V6Z" fill="currentColor"/></svg></a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="site-footer__divider" aria-hidden="true"></div>
+
+        <div class="site-footer__bottom">
+          <ul class="site-footer__details">
+            <li>NIP: 5252975057</li>
+            <li>KRS: 0001061852</li>
+            <li>REGON: 526603932</li>
+          </ul>
+          <ul class="site-footer__legal">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms &amp; Conditions</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
 
     <div class="mobile-block" role="alertdialog" aria-modal="true" aria-labelledby="mobile-block-title">
       <div class="mobile-block__panel">

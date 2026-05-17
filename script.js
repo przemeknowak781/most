@@ -277,18 +277,12 @@ function updateScroll() {
   if (topNav) topNav.classList.toggle("is-scrolled", scrollY > 12);
 }
 
-function revealOnScroll() {
-  const groups = [
-    { selector: ".expertise__item", stagger: 60 },
-    { selector: ".hww__item", stagger: 80 },
-    { selector: ".about__block", stagger: 60 },
-    { selector: ".team__card", stagger: 60 },
-  ];
+function setupSectionReveal() {
+  const targets = document.querySelectorAll(".mission, .basecamp");
+  if (!targets.length) return;
 
   if (!("IntersectionObserver" in window)) {
-    groups.forEach(({ selector }) =>
-      document.querySelectorAll(selector).forEach((item) => item.classList.add("is-visible"))
-    );
+    targets.forEach((el) => el.classList.add("is-visible"));
     return;
   }
 
@@ -303,36 +297,126 @@ function revealOnScroll() {
     { threshold: 0.18 }
   );
 
-  groups.forEach(({ selector, stagger }) => {
-    const items = document.querySelectorAll(selector);
-    items.forEach((item, index) => {
-      if (stagger) item.style.transitionDelay = `${index * stagger}ms`;
-      observer.observe(item);
-    });
-  });
+  targets.forEach((el) => observer.observe(el));
 }
 
-function setupAudienceTabs() {
-  const tabs = Array.from(document.querySelectorAll(".audience__tab"));
-  const panels = Array.from(document.querySelectorAll(".audience__panel"));
-  if (!tabs.length || !panels.length) return;
+function setupMissionPhrases() {
+  const phrases = document.querySelectorAll(".mission__phrase");
+  if (!phrases.length) return;
 
-  function activate(targetTab) {
-    const target = targetTab.dataset.tab;
-    tabs.forEach((tab) => {
-      const isActive = tab === targetTab;
-      tab.setAttribute("aria-selected", String(isActive));
-      tab.setAttribute("tabindex", isActive ? "0" : "-1");
+  if (!("IntersectionObserver" in window)) {
+    phrases.forEach((p) => p.classList.add("is-visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.4 }
+  );
+
+  phrases.forEach((p) => observer.observe(p));
+}
+
+function setupRouteMap() {
+  const root = document.querySelector(".route-map");
+  if (!root) return;
+
+  const items = Array.from(root.querySelectorAll(".route-map__item"));
+  const nodes = Array.from(root.querySelectorAll(".route-map__node"));
+  const activeNum = root.querySelector("[data-active-num]");
+  const activeLabel = root.querySelector("[data-active-label]");
+
+  function activate(target) {
+    items.forEach((item) => {
+      const isActive = item.dataset.target === target;
+      item.classList.toggle("is-active", isActive);
+      item.setAttribute("aria-pressed", String(isActive));
+      if (isActive) {
+        if (activeNum) activeNum.textContent = item.querySelector(".route-map__item-num").textContent;
+        if (activeLabel) activeLabel.textContent = item.querySelector(".route-map__item-name").textContent;
+      }
     });
-    panels.forEach((panel) => {
-      const isActive = panel.dataset.panel === target;
-      panel.hidden = !isActive;
-      panel.classList.toggle("is-active", isActive);
+    nodes.forEach((node) => {
+      node.classList.toggle("is-active", node.dataset.node === target);
     });
   }
 
+  items.forEach((item) => {
+    item.addEventListener("click", () => activate(item.dataset.target));
+    item.addEventListener("focus", () => activate(item.dataset.target));
+  });
+
+  nodes.forEach((node) => {
+    node.addEventListener("click", () => {
+      const target = node.dataset.node;
+      activate(target);
+      const matchingItem = items.find((i) => i.dataset.target === target);
+      if (matchingItem) matchingItem.focus();
+    });
+  });
+
+  // Auto-cycle while section is in view (subtle scroll-driven progression)
+  if ("IntersectionObserver" in window) {
+    let cycleIndex = 0;
+    let cycleTimer = 0;
+    const cycleObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !cycleTimer) {
+            cycleTimer = window.setInterval(() => {
+              cycleIndex = (cycleIndex + 1) % items.length;
+              activate(items[cycleIndex].dataset.target);
+            }, 3200);
+          } else if (!entry.isIntersecting && cycleTimer) {
+            window.clearInterval(cycleTimer);
+            cycleTimer = 0;
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+    cycleObserver.observe(root);
+  }
+}
+
+function setupRoutesSwitcher() {
+  const tabs = Array.from(document.querySelectorAll(".routes__tab"));
+  const scenes = Array.from(document.querySelectorAll(".routes__scene"));
+  const section = document.querySelector(".routes");
+  if (!tabs.length || !scenes.length || !section) return;
+
+  function activate(target) {
+    tabs.forEach((tab) => {
+      const isActive = tab.dataset.route === target;
+      tab.classList.toggle("is-active", isActive);
+      tab.setAttribute("aria-selected", String(isActive));
+      tab.setAttribute("tabindex", isActive ? "0" : "-1");
+    });
+    scenes.forEach((scene) => {
+      const isActive = scene.dataset.scene === target;
+      scene.hidden = !isActive;
+      scene.classList.toggle("is-active", isActive);
+      if (isActive) {
+        // Restart animation by re-toggling
+        const path = scene.querySelector(".routes__path");
+        if (path) {
+          path.style.animation = "none";
+          path.getBoundingClientRect();
+          path.style.animation = "";
+        }
+      }
+    });
+    section.className = section.className.replace(/routes--\w+/g, "").trim() + ` routes--${target}`;
+  }
+
   tabs.forEach((tab) => {
-    tab.addEventListener("click", () => activate(tab));
+    tab.addEventListener("click", () => activate(tab.dataset.route));
     tab.addEventListener("keydown", (event) => {
       if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
       event.preventDefault();
@@ -340,9 +424,36 @@ function setupAudienceTabs() {
       const currentIndex = tabs.indexOf(tab);
       const nextIndex = (currentIndex + direction + tabs.length) % tabs.length;
       tabs[nextIndex].focus();
-      activate(tabs[nextIndex]);
+      activate(tabs[nextIndex].dataset.route);
     });
   });
+
+  // Initialize accent
+  const initial = tabs.find((t) => t.classList.contains("is-active")) || tabs[0];
+  if (initial) {
+    section.classList.add(`routes--${initial.dataset.route}`);
+  }
+}
+
+function setupTransitionMarker() {
+  const marker = document.querySelector(".transition-marker");
+  if (!marker) return;
+  const active = marker.querySelector(".transition-marker__active");
+  const head = marker.querySelector(".transition-marker__head");
+  if (!active || !head) return;
+
+  function update() {
+    const rect = marker.getBoundingClientRect();
+    const vh = window.innerHeight || 1;
+    const progress = Math.min(1, Math.max(0, (vh - rect.top) / (vh + rect.height)));
+    const x = Math.round(progress * 1200);
+    active.setAttribute("x2", String(x));
+    head.setAttribute("cx", String(x));
+  }
+
+  update();
+  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update, { passive: true });
 }
 
 function setupMobileMenu() {
@@ -406,8 +517,11 @@ if (document.fonts) {
 }
 
 updateScroll();
-revealOnScroll();
+setupSectionReveal();
+setupMissionPhrases();
+setupRouteMap();
+setupRoutesSwitcher();
+setupTransitionMarker();
 setupMobileMenu();
-setupAudienceTabs();
 setupHeroTrail();
 window.addEventListener("load", () => scheduleTrailOverlay(true));
