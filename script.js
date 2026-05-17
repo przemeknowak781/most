@@ -331,6 +331,8 @@ function setupRouteMap() {
   const nodes = Array.from(root.querySelectorAll(".route-map__node"));
   const activeNum = root.querySelector("[data-active-num]");
   const activeLabel = root.querySelector("[data-active-label]");
+  const detailDesc = root.querySelector("[data-detail-desc]");
+  const detailList = root.querySelector("[data-detail-list]");
 
   function activate(target) {
     items.forEach((item) => {
@@ -340,6 +342,17 @@ function setupRouteMap() {
       if (isActive) {
         if (activeNum) activeNum.textContent = item.querySelector(".route-map__item-num").textContent;
         if (activeLabel) activeLabel.textContent = item.querySelector(".route-map__item-name").textContent;
+        if (detailDesc && item.dataset.desc) {
+          detailDesc.textContent = item.dataset.desc;
+        }
+        if (detailList && item.dataset.list) {
+          while (detailList.firstChild) detailList.removeChild(detailList.firstChild);
+          item.dataset.list.split("|").forEach((entry) => {
+            const li = document.createElement("li");
+            li.textContent = entry.trim();
+            detailList.appendChild(li);
+          });
+        }
       }
     });
     nodes.forEach((node) => {
