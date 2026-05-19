@@ -1135,25 +1135,25 @@ body.menu-open {
   isolation: isolate;
 }
 
-.aboutfold::before {
+.aboutfold__sticky::before {
   content: "";
   position: absolute;
   inset: 0;
   background-image: url("background.webp");
   background-size: cover;
-  background-position: center calc(30% + var(--aboutfold-progress, 0) * 22%);
+  background-position: center calc(38% + var(--aboutfold-progress, 0) * 18%);
   background-repeat: no-repeat;
-  opacity: 0.085;
+  opacity: 0.09;
   mix-blend-mode: multiply;
-  filter: saturate(0.7);
+  filter: saturate(0.65);
   pointer-events: none;
   z-index: -1;
   will-change: background-position;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .aboutfold::before {
-    background-position: center 40%;
+  .aboutfold__sticky::before {
+    background-position: center 45%;
   }
 }
 
