@@ -1450,7 +1450,7 @@ body.menu-open {
 }
 
 .aboutfold__pattern-cut {
-  fill: #F0EBE9;
+  fill: #E2DBD6;
 }
 
 .aboutfold__pattern-path {
@@ -2355,9 +2355,10 @@ body.menu-open {
   z-index: 2;
   max-width: 1360px;
   margin: 0 auto;
+  transform: translateY(clamp(-44px, -4.5vh, -24px));
   display: grid;
   grid-template-columns: minmax(240px, 0.62fr) repeat(3, minmax(0, 1fr));
-  grid-template-rows: clamp(112px, 13vh, 168px) 1fr;
+  grid-template-rows: clamp(76px, 8.5vh, 112px) 1fr;
   column-gap: clamp(16px, 2vw, 28px);
   row-gap: 0;
   align-items: stretch;
@@ -2697,6 +2698,7 @@ body.menu-open {
   .audience-intro__grid {
     grid-template-columns: 1fr;
     row-gap: 32px;
+    transform: none;
   }
   .audience-intro__head {
     grid-column: 1 / -1;
