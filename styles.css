@@ -125,13 +125,29 @@ a {
 }
 
 .top-nav__menu {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
-  gap: clamp(22px, 3vw, 40px);
+  gap: clamp(20px, 2.6vw, 36px);
+}
+
+.top-nav__menu--left {
+  margin-left: clamp(28px, 4vw, 60px);
+}
+
+.top-nav__menu--right {
+  margin-left: auto;
+  margin-right: clamp(20px, 2.4vw, 32px);
+}
+
+.top-nav__menu--right a {
+  font-size: 13px;
+  color: var(--light-60);
+  letter-spacing: 0.06em;
+}
+
+.top-nav__menu--right a:hover,
+.top-nav__menu--right a:focus-visible {
+  color: var(--light);
 }
 
 .top-nav__menu a {
@@ -168,7 +184,7 @@ a {
 }
 
 .top-nav .nav-cta {
-  margin-left: auto;
+  margin-left: 0;
 }
 
 .nav-cta,
@@ -2309,56 +2325,205 @@ body.menu-open {
 }
 
 .preview {
+  --accent: rgba(255, 168, 110, 0.85);
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding: clamp(28px, 4vh, 44px);
+  gap: 14px;
+  padding: clamp(24px, 3vh, 36px) clamp(22px, 2.4vw, 32px) clamp(64px, 6vh, 80px);
   background: linear-gradient(180deg, rgba(240, 235, 233, 0.04), rgba(240, 235, 233, 0.01));
   border: 1px solid rgba(240, 235, 233, 0.1);
   border-radius: 16px;
   color: var(--light);
-  text-decoration: none;
-  transition: border-color 320ms ease, transform 320ms ease, background 320ms ease;
+  transition: border-color 320ms ease, background 320ms ease;
 }
 
-.preview:hover {
-  transform: translateY(-6px);
+.preview--founders { --accent: #D17E5F; }
+.preview--companies { --accent: #9B8B95; }
+.preview--investors { --accent: #5B7AB0; }
+
+.preview:hover,
+.preview.is-expanded {
+  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
   background: linear-gradient(180deg, rgba(240, 235, 233, 0.07), rgba(240, 235, 233, 0.02));
 }
 
-.preview--founders:hover { border-color: rgba(209, 126, 95, 0.6); }
-.preview--companies:hover { border-color: rgba(155, 139, 149, 0.6); }
-.preview--investors:hover { border-color: rgba(91, 122, 176, 0.6); }
+.preview__head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
 .preview__num {
-  color: rgba(255, 168, 110, 0.65);
+  color: var(--accent);
   font: 500 11px / 1 "Montserrat", system-ui, sans-serif;
   letter-spacing: 0.28em;
 }
 
-.preview--founders .preview__num { color: rgba(209, 126, 95, 0.95); }
-.preview--companies .preview__num { color: rgba(155, 139, 149, 0.95); }
-.preview--investors .preview__num { color: rgba(91, 122, 176, 0.95); }
-
 .preview__route {
   width: 100%;
   height: auto;
-  max-height: 110px;
-  margin: 4px 0 8px;
+  max-height: 96px;
+  margin: 0 0 4px;
 }
 
 .preview__name {
   margin: 0;
   color: var(--light);
-  font: 500 clamp(24px, 2.4vw, 34px) / 1 "Urbanist", system-ui, sans-serif;
+  font: 500 clamp(22px, 2.2vw, 30px) / 1.05 "Urbanist", system-ui, sans-serif;
   letter-spacing: -0.005em;
 }
 
 .preview__hint {
   margin: 0;
   color: var(--light-60);
-  font: italic 400 14px / 1.4 "Outfit", system-ui, sans-serif;
+  font: italic 400 13.5px / 1.4 "Outfit", system-ui, sans-serif;
+}
+
+.preview__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  margin: 0;
+  transition: grid-template-rows 420ms cubic-bezier(0.22, 1, 0.36, 1), opacity 280ms ease, margin 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.preview__body > * {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.preview.is-expanded .preview__body {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 6px;
+}
+
+.preview__copy {
+  margin: 0 0 14px;
+  color: rgba(240, 235, 233, 0.78);
+  font: 400 13.5px / 1.55 "Outfit", system-ui, sans-serif;
+  text-wrap: pretty;
+}
+
+.preview__list {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  padding-top: 14px;
+}
+
+.preview__list li {
+  position: relative;
+  padding-left: 18px;
+  color: rgba(240, 235, 233, 0.75);
+  font: 400 13px / 1.5 "Outfit", system-ui, sans-serif;
+}
+
+.preview__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 8px;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.75;
+}
+
+.preview__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--light);
+  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 4px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  transition: color 240ms ease, border-color 240ms ease, transform 240ms ease;
+  align-self: flex-start;
+}
+
+.preview__cta svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 240ms ease;
+}
+
+.preview__cta:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.preview__cta:hover svg {
+  transform: translateX(4px);
+}
+
+.preview__toggle {
+  position: absolute;
+  left: clamp(22px, 2.4vw, 32px);
+  right: clamp(22px, 2.4vw, 32px);
+  bottom: clamp(20px, 2.4vh, 28px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0 0;
+  border-top: 1px solid rgba(240, 235, 233, 0.12);
+  background: transparent;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+  color: var(--light-60);
+  font: 500 11px / 1 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 240ms ease;
+}
+
+.preview__toggle:hover {
+  color: var(--light);
+}
+
+.preview__toggle-icon {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.preview__toggle-icon::before,
+.preview__toggle-icon::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+  transition: transform 280ms ease;
+}
+
+.preview__toggle-icon::before {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+.preview__toggle-icon::after {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  transform: translateX(-50%);
+}
+
+.preview.is-expanded .preview__toggle-icon::after {
+  transform: translateX(-50%) scaleY(0);
 }
 
 @media (max-width: 860px) {

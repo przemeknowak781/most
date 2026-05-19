@@ -463,6 +463,25 @@ if (document.fonts) {
   document.fonts.ready.then(() => scheduleTrailOverlay(true));
 }
 
+function setupAudienceTriptych() {
+  const root = document.querySelector("[data-audience-triptych]");
+  if (!root) return;
+  const cards = Array.from(root.querySelectorAll("[data-audience-card]"));
+  if (!cards.length) return;
+
+  cards.forEach((card) => {
+    const toggle = card.querySelector("[data-audience-toggle]");
+    if (!toggle) return;
+    toggle.addEventListener("click", (e) => {
+      e.preventDefault();
+      const expanded = card.classList.toggle("is-expanded");
+      toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+      const label = toggle.querySelector(".preview__toggle-label");
+      if (label) label.textContent = expanded ? "show less" : "read more";
+    });
+  });
+}
+
 function setupAboutfold() {
   const section = document.querySelector(".aboutfold");
   if (!section) return;
@@ -817,5 +836,6 @@ setupRouteMap();
 setupTransitionMarker();
 setupMobileMenu();
 setupHeroTrail();
+setupAudienceTriptych();
 setupAboutfold();
 window.addEventListener("load", () => scheduleTrailOverlay(true));
