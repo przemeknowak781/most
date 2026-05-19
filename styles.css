@@ -3386,10 +3386,29 @@ body.menu-open {
 
 /* ---------- SITE FOOTER ---------- */
 
+.footer-ridge {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--navy);
+  line-height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.footer-ridge img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: -1px;
+  user-select: none;
+}
+
 .site-footer {
   position: relative;
   background: var(--navy);
-  padding: clamp(72px, 9vh, 120px) var(--container-x) clamp(40px, 5vh, 64px);
+  padding: clamp(24px, 4vh, 48px) var(--container-x) clamp(40px, 5vh, 64px);
   overflow: hidden;
 }
 
