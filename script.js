@@ -278,7 +278,7 @@ function updateScroll() {
 }
 
 function setupSectionReveal() {
-  const targets = document.querySelectorAll(".mission, .basecamp, .route-stage");
+  const targets = document.querySelectorAll(".basecamp, .route-stage");
   if (!targets.length) return;
 
   if (!("IntersectionObserver" in window)) {
@@ -298,29 +298,6 @@ function setupSectionReveal() {
   );
 
   targets.forEach((el) => observer.observe(el));
-}
-
-function setupMissionPhrases() {
-  const phrases = document.querySelectorAll(".mission__phrase");
-  if (!phrases.length) return;
-
-  if (!("IntersectionObserver" in window)) {
-    phrases.forEach((p) => p.classList.add("is-visible"));
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add("is-visible");
-        observer.unobserve(entry.target);
-      });
-    },
-    { threshold: 0.4 }
-  );
-
-  phrases.forEach((p) => observer.observe(p));
 }
 
 function setupRouteMap() {
@@ -482,7 +459,6 @@ if (document.fonts) {
 
 updateScroll();
 setupSectionReveal();
-setupMissionPhrases();
 setupRouteMap();
 setupTransitionMarker();
 setupMobileMenu();
