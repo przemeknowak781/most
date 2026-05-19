@@ -967,260 +967,827 @@ body.menu-open {
   }
 }
 
-/* ---------- CHAPTER (narrative beats) ---------- */
+/* ============================================================
+   DISTINCT NARRATIVE SECTIONS
+   Each chapter has its own layout personality.
+   ============================================================ */
 
-.chapter {
+/* ---------- 1. BRAND INTRO — editorial split with monogram ---------- */
+
+.brand-intro {
   position: relative;
   isolation: isolate;
-  padding: clamp(110px, 14vh, 180px) var(--container-x);
-  background: linear-gradient(180deg, #07090f 0%, #0a0d18 100%);
+  display: grid;
+  grid-template-columns: minmax(0, 0.44fr) minmax(0, 0.56fr);
+  align-items: center;
+  gap: clamp(40px, 6vw, 96px);
+  min-height: 88svh;
+  padding: clamp(120px, 18vh, 200px) var(--container-x);
+  background:
+    radial-gradient(900px 600px at 16% 24%, rgba(255, 97, 44, 0.18), transparent 70%),
+    linear-gradient(180deg, var(--navy-deep) 0%, #050810 100%);
   overflow: hidden;
 }
 
-.chapter--intro {
-  background:
-    radial-gradient(960px 640px at 14% 18%, rgba(255, 97, 44, 0.16), transparent 70%),
-    linear-gradient(180deg, var(--navy-deep) 0%, #07090f 100%);
+.brand-intro__monogram {
+  position: relative;
+  display: grid;
+  place-items: center;
+  font: 600 clamp(220px, 30vw, 460px) / 0.78 "Urbanist", system-ui, sans-serif;
+  letter-spacing: -0.04em;
+  background: linear-gradient(160deg, rgba(255, 176, 119, 0.42), rgba(255, 97, 44, 0.18) 60%, rgba(8, 11, 19, 0.12));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  user-select: none;
 }
 
-.chapter--metrics {
-  background:
-    radial-gradient(900px 600px at 86% 14%, rgba(255, 97, 44, 0.16), transparent 70%),
-    radial-gradient(700px 480px at 8% 88%, rgba(48, 62, 89, 0.18), transparent 72%),
-    linear-gradient(180deg, #0a0d18 0%, #070912 100%);
-}
-
-.chapter--mission {
-  background:
-    radial-gradient(900px 600px at 92% 90%, rgba(255, 176, 119, 0.14), transparent 70%),
-    linear-gradient(180deg, #070912 0%, #050810 100%);
-}
-
-.chapter--overview {
-  background:
-    linear-gradient(180deg, #0a0d18 0%, #07090f 100%);
-}
-
-.chapter--audience-intro {
-  background:
-    radial-gradient(960px 620px at 50% 12%, rgba(255, 97, 44, 0.18), transparent 70%),
-    linear-gradient(180deg, #070912 0%, #161822 100%);
-}
-
-.chapter__rail {
-  position: absolute;
-  top: clamp(80px, 12vh, 140px);
-  bottom: clamp(80px, 12vh, 140px);
-  left: clamp(40px, 6vw, 96px);
-  width: 1px;
-  background: linear-gradient(180deg, transparent, rgba(255, 97, 44, 0.45), rgba(255, 176, 119, 0.32), transparent);
-  z-index: 0;
-}
-
-.chapter__rail::before,
-.chapter__rail::after {
+.brand-intro__monogram::after {
   content: "";
   position: absolute;
-  left: -4px;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--orange);
-  box-shadow: 0 0 14px rgba(255, 97, 44, 0.6);
+  left: 0;
+  right: 0;
+  bottom: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 97, 44, 0.55), transparent);
+  filter: drop-shadow(0 0 12px rgba(255, 97, 44, 0.5));
 }
 
-.chapter__rail::before { top: -4px; }
-.chapter__rail::after { bottom: -4px; }
+.brand-intro__index {
+  position: absolute;
+  top: clamp(120px, 16vh, 180px);
+  right: clamp(40px, 5vw, 80px);
+  color: rgba(240, 235, 233, 0.4);
+  font: 500 12px / 1 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-.chapter__inner {
+.brand-intro__index span {
+  color: var(--orange);
+  font: 500 18px / 1 "Urbanist", system-ui, sans-serif;
+  letter-spacing: 0;
+}
+
+.brand-intro__copy {
   position: relative;
   z-index: 1;
-  max-width: 960px;
-  margin: 0 auto;
-  padding-left: clamp(0px, 8vw, 120px);
+  max-width: 620px;
 }
 
-.chapter--audience-intro .chapter__inner,
-.chapter--overview .chapter__inner {
-  text-align: center;
-  padding-left: 0;
-  max-width: 1080px;
-}
-
-.chapter__eyebrow {
-  display: inline-block;
-  margin: 0 0 24px;
-  color: rgba(255, 168, 110, 0.82);
+.brand-intro__eyebrow {
+  margin: 0 0 28px;
+  color: rgba(255, 168, 110, 0.78);
   font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
 }
 
-.chapter__step {
-  margin: 0 0 24px;
-  color: rgba(255, 168, 110, 0.75);
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-}
-
-.chapter__title {
-  margin: 0 0 32px;
+.brand-intro__title {
+  margin: 0 0 40px;
   color: var(--light);
-  font: 500 clamp(32px, 4.4vw, 56px) / 1.08 "Urbanist", system-ui, sans-serif;
+  font: 500 clamp(34px, 4.6vw, 64px) / 1.06 "Urbanist", system-ui, sans-serif;
   letter-spacing: -0.005em;
   text-wrap: balance;
 }
 
-.chapter__title--display {
-  font-size: clamp(36px, 5.2vw, 72px);
-  line-height: 1.04;
+.brand-intro__title br {
+  display: block;
 }
 
-.chapter__lede {
-  max-width: 720px;
+.brand-intro__lede {
   margin: 0 0 24px;
+  padding-left: clamp(20px, 2vw, 32px);
+  border-left: 2px solid rgba(255, 97, 44, 0.55);
   color: rgba(240, 235, 233, 0.84);
-  font: 400 clamp(17px, 1.4vw, 22px) / 1.5 "Outfit", system-ui, sans-serif;
+  font: 400 clamp(17px, 1.3vw, 21px) / 1.5 "Outfit", system-ui, sans-serif;
   text-wrap: pretty;
 }
 
-.chapter--audience-intro .chapter__lede,
-.chapter--overview .chapter__lede {
-  margin-inline: auto;
+.brand-intro__signature {
+  margin: 0;
+  color: var(--light-60);
+  font: italic 400 clamp(15px, 1.1vw, 17px) / 1.6 "Outfit", system-ui, sans-serif;
+  text-wrap: pretty;
+  max-width: 540px;
 }
 
-.chapter__body {
-  max-width: 680px;
-  margin: 0 0 20px;
+@media (max-width: 1024px) {
+  .brand-intro {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    min-height: auto;
+  }
+  .brand-intro__monogram {
+    font-size: clamp(180px, 38vw, 320px);
+    height: 240px;
+    align-self: start;
+  }
+}
+
+/* ---------- 2. PERSPECTIVE — editorial pull-quote ---------- */
+
+.perspective {
+  position: relative;
+  padding: clamp(120px, 18vh, 220px) var(--container-x);
+  background:
+    radial-gradient(800px 500px at 50% 30%, rgba(48, 62, 89, 0.32), transparent 70%),
+    linear-gradient(180deg, #050810 0%, #070912 100%);
+  overflow: hidden;
+  text-align: center;
+}
+
+.perspective__frame {
+  position: absolute;
+  inset: clamp(80px, 12vh, 140px) clamp(8%, 12vw, 18%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.perspective__quote {
+  position: absolute;
+  color: rgba(255, 97, 44, 0.16);
+  font: 600 clamp(160px, 22vw, 320px) / 0.5 "Urbanist", system-ui, sans-serif;
+  letter-spacing: -0.04em;
+  user-select: none;
+}
+
+.perspective__quote--open {
+  top: 0;
+  left: 0;
+}
+
+.perspective__quote--close {
+  bottom: 0;
+  right: 0;
+}
+
+.perspective__step {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 32px;
+  color: rgba(240, 235, 233, 0.5);
+  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+.perspective__step span {
+  color: var(--orange);
+  font-family: "Urbanist", system-ui, sans-serif;
+  font-size: 14px;
+  letter-spacing: 0;
+  margin-right: 8px;
+}
+
+.perspective__title {
+  position: relative;
+  z-index: 1;
+  max-width: 880px;
+  margin: 0 auto clamp(48px, 7vh, 80px);
+  color: var(--light);
+  font: italic 500 clamp(34px, 5vw, 68px) / 1.08 "Urbanist", system-ui, sans-serif;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+
+.perspective__pillars {
+  position: relative;
+  z-index: 1;
+  max-width: 880px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 4vw, 64px);
+  text-align: left;
+}
+
+.perspective__pillars p {
+  margin: 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 168, 110, 0.3);
   color: var(--light-80);
   font: 400 clamp(15px, 1.15vw, 17px) / 1.65 "Outfit", system-ui, sans-serif;
   text-wrap: pretty;
 }
 
-.chapter__body:last-child {
-  margin-bottom: 0;
+.perspective__pillars p::first-line {
+  color: var(--light);
 }
 
-/* metrics inside chapter--metrics */
+.perspective__triangulation {
+  position: relative;
+  z-index: 1;
+  max-width: 400px;
+  margin: clamp(48px, 7vh, 80px) auto 0;
+}
 
-.metrics {
+.perspective__triangulation svg {
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 720px) {
+  .perspective__pillars {
+    grid-template-columns: 1fr;
+  }
+  .perspective__quote {
+    font-size: clamp(120px, 28vw, 200px);
+  }
+}
+
+/* ---------- 3. TRACK RECORD — numbers AS the layout ---------- */
+
+.track-record {
+  position: relative;
+  padding: clamp(120px, 16vh, 200px) var(--container-x);
+  background:
+    radial-gradient(900px 600px at 84% 18%, rgba(255, 97, 44, 0.16), transparent 70%),
+    radial-gradient(700px 480px at 10% 86%, rgba(48, 62, 89, 0.2), transparent 72%),
+    linear-gradient(180deg, #070912 0%, #050810 50%, #0a0d18 100%);
+  overflow: hidden;
+}
+
+.track-record__head {
+  max-width: 1280px;
+  margin: 0 auto clamp(60px, 9vh, 100px);
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(20px, 3vw, 40px);
-  margin: clamp(40px, 6vh, 64px) 0 clamp(32px, 5vh, 48px);
-  padding: clamp(28px, 4vh, 44px) clamp(28px, 4vw, 48px);
-  background: rgba(240, 235, 233, 0.035);
-  border: 1px solid rgba(240, 235, 233, 0.08);
-  border-radius: 14px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: end;
 }
 
-.metrics__item {
+.track-record__step {
+  margin: 0;
+  color: rgba(255, 168, 110, 0.78);
+  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+.track-record__step span {
+  color: var(--orange);
+  font-family: "Urbanist", system-ui, sans-serif;
+  font-size: 14px;
+  letter-spacing: 0;
+  margin-right: 8px;
+}
+
+.track-record__title {
+  margin: 16px 0 0;
+  color: var(--light);
+  font: 500 clamp(36px, 4.6vw, 60px) / 1.04 "Urbanist", system-ui, sans-serif;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+
+.track-record__lede {
+  margin: 0;
+  color: rgba(240, 235, 233, 0.74);
+  font: 400 clamp(16px, 1.2vw, 19px) / 1.55 "Outfit", system-ui, sans-serif;
+  text-wrap: pretty;
+}
+
+.track-record__numbers {
+  max-width: 1380px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 1.1fr 1fr;
+  gap: 0;
+  border-top: 1px solid rgba(255, 168, 110, 0.32);
+  border-bottom: 1px solid rgba(255, 168, 110, 0.32);
+}
+
+.big-stat {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
+  padding: clamp(40px, 6vh, 72px) clamp(20px, 3vw, 40px);
 }
 
-.metrics__num {
+.big-stat:not(:last-child) {
+  border-right: 1px solid rgba(255, 168, 110, 0.18);
+}
+
+.big-stat__num {
   margin: 0;
   color: var(--light);
-  font: 500 clamp(40px, 5vw, 72px) / 0.95 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.015em;
+  font: 500 clamp(72px, 11vw, 180px) / 0.86 "Urbanist", system-ui, sans-serif;
+  letter-spacing: -0.025em;
 }
 
-.metrics__num span {
+.big-stat__num--word {
+  font-size: clamp(48px, 7vw, 100px);
+  line-height: 0.94;
+}
+
+.big-stat__num span {
+  display: inline-block;
   color: rgba(255, 168, 110, 0.85);
-  font-size: 0.42em;
+  font-size: 0.36em;
   margin-left: 6px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  vertical-align: 0.6em;
+  letter-spacing: 0;
   font-weight: 500;
 }
 
-.metrics__label {
+.big-stat__num--word span {
+  display: block;
+  font-size: 0.36em;
+  margin-left: 0;
+  vertical-align: baseline;
+  color: rgba(240, 235, 233, 0.5);
+  letter-spacing: 0.04em;
+}
+
+.big-stat__label {
   margin: 0;
-  color: var(--light-60);
-  font: 500 12px / 1.3 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.16em;
+  color: var(--light);
+  font: 500 13px / 1.35 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
-@media (max-width: 860px) {
-  .metrics {
+.big-stat__copy {
+  margin: 0;
+  color: var(--light-60);
+  font: 400 14px / 1.55 "Outfit", system-ui, sans-serif;
+  max-width: 280px;
+}
+
+.track-record__foot {
+  max-width: 760px;
+  margin: clamp(48px, 7vh, 88px) 0 0;
+  padding-left: clamp(20px, 3vw, 48px);
+  border-left: 2px solid rgba(255, 97, 44, 0.55);
+}
+
+.track-record__foot p {
+  margin: 0;
+  color: var(--light-80);
+  font: 400 clamp(16px, 1.2vw, 18px) / 1.65 "Outfit", system-ui, sans-serif;
+  text-wrap: pretty;
+}
+
+@media (max-width: 1024px) {
+  .track-record__head {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 16px;
+    align-items: start;
   }
-  .chapter__inner {
-    padding-left: 0;
+  .track-record__numbers {
+    grid-template-columns: 1fr;
+  }
+  .big-stat:not(:last-child) {
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 168, 110, 0.18);
   }
 }
 
-/* overview list (six expertise areas) */
+/* ---------- 4. PHILOSOPHY — staggered overlapping cards ---------- */
 
-.overview-list {
-  list-style: none;
-  margin: clamp(40px, 6vh, 64px) auto 0;
-  padding: 0;
-  max-width: 720px;
+.philosophy {
+  position: relative;
+  padding: clamp(120px, 16vh, 200px) var(--container-x);
+  background:
+    radial-gradient(900px 600px at 50% 110%, rgba(255, 97, 44, 0.16), transparent 70%),
+    linear-gradient(180deg, #0a0d18 0%, #070912 100%);
+  overflow: hidden;
+}
+
+.philosophy__head {
+  max-width: 1180px;
+  margin: 0 auto clamp(56px, 8vh, 96px);
+  text-align: center;
+}
+
+.philosophy__step {
+  margin: 0 0 24px;
+  color: rgba(255, 168, 110, 0.78);
+  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+.philosophy__step span {
+  color: var(--orange);
+  font-family: "Urbanist", system-ui, sans-serif;
+  font-size: 14px;
+  letter-spacing: 0;
+  margin-right: 8px;
+}
+
+.philosophy__title {
+  margin: 0;
+  color: var(--light);
+  font: 500 clamp(36px, 5vw, 64px) / 1.04 "Urbanist", system-ui, sans-serif;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+
+.philosophy__stack {
+  position: relative;
+  max-width: 980px;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px 32px;
+  grid-template-columns: 1fr;
+  gap: clamp(20px, 3vh, 36px);
+}
+
+.philosophy__card {
+  position: relative;
+  max-width: 600px;
+  padding: clamp(32px, 4vh, 48px) clamp(32px, 4vw, 56px);
+  background: linear-gradient(160deg, rgba(240, 235, 233, 0.06), rgba(240, 235, 233, 0.02));
+  border: 1px solid rgba(240, 235, 233, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(22px);
+  box-shadow: 0 32px 80px rgba(4, 6, 12, 0.32);
+}
+
+.philosophy__card--a {
+  justify-self: start;
+}
+
+.philosophy__card--b {
+  justify-self: end;
+  background: linear-gradient(160deg, rgba(255, 97, 44, 0.16), rgba(255, 97, 44, 0.04));
+  border-color: rgba(255, 168, 110, 0.38);
+}
+
+.philosophy__card--c {
+  justify-self: center;
+}
+
+.philosophy__card-tag {
+  display: inline-block;
+  margin: 0 0 14px;
+  color: rgba(255, 168, 110, 0.85);
+  font: italic 400 13px / 1.2 "Outfit", system-ui, sans-serif;
+}
+
+.philosophy__card p {
+  margin: 0;
+  color: var(--light);
+  font: 500 clamp(20px, 1.8vw, 26px) / 1.35 "Urbanist", system-ui, sans-serif;
+  letter-spacing: -0.005em;
+}
+
+.philosophy__card--b p {
+  color: var(--light);
+}
+
+@media (max-width: 720px) {
+  .philosophy__card {
+    max-width: 100%;
+  }
+  .philosophy__card--a,
+  .philosophy__card--b,
+  .philosophy__card--c {
+    justify-self: stretch;
+  }
+}
+
+/* ---------- 5. MANIFESTO — two-column with center divider ---------- */
+
+.manifesto {
+  position: relative;
+  padding: clamp(120px, 18vh, 220px) var(--container-x);
+  background:
+    radial-gradient(900px 600px at 92% 90%, rgba(255, 176, 119, 0.14), transparent 70%),
+    linear-gradient(180deg, #070912 0%, #0a0d18 100%);
+  overflow: hidden;
+  text-align: center;
+}
+
+.manifesto__step {
+  margin: 0 0 28px;
+  color: rgba(255, 168, 110, 0.78);
+  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+.manifesto__step span {
+  color: var(--orange);
+  font-family: "Urbanist", system-ui, sans-serif;
+  font-size: 14px;
+  letter-spacing: 0;
+  margin-right: 8px;
+}
+
+.manifesto__title {
+  margin: 0 auto clamp(64px, 9vh, 112px);
+  max-width: 1080px;
+  color: var(--light);
+  font: 500 clamp(36px, 5.6vw, 72px) / 1.02 "Urbanist", system-ui, sans-serif;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+
+.manifesto__split {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: clamp(40px, 6vw, 96px);
+  align-items: stretch;
   text-align: left;
 }
 
-.overview-list li {
+.manifesto__col {
   display: flex;
-  align-items: baseline;
-  gap: 14px;
-  padding: 14px 0;
-  border-bottom: 1px solid rgba(240, 235, 233, 0.08);
-  color: var(--light);
-  font: 500 clamp(15px, 1.2vw, 18px) / 1.3 "Urbanist", system-ui, sans-serif;
+  flex-direction: column;
+  gap: 18px;
 }
 
-.overview-list li span {
+.manifesto__col--right {
+  text-align: right;
+}
+
+.manifesto__col-label {
+  margin: 0 0 8px;
   color: rgba(255, 168, 110, 0.85);
-  font: 500 12px / 1 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.16em;
+  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
 }
 
-/* audience-nav (jump anchors in audience-intro chapter) */
-
-.audience-nav {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: clamp(16px, 3vw, 40px);
-  margin-top: clamp(40px, 6vh, 64px);
+.manifesto__col p {
+  margin: 0;
+  color: var(--light-80);
+  font: 400 clamp(15px, 1.2vw, 18px) / 1.6 "Outfit", system-ui, sans-serif;
+  text-wrap: pretty;
 }
 
-.audience-nav a {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 10px;
-  padding: 12px 22px;
-  border: 1px solid rgba(240, 235, 233, 0.18);
-  border-radius: 999px;
+.manifesto__col--right p {
+  margin-left: auto;
+}
+
+.manifesto__divider {
+  position: relative;
+  width: 1px;
+  align-self: stretch;
+  background: linear-gradient(180deg, transparent, rgba(255, 97, 44, 0.6) 30%, rgba(255, 176, 119, 0.4) 70%, transparent);
+}
+
+.manifesto__divider-node {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  background: var(--orange);
+  border-radius: 50%;
+  box-shadow: 0 0 0 6px rgba(255, 97, 44, 0.16), 0 0 22px rgba(255, 97, 44, 0.7);
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 860px) {
+  .manifesto__split {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .manifesto__col--right {
+    text-align: left;
+  }
+  .manifesto__col--right p {
+    margin-left: 0;
+  }
+  .manifesto__divider {
+    width: 60%;
+    height: 1px;
+    align-self: center;
+    background: linear-gradient(90deg, transparent, rgba(255, 97, 44, 0.6), transparent);
+  }
+}
+
+/* ---------- 6. EXPERTISE INTRO — constellation ---------- */
+
+.expertise-intro {
+  position: relative;
+  padding: clamp(120px, 16vh, 200px) var(--container-x);
+  background:
+    radial-gradient(700px 500px at 50% 50%, rgba(255, 97, 44, 0.1), transparent 70%),
+    linear-gradient(180deg, #050810 0%, #070912 100%);
+  overflow: hidden;
+  text-align: center;
+}
+
+.expertise-intro__eyebrow {
+  margin: 0 0 28px;
+  color: rgba(255, 168, 110, 0.65);
+  font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+}
+
+.expertise-intro__title {
+  margin: 0 auto 32px;
+  max-width: 920px;
   color: var(--light);
-  font: 500 14px / 1.2 "Urbanist", system-ui, sans-serif;
+  font: 500 clamp(36px, 5.4vw, 68px) / 1.04 "Urbanist", system-ui, sans-serif;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+
+.expertise-intro__lede {
+  max-width: 640px;
+  margin: 0 auto clamp(72px, 10vh, 120px);
+  color: rgba(240, 235, 233, 0.74);
+  font: 400 clamp(16px, 1.2vw, 19px) / 1.6 "Outfit", system-ui, sans-serif;
+  text-wrap: pretty;
+}
+
+.constellation {
+  position: relative;
+  width: min(680px, 100%);
+  margin: 0 auto;
+  aspect-ratio: 1 / 1;
+}
+
+.constellation__web {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.constellation__node {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 18px;
+  background: rgba(7, 9, 18, 0.92);
+  border: 1px solid rgba(255, 168, 110, 0.32);
+  border-radius: 12px;
+  color: var(--light);
   text-decoration: none;
-  transition: border-color 240ms ease, background 240ms ease, transform 240ms ease;
+  text-align: center;
+  min-width: 140px;
+  backdrop-filter: blur(8px);
+  transition: border-color 240ms ease, background 240ms ease, transform 240ms ease, box-shadow 240ms ease;
 }
 
-.audience-nav a span {
-  color: rgba(255, 168, 110, 0.85);
+.constellation__node:hover {
+  border-color: rgba(255, 168, 110, 0.7);
+  background: rgba(255, 97, 44, 0.12);
+  transform: translate(var(--shift-x, 0), var(--shift-y, -4px));
+  box-shadow: 0 18px 40px rgba(255, 97, 44, 0.22);
+}
+
+.constellation__num {
+  color: var(--orange);
   font: 500 11px / 1 "Montserrat", system-ui, sans-serif;
   letter-spacing: 0.18em;
 }
 
-.audience-nav a:hover {
-  border-color: rgba(255, 168, 110, 0.55);
-  background: rgba(255, 97, 44, 0.08);
-  transform: translateY(-2px);
+.constellation__name {
+  font: 500 13px / 1.25 "Urbanist", system-ui, sans-serif;
+  letter-spacing: 0;
 }
 
+.constellation__node--01 { top: 0; left: 50%; transform: translate(-50%, 0); }
+.constellation__node--02 { top: 22%; right: 0; transform: translate(0, 0); }
+.constellation__node--03 { bottom: 22%; right: 0; transform: translate(0, 0); }
+.constellation__node--04 { bottom: 0; left: 50%; transform: translate(-50%, 0); }
+.constellation__node--05 { bottom: 22%; left: 0; transform: translate(0, 0); }
+.constellation__node--06 { top: 22%; left: 0; transform: translate(0, 0); }
+
+.constellation__node--01:hover { transform: translate(-50%, -6px); }
+.constellation__node--04:hover { transform: translate(-50%, -6px); }
+
 @media (max-width: 720px) {
-  .overview-list {
+  .constellation {
+    aspect-ratio: auto;
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .constellation__node {
+    position: relative;
+    top: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+  }
+  .constellation__web { display: none; }
+}
+
+/* ---------- 7. AUDIENCE INTRO — triptych preview ---------- */
+
+.audience-intro {
+  position: relative;
+  padding: clamp(120px, 16vh, 200px) var(--container-x);
+  background:
+    radial-gradient(900px 580px at 50% 12%, rgba(255, 97, 44, 0.18), transparent 70%),
+    linear-gradient(180deg, #070912 0%, #161822 100%);
+  overflow: hidden;
+}
+
+.audience-intro__head {
+  max-width: 920px;
+  margin: 0 auto clamp(64px, 9vh, 112px);
+  text-align: center;
+}
+
+.audience-intro__eyebrow {
+  margin: 0 0 28px;
+  color: rgba(255, 168, 110, 0.65);
+  font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+}
+
+.audience-intro__title {
+  margin: 0 0 28px;
+  color: var(--light);
+  font: 500 clamp(40px, 6vw, 80px) / 0.98 "Urbanist", system-ui, sans-serif;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.audience-intro__lede {
+  max-width: 640px;
+  margin: 0 auto;
+  color: rgba(240, 235, 233, 0.74);
+  font: 400 clamp(16px, 1.2vw, 19px) / 1.6 "Outfit", system-ui, sans-serif;
+  text-wrap: pretty;
+}
+
+.audience-triptych {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2vw, 24px);
+}
+
+.preview {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: clamp(28px, 4vh, 44px);
+  background: linear-gradient(180deg, rgba(240, 235, 233, 0.04), rgba(240, 235, 233, 0.01));
+  border: 1px solid rgba(240, 235, 233, 0.1);
+  border-radius: 16px;
+  color: var(--light);
+  text-decoration: none;
+  transition: border-color 320ms ease, transform 320ms ease, background 320ms ease;
+}
+
+.preview:hover {
+  transform: translateY(-6px);
+  background: linear-gradient(180deg, rgba(240, 235, 233, 0.07), rgba(240, 235, 233, 0.02));
+}
+
+.preview--founders:hover { border-color: rgba(209, 126, 95, 0.6); }
+.preview--companies:hover { border-color: rgba(155, 139, 149, 0.6); }
+.preview--investors:hover { border-color: rgba(91, 122, 176, 0.6); }
+
+.preview__num {
+  color: rgba(255, 168, 110, 0.65);
+  font: 500 11px / 1 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.28em;
+}
+
+.preview--founders .preview__num { color: rgba(209, 126, 95, 0.95); }
+.preview--companies .preview__num { color: rgba(155, 139, 149, 0.95); }
+.preview--investors .preview__num { color: rgba(91, 122, 176, 0.95); }
+
+.preview__route {
+  width: 100%;
+  height: auto;
+  max-height: 140px;
+  margin: 4px 0 8px;
+}
+
+.preview__name {
+  margin: 0;
+  color: var(--light);
+  font: 500 clamp(28px, 3vw, 40px) / 1 "Urbanist", system-ui, sans-serif;
+  letter-spacing: -0.005em;
+}
+
+.preview__hint {
+  margin: 0;
+  color: var(--light-60);
+  font: italic 400 14px / 1.4 "Outfit", system-ui, sans-serif;
+}
+
+@media (max-width: 860px) {
+  .audience-triptych {
     grid-template-columns: 1fr;
   }
 }
@@ -1871,6 +2438,437 @@ body.menu-open {
   .route-stage__lists {
     grid-template-columns: 1fr;
     gap: 32px;
+  }
+}
+
+/* ---------- FOUNDERS — ASCENDING STAIRCASE ---------- */
+.route-stage--founders {
+  padding: clamp(140px, 18vh, 220px) var(--container-x) clamp(160px, 20vh, 240px);
+}
+
+.route-stage--founders::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(180deg, transparent 0%, transparent 60%, rgba(209, 126, 95, 0.04) 100%),
+    repeating-linear-gradient(78deg, transparent 0 110px, rgba(209, 126, 95, 0.05) 110px 111px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.route-stage--founders .route-stage__inner {
+  position: relative;
+  z-index: 1;
+  gap: clamp(80px, 11vh, 140px);
+}
+
+.route-stage--founders .route-stage__top {
+  grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr);
+  align-items: stretch;
+  gap: clamp(48px, 6vw, 110px);
+}
+
+.route-stage--founders .route-stage__copy {
+  align-self: end;
+  padding-bottom: 18px;
+  border-left: 1px solid rgba(209, 126, 95, 0.4);
+  padding-left: clamp(20px, 2vw, 32px);
+}
+
+.route-stage--founders .route-stage__bg {
+  min-height: 560px;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.route-stage--founders .route-stage__route {
+  max-width: none;
+}
+
+.route-stage--founders .route-stage__ghost {
+  font-size: clamp(140px, 22vw, 280px);
+  letter-spacing: -0.04em;
+  place-items: end start;
+  padding: 0 0 4vh 0;
+  color: rgba(209, 126, 95, 0.07);
+}
+
+.route-stage--founders .route-stage__lists {
+  grid-template-columns: repeat(3, 1fr);
+  align-items: start;
+  border-top: none;
+  padding-top: 0;
+  counter-reset: stair;
+  gap: clamp(24px, 3vw, 48px);
+  position: relative;
+}
+
+.route-stage--founders .route-stage__lists::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 18px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(209, 126, 95, 0.5) 30%, rgba(209, 126, 95, 0.5) 70%, transparent 100%);
+}
+
+.route-stage--founders .route-stage__list {
+  counter-increment: stair;
+  position: relative;
+  padding-top: 56px;
+}
+
+.route-stage--founders .route-stage__list::before {
+  content: counter(stair, decimal-leading-zero);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--navy);
+  border: 1px solid rgba(209, 126, 95, 0.55);
+  color: #D17E5F;
+  font: 500 11px / 1 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.1em;
+  transform: translateY(0);
+  z-index: 1;
+}
+
+.route-stage--founders .route-stage__list:nth-child(2) {
+  transform: translateY(-28px);
+}
+
+.route-stage--founders .route-stage__list:nth-child(3) {
+  transform: translateY(-56px);
+}
+
+.route-stage--founders .route-stage__list--check li::before {
+  content: "↗";
+  color: #D17E5F;
+}
+
+/* ---------- COMPANIES — EDITORIAL HORIZONTAL BANDS ---------- */
+.route-stage--companies {
+  padding: clamp(120px, 16vh, 200px) 0;
+}
+
+.route-stage--companies .route-stage__inner {
+  max-width: none;
+  padding: 0;
+  gap: 0;
+}
+
+.route-stage--companies .route-stage__top {
+  position: relative;
+  grid-template-columns: 1fr;
+  gap: 0;
+  padding: clamp(40px, 6vh, 80px) var(--container-x) clamp(80px, 10vh, 140px);
+  text-align: left;
+  min-height: 520px;
+  align-items: end;
+  overflow: hidden;
+}
+
+.route-stage--companies .route-stage__bg {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  pointer-events: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.route-stage--companies .route-stage__route {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  opacity: 0.78;
+}
+
+.route-stage--companies .route-stage__ghost {
+  font-size: clamp(160px, 26vw, 360px);
+  place-items: center;
+  color: rgba(155, 139, 149, 0.045);
+  letter-spacing: -0.04em;
+}
+
+.route-stage--companies .route-stage__copy {
+  position: relative;
+  z-index: 2;
+  max-width: 920px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.34fr) minmax(0, 0.66fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: end;
+  padding-top: clamp(80px, 12vh, 160px);
+}
+
+.route-stage--companies .route-stage__step {
+  grid-row: 1;
+  align-self: end;
+  margin: 0 0 6px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  height: max-content;
+  padding-right: 2px;
+}
+
+.route-stage--companies .route-stage__title {
+  grid-row: 1;
+  margin: 0;
+}
+
+.route-stage--companies .route-stage__body {
+  grid-column: 2;
+  grid-row: 2;
+  margin: 24px 0 28px;
+  max-width: 56ch;
+}
+
+.route-stage--companies .route-stage__cta {
+  grid-column: 2;
+  grid-row: 3;
+  justify-self: start;
+}
+
+.route-stage--companies .route-stage__lists {
+  display: block;
+  border-top: 1px solid rgba(240, 235, 233, 0.1);
+  border-bottom: 1px solid rgba(240, 235, 233, 0.1);
+  padding: 0;
+  margin: 0 var(--container-x);
+}
+
+.route-stage--companies .route-stage__list {
+  display: grid;
+  grid-template-columns: minmax(0, 0.28fr) minmax(0, 0.72fr);
+  gap: clamp(24px, 5vw, 80px);
+  align-items: start;
+  padding: clamp(36px, 5vh, 56px) 0;
+  border-bottom: 1px solid rgba(240, 235, 233, 0.08);
+}
+
+.route-stage--companies .route-stage__list:last-child {
+  border-bottom: none;
+}
+
+.route-stage--companies .route-stage__list h3 {
+  position: sticky;
+  top: 100px;
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+}
+
+.route-stage--companies .route-stage__list ul {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px clamp(24px, 4vw, 56px);
+  display: grid;
+}
+
+.route-stage--companies .route-stage__list li {
+  font-size: 15px;
+}
+
+/* ---------- INVESTORS — PRECISION GRID / TECHNICAL ---------- */
+.route-stage--investors {
+  padding: clamp(140px, 18vh, 220px) var(--container-x);
+}
+
+.route-stage--investors::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(91, 122, 176, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(91, 122, 176, 0.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+  background-position: 0 0;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 0%, transparent 90%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 0%, transparent 90%);
+}
+
+.route-stage--investors .route-stage__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.route-stage--investors .route-stage__top {
+  grid-template-columns: minmax(0, 0.56fr) minmax(0, 0.44fr);
+  align-items: start;
+  gap: clamp(40px, 5vw, 88px);
+}
+
+.route-stage--investors .route-stage__bg {
+  order: 1;
+  min-height: 440px;
+  padding: 32px;
+  border: 1px solid rgba(91, 122, 176, 0.18);
+  background: linear-gradient(180deg, rgba(91, 122, 176, 0.04), rgba(91, 122, 176, 0.01));
+}
+
+.route-stage--investors .route-stage__bg::before,
+.route-stage--investors .route-stage__bg::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #5B7AB0;
+  pointer-events: none;
+}
+
+.route-stage--investors .route-stage__bg::before {
+  top: -1px;
+  left: -1px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.route-stage--investors .route-stage__bg::after {
+  bottom: -1px;
+  right: -1px;
+  border-left: none;
+  border-top: none;
+}
+
+.route-stage--investors .route-stage__ghost {
+  font-size: clamp(80px, 12vw, 160px);
+  letter-spacing: 0.04em;
+  place-items: start end;
+  padding: 18px 24px;
+  color: rgba(91, 122, 176, 0.08);
+  font-weight: 500;
+}
+
+.route-stage--investors .route-stage__copy {
+  order: 0;
+  padding-right: clamp(0px, 2vw, 32px);
+}
+
+.route-stage--investors .route-stage__title {
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+.route-stage--investors .route-stage__step::before {
+  content: "▸ ";
+  color: #5B7AB0;
+  margin-right: 4px;
+}
+
+.route-stage--investors .route-stage__lists {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: none;
+  padding-top: clamp(48px, 6vh, 72px);
+  border: 1px solid rgba(91, 122, 176, 0.16);
+}
+
+.route-stage--investors .route-stage__list {
+  padding: clamp(32px, 4vw, 44px);
+  border-right: 1px solid rgba(91, 122, 176, 0.16);
+  position: relative;
+  background: linear-gradient(180deg, rgba(91, 122, 176, 0.025), transparent);
+}
+
+.route-stage--investors .route-stage__list:last-child {
+  border-right: none;
+}
+
+.route-stage--investors .route-stage__list::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #5B7AB0;
+  box-shadow: 0 0 12px rgba(91, 122, 176, 0.7);
+}
+
+.route-stage--investors .route-stage__list h3 {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(91, 122, 176, 0.18);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+}
+
+.route-stage--investors .route-stage__list li {
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.route-stage--investors .route-stage__list li::before {
+  width: 6px;
+  height: 6px;
+  top: 8px;
+  border-radius: 0;
+  background: #5B7AB0;
+  opacity: 0.6;
+}
+
+.route-stage--investors .route-stage__list--check li::before {
+  content: "■";
+  color: #5B7AB0;
+  font-size: 8px;
+  top: 6px;
+}
+
+@media (max-width: 1024px) {
+  .route-stage--founders .route-stage__top,
+  .route-stage--companies .route-stage__top,
+  .route-stage--investors .route-stage__top {
+    grid-template-columns: 1fr;
+  }
+  .route-stage--founders .route-stage__list,
+  .route-stage--founders .route-stage__list:nth-child(2),
+  .route-stage--founders .route-stage__list:nth-child(3) {
+    transform: none;
+  }
+  .route-stage--founders .route-stage__lists,
+  .route-stage--investors .route-stage__lists {
+    grid-template-columns: 1fr;
+    border: none;
+  }
+  .route-stage--investors .route-stage__list {
+    border-right: none;
+    border-bottom: 1px solid rgba(91, 122, 176, 0.16);
+  }
+  .route-stage--investors .route-stage__list:last-child {
+    border-bottom: none;
+  }
+  .route-stage--investors .route-stage__bg {
+    order: -1;
+  }
+  .route-stage--companies .route-stage__copy {
+    grid-template-columns: 1fr;
+  }
+  .route-stage--companies .route-stage__step {
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+  .route-stage--companies .route-stage__body,
+  .route-stage--companies .route-stage__cta {
+    grid-column: 1;
+  }
+  .route-stage--companies .route-stage__list {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .route-stage--companies .route-stage__list h3 {
+    position: static;
+  }
+  .route-stage--companies .route-stage__list ul {
+    grid-template-columns: 1fr;
   }
 }
 
