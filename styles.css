@@ -828,17 +828,35 @@ body.menu-open {
 .ridge-quote {
   position: absolute;
   left: var(--container-x);
-  bottom: clamp(96px, 14vh, 160px);
+  bottom: clamp(218px, 31vh, 340px);
   z-index: 5;
-  max-width: min(420px, 40vw);
+  max-width: min(520px, 38vw);
   margin: 0;
+  padding-left: clamp(18px, 1.6vw, 26px);
   pointer-events: auto;
-  color: rgba(220, 222, 236, 0.7);
-  font: italic 400 clamp(15px, 1.15vw, 19px) / 1.55 "Outfit", system-ui, sans-serif;
+  color: rgba(240, 235, 233, 0.78);
+  font: italic 400 clamp(17px, 1.35vw, 24px) / 1.48 "Outfit", system-ui, sans-serif;
   letter-spacing: 0;
   text-align: left;
   text-wrap: pretty;
-  text-shadow: 0 1px 14px rgba(4, 6, 12, 0.65);
+  text-shadow: 0 2px 20px rgba(4, 6, 12, 0.78);
+}
+
+.ridge-quote::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.35em;
+  bottom: 0.28em;
+  width: 2px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 168, 110, 0.95), rgba(255, 97, 44, 0.42));
+  box-shadow: 0 0 18px rgba(255, 168, 110, 0.34);
+}
+
+.ridge-quote strong {
+  color: rgba(255, 247, 241, 0.96);
+  font-weight: 500;
 }
 
 @media (max-width: 860px) {
@@ -1141,7 +1159,7 @@ body.menu-open {
   inset: 0;
   background-image: url("background.webp");
   background-size: auto 150%;
-  background-position: center calc(100% - var(--aboutfold-progress, 0) * 14%);
+  background-position: center calc(86% + var(--aboutfold-progress, 0) * 14%);
   background-repeat: no-repeat;
   opacity: 0.09;
   mix-blend-mode: multiply;
