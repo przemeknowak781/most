@@ -650,7 +650,7 @@ body.menu-open {
   content: "";
   position: absolute;
   inset: -14% 0;
-  background-image: url("background.png");
+  background-image: url("background.webp");
   background-size: cover;
   background-position: 56% 25%;
   transform: scaleX(-1) translate3d(0, calc((var(--ridge-progress, 0.5) - 0.5) * 12vh), 0);
@@ -1153,10 +1153,7 @@ body.menu-open {
 .aboutfold__trail-path--active {
   stroke: rgba(255, 168, 110, 0.95);
   stroke-width: 2.2;
-  filter:
-    drop-shadow(0 0 3px rgba(255, 168, 110, 0.7))
-    drop-shadow(0 0 10px rgba(255, 150, 88, 0.38))
-    drop-shadow(0 0 22px rgba(255, 188, 140, 0.2));
+  filter: drop-shadow(0 0 3px rgba(255, 168, 110, 0.48));
   transition: stroke-dashoffset 300ms var(--ease-out);
 }
 
@@ -1168,9 +1165,7 @@ body.menu-open {
   transform: scale(0.25);
   transform-box: fill-box;
   transform-origin: center;
-  filter:
-    drop-shadow(0 0 6px rgba(255, 168, 110, 0.6))
-    drop-shadow(0 0 18px rgba(255, 188, 140, 0.32));
+  filter: drop-shadow(0 0 6px rgba(255, 168, 110, 0.42));
   transition: opacity 240ms var(--ease-out), transform 360ms var(--ease-out), fill 240ms var(--ease-out);
 }
 
@@ -1353,6 +1348,9 @@ body.menu-open {
 }
 
 .aboutfold__pattern {
+  --pattern-shift: 0px;
+  --pattern-detail-shift: 0px;
+  --pattern-sheen: 0.62;
   position: absolute;
   z-index: 0;
   bottom: 0;
@@ -1383,15 +1381,17 @@ body.menu-open {
   background:
     linear-gradient(90deg, rgba(240, 235, 233, 0.18) 0%, transparent 18%, rgba(255, 97, 44, 0.1) 48%, transparent 68%, rgba(240, 235, 233, 0.42) 100%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.14), transparent 34%, rgba(22, 24, 34, 0.06));
-  mix-blend-mode: screen;
-  opacity: 0.7;
+  opacity: var(--pattern-sheen);
+  transform: translate3d(var(--pattern-shift), 0, 0);
+  will-change: transform, opacity;
 }
 
 .aboutfold__pattern::after {
   z-index: 3;
   background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.12) 0 1px, transparent 1px 12px, rgba(22, 24, 34, 0.08) 12px 14px, transparent 14px 28px);
   opacity: 0.38;
-  filter: blur(0.25px);
+  transform: translate3d(var(--pattern-detail-shift), 0, 0);
+  will-change: transform;
 }
 
 .aboutfold__bar {
@@ -1400,10 +1400,6 @@ body.menu-open {
   display: block;
   flex: 0 0 auto;
   min-height: 100%;
-  box-shadow: inset 1px 0 rgba(255, 255, 255, 0.06), inset -1px 0 rgba(22, 24, 34, 0.07);
-  transform-origin: center center;
-  will-change: transform, opacity, background-color;
-  transition: transform 90ms linear, opacity 90ms linear, background-color 90ms linear;
 }
 
 .aboutfold__pattern-route {
@@ -1435,9 +1431,7 @@ body.menu-open {
 .aboutfold__pattern-path--active {
   stroke: rgba(255, 168, 110, 0.96);
   stroke-width: 1.25;
-  filter:
-    drop-shadow(0 0 3px rgba(255, 168, 110, 0.72))
-    drop-shadow(0 0 12px rgba(255, 97, 44, 0.32));
+  filter: drop-shadow(0 0 3px rgba(255, 168, 110, 0.42));
   transition: stroke-dashoffset 260ms var(--ease-out);
 }
 
