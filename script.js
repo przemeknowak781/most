@@ -529,9 +529,12 @@ function setupAboutfold() {
 
     items.forEach((item, idx) => {
       const itemProg = Math.max(0, Math.min(1, stepProgress - idx));
+      const isLast = idx === items.length - 1;
+      const isActive = isLast ? stepProgress >= idx - 0.3 : (stepProgress >= idx - 0.3 && stepProgress < idx + 0.7);
+      
       item.style.setProperty("--item-progress", itemProg.toFixed(3));
-      item.classList.toggle("is-expanded", itemProg > 0.05);
-      item.classList.toggle("is-active", itemProg > 0.05 && itemProg < 0.98);
+      item.classList.toggle("is-expanded", isActive);
+      item.classList.toggle("is-active", isActive);
     });
 
     // Parametric stripes: hue rotation + opacity wave + vertical scale wave.
