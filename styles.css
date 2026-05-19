@@ -643,7 +643,7 @@ body.menu-open {
 .ridge-edge {
   position: relative;
   z-index: 6;
-  margin-top: calc(clamp(-160px, -12vh, -60px) - 2px);
+  margin-top: calc(clamp(-260px, -20vh, -120px) - 2px);
   margin-bottom: -1px;
   pointer-events: none;
   line-height: 0;
@@ -1140,8 +1140,8 @@ body.menu-open {
   position: absolute;
   inset: 0;
   background-image: url("background.webp");
-  background-size: cover;
-  background-position: center calc(38% + var(--aboutfold-progress, 0) * 18%);
+  background-size: auto 150%;
+  background-position: center calc(100% - var(--aboutfold-progress, 0) * 14%);
   background-repeat: no-repeat;
   opacity: 0.09;
   mix-blend-mode: multiply;
@@ -1153,7 +1153,7 @@ body.menu-open {
 
 @media (prefers-reduced-motion: reduce) {
   .aboutfold__sticky::before {
-    background-position: center 45%;
+    background-position: center bottom;
   }
 }
 
@@ -2355,10 +2355,10 @@ body.menu-open {
   z-index: 2;
   max-width: 1360px;
   margin: 0 auto;
-  transform: translateY(clamp(-44px, -4.5vh, -24px));
+  transform: translateY(clamp(-96px, -9vh, -56px));
   display: grid;
   grid-template-columns: minmax(240px, 0.62fr) repeat(3, minmax(0, 1fr));
-  grid-template-rows: clamp(76px, 8.5vh, 112px) 1fr;
+  grid-template-rows: clamp(32px, 4vh, 58px) 1fr;
   column-gap: clamp(16px, 2vw, 28px);
   row-gap: 0;
   align-items: stretch;
