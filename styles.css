@@ -5680,9 +5680,6 @@ body.menu-open {
   transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.member:hover .member__portrait {
-  transform: translateX(-50%) scale(1.04);
-}
 
 .member__index {
   position: absolute;
