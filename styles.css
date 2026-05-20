@@ -5563,6 +5563,23 @@ body.menu-open {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   gap: clamp(40px, 6vw, 96px);
   align-items: center;
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 1000ms cubic-bezier(0.16, 1, 0.3, 1), transform 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.member.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .member {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 .member--reverse {
@@ -5636,20 +5653,15 @@ body.menu-open {
   border-radius: 140px 90px 240px 240px / 120px 95px 280px 280px;
   overflow: hidden;
   isolation: isolate;
-  background: transparent;
-  transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  background: linear-gradient(135deg, rgba(253, 251, 250, 0.94) 0%, rgba(246, 237, 231, 0.94) 100%);
+  box-shadow: 0 16px 48px -12px rgba(28, 20, 25, 0.08);
+  border: 1px solid rgba(199, 82, 50, 0.08);
+  transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .member:hover .member__plate {
   transform: translateY(-4px);
-}
-
-.member__gradient {
-  display: none;
-}
-
-.member__gradient::after {
-  display: none;
+  box-shadow: 0 24px 64px -10px rgba(28, 20, 25, 0.12);
 }
 
 .member__portrait {
