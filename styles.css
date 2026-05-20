@@ -6171,6 +6171,7 @@ body.menu-open {
 
 /* AUD BLEED */
 .aud-bleed {
+  position: relative;
   margin: 0;
   width: 100%;
   aspect-ratio: 21 / 8;
