@@ -207,7 +207,9 @@ a {
 
 .nav-cta {
   flex-shrink: 0;
-  padding: 10px 26px;
+  padding: 20px 52px;
+  min-height: 84px;
+  font-size: 24px;
   white-space: nowrap;
 }
 
