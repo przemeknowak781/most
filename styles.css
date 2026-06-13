@@ -8390,3 +8390,165 @@ body.menu-open {
   }
 }
 
+
+/* ============================================================
+   ABOUT PAGE POLISH — hero parity with homepage, photo duotone,
+   scroll reveals
+   ============================================================ */
+
+/* ---------- PAGE HERO (about): homepage-grade atmosphere ---------- */
+
+.page--about .page-hero {
+  min-height: clamp(560px, 78vh, 820px);
+  padding-bottom: clamp(120px, 16vh, 190px);
+}
+
+.page--about .page-hero__bg {
+  object-position: 56% 72%;
+  filter: saturate(0.94) contrast(1.06) brightness(0.74);
+}
+
+.page--about .page-hero__wash {
+  background:
+    radial-gradient(820px 520px at 18% 38%, rgba(255, 97, 44, 0.32), transparent 68%),
+    radial-gradient(700px 460px at 62% 50%, rgba(255, 176, 119, 0.12), transparent 72%),
+    linear-gradient(90deg, rgba(4, 6, 12, 0.86) 0%, rgba(11, 14, 25, 0.58) 38%, rgba(18, 20, 31, 0.24) 72%, rgba(8, 10, 17, 0.34) 100%),
+    linear-gradient(180deg, rgba(8, 11, 19, 0.36) 0%, rgba(8, 11, 19, 0.55) 58%, rgba(8, 11, 19, 0.95) 100%);
+}
+
+.page-hero__vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(9, 13, 22, 0.3) 0%, transparent 30%, transparent 100%),
+    radial-gradient(1000px 680px at 86% 96%, rgba(5, 7, 12, 0.58), transparent 62%),
+    radial-gradient(900px 720px at 2% 5%, rgba(8, 10, 18, 0.5), transparent 70%);
+}
+
+.page-hero__noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  background-image:
+    linear-gradient(115deg, transparent 0 48%, rgba(240, 235, 233, 0.04) 49% 50%, transparent 51% 100%),
+    radial-gradient(circle at 20% 30%, rgba(240, 235, 233, 0.1) 0 1px, transparent 1.5px);
+  background-size: 180px 180px, 82px 82px;
+}
+
+.page-hero__haze {
+  position: absolute;
+  inset: 16% -10% -10%;
+  background: radial-gradient(60% 100% at 50% 100%, rgba(255, 97, 44, 0.16), transparent 70%);
+  mix-blend-mode: screen;
+  opacity: 0.7;
+  animation: hero-haze-drift 12s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.page--about .page-hero__sun {
+  top: 12%;
+  left: 12%;
+  width: clamp(240px, 30vw, 420px);
+  height: clamp(240px, 30vw, 420px);
+  animation: hero-sun-breathe 9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+/* Key facts strip pinned to hero foot — mirrors homepage hero-stats */
+.page-hero__meta {
+  position: absolute;
+  left: var(--container-x);
+  right: var(--container-x);
+  bottom: clamp(34px, 6vh, 56px);
+  z-index: 4;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 3vw, 36px);
+  animation-delay: 440ms;
+}
+
+.page-hero__fact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.page-hero__fact strong {
+  color: var(--light);
+  font: 500 clamp(24px, 2.2vw, 34px) / 1 "Urbanist", system-ui, sans-serif;
+}
+
+.page-hero__fact span {
+  color: var(--light-60);
+  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 860px) {
+  .page-hero__meta {
+    position: static;
+    margin-top: clamp(36px, 7vh, 56px);
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+/* ---------- PHOTO BREAK: warm duotone tied to the palette ---------- */
+
+.page--about .photo-break::after {
+  background:
+    radial-gradient(820px 460px at 16% 80%, rgba(255, 97, 44, 0.18), transparent 66%),
+    linear-gradient(90deg, rgba(8, 11, 19, 0.42) 0%, transparent 45%, rgba(8, 11, 19, 0.28) 100%),
+    linear-gradient(180deg, rgba(8, 11, 19, 0.3) 0%, transparent 35%, rgba(8, 11, 19, 0.62) 100%);
+}
+
+.page--about .photo-break--right::after {
+  background:
+    radial-gradient(820px 460px at 84% 80%, rgba(255, 97, 44, 0.18), transparent 66%),
+    linear-gradient(270deg, rgba(8, 11, 19, 0.42) 0%, transparent 45%, rgba(8, 11, 19, 0.28) 100%),
+    linear-gradient(180deg, rgba(8, 11, 19, 0.3) 0%, transparent 35%, rgba(8, 11, 19, 0.62) 100%);
+}
+
+.page--about .photo-break__index::after {
+  content: "";
+  display: inline-block;
+  width: 44px;
+  height: 1px;
+  margin-left: 12px;
+  vertical-align: middle;
+  background: linear-gradient(90deg, rgba(255, 168, 110, 0.9), transparent);
+}
+
+.page--about .photo-break--right .photo-break__index::after {
+  margin-left: 0;
+  margin-right: 12px;
+  background: linear-gradient(270deg, rgba(255, 168, 110, 0.9), transparent);
+}
+
+/* ---------- SCROLL REVEAL (shared with setupSectionReveal) ---------- */
+
+/* Uses the standalone `translate` property so it composes with any
+   `transform` the element already has (e.g. philosophy card offsets). */
+[data-reveal] {
+  opacity: 0;
+  translate: 0 28px;
+  transition:
+    opacity 760ms var(--ease-out),
+    translate 760ms var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  translate: 0 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    translate: none;
+    transition: none;
+  }
+}
