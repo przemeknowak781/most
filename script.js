@@ -122,12 +122,11 @@ function setupHeroTrail() {
   trailLabels = [];
 
   if ("ResizeObserver" in window && !setupHeroTrail._observer) {
+    // Only observe ridgesImg — it drives all dependent sizing. Removed
+    // redundant observers on trailSvg/labelsHost/ridges which all resize
+    // in lockstep with it (was causing 3-4x scheduleTrailOverlay calls).
     setupHeroTrail._observer = new ResizeObserver(() => scheduleTrailOverlay(true));
-    setupHeroTrail._observer.observe(trailSvg);
-    if (labelsHost) setupHeroTrail._observer.observe(labelsHost);
     const ridgesImg = document.querySelector(".hero-ridges__img");
-    const ridges = document.querySelector(".hero-ridges");
-    if (ridges) setupHeroTrail._observer.observe(ridges);
     if (ridgesImg) {
       setupHeroTrail._observer.observe(ridgesImg);
       ridgesImg.addEventListener("load", () => scheduleTrailOverlay(true));
@@ -200,60 +199,85 @@ function positionTrailOverlay() {
 
   const ctm = trailSvg.getScreenCTM();
   if (!ctm) return;
+
+  // ---- READ PHASE: gather all geometry first to avoid layout thrashing ----
   const pointsRect = pointsHost.getBoundingClientRect();
   const labelsRect = labelsHost.getBoundingClientRect();
   const pt = trailSvg.createSVGPoint();
 
-  trailDots.forEach(({ el, cp }) => {
+  const dotPositions = trailDots.map(({ el, cp }) => {
     pt.x = cp.x;
     pt.y = cp.y;
     const screen = pt.matrixTransform(ctm);
-    el.style.left = `${screen.x - pointsRect.left}px`;
-    el.style.top = `${screen.y - pointsRect.top}px`;
+    return { el, left: screen.x - pointsRect.left, top: screen.y - pointsRect.top };
   });
-
-  trailLabels.forEach(({ el, cp }) => {
+  const labelPositions = trailLabels.map(({ el, cp }) => {
     pt.x = cp.x;
     pt.y = cp.y;
     const screen = pt.matrixTransform(ctm);
-    el.style.left = `${screen.x - labelsRect.left}px`;
+    return { el, left: screen.x - labelsRect.left };
   });
 
+  let climberWrite = null;
+  let sunWrite = null;
   const climbers = document.querySelector(".hero-climbers");
   const climbersSun = document.querySelector(".hero-climbers-sun");
   if (TRAIL.climbers) {
     const ridgesImg = document.querySelector(".hero-ridges__img");
-    if (!ridgesImg) return;
-
-    const imgRect = ridgesImg.getBoundingClientRect();
-    if (imgRect.width === 0 || imgRect.height === 0) return;
-
-    const climberViewBox = TRAIL.climbers.viewBox;
-    const climberScale = ((TRAIL.climbers.width / TRAIL.viewBox.width) * imgRect.width) / climberViewBox.width;
-    const widthPx = climberViewBox.width * climberScale;
-    const anchor = TRAIL.climbers.anchor;
-    const screen = {
-      x: imgRect.left + (TRAIL.climbers.x / TRAIL.viewBox.width) * imgRect.width,
-      y: imgRect.top + (TRAIL.climbers.y / TRAIL.viewBox.height) * imgRect.height,
-    };
-
-    if (climbers) {
-      const climbersHostRect = climbers.parentElement.getBoundingClientRect();
-      climbers.style.width = `${widthPx}px`;
-      climbers.style.left = `${screen.x - climbersHostRect.left - anchor.x * climberScale}px`;
-      climbers.style.top = `${screen.y - climbersHostRect.top - anchor.y * climberScale}px`;
+    if (ridgesImg) {
+      const imgRect = ridgesImg.getBoundingClientRect();
+      if (imgRect.width !== 0 && imgRect.height !== 0) {
+        const climberViewBox = TRAIL.climbers.viewBox;
+        const climberScale = ((TRAIL.climbers.width / TRAIL.viewBox.width) * imgRect.width) / climberViewBox.width;
+        const widthPx = climberViewBox.width * climberScale;
+        const anchor = TRAIL.climbers.anchor;
+        const screen = {
+          x: imgRect.left + (TRAIL.climbers.x / TRAIL.viewBox.width) * imgRect.width,
+          y: imgRect.top + (TRAIL.climbers.y / TRAIL.viewBox.height) * imgRect.height,
+        };
+        if (climbers) {
+          const climbersHostRect = climbers.parentElement.getBoundingClientRect();
+          climberWrite = {
+            el: climbers,
+            width: widthPx,
+            left: screen.x - climbersHostRect.left - anchor.x * climberScale,
+            top: screen.y - climbersHostRect.top - anchor.y * climberScale,
+          };
+        }
+        if (climbersSun) {
+          const sunScreen = {
+            x: imgRect.left + ((TRAIL.climbers.x + TRAIL.climbers.sunOffset.x) / TRAIL.viewBox.width) * imgRect.width,
+            y: imgRect.top + ((TRAIL.climbers.y + TRAIL.climbers.sunOffset.y) / TRAIL.viewBox.height) * imgRect.height,
+          };
+          const sunHostRect = climbersSun.parentElement.getBoundingClientRect();
+          sunWrite = {
+            el: climbersSun,
+            width: widthPx * 5.6,
+            left: sunScreen.x - sunHostRect.left,
+            top: sunScreen.y - sunHostRect.top,
+          };
+        }
+      }
     }
+  }
 
-    if (climbersSun) {
-      const sunScreen = {
-        x: imgRect.left + ((TRAIL.climbers.x + TRAIL.climbers.sunOffset.x) / TRAIL.viewBox.width) * imgRect.width,
-        y: imgRect.top + ((TRAIL.climbers.y + TRAIL.climbers.sunOffset.y) / TRAIL.viewBox.height) * imgRect.height,
-      };
-      const sunHostRect = climbersSun.parentElement.getBoundingClientRect();
-      climbersSun.style.width = `${widthPx * 5.6}px`;
-      climbersSun.style.left = `${sunScreen.x - sunHostRect.left}px`;
-      climbersSun.style.top = `${sunScreen.y - sunHostRect.top}px`;
-    }
+  // ---- WRITE PHASE: batch all style mutations after reads are done ----
+  for (const p of dotPositions) {
+    p.el.style.left = `${p.left}px`;
+    p.el.style.top = `${p.top}px`;
+  }
+  for (const p of labelPositions) {
+    p.el.style.left = `${p.left}px`;
+  }
+  if (climberWrite) {
+    climberWrite.el.style.width = `${climberWrite.width}px`;
+    climberWrite.el.style.left = `${climberWrite.left}px`;
+    climberWrite.el.style.top = `${climberWrite.top}px`;
+  }
+  if (sunWrite) {
+    sunWrite.el.style.width = `${sunWrite.width}px`;
+    sunWrite.el.style.left = `${sunWrite.left}px`;
+    sunWrite.el.style.top = `${sunWrite.top}px`;
   }
 }
 
@@ -290,10 +314,11 @@ function updateScroll() {
   }
 
   if (topNav) topNav.classList.toggle("is-scrolled", scrollY > 12);
+  if (window.updateParallax) window.updateParallax();
 }
 
 function setupSectionReveal() {
-  const targets = document.querySelectorAll(".basecamp, .route-stage");
+  const targets = document.querySelectorAll(".basecamp, .route-stage, .member");
   if (!targets.length) return;
 
   if (!("IntersectionObserver" in window)) {
@@ -398,18 +423,30 @@ function setupTransitionMarker() {
   const head = marker.querySelector(".transition-marker__head");
   if (!active || !head) return;
 
+  let lastX = -1;
   function update() {
     const rect = marker.getBoundingClientRect();
     const vh = window.innerHeight || 1;
     const progress = Math.min(1, Math.max(0, (vh - rect.top) / (vh + rect.height)));
     const x = Math.round(progress * 1200);
+    if (x === lastX) return;
+    lastX = x;
     active.setAttribute("x2", String(x));
     head.setAttribute("cx", String(x));
   }
 
+  let raf = 0;
+  function schedule() {
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      raf = 0;
+      update();
+    });
+  }
+
   update();
-  window.addEventListener("scroll", update, { passive: true });
-  window.addEventListener("resize", update, { passive: true });
+  window.addEventListener("scroll", schedule, { passive: true });
+  window.addEventListener("resize", schedule, { passive: true });
 }
 
 function setupMobileMenu() {
@@ -481,10 +518,37 @@ function setupAudienceTriptych() {
   if (!cards.length) return;
   const section = root.closest(".audience-intro") || root;
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const audienceThemes = ["founders", "companies", "investors"];
   let sectionTop = 0;
   let sectionHeight = 1;
   let sectionScrollable = 1;
   let activeIndex = null;
+
+  function updateBackdrop(progress) {
+    if (reducedMotion) {
+      setCssVar(section, "--audience-bg-x", "0px");
+      setCssVar(section, "--audience-bg-y", "0px");
+      setCssVar(section, "--audience-bg-sweep", "0px");
+      setCssVar(section, "--audience-title-bg-x", "0px");
+      setCssVar(section, "--audience-title-bg-y", "0px");
+      setCssVar(section, "--audience-title-bg-sweep", "0px");
+      setCssVar(section, "--audience-bg-alpha", "0.180");
+      return;
+    }
+
+    const eased = progress * progress * (3 - 2 * progress);
+    const wave = Math.sin(progress * Math.PI * 2);
+    const bgX = (eased - 0.5) * 140;
+    const bgY = wave * 26 + (eased - 0.5) * 36;
+    const bgSweep = (0.5 - eased) * 96;
+    setCssVar(section, "--audience-bg-x", `${bgX.toFixed(1)}px`);
+    setCssVar(section, "--audience-bg-y", `${bgY.toFixed(1)}px`);
+    setCssVar(section, "--audience-bg-sweep", `${bgSweep.toFixed(1)}px`);
+    setCssVar(section, "--audience-title-bg-x", `${(bgX * 0.22).toFixed(1)}px`);
+    setCssVar(section, "--audience-title-bg-y", `${(bgY * 0.18).toFixed(1)}px`);
+    setCssVar(section, "--audience-title-bg-sweep", `${(bgSweep * 0.28).toFixed(1)}px`);
+    setCssVar(section, "--audience-bg-alpha", (0.15 + Math.sin(progress * Math.PI) * 0.07).toFixed(3));
+  }
 
   function setActiveCard(index) {
     if (index === activeIndex) return;
@@ -492,6 +556,9 @@ function setupAudienceTriptych() {
     root.classList.toggle("has-no-active", index < 0);
     cards.forEach((_, idx) => {
       root.classList.toggle(`is-active-${idx}`, idx === index);
+    });
+    audienceThemes.forEach((theme, idx) => {
+      section.classList.toggle(`is-audience-${theme}`, idx === index);
     });
 
     cards.forEach((card, idx) => {
@@ -519,6 +586,7 @@ function setupAudienceTriptych() {
 
   function updateFromScroll() {
     if (reducedMotion) {
+      updateBackdrop(0);
       setActiveCard(0);
       return;
     }
@@ -526,6 +594,7 @@ function setupAudienceTriptych() {
     const scrollY = window.scrollY || 0;
     const vh = window.innerHeight || 1;
     const revealStart = sectionTop - vh * 0.08;
+    updateBackdrop(clamp((scrollY - sectionTop) / sectionScrollable, 0, 1));
 
     if (scrollY < revealStart) {
       setActiveCard(-1);
@@ -610,22 +679,31 @@ function setupAudienceConnectors() {
     return trailPoints[trailPoints.length - 1][1];
   }
 
+  let cachedPseudo = null;
+  let cachedPseudoWidth = -1;
+  function getPseudoMetrics() {
+    const vw = window.innerWidth;
+    if (cachedPseudo && cachedPseudoWidth === vw) return cachedPseudo;
+    const pseudo = getComputedStyle(section, "::after");
+    cachedPseudo = {
+      cutOffset: readPx(pseudo.top, cssClamp(-180, vw * -0.1, -118)),
+      cutDepth: readPx(pseudo.height, cssClamp(130, vw * 0.11, 190)),
+    };
+    cachedPseudoWidth = vw;
+    return cachedPseudo;
+  }
+
   function update() {
     const sectionRect = section.getBoundingClientRect();
     if (!sectionRect.width) return;
 
-    const pseudo = getComputedStyle(section, "::after");
-    const cutOffset = readPx(
-      pseudo.top,
-      cssClamp(-180, window.innerWidth * -0.1, -118)
-    );
-    const cutDepth = readPx(
-      pseudo.height,
-      cssClamp(130, window.innerWidth * 0.11, 190)
-    );
+    const { cutOffset, cutDepth } = getPseudoMetrics();
 
-    connectors.forEach((connector) => {
-      const rect = connector.getBoundingClientRect();
+    // Phase 1: read all connector rects
+    const reads = connectors.map((connector) => connector.getBoundingClientRect());
+    // Phase 2: compute + write
+    connectors.forEach((connector, i) => {
+      const rect = reads[i];
       const centerX = rect.left + rect.width / 2 - sectionRect.left;
       const pathX = (centerX / sectionRect.width) * 1200;
       const pathY = trailYAt(pathX);
@@ -644,7 +722,10 @@ function setupAudienceConnectors() {
   };
 
   scheduleAudienceConnectors();
-  window.addEventListener("resize", scheduleAudienceConnectors, { passive: true });
+  window.addEventListener("resize", () => {
+    cachedPseudoWidth = -1; // invalidate pseudo cache on viewport change
+    scheduleAudienceConnectors();
+  }, { passive: true });
   window.addEventListener("load", scheduleAudienceConnectors, { once: true });
   if (document.fonts) document.fonts.ready.then(scheduleAudienceConnectors);
 }
@@ -911,10 +992,18 @@ function setupAboutfold() {
       const sample = clamp(b.sample + shimmer * 0.012 + sweep * 0.018, 0, 1);
       const color = shadeColor(colorAt(sample), b.shade + shimmer * 0.075 + sweep * 0.065 + pulse * 0.035);
       const opacity = clamp(b.baseAlpha + shimmer * 0.055 + sweep * 0.04 + pulse * 0.03, 0.42, 1);
-
-      b.el.style.backgroundColor = rgbToCss(color);
-      b.el.style.opacity = opacity.toFixed(3);
-      b.el.style.transform = `scaleX(${(1 + sweep * 0.1 + pulse * 0.045).toFixed(3)})`;
+      // Quantize to avoid redundant style writes (epsilon ~0.04 opacity, ~6 levels per channel)
+      const colorKey = (color[0] >> 2) << 16 | (color[1] >> 2) << 8 | (color[2] >> 2);
+      const opacityKey = Math.round(opacity * 25);
+      if (b.lastColorKey !== colorKey) {
+        b.el.style.backgroundColor = rgbToCss(color);
+        b.lastColorKey = colorKey;
+      }
+      if (b.lastOpacityKey !== opacityKey) {
+        b.el.style.opacity = opacity.toFixed(3);
+        b.lastOpacityKey = opacityKey;
+      }
+      // scaleX removed — was forcing relayout/paint on ~550 bars per frame
     }
   }
 
@@ -952,6 +1041,8 @@ function setupAboutfold() {
     return;
   }
 
+  let isInView = false;
+
   function update() {
     const rect = section.getBoundingClientRect();
     const scrollable = section.offsetHeight - window.innerHeight;
@@ -969,13 +1060,14 @@ function setupAboutfold() {
       const itemProg = Math.max(0, Math.min(1, stepProgress - idx));
       const isLast = idx === items.length - 1;
       const isActive = isLast ? stepProgress >= idx - 0.3 : (stepProgress >= idx - 0.3 && stepProgress < idx + 0.7);
-      
+
       item.style.setProperty("--item-progress", itemProg.toFixed(3));
       item.classList.toggle("is-expanded", isActive);
       item.classList.toggle("is-active", isActive);
     });
 
-    updatePattern(progress);
+    // Skip expensive per-bar pattern animation when section is off-screen
+    if (isInView) updatePattern(progress);
     updateRouteState(stepProgress);
     updateRailState(stepProgress);
   }
@@ -989,6 +1081,21 @@ function setupAboutfold() {
     });
   }
 
+  if ("IntersectionObserver" in window) {
+    const visibilityObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isInView = entry.isIntersecting;
+          if (isInView) schedule();
+        });
+      },
+      { rootMargin: "200px 0px" }
+    );
+    visibilityObserver.observe(section);
+  } else {
+    isInView = true;
+  }
+
   window.addEventListener("scroll", schedule, { passive: true });
   window.addEventListener("resize", () => {
     buildPattern();
@@ -997,6 +1104,246 @@ function setupAboutfold() {
   update();
 }
 
+function setupMemberReadmore() {
+  const buttons = document.querySelectorAll("[data-readmore]");
+  buttons.forEach((btn) => {
+    const card = btn.closest(".member");
+    if (!card) return;
+    const label = btn.querySelector("span");
+    btn.addEventListener("click", () => {
+      const isExpanded = card.classList.toggle("is-expanded");
+      btn.setAttribute("aria-expanded", String(isExpanded));
+      if (label) label.textContent = isExpanded ? "Read less" : "Read more";
+    });
+  });
+}
+
+function setupCtaPattern() {
+  const sections = document.querySelectorAll(".cta-strip");
+  sections.forEach((section) => {
+    let pattern = section.querySelector("[data-cta-pattern]");
+    if (!pattern) {
+      pattern = document.createElement("div");
+      pattern.className = "cta-strip__pattern";
+      pattern.setAttribute("data-cta-pattern", "");
+      pattern.setAttribute("aria-hidden", "true");
+      section.insertBefore(pattern, section.firstChild);
+    }
+
+    const stripeStops = [
+      { at: 0, color: "#b9c1cd" },
+      { at: 0.055, color: "#7d89a4" },
+      { at: 0.14, color: "#56617f" },
+      { at: 0.24, color: "#555263" },
+      { at: 0.33, color: "#493f48" },
+      { at: 0.41, color: "#865241" },
+      { at: 0.49, color: "#c65f38" },
+      { at: 0.56, color: "#e4532b" },
+      { at: 0.64, color: "#de5e36" },
+      { at: 0.71, color: "#b9877d" },
+      { at: 0.79, color: "#857a7d" },
+      { at: 0.88, color: "#b4b8be" },
+      { at: 1, color: "#e4e7e7" },
+    ];
+
+    stripeStops.forEach((stop) => {
+      stop.rgb = hexToRgb(stop.color);
+    });
+
+    let bars = [];
+    let patternWidth = 0;
+    let seed = 0x4d4f5354;
+    let isIntersecting = false;
+    let animationFrameId = null;
+
+    function rand() {
+      seed |= 0;
+      seed = (seed + 0x6d2b79f5) | 0;
+      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    }
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
+
+    function hexToRgb(hex) {
+      const val = hex.replace("#", "");
+      return [
+        parseInt(val.slice(0, 2), 16),
+        parseInt(val.slice(2, 4), 16),
+        parseInt(val.slice(4, 6), 16),
+      ];
+    }
+
+    function mixChannel(a, b, t) {
+      return Math.round(a + (b - a) * t);
+    }
+
+    function mixColor(a, b, t) {
+      return [
+        mixChannel(a[0], b[0], t),
+        mixChannel(a[1], b[1], t),
+        mixChannel(a[2], b[2], t),
+      ];
+    }
+
+    function shadeColor(rgb, amount) {
+      const target = amount >= 0 ? 255 : 0;
+      const strength = Math.abs(amount);
+      return rgb.map((channel) => Math.round(channel + (target - channel) * strength));
+    }
+
+    function colorAt(position) {
+      const x = clamp(position, 0, 1);
+      for (let i = 1; i < stripeStops.length; i++) {
+        const prev = stripeStops[i - 1];
+        const next = stripeStops[i];
+        if (x <= next.at) {
+          const t = (x - prev.at) / (next.at - prev.at);
+          return mixColor(prev.rgb, next.rgb, clamp(t, 0, 1));
+        }
+      }
+      return stripeStops[stripeStops.length - 1].rgb;
+    }
+
+    function rgbToCss(rgb) {
+      return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+    }
+
+    function build() {
+      const rect = pattern.getBoundingClientRect();
+      const nextWidth = Math.ceil(rect.width || window.innerWidth);
+      if (bars.length && Math.abs(nextWidth - patternWidth) < 16) return;
+
+      patternWidth = Math.max(320, nextWidth);
+      seed = 0x4d4f5354;
+      bars = [];
+      pattern.replaceChildren();
+
+      let x = 0;
+      while (x < patternWidth * 1.025) {
+        const xNorm = clamp(x / patternWidth, 0, 1);
+        const isHairline = rand() > 0.76;
+        const isLightStreak = rand() > 0.89;
+        const width = isHairline
+          ? 0.8 + rand() * 1.8
+          : 2.2 + Math.pow(rand(), 1.45) * 8.2;
+        const sample = clamp(xNorm + (rand() - 0.5) * 0.034, 0, 1);
+        const shade = isLightStreak ? 0.2 + rand() * 0.28 : (rand() - 0.5) * 0.3;
+        const baseAlpha = isLightStreak ? 0.72 + rand() * 0.2 : 0.58 + rand() * 0.34;
+        const baseColor = shadeColor(colorAt(sample), shade);
+        const bar = document.createElement("span");
+
+        bar.className = "cta-strip__bar";
+        bar.style.width = `${width.toFixed(2)}px`;
+        bar.style.backgroundColor = rgbToCss(baseColor);
+        bar.style.opacity = baseAlpha.toFixed(3);
+        pattern.appendChild(bar);
+
+        bars.push({
+          el: bar,
+          xNorm,
+          sample,
+          shade,
+          baseAlpha,
+          phase: rand(),
+        });
+
+        x += width;
+      }
+    }
+
+    function animate(timestamp) {
+      if (!isIntersecting) return;
+      const t = timestamp / 8000;
+      for (let i = 0; i < bars.length; i++) {
+        const b = bars[i];
+        const shimmer = Math.sin((b.phase + t * 1.65) * Math.PI * 2);
+        const sweep = Math.cos((b.xNorm * 9.5 - t * 3.2) * Math.PI * 2);
+        const pulse = Math.sin((b.xNorm * 18 + b.phase * 2.4 + t * 4.1) * Math.PI * 2);
+        const sample = clamp(b.sample + shimmer * 0.012 + sweep * 0.018, 0, 1);
+        const color = shadeColor(colorAt(sample), b.shade + shimmer * 0.075 + sweep * 0.065 + pulse * 0.035);
+        const opacity = clamp(b.baseAlpha + shimmer * 0.055 + sweep * 0.04 + pulse * 0.03, 0.42, 1);
+
+        const colorKey = (color[0] >> 2) << 16 | (color[1] >> 2) << 8 | (color[2] >> 2);
+        const opacityKey = Math.round(opacity * 25);
+        if (b.lastColorKey !== colorKey) {
+          b.el.style.backgroundColor = rgbToCss(color);
+          b.lastColorKey = colorKey;
+        }
+        if (b.lastOpacityKey !== opacityKey) {
+          b.el.style.opacity = opacity.toFixed(3);
+          b.lastOpacityKey = opacityKey;
+        }
+      }
+      animationFrameId = requestAnimationFrame(animate);
+    }
+
+    let resizeTimer = null;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        build();
+      }, 100);
+    });
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          isIntersecting = entry.isIntersecting;
+          if (isIntersecting) {
+            build();
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = requestAnimationFrame(animate);
+          } else {
+            cancelAnimationFrame(animationFrameId);
+          }
+        });
+      }, { rootMargin: "200px 0px" });
+      observer.observe(section);
+    } else {
+      isIntersecting = true;
+      build();
+      animationFrameId = requestAnimationFrame(animate);
+    }
+  });
+}
+
+function setupParallax() {
+  const images = Array.from(document.querySelectorAll(".photo-break img, .aud-bleed img, .footer-summit__photo img"));
+  if (!images.length) return;
+
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reducedMotion) return;
+
+  function tick() {
+    const vh = window.innerHeight;
+    for (let i = 0; i < images.length; i++) {
+      const img = images[i];
+      const parent = img.parentElement;
+      if (!parent) continue;
+
+      const rect = parent.getBoundingClientRect();
+      // Skip if far outside viewport to avoid unnecessary work
+      if (rect.bottom < -200 || rect.top > vh + 200) continue;
+
+      // progress 0 = entering from bottom, 0.5 = centered, 1 = exiting top
+      const progress = (vh - rect.top) / (vh + rect.height);
+      const clamped = Math.max(0, Math.min(1, progress));
+
+      // Translate ±8% relative to image height
+      const translateY = (0.5 - clamped) * 16;
+      img.style.transform = `translate3d(-50%, calc(-50% + ${translateY.toFixed(2)}%), 0)`;
+    }
+  }
+
+  window.updateParallax = tick;
+  tick(); // Apply immediately on load
+}
+
+setupParallax();
 updateScroll();
 setupSectionReveal();
 setupRouteMap();
@@ -1005,5 +1352,27 @@ setupMobileMenu();
 setupHeroTrail();
 setupAudienceTriptych();
 setupAudienceConnectors();
-setupAboutfold();
+setupMemberReadmore();
+setupCtaPattern();
+
+// Defer the expensive aboutfold setup (builds ~550 bars + SVG path computeLength)
+// until the section is near the viewport. Falls back to immediate init.
+(function deferSetupAboutfold() {
+  const target = document.querySelector(".aboutfold");
+  if (!target || !("IntersectionObserver" in window)) {
+    setupAboutfold();
+    return;
+  }
+  const initObserver = new IntersectionObserver(
+    (entries, obs) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        obs.disconnect();
+        setupAboutfold();
+      }
+    },
+    { rootMargin: "800px 0px" }
+  );
+  initObserver.observe(target);
+})();
+
 window.addEventListener("load", () => scheduleTrailOverlay(true));
