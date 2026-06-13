@@ -8552,3 +8552,95 @@ body.menu-open {
     transition: none;
   }
 }
+
+/* ---------- SECTION TRAIL (stock-chart divider, homepage parity) ----------
+   Reuses the homepage trail's visual language — uneven jagged "stock chart"
+   line in warm orange, soft glow, a pulsing checkpoint dot, and a
+   left-to-right draw-in as the section scrolls into view. Placed at the top
+   of dark sections that follow a photo break, so the line emerges from the
+   image into the content like the hero trail emerges from the ridge. */
+
+.has-trail {
+  position: relative;
+}
+
+.has-trail::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: clamp(72px, 9vw, 120px);
+  z-index: 2;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: 100% 100%;
+  filter: drop-shadow(0 0 5px rgba(255, 168, 110, 0.45));
+  opacity: 0.82;
+  /* draw-in: reveal the line left → right */
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.5s var(--ease-out) var(--reveal-delay, 0ms);
+}
+
+.has-trail.is-visible::before {
+  clip-path: inset(0 0 0 0);
+}
+
+.has-trail--a::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0 78 L46 74 L92 84 L150 60 L196 68 L250 44 L300 56 L356 32 L410 50 L470 38 L540 64 L598 52 L660 70 L712 46 L772 58 L838 34 L902 52 L968 28 L1032 48 L1092 36 L1146 58 L1200 50' stroke='%23FFA86E' stroke-opacity='.92' stroke-width='1.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.has-trail--b::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0 44 L54 40 L110 52 L168 36 L220 54 L286 42 L342 60 L408 48 L470 66 L532 52 L598 70 L660 56 L726 74 L792 60 L856 78 L922 64 L988 82 L1052 68 L1112 86 L1170 72 L1200 80' stroke='%23FFA86E' stroke-opacity='.92' stroke-width='1.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* Pulsing checkpoint dot riding on the line — mirrors .hero-trail-point */
+.has-trail__dot {
+  position: absolute;
+  z-index: 3;
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 50%;
+  background: rgba(255, 168, 110, 0.98);
+  box-shadow:
+    0 0 0 3px rgba(255, 168, 110, 0.18),
+    0 0 12px rgba(255, 168, 110, 0.6),
+    0 0 26px rgba(255, 188, 140, 0.32);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 600ms var(--ease-out) 900ms;
+}
+
+.has-trail.is-visible .has-trail__dot {
+  opacity: 1;
+  animation: trail-point-pulse 3.4s ease-in-out infinite;
+}
+
+/* Dot positions map 1:1 to the stretched SVG (left = x/1200, top = y/120) */
+.has-trail--a .has-trail__dot {
+  /* peak at (968, 28) */
+  left: 80.67%;
+  top: clamp(16px, calc(0.2333 * clamp(72px, 9vw, 120px)), 28px);
+}
+
+.has-trail--b .has-trail__dot {
+  /* peak at (168, 36) */
+  left: 14%;
+  top: clamp(20px, calc(0.3 * clamp(72px, 9vw, 120px)), 36px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .has-trail::before {
+    clip-path: none;
+    transition: none;
+  }
+  .has-trail__dot {
+    opacity: 1;
+    transition: none;
+  }
+  .has-trail.is-visible .has-trail__dot {
+    animation: none;
+  }
+}

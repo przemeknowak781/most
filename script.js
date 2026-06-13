@@ -318,7 +318,7 @@ function updateScroll() {
 }
 
 function setupSectionReveal() {
-  const targets = document.querySelectorAll(".basecamp, .route-stage, .member, [data-reveal]");
+  const targets = document.querySelectorAll(".basecamp, .route-stage, .member, .has-trail, [data-reveal]");
   if (!targets.length) return;
 
   if (!("IntersectionObserver" in window)) {
