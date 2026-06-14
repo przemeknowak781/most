@@ -5887,25 +5887,35 @@ body.menu-open {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0 78 L46 74 L92 84 L150 60 L196 68 L250 44 L300 56 L356 32 L410 50 L470 38 L540 64 L598 52 L660 70 L712 46 L772 58 L838 34 L902 52 L968 28 L1032 48 L1092 36 L1146 58 L1200 50' stroke='%23FFA86E' stroke-opacity='.55' stroke-width='1.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
-  filter: drop-shadow(0 0 5px rgba(255, 168, 110, 0.35));
+  filter: drop-shadow(0 0 5px rgba(255, 168, 110, 0.44));
   clip-path: inset(0 100% 0 0);
-  transition: clip-path 1.4s var(--ease-out);
+  transition: clip-path 1.6s var(--ease-out);
+}
+
+/*
+  Smooth, organic trail in the spirit of the hero ridge line — flowing bezier
+  curves, not a regular zigzag. Two variants so consecutive dividers don't
+  read as a repeated pattern.
+*/
+.member-trail--a::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0 88 C 130 84 210 66 330 70 C 430 73 500 52 610 50 C 720 48 800 64 910 44 C 1010 26 1090 38 1200 22' stroke='%23FFA86E' stroke-opacity='.85' stroke-width='1.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.member-trail--b::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0 60 C 120 66 200 46 310 50 C 420 54 490 34 600 40 C 710 46 790 28 900 34 C 1010 40 1090 22 1200 28' stroke='%23FFA86E' stroke-opacity='.85' stroke-width='1.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
 .member-trail.is-visible::before {
   clip-path: inset(0 0 0 0);
 }
 
-/* Waypoint dot — peak of the jagged path near x=968/1200 */
+/* Waypoint dot — a checkpoint riding on the trail (positioned per variant) */
 .member-trail__dot {
   position: absolute;
   z-index: 2;
-  left: 80.67%;
-  top: 23.3%;
   width: 8px;
   height: 8px;
   margin: -4px 0 0 -4px;
@@ -5922,6 +5932,17 @@ body.menu-open {
 .member-trail.is-visible .member-trail__dot {
   opacity: 1;
   animation: trail-point-pulse 3.4s ease-in-out infinite;
+}
+
+/* Dot sits on an anchor point of each variant's curve */
+.member-trail--a .member-trail__dot {
+  left: 75.83%;
+  top: 36.67%;
+}
+
+.member-trail--b .member-trail__dot {
+  left: 50%;
+  top: 33.33%;
 }
 
 @media (prefers-reduced-motion: reduce) {
