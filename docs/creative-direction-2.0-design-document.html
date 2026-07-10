@@ -99,6 +99,8 @@
   .cover .meta{display:flex;gap:36px;margin-top:34px;padding-top:22px;border-top:1px solid var(--light-12);}
   .cover .meta div{font-size:12px;color:var(--light-60);}
   .cover .meta strong{display:block;font-size:14px;color:var(--light);font-weight:500;margin-top:5px;}
+  .cover-by{margin-top:18px;font:600 12px/1 "Montserrat",system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--light-60);}
+  .cover-by span{color:var(--orange-soft);}
 
   /* ---------- GENERIC CONTENT PAGE ---------- */
   .kicker-row{display:flex;align-items:center;gap:10px;margin-bottom:11px;}
@@ -117,11 +119,11 @@
   .toc-row .d{margin-left:auto;font-size:12.5px;color:var(--light-60);text-align:right;max-width:3.6in;}
 
   /* ---------- DIRECTION AT A GLANCE ---------- */
-  .glance-grid{margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-  .glance-card{border:1px solid var(--light-12);border-radius:10px;padding:20px 22px;background:rgba(240,235,233,.03);}
+  .glance-grid{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+  .glance-card{border:1px solid var(--light-12);border-radius:10px;padding:15px 18px;background:rgba(240,235,233,.03);}
   .glance-card .num{font:600 12px "Urbanist";color:var(--orange);letter-spacing:.08em;}
-  .glance-card h3{font-size:17px;margin-top:8px;}
-  .glance-card p{font-size:13px;line-height:1.6;color:var(--light-60);margin-top:8px;}
+  .glance-card h3{font-size:16px;margin-top:6px;}
+  .glance-card p{font-size:12.5px;line-height:1.5;color:var(--light-60);margin-top:6px;}
 
   /* ---------- COLOR PAGE ---------- */
   .swatch-grid{margin-top:26px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
@@ -145,13 +147,22 @@
   .ba-card .cap{padding:10px 12px;font-size:12px;line-height:1.5;color:var(--light-60);}
 
   /* ---------- SEGMENT COLOR CODING ---------- */
-  .segment-grid{margin-top:26px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .segment-grid{margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
   .segment-card{border:1px solid var(--light-12);border-radius:10px;overflow:hidden;background:rgba(240,235,233,.03);}
-  .segment-card img{display:block;width:100%;}
+  .segment-card img{display:block;width:100%;height:300px;object-fit:cover;object-position:top;}
   .segment-card .meta{padding:12px 14px;}
   .segment-card .meta .name{font-size:14px;font-weight:500;}
   .segment-card .meta .hex{font-size:11px;color:var(--light-60);font-family:monospace;margin-top:3px;}
   .segment-card .meta .shape{font-size:11.5px;color:var(--light-60);margin-top:6px;line-height:1.5;}
+
+  /* ---------- AI PAGE ---------- */
+  .ai-split{margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .ai-col{border:1px solid rgba(8,11,19,.12);border-radius:10px;padding:18px 20px;background:rgba(8,11,19,.02);}
+  .ai-col .tag{font:600 10px/1 "Montserrat",system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#c24a1f;}
+  .ai-col h3{font-size:17px;margin-top:7px;color:var(--navy-deep);}
+  .ai-col ul{margin:13px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px;}
+  .ai-col li{font-size:12.5px;line-height:1.5;color:rgba(8,11,19,.72);padding-left:16px;position:relative;}
+  .ai-col li::before{content:"—";position:absolute;left:0;color:#c24a1f;}
 
   /* ---------- TYPE PAGE ---------- */
   .type-row{margin-top:26px;border-top:1px solid var(--light-12);padding:22px 0;}
@@ -182,10 +193,10 @@
   .sitemap li::before{content:"";position:absolute;left:0;top:7px;width:6px;height:6px;background:var(--orange);border-radius:50%;}
 
   /* ---------- SCREENS GALLERY ---------- */
-  .gallery{margin-top:20px;display:flex;flex-direction:column;gap:22px;}
+  .gallery{margin-top:18px;display:flex;flex-direction:column;gap:16px;}
   .gallery figure{margin:0;border-radius:10px;overflow:hidden;border:1px solid var(--light-12);}
-  .gallery img{display:block;width:100%;}
-  .gallery figcaption{padding:10px 14px;font-size:12.5px;color:var(--light-60);background:rgba(240,235,233,.03);}
+  .gallery img{display:block;max-width:100%;width:auto;max-height:330px;margin:0 auto;}
+  .gallery figcaption{padding:8px 14px;font-size:12px;color:var(--light-60);background:rgba(240,235,233,.03);}
 
   /* ---------- CLOSING ---------- */
   .closing-list{margin-top:24px;display:flex;flex-direction:column;gap:13px;}
@@ -210,9 +221,10 @@
       <p class="eyebrow kicker">Creative Direction 2.0</p>
       <h1>Design Direction<br/>Summary &amp; Reference</h1>
       <p class="sub">Podsumowanie kierunku kreatywnego wypracowanego po ostatnich rozmowach, zamykające ten etap prac i stanowiące punkt wyjścia do projektowania kolejnych podstron.</p>
+      <p class="cover-by">Opracowanie — <span>therectangles</span></p>
       <div class="meta">
         <div>Projekt<strong>MOST Partners — Website</strong></div>
-        <div>Etap<strong>Creative Direction 2.0</strong></div>
+        <div>Opracowanie<strong>therectangles</strong></div>
         <div>Status<strong>Do zamknięcia</strong></div>
       </div>
     </div>
@@ -223,7 +235,7 @@
   <section class="page">
     <div class="kicker-row"><span class="idx">00</span><p class="eyebrow">O tym dokumencie</p></div>
     <h2 class="page-title">Jeden punkt odniesienia dla dalszych prac</h2>
-    <p class="lede">Ten dokument zbiera i porządkuje to, co zostało już wypracowane w rozmowach i materiałach pokazanych przez Przemka — nie wprowadza nowego projektu ani finalnych widoków podstron. Jego celem jest formalne zamknięcie etapu Creative Direction 2.0, tak aby cały zespół pracował dalej w oparciu o te same założenia.</p>
+    <p class="lede">Ten dokument zbiera i porządkuje to, co zostało już wypracowane w rozmowach i materiałach pokazanych przez zespół therectangles — nie wprowadza nowego projektu ani finalnych widoków podstron. Jego celem jest formalne zamknięcie etapu Creative Direction 2.0, tak aby cały zespół pracował dalej w oparciu o te same założenia.</p>
 
     <ul class="toc-list">
       <li class="toc-row"><span class="n">01</span><span class="t">Kierunek w skrócie</span><span class="d">Osiem punktów opisujących założenia dalszych prac</span></li>
@@ -284,7 +296,7 @@
       <div class="glance-card">
         <p class="num">Kontekst pracy z AI</p>
         <h3>Wsparcie w implementacji, nie w projektowaniu</h3>
-        <p>Designy zaprojektowane ręcznie przez Przemka. AI pomagał je zaimplementować w kodzie i wprowadzać punktowe modyfikacje.</p>
+        <p>Designy zaprojektowane ręcznie przez zespół therectangles (nie tylko Przemka). AI pomagało zaimplementować je w kodzie i nanosić punktowe modyfikacje.</p>
       </div>
     </div>
     <div class="page-foot"><span class="mark"><span class="dot"></span>MOST Partners</span><span>03</span></div>
@@ -373,7 +385,7 @@
 
     <div class="callout">
       <p class="eyebrow">Otwarta decyzja projektowa</p>
-      <p>Ustalenie o spójnym tonie pomarańczu (patrz: System kolorystyczny) prawdopodobnie dotyczy też tych trzech akcentów. Nie zakładamy tu jednak konkretnego rozwiązania — to, w jaki sposób pogodzić rozróżnienie segmentów ze spójnością kolorystyczną (np. warianty jednego tonu pomarańczu, czy inne podejście), jest decyzją do ustalenia bezpośrednio z Przemkiem.</p>
+      <p>Ustalenie o spójnym tonie pomarańczu (patrz: System kolorystyczny) prawdopodobnie dotyczy też tych trzech akcentów. Nie zakładamy tu jednak konkretnego rozwiązania — to, w jaki sposób pogodzić rozróżnienie segmentów ze spójnością kolorystyczną (np. warianty jednego tonu pomarańczu, czy inne podejście), jest decyzją do ustalenia bezpośrednio z zespołem therectangles.</p>
     </div>
     <div class="page-foot"><span class="mark"><span class="dot"></span>MOST Partners</span><span>05</span></div>
   </section>
@@ -514,11 +526,35 @@
   <!-- 12. WORKING WITH AI -->
   <section class="page light">
     <div class="kicker-row"><span class="idx">09</span><p class="eyebrow">Praca z AI</p></div>
-    <h2 class="page-title">Rola AI: implementacja, nie projektowanie</h2>
-    <p class="lede" style="max-width:7.2in;">Dla jasności i uniknięcia nieporozumień: praca z AI przy tym projekcie nie polegała na generowaniu designów od zera. Wszystkie projekty zostały zaprojektowane ręcznie przez Przemka. Rola AI ograniczała się do:</p>
-    <div class="rule-list" style="margin-top:20px;">
-      <div class="r" style="color:rgba(8,11,19,.75)"><span class="m">—</span><span>pomocy przy <b style="color:#161822">implementacji</b> ręcznie zaprojektowanych układów w kodzie (HTML/CSS/JS),</span></div>
-      <div class="r" style="color:rgba(8,11,19,.75)"><span class="m">—</span><span>wprowadzaniu późniejszych, <b style="color:#161822">punktowych i jednostkowych modyfikacji</b> wybranych elementów.</span></div>
+    <h2 class="page-title">Rola AI: narzędzie w rękach zespołu therectangles</h2>
+    <p class="lede" style="max-width:8in;">Dla jasności i uniknięcia nieporozumień: kierunek kreatywny oraz wszystkie projekty to praca <b>całego zespołu therectangles</b> — nie tylko Przemka. AI było narzędziem wspierającym, a nie autorem designu. Nie generowaliśmy layoutów „od zera" promptem — koncepcja, kompozycje, hierarchia i estetyka powstały po stronie ludzi. AI weszło do gry dopiero na etapie technicznym.</p>
+
+    <div class="ai-split">
+      <div class="ai-col">
+        <p class="tag">Zespół therectangles — autor</p>
+        <h3>Projekt i decyzje kreatywne</h3>
+        <ul>
+          <li>Kierunek kreatywny i koncepcja całości</li>
+          <li>Projekt layoutów, kompozycji i hierarchii treści</li>
+          <li>Dobór kolorystyki, typografii i doboru zdjęć</li>
+          <li>Decyzje projektowe i iteracje na podstawie feedbacku</li>
+        </ul>
+      </div>
+      <div class="ai-col">
+        <p class="tag">AI — narzędzie</p>
+        <h3>Wsparcie techniczne</h3>
+        <ul>
+          <li>Implementacja gotowych, ręcznie zaprojektowanych układów w kodzie (HTML/CSS/JS)</li>
+          <li>Punktowe, jednostkowe modyfikacje wskazanych elementów</li>
+          <li>Przyspieszenie żmudnych, powtarzalnych zadań technicznych</li>
+          <li>Zawsze pod kontrolą i według wskazówek zespołu</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout" style="border-color:rgba(194,74,31,.4);background:rgba(194,74,31,.07);margin-top:22px;">
+      <p class="eyebrow">Dlaczego to podkreślamy</p>
+      <p style="color:rgba(8,11,19,.75)">Autorstwo i odpowiedzialność za kierunek leżą po stronie zespołu therectangles. AI nie zastępuje projektanta — pomaga jedynie szybciej doprowadzić ręcznie zaprojektowane rozwiązania do działającego kodu i sprawnie nanosić drobne poprawki.</p>
     </div>
     <div class="page-foot"><span class="mark"><span class="dot"></span>MOST Partners</span><span>13</span></div>
   </section>
@@ -532,7 +568,7 @@
     <div class="closing-list">
       <div class="c"><span class="box"></span><span>Kierunek, styl komunikacji, layout i kluczowa identyfikacja wizualna — utrzymane bez zmian.</span></div>
       <div class="c"><span class="box"></span><span>Kolorystyka — ujednolicenie akcentów wokół jednego, spójnego tonu pomarańczu.</span></div>
-      <div class="c"><span class="box"></span><span>Kodowanie segmentów Founders / Companies / Investors — forma ujednolicenia do ustalenia z Przemkiem.</span></div>
+      <div class="c"><span class="box"></span><span>Kodowanie segmentów Founders / Companies / Investors — forma ujednolicenia do ustalenia z zespołem therectangles.</span></div>
       <div class="c"><span class="box"></span><span>Linie szlaku/dividery — jedna miękka linia jak w hero, spójna w całym serwisie (bez mechanicznych zygzaków).</span></div>
       <div class="c"><span class="box"></span><span>Kolejny krok: projektowanie pozostałych podstron w oparciu o powyższe założenia.</span></div>
     </div>
