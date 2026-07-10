@@ -8777,7 +8777,7 @@ body.menu-open {
 }
 
 .has-trail--b::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0 44 L54 40 L110 52 L168 36 L220 54 L286 42 L342 60 L408 48 L470 66 L532 52 L598 70 L660 56 L726 74 L792 60 L856 78 L922 64 L988 82 L1052 68 L1112 86 L1170 72 L1200 80' stroke='%23FFA86E' stroke-opacity='.92' stroke-width='1.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0 78 L46 74 L92 84 L150 60 L196 68 L250 44 L300 56 L356 32 L410 50 L470 38 L540 64 L598 52 L660 70 L712 46 L772 58 L838 34 L902 52 L968 28 L1032 48 L1092 36 L1146 58 L1200 50' stroke='%23FFA86E' stroke-opacity='.92' stroke-width='1.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
 /* Pulsing checkpoint dot riding on the line — mirrors .hero-trail-point */
@@ -8811,9 +8811,9 @@ body.menu-open {
 }
 
 .has-trail--b .has-trail__dot {
-  /* peak at (168, 36) */
-  left: 14%;
-  top: clamp(20px, calc(0.3 * clamp(72px, 9vw, 120px)), 36px);
+  /* peak at (968, 28) — matches the single canonical trail line */
+  left: 80.67%;
+  top: clamp(16px, calc(0.2333 * clamp(72px, 9vw, 120px)), 28px);
 }
 
 @media (prefers-reduced-motion: reduce) {
