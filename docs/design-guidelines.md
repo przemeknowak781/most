@@ -91,8 +91,14 @@ so there is no visible rim.
 **Placement is coming-soon's, mirrored.** Coming-soon puts the sun bottom-left;
 here it sits bottom-**right**, behind the ridge that ascends toward the climbers,
 so they climb into the light and the left third stays deep and cool for the
-headline. The background photograph is horizontally symmetric, so nothing is
-gained by flipping the image itself — only the light layers move.
+headline.
+
+The photograph is **not** mirrored, and must not be: the sun physically strikes
+the rock on the right of the frame, which is the side the CSS light is on.
+Mirroring it would throw the lit peaks over to the left, under the headline, and
+leave the sun glowing on the hazy side. What has to stay off them is the
+darkening — the night ramp and the top vignette are pulled back on the right so
+the sunlit rock reads, and kept on the left where the headline needs its ground.
 
 ### 03 · The mountain as stage
 

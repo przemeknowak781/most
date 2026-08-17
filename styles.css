@@ -415,8 +415,8 @@ body.menu-open {
 .hero-wash {
   z-index: 1;
   background:
-    linear-gradient(180deg, rgba(5, 13, 25, 0.9) 0%, rgba(8, 17, 31, 0.8) 28%, rgba(41, 36, 42, 0.62) 48%, rgba(121, 64, 43, 0.58) 68%, rgba(55, 24, 17, 0.68) 100%),
-    radial-gradient(980px 620px at 88% 60%, rgb(from var(--hero-wash) r g b / 0.36), rgb(from var(--hero-wash) r g b / 0.2) 48%, transparent 74%),
+    linear-gradient(180deg, rgba(5, 13, 25, 0.82) 0%, rgba(8, 17, 31, 0.6) 26%, rgba(35, 30, 36, 0.3) 44%, rgba(90, 48, 33, 0.24) 66%, rgba(55, 24, 17, 0.34) 100%),
+    radial-gradient(980px 620px at 88% 60%, rgb(from var(--hero-wash) r g b / 0.22), rgb(from var(--hero-wash) r g b / 0.12) 48%, transparent 74%),
     radial-gradient(900px 520px at 20% 38%, rgba(9, 18, 33, 0.56), rgba(8, 11, 19, 0.16) 58%, transparent 82%),
     linear-gradient(90deg, rgba(8, 11, 19, 0.72), rgba(8, 11, 19, 0.32) 46%, rgba(8, 11, 19, 0.1) 76%, transparent 100%);
   -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 55%, rgba(0, 0, 0, 0.42) 67%, transparent 82%);
@@ -426,8 +426,8 @@ body.menu-open {
 .hero-vignette {
   z-index: 2;
   background:
-    linear-gradient(180deg, rgba(6, 12, 23, 0.5), rgba(6, 12, 23, 0.2) 24%, transparent 46%, rgba(8, 11, 19, 0.52) 100%),
-    radial-gradient(1120px 680px at 52% -8%, rgba(5, 13, 25, 0.66), transparent 70%),
+    linear-gradient(180deg, rgba(6, 12, 23, 0.42), rgba(6, 12, 23, 0.12) 24%, transparent 44%, rgba(8, 11, 19, 0.4) 100%),
+    radial-gradient(1000px 560px at 24% -12%, rgba(5, 13, 25, 0.62), transparent 72%),
     radial-gradient(circle at 84% 58%, rgba(8, 11, 19, 0.22), transparent 48%),
     linear-gradient(90deg, rgba(8, 11, 19, 0.24), transparent 52%);
   -webkit-mask-image:
@@ -5327,9 +5327,9 @@ body.menu-open {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(900px 540px at 80% 56%, rgb(from var(--hero-wash) r g b / 0.32), transparent 72%),
-    linear-gradient(90deg, rgba(8, 11, 19, 0.62), rgba(8, 11, 19, 0.24) 52%, transparent 100%),
-    linear-gradient(180deg, rgba(5, 13, 25, 0.62) 0%, rgba(8, 11, 19, 0.36) 46%, rgba(8, 11, 19, 0.92) 100%);
+    radial-gradient(900px 540px at 80% 56%, rgb(from var(--hero-wash) r g b / 0.18), transparent 74%),
+    linear-gradient(90deg, rgba(8, 11, 19, 0.66), rgba(8, 11, 19, 0.22) 54%, transparent 100%),
+    linear-gradient(180deg, rgba(5, 13, 25, 0.5) 0%, rgba(8, 11, 19, 0.14) 44%, rgba(8, 11, 19, 0.82) 100%);
 }
 
 .page-hero__glow {
@@ -6547,27 +6547,30 @@ body.menu-open {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(900px 540px at 80% 58%, rgb(from var(--hero-wash) r g b / 0.34), transparent 72%),
-    linear-gradient(90deg, rgba(8, 11, 19, 0.6), rgba(8, 11, 19, 0.22) 54%, transparent 100%),
-    linear-gradient(180deg, rgba(5, 13, 25, 0.6) 0%, rgba(8, 11, 19, 0.34) 48%, rgba(8, 11, 19, 0.94) 100%);
+    radial-gradient(900px 540px at 80% 58%, rgb(from var(--hero-wash) r g b / 0.18), transparent 74%),
+    linear-gradient(90deg, rgba(8, 11, 19, 0.66), rgba(8, 11, 19, 0.2) 56%, transparent 100%),
+    linear-gradient(180deg, rgba(5, 13, 25, 0.48) 0%, rgba(8, 11, 19, 0.12) 46%, rgba(8, 11, 19, 0.86) 100%);
 }
 
 .aud-hero--founders .aud-hero__wash {
   background:
-    radial-gradient(900px 540px at 18% 28%, rgba(230, 95, 50, 0.6), transparent 70%),
-    linear-gradient(180deg, rgba(48, 16, 8, 0.4) 0%, rgba(8, 11, 19, 0.7) 70%, rgba(8, 11, 19, 0.95) 100%);
+    radial-gradient(900px 540px at 80% 54%, rgb(from var(--accent-founders) r g b / 0.24), transparent 74%),
+    linear-gradient(90deg, rgba(8, 11, 19, 0.68), rgba(8, 11, 19, 0.2) 56%, transparent 100%),
+    linear-gradient(180deg, rgba(30, 12, 8, 0.44) 0%, rgba(8, 11, 19, 0.12) 46%, rgba(8, 11, 19, 0.86) 100%);
 }
 
 .aud-hero--companies .aud-hero__wash {
   background:
-    radial-gradient(900px 540px at 78% 30%, rgba(155, 139, 149, 0.5), transparent 70%),
-    linear-gradient(180deg, rgba(40, 30, 38, 0.5) 0%, rgba(8, 11, 19, 0.7) 70%, rgba(8, 11, 19, 0.95) 100%);
+    radial-gradient(900px 540px at 80% 54%, rgb(from var(--accent-companies) r g b / 0.24), transparent 74%),
+    linear-gradient(90deg, rgba(8, 11, 19, 0.68), rgba(8, 11, 19, 0.2) 56%, transparent 100%),
+    linear-gradient(180deg, rgba(30, 24, 30, 0.44) 0%, rgba(8, 11, 19, 0.12) 46%, rgba(8, 11, 19, 0.86) 100%);
 }
 
 .aud-hero--investors .aud-hero__wash {
   background:
-    radial-gradient(900px 540px at 78% 30%, rgba(91, 122, 176, 0.5), transparent 70%),
-    linear-gradient(180deg, rgba(20, 30, 56, 0.55) 0%, rgba(8, 11, 19, 0.7) 70%, rgba(8, 11, 19, 0.95) 100%);
+    radial-gradient(900px 540px at 80% 54%, rgb(from var(--accent-investors) r g b / 0.26), transparent 74%),
+    linear-gradient(90deg, rgba(8, 11, 19, 0.68), rgba(8, 11, 19, 0.2) 56%, transparent 100%),
+    linear-gradient(180deg, rgba(16, 22, 42, 0.46) 0%, rgba(8, 11, 19, 0.12) 46%, rgba(8, 11, 19, 0.86) 100%);
 }
 
 .aud-hero__noise {
@@ -7166,9 +7169,9 @@ body.menu-open {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(900px 540px at 80% 56%, rgb(from var(--hero-wash) r g b / 0.32), transparent 72%),
-    linear-gradient(90deg, rgba(8, 11, 19, 0.58), rgba(8, 11, 19, 0.2) 54%, transparent 100%),
-    linear-gradient(180deg, rgba(5, 13, 25, 0.58) 0%, rgba(8, 11, 19, 0.32) 46%, rgba(8, 11, 19, 0.92) 100%);
+    radial-gradient(900px 540px at 80% 56%, rgb(from var(--hero-wash) r g b / 0.16), transparent 74%),
+    linear-gradient(90deg, rgba(8, 11, 19, 0.62), rgba(8, 11, 19, 0.18) 56%, transparent 100%),
+    linear-gradient(180deg, rgba(5, 13, 25, 0.44) 0%, rgba(8, 11, 19, 0.1) 44%, rgba(8, 11, 19, 0.8) 100%);
 }
 
 .contact-hero__ridge {
@@ -8803,9 +8806,9 @@ body.menu-open {
 
 .page--about .page-hero__wash {
   background:
-    radial-gradient(820px 520px at 82% 54%, rgb(from var(--hero-wash) r g b / 0.3), transparent 70%),
-    linear-gradient(90deg, rgba(4, 6, 12, 0.86) 0%, rgba(11, 14, 25, 0.56) 40%, rgba(18, 20, 31, 0.2) 74%, transparent 100%),
-    linear-gradient(180deg, rgba(5, 13, 25, 0.6) 0%, rgba(8, 11, 19, 0.3) 48%, rgba(8, 11, 19, 0.92) 100%);
+    radial-gradient(820px 520px at 82% 54%, rgb(from var(--hero-wash) r g b / 0.16), transparent 74%),
+    linear-gradient(90deg, rgba(4, 6, 12, 0.88) 0%, rgba(11, 14, 25, 0.52) 40%, rgba(18, 20, 31, 0.14) 74%, transparent 100%),
+    linear-gradient(180deg, rgba(5, 13, 25, 0.44) 0%, rgba(8, 11, 19, 0.1) 46%, rgba(8, 11, 19, 0.82) 100%);
 }
 
 .page-hero__vignette {
