@@ -93,12 +93,25 @@ here it sits bottom-**right**, behind the ridge that ascends toward the climbers
 so they climb into the light and the left third stays deep and cool for the
 headline.
 
-The photograph is **not** mirrored, and must not be: the sun physically strikes
-the rock on the right of the frame, which is the side the CSS light is on.
-Mirroring it would throw the lit peaks over to the left, under the headline, and
-leave the sun glowing on the hazy side. What has to stay off them is the
-darkening — the night ramp and the top vignette are pulled back on the right so
-the sunlit rock reads, and kept on the left where the headline needs its ground.
+**The photograph is mirrored** (`scale: -1 1` with `object-position` mirrored to
+match). Our silhouette is the coming-soon one flipped — its mass is on the
+right, where the photograph's own dark half needs to go — so the photograph
+flips with it. That puts the warm half of the frame under the scene's light and
+the dark half behind the ridge, which is the relationship coming-soon has.
+
+Three things have to hold together or the photograph stops reading:
+
+1. **The silhouette is an edge, not a wall.** It is flattened to `scaleY(0.8)`
+   from the bottom so the lit ranges clear it. If you change this, re-check that
+   the first trail checkpoint has not dropped into the stats row — the trail is
+   positioned against the ridge image's box at runtime.
+2. **The silhouettes are `--hero-ridge` (`#0c101c`), baked into
+   `gora-bez-tla-2000px.svg`, `climbers.svg` and `footer.svg`.** They shipped in
+   the retired `#161822`, which sat ~10 levels above the ground and flattened
+   the whole frame. Coming-soon's silhouette measures 2,6,20 in composite; ours
+   now matches. This one value did more for the look than any gradient.
+3. **The ground is fully down by 82% of the hero**, where the ridge band below
+   begins, so the join disappears instead of reading as a cut.
 
 ### 03 · The mountain as stage
 
