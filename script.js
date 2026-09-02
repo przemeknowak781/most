@@ -1376,3 +1376,29 @@ setupCtaPattern();
 })();
 
 window.addEventListener("load", () => scheduleTrailOverlay(true));
+
+/* Expertise "Our Areas": master-detail tabs (the Figma layout) */
+(() => {
+  const tabs = Array.from(document.querySelectorAll('.ex-areas__nav [role="tab"]'));
+  if (!tabs.length) return;
+  const panels = Array.from(document.querySelectorAll(".ex-areas__panel"));
+
+  const select = (tab) => {
+    tabs.forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
+    panels.forEach((p) => {
+      p.hidden = p.id !== tab.getAttribute("aria-controls");
+    });
+  };
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => select(tab));
+    tab.addEventListener("keydown", (e) => {
+      const step = e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : e.key === "ArrowUp" || e.key === "ArrowLeft" ? -1 : 0;
+      if (!step) return;
+      e.preventDefault();
+      const next = tabs[(tabs.indexOf(tab) + step + tabs.length) % tabs.length];
+      next.focus();
+      select(next);
+    });
+  });
+})();
