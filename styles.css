@@ -9907,9 +9907,12 @@ body.menu-open {
 }
 
 /* The ridge is the horizon: cream sky above it, dark rock below, so the
-   labels under the line flip to light type. */
+   labels under the line flip to light type. The rock is brand navy at the
+   ridge line - where the eye actually reads it - and deepens to the colour
+   of whatever section follows, so the seam at the bottom stays invisible
+   without repainting those sections. */
 .exwork-terrain__fill {
-  fill: #0b0e18;
+  fill: url(#terrain-rock);
 }
 
 .exwork-terrain__labels li.is-below h3 {
