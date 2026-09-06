@@ -9106,16 +9106,11 @@ body.menu-open {
   );
 }
 
-/* arch-1 is a darker photo than the other bleed shots - lift it so the
-   architecture still reads under the mauve duotone. */
+/* the companies bleed is a bright lattice - hold it back so the pattern
+   still reads under the duotone instead of blowing out */
 .page--companies .aud-bleed img {
-  filter: saturate(0.66) brightness(1.08) contrast(1.05);
+  filter: saturate(0.6) brightness(0.68) contrast(1.12);
 }
-/* Figma copy audit: the companies/investors "how we work" rows carry five
-   tiles {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-}
-
 .aud-grow__sub {
   margin: 14px auto 26px;
   max-width: 520px;
