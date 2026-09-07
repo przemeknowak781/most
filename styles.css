@@ -1576,6 +1576,50 @@ body.menu-open {
    rise and fall exactly as the cards do. The stroke is non-scaling, so
    stretching the viewBox to the section width moves the geometry without
    ever thickening the line. */
+/* The heading names founders, companies and investors; this is where the
+   page stops naming them and starts pointing at them. */
+.ascent__paths {
+  position: relative;
+  z-index: 1;
+  margin: clamp(30px, 4vh, 48px) auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 12px clamp(18px, 2.4vw, 34px);
+}
+
+.ascent__paths-label {
+  color: rgba(240, 235, 233, 0.5);
+  font: 500 11px / 1.4 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.ascent__paths a {
+  position: relative;
+  color: rgba(255, 168, 110, 0.92);
+  font: 400 clamp(15px, 1.15vw, 17px) / 1.4 "Outfit", system-ui, sans-serif;
+  text-decoration: none;
+}
+
+.ascent__paths a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.35;
+  transition: opacity 220ms var(--ease-out);
+}
+
+.ascent__paths a:hover::after,
+.ascent__paths a:focus-visible::after {
+  opacity: 1;
+}
+
 .ascent__trail {
   position: relative;
   z-index: 1;
@@ -1728,6 +1772,7 @@ body.menu-open {
     transform: none;
   }
   .ascent__trail { display: none; }
+  .ascent__paths { margin-bottom: clamp(8px, 2vh, 24px); }
 }
 
 @media (max-width: 720px) {
@@ -5734,6 +5779,21 @@ body.menu-open {
   text-wrap: balance;
 }
 
+a.photo-break__line {
+  align-self: flex-start;
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0 1px;
+  transition: background-size 320ms var(--ease-out);
+}
+
+a.photo-break__line:hover,
+a.photo-break__line:focus-visible {
+  background-size: 100% 1px;
+}
+
 /* ---------- EXPERTISE: AUDIENCE CHIPS ---------- */
 
 .ex-card__for {
@@ -6031,6 +6091,25 @@ body.menu-open {
   color: var(--light);
   font: 500 clamp(32px, 4.4vw, 56px) / 1.05 "Urbanist", system-ui, sans-serif;
   letter-spacing: -0.01em;
+}
+
+/* The quiet second route sits under the button, not beside it - the strip
+   is a centred block, so an inline-block would just share the line. */
+.cta-strip__alt {
+  display: table;
+  margin: clamp(20px, 2.6vh, 30px) auto 0;
+  color: rgba(240, 235, 233, 0.62);
+  font: 400 15px / 1.4 "Outfit", system-ui, sans-serif;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(240, 235, 233, 0.22);
+  padding-bottom: 3px;
+  transition: color 220ms ease, border-color 220ms ease;
+}
+
+.cta-strip__alt:hover,
+.cta-strip__alt:focus-visible {
+  color: var(--light);
+  border-bottom-color: rgba(255, 168, 110, 0.7);
 }
 
 .cta-strip__btn {
