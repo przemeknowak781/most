@@ -5779,19 +5779,20 @@ body.menu-open {
   text-wrap: balance;
 }
 
+/* A background-image underline would draw one 460px rule under a caption
+   that wraps to two ragged lines. Text decoration follows the text. */
 a.photo-break__line {
   align-self: flex-start;
-  text-decoration: none;
-  background-image: linear-gradient(currentColor, currentColor);
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  background-size: 0 1px;
-  transition: background-size 320ms var(--ease-out);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+  text-decoration-color: transparent;
+  transition: text-decoration-color 260ms var(--ease-out);
 }
 
 a.photo-break__line:hover,
 a.photo-break__line:focus-visible {
-  background-size: 100% 1px;
+  text-decoration-color: rgba(255, 168, 110, 0.85);
 }
 
 /* ---------- EXPERTISE: AUDIENCE CHIPS ---------- */
