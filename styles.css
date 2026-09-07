@@ -1690,19 +1690,6 @@ body.menu-open {
   height: 22px;
 }
 
-.ascent__stage--active {
-  background: linear-gradient(180deg, rgba(34, 22, 18, 0.95), rgba(20, 14, 12, 0.95));
-  border-color: rgba(255, 168, 110, 0.45);
-  box-shadow: 0 32px 80px rgba(255, 97, 44, 0.18), 0 0 0 1px rgba(255, 168, 110, 0.18) inset;
-}
-
-.ascent__stage--active .ascent__icon {
-  background: radial-gradient(circle, rgba(255, 97, 44, 0.55), rgba(255, 97, 44, 0.15));
-  border-color: rgba(255, 168, 110, 0.75);
-  color: var(--light);
-  box-shadow: 0 0 24px rgba(255, 97, 44, 0.55);
-}
-
 .ascent__step {
   margin: 0;
   color: rgba(255, 168, 110, 0.65);
@@ -1765,29 +1752,44 @@ body.menu-open {
   justify-content: center;
 }
 
+/* The marks bracket the line they are quoting. They used to sit at the
+   corners of a box spanning almost the whole section - the opening one
+   above and left of the eyebrow, the closing one 300px below the text,
+   next to nothing. Wrapping the heading makes them track it at any size.
+   The outward offset is a percentage of the frame, so the marks move
+   inward as the column narrows instead of clipping against overflow. */
+/* The marks are laid out beside the line they quote rather than positioned
+   at magic offsets: the opening one aligns to the top of the heading box,
+   the closing one to the bottom, so they follow it through any wrap,
+   type size or font substitution. A line-height of 1 keeps each glyph in
+   a predictable em box - at 0.5 the ink floated most of a line above where
+   the box said it was. */
 .perspective__frame {
-  position: absolute;
-  inset: clamp(80px, 12vh, 140px) clamp(8%, 12vw, 18%);
-  pointer-events: none;
-  z-index: 0;
+  position: relative;
+  z-index: 1;
+  max-width: 1000px;
+  margin: 0 auto clamp(36px, 5vh, 60px);
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: clamp(2px, 1vw, 16px);
 }
 
 .perspective__quote {
-  position: absolute;
+  flex: 0 0 auto;
   color: rgba(255, 97, 44, 0.16);
-  font: 600 clamp(160px, 22vw, 320px) / 0.5 "Urbanist", system-ui, sans-serif;
+  font: 600 clamp(64px, 6.4vw, 112px) / 1 "Urbanist", system-ui, sans-serif;
   letter-spacing: -0.04em;
+  pointer-events: none;
   user-select: none;
 }
 
 .perspective__quote--open {
-  top: 0;
-  left: 0;
+  align-self: flex-start;
 }
 
 .perspective__quote--close {
-  bottom: 0;
-  right: 0;
+  align-self: flex-end;
 }
 
 .perspective__step {
@@ -1811,8 +1813,8 @@ body.menu-open {
 .perspective__title {
   position: relative;
   z-index: 1;
-  max-width: 880px;
-  margin: 0 auto clamp(36px, 5vh, 60px);
+  flex: 0 1 880px;
+  margin: 0;
   color: var(--light);
   font: italic 500 clamp(30px, 4.2vw, 56px) / 1.1 "Urbanist", system-ui, sans-serif;
   letter-spacing: -0.005em;
