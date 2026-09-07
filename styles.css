@@ -1526,31 +1526,38 @@ body.menu-open {
   justify-content: center;
 }
 
+/* Label left, statement right - but on the same first baseline. Bottom
+   alignment hung the label 198px below the top of a four-line headline,
+   in the middle of an otherwise empty quadrant. */
 .ascent__head {
   position: relative;
+  width: 100%;
   max-width: 1280px;
   margin: 0 auto clamp(56px, 8vh, 96px);
   display: grid;
   grid-template-columns: minmax(0, 0.36fr) minmax(0, 0.64fr);
   gap: clamp(32px, 5vw, 80px);
-  align-items: end;
+  align-items: baseline;
 }
 
 .ascent__eyebrow {
   margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 14px;
   color: rgba(240, 235, 233, 0.5);
   font: 500 11px / 1.4 "Montserrat", system-ui, sans-serif;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  max-width: 260px;
+  max-width: 300px;
 }
 
+/* As a flex item competing with two lines of tracked-out caps inside a
+   260px box, this rule resolved to 0px wide at every width and never drew
+   at all. Sitting on the baseline in front of the label, it does. */
 .ascent__eyebrow-rule {
-  flex: 1;
+  display: inline-block;
+  width: 44px;
   height: 1px;
+  margin-right: 12px;
+  vertical-align: middle;
   background: linear-gradient(90deg, rgba(255, 168, 110, 0.55), transparent);
 }
 
@@ -1563,13 +1570,12 @@ body.menu-open {
 }
 
 /* The ascent line is a route like every other route on the site: the same
-   warm hairline, the same glow, the same left-to-right draw-in. It sits
-   below the stage cards rather than behind them, and its four peaks rise
-   and fall exactly as the cards do, so the cards read as standing on it.
-   The stroke is non-scaling, so stretching the viewBox to the section
-   width moves the geometry without ever thickening the line. */
-/* The trail sits in flow directly under the stages, so it stays the same
-   distance below them however tall the section grows. */
+   warm hairline, the same glow, the same left-to-right draw-in. It sits in
+   flow below the stage cards rather than behind them, so it holds the same
+   distance from them however tall the section grows, and its four peaks
+   rise and fall exactly as the cards do. The stroke is non-scaling, so
+   stretching the viewBox to the section width moves the geometry without
+   ever thickening the line. */
 .ascent__trail {
   position: relative;
   z-index: 1;
@@ -1910,14 +1916,25 @@ body.menu-open {
   justify-content: center;
 }
 
+/* The lede used to auto-place into column one, row two - under the small
+   eyebrow, leaving a hole under the title it belongs to. Placed
+   explicitly, the head reads label-left, statement-and-lede-right. */
 .track-record__head {
+  width: 100%;
   max-width: 1280px;
   margin: 0 auto clamp(40px, 6vh, 72px);
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
-  gap: clamp(32px, 5vw, 80px);
-  align-items: end;
+  grid-template-areas:
+    "step title"
+    ".    lede";
+  gap: 0 clamp(32px, 5vw, 80px);
+  align-items: baseline;
 }
+
+.track-record__step { grid-area: step; }
+.track-record__title { grid-area: title; }
+.track-record__lede { grid-area: lede; }
 
 .track-record__step {
   margin: 0;
@@ -1936,7 +1953,7 @@ body.menu-open {
 }
 
 .track-record__title {
-  margin: 12px 0 0;
+  margin: 0;
   color: var(--light);
   font: 500 clamp(30px, 3.8vw, 52px) / 1.06 "Urbanist", system-ui, sans-serif;
   letter-spacing: -0.005em;
@@ -1944,7 +1961,8 @@ body.menu-open {
 }
 
 .track-record__lede {
-  margin: 0;
+  margin: clamp(18px, 2.4vh, 28px) 0 0;
+  max-width: 46ch;
   color: rgba(240, 235, 233, 0.74);
   font: 400 clamp(16px, 1.2vw, 19px) / 1.55 "Outfit", system-ui, sans-serif;
   text-wrap: pretty;
@@ -2035,6 +2053,8 @@ body.menu-open {
 @media (max-width: 1024px) {
   .track-record__head {
     grid-template-columns: 1fr;
+    grid-template-areas: "step" "title" "lede";
+    gap: 0;
     gap: 16px;
     align-items: start;
   }
