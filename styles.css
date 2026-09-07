@@ -2051,7 +2051,12 @@ body.menu-open {
 
 .philosophy {
   position: relative;
-  min-height: 100svh;
+  /* Three short cards are about 420px of content. A full viewport is the
+     right box for that at laptop heights and too much box above them - at
+     1080 it left 335px of nothing above and 325px below, a 39% fill. The
+     cap holds the chapter feel where it works and stops the box growing
+     faster than what is in it. */
+  min-height: min(100svh, 830px);
   padding: clamp(88px, 12vh, 140px) var(--container-x);
   background:
     radial-gradient(900px 600px at 50% 110%, rgba(255, 97, 44, 0.16), transparent 70%),
@@ -2178,7 +2183,8 @@ body.menu-open {
 
 .manifesto {
   position: relative;
-  min-height: 100svh;
+  /* Same reasoning as .philosophy, with a taller cap for its two columns. */
+  min-height: min(100svh, 890px);
   padding: clamp(88px, 12vh, 140px) var(--container-x);
   background:
     radial-gradient(900px 600px at 92% 90%, rgba(255, 176, 119, 0.14), transparent 70%),
