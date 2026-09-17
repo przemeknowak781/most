@@ -10472,6 +10472,9 @@ a.contact-channels__value:focus-visible {
 .page--founders[data-hero="m3"] .fnd-photo,
 .page--founders[data-hero="a1"] .fnd-photo,
 .page--founders[data-hero="a2"] .fnd-photo,
+.page--founders[data-hero="s1"] .fnd-photo,
+.page--founders[data-hero="s2"] .fnd-photo,
+.page--founders[data-hero="s3"] .fnd-photo,
 .page--founders[data-hero="c1"] .fnd-photo,
 .page--founders[data-hero="c2"] .fnd-photo,
 .page--founders[data-hero="b1"] .fnd-photo,
@@ -10496,6 +10499,9 @@ a.contact-channels__value:focus-visible {
 .page--founders[data-hero="m3"] .fnd-sky,
 .page--founders[data-hero="a1"] .fnd-sky,
 .page--founders[data-hero="a2"] .fnd-sky,
+.page--founders[data-hero="s1"] .fnd-sky,
+.page--founders[data-hero="s2"] .fnd-sky,
+.page--founders[data-hero="s3"] .fnd-sky,
 .page--founders[data-hero="c1"] .fnd-sky,
 .page--founders[data-hero="c2"] .fnd-sky,
 .page--founders[data-hero="b1"] .fnd-sky,
@@ -10879,6 +10885,47 @@ a.contact-channels__value:focus-visible {
    picked against, where a muted orange simply disappears - it goes deeper */
 .page--founders[data-hero="c1"] .hero-content .eyebrow,
 .page--founders[data-hero="c2"] .hero-content .eyebrow { color: #93401a; }
+
+/* --- stock architecture ---
+   Photographs rather than generations, all three from Unsplash under the
+   Unsplash licence (free for commercial use, no attribution required):
+
+     s1  Rowan Heuvel      concrete fins, cropped out of a whole-building
+                           shot that also held sky, street and graffiti
+     s2  Christer Gundersen  a grid of deep window reveals, already inside
+                           the fabric as shot
+     s3  Zara Walker       a roof diagrid, its diagonals running the same
+                           way the ridge does
+
+   Every one is cropped so no roofline, no corner and no sky survives, and
+   each is put through the same terracotta ramp the tinted variants use, so
+   they arrive in the palette rather than in whatever light they were taken
+   in - two of the three were monochrome to begin with, which is the ideal
+   input for a gradient map. */
+.page--founders[data-hero="s1"] .fnd-photo { background-image: url("fnd-stock-s1.webp"); }
+.page--founders[data-hero="s2"] .fnd-photo { background-image: url("fnd-stock-s2.webp"); }
+.page--founders[data-hero="s3"] .fnd-photo { background-image: url("fnd-stock-s3.webp"); }
+
+/* the same short scrim under the navbar, and the same left lift the other
+   photographic backdrops take */
+.page--founders[data-hero="s1"] .fnd-sky,
+.page--founders[data-hero="s2"] .fnd-sky,
+.page--founders[data-hero="s3"] .fnd-sky {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(48, 26, 14, 0.8) 0%,
+      rgba(48, 26, 14, 0.3) 12%,
+      transparent 24%
+    ),
+    linear-gradient(
+      100deg,
+      rgba(252, 233, 210, 0.76) 0%,
+      rgba(252, 233, 210, 0.54) 30%,
+      rgba(252, 233, 210, 0.2) 50%,
+      transparent 70%
+    );
+}
 
 /* ============ FOUNDERS SCENE (Figma 2795:1228) ============
    A flat terracotta sky, the ridge silhouette lifted straight out of the
