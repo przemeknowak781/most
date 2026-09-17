@@ -10927,28 +10927,41 @@ a.contact-channels__value:focus-visible {
     linear-gradient(179deg, var(--fnd-sky-high) 0%, var(--fnd-sky) 46%, var(--fnd-sky-low) 100%);
 }
 
-/* The viewBox is cropped to the span where the artwork's base is unbroken
-   (-52 .. 1626 in Figma coordinates) - any wider and the bottom corners
-   open up on the sky. */
+/* The ridge and the wanderer are the ones from the Coming Soon page, brought
+   over as the single path they are there - the figure comes with the land
+   rather than being posed on it. The relationship carries over intact too:
+   a dark silhouette against a bright sky, which is what lets a figure that
+   size read at all.
+
+   The artwork's own constants, measured off the path: it is 0.45600 as tall
+   as it is wide (1443 x 658), and the outcrop the wanderer stands on sits
+   0.24047 of that width below its own top. That outcrop is what
+   --scene-cross pins to - the left edge runs to the top corner here, so the
+   crossing the old artwork was anchored by does not exist. */
 .page--founders .fnd-ridge {
   position: absolute;
   left: var(--fnd-art-x);
-  top: calc(var(--scene-cross) - 0.36532 * var(--fnd-art-w));
+  top: calc(var(--scene-cross) - 0.24047 * var(--fnd-art-w));
   z-index: -2;
   width: var(--fnd-art-w);
   height: auto;
-  aspect-ratio: 1678 / 1000;
+  aspect-ratio: 1443 / 658;
+  /* Mirrored. The land runs to its top left corner in the original, which
+     put the steep mass straight under the copy; flipped, that mass sits on
+     the right, the copy column falls on open sky, and the wanderer lands
+     just clear of it. The outcrop keeps its depth, so the anchor above is
+     unaffected. */
+  transform: scaleX(-1);
   color: var(--fnd-land);
   pointer-events: none;
 }
 
-.page--founders .fnd-ridge__land,
-.page--founders .fnd-ridge__walker {
+.page--founders .fnd-ridge__land {
   fill: currentColor;
 }
 
 .page--founders .scene-ground {
-  top: calc(var(--scene-cross) + 0.23063 * var(--fnd-art-w) - 1px);
+  top: calc(var(--scene-cross) + 0.21553 * var(--fnd-art-w) - 1px);
 }
 
 /* Hero type: near-black on terracotta, the same ink as the ridge. */
