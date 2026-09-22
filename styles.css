@@ -5466,7 +5466,7 @@ body.menu-open {
   position: relative;
   padding: clamp(96px, 12vh, 144px) var(--container-x);
   background:
-    radial-gradient(900px 540px at 78% 8%, rgba(255, 97, 44, 0.08), transparent 70%),
+    radial-gradient(900px 540px at 78% 560px, rgba(255, 97, 44, 0.08), transparent 70%),
     linear-gradient(180deg, #0a0d18 0%, #07090f 100%);
   overflow: hidden;
 }
@@ -5612,30 +5612,6 @@ body.menu-open {
   width: 6px;
   height: 1px;
   background: rgba(255, 168, 110, 0.6);
-}
-
-.expertise-cards__foot {
-  max-width: 720px;
-  margin: clamp(40px, 6vh, 64px) auto 0;
-  text-align: center;
-}
-
-.expertise-cards__foot p {
-  margin: 0;
-  color: var(--light-80);
-  font: 400 15px / 1.55 "Outfit", system-ui, sans-serif;
-}
-
-.expertise-cards__foot a {
-  color: var(--orange-soft);
-  border-bottom: 1px solid rgba(255, 168, 110, 0.4);
-  padding-bottom: 1px;
-  transition: color 200ms ease, border-color 200ms ease;
-}
-
-.expertise-cards__foot a:hover {
-  color: var(--light);
-  border-bottom-color: var(--orange-soft);
 }
 
 @media (max-width: 1180px) {
@@ -11797,7 +11773,7 @@ a.contact-channels__value:focus-visible {
   inset: 0;
   background:
     radial-gradient(900px 560px at 18% 8%, rgba(255, 97, 44, 0.12), transparent 70%),
-    linear-gradient(180deg, rgba(22, 24, 34, 0.9) 0%, rgba(22, 24, 34, 0.82) 46%, rgba(8, 11, 19, 0.94) 100%);
+    linear-gradient(180deg, rgba(22, 24, 34, 0.9) 0%, rgba(22, 24, 34, 0.82) 46%, rgba(10, 13, 24, 0.97) 90%, #0a0d18 100%);
 }
 
 .whoweare__inner {
