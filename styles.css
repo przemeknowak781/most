@@ -11112,21 +11112,22 @@ a.contact-channels__value:focus-visible {
 
 /* ============ HORIZON SCENE (Figma 2795:1083 and 2795:945) ============
    Companies and Investors share one construction: an architecture pattern
-   filling the hero, the Figma torn horizon cutting a flat field across it,
-   and the orange route dropping from the summit down into that field. Only
-   two colours and the photograph change between the two pages.
+   filling the hero, a ridge cutting a flat field across it, and the orange
+   route climbing that ridge. Only two colours and the photograph change
+   between the two pages.
 
-   Same anchoring idea as the founders ridge, with this artwork's own
-   constants: the horizon is 0.52708 as tall as it is wide, and its
-   left-hand crossing sits 0.16944 of that width below its own top. */
+   The ridge is the founders' one, minus the wanderer, at the founders'
+   viewBox, anchor and mirror - so the same mountain lands in the same place
+   on all three audience pages and they read as one setup. Which means this
+   scene borrows the founders' crossing too. */
 .page--horizon {
   --hz-accent: #ff612c;
   --scene-cream: #f4ece7;
   --scene-ground: var(--hz-field);
-  /* 56svh is the Figma ratio; the px floor keeps the crossing below the CTA
-     on short windows, where the artwork scales by width but the copy still
-     has to fit the height. */
-  --scene-cross: min(calc(100svh - 40px), max(56svh, 585px));
+  /* Shared with .page--founders: the ridge scales by width, so the crossing
+     has to carry a vw term or the copy and the skyline collide on wide,
+     short windows. */
+  --scene-cross: min(calc(100svh - 36px), max(67svh, 560px + 7.74vw));
   --spine-line: var(--hz-accent);
   --spine-line-fade: rgba(255, 97, 44, 0.5);
   --spine-dot: transparent;
@@ -11135,14 +11136,29 @@ a.contact-channels__value:focus-visible {
   --spine-dot-2: rgba(244, 236, 231, 0.72);
 }
 
+/* A mountain is dark against a bright sky - that is the Coming Soon picture
+   and the founders page keeps it. The horizon pages used to invert it: a
+   light field under a dark photograph. That read as a torn band, but once
+   the field became the same ridge it read as a pale mountain against a night
+   sky, which is the wrong way round. So the photograph moves up into the
+   sky, tinted and lifted, and the land goes to ink. One picture, three
+   skies. */
 .page--companies {
-  --hz-field: #5f5853;
-  --hz-ink: 38, 31, 36;
+  --hz-sky-high: #b69c91;
+  --hz-sky: #ab8e82;
+  --hz-sky-low: #977a6e;
+  --hz-sky-rgb: 171, 142, 130;
+  --hz-field: #1c181b;
+  --hz-ink: 28, 24, 27;
 }
 
 .page--investors {
-  --hz-field: #313e59;
-  --hz-ink: 24, 27, 38;
+  --hz-sky-high: #8f9eb4;
+  --hz-sky: #8494ac;
+  --hz-sky-low: #71829c;
+  --hz-sky-rgb: 132, 148, 172;
+  --hz-field: #141925;
+  --hz-ink: 20, 25, 37;
 }
 
 .page--horizon .hz-scene {
@@ -11156,14 +11172,19 @@ a.contact-channels__value:focus-visible {
   background: var(--hz-field);
 }
 
-/* The architecture reads as a pattern, not as a building: desaturated,
-   pushed dark, and weighted towards the left so the copy has a ground. */
+/* The architecture reads as a pattern, not as a building - and now as
+   weather rather than as a wall: the tinted sky is the ground layer and the
+   photograph only lends it structure, blended on luminosity so it takes the
+   sky's hue and keeps its own light. */
 .page--horizon .hz-photo {
   position: absolute;
   inset: 0;
   z-index: -4;
   overflow: hidden;
-  background: rgb(var(--hz-ink));
+  isolation: isolate;
+  background:
+    radial-gradient(118% 76% at 76% 4%, rgba(255, 249, 244, 0.16), transparent 62%),
+    linear-gradient(179deg, var(--hz-sky-high) 0%, var(--hz-sky) 46%, var(--hz-sky-low) 100%);
 }
 
 .page--horizon .hz-photo img {
@@ -11171,57 +11192,79 @@ a.contact-channels__value:focus-visible {
   height: 100%;
   object-fit: cover;
   object-position: 50% 52%;
-  filter: saturate(0.46) contrast(1.24) brightness(0.56);
+  opacity: 0.26;
+  filter: saturate(0.16) contrast(0.72) brightness(1.12);
+  mix-blend-mode: luminosity;
 }
 
+/* Haze, in the sky's own colour: it washes the copy column almost clear so
+   the headline has a calm ground, lets the glazing come through on the
+   right, and lifts where the ridge meets the sky so the silhouette reads
+   against light rather than against the pattern. */
 .page--horizon .hz-photo::after {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(var(--hz-ink), 0.74) 0%, rgba(var(--hz-ink), 0.42) 44%, rgba(var(--hz-ink), 0.58) 100%),
-    linear-gradient(97deg, rgba(var(--hz-ink), 0.8) 0%, rgba(var(--hz-ink), 0.34) 48%, rgba(var(--hz-ink), 0.05) 76%);
+    linear-gradient(97deg, rgba(var(--hz-sky-rgb), 0.92) 0%, rgba(var(--hz-sky-rgb), 0.55) 44%, rgba(var(--hz-sky-rgb), 0) 74%),
+    linear-gradient(180deg, rgba(var(--hz-sky-rgb), 0.5) 0%, rgba(var(--hz-sky-rgb), 0.1) 34%, rgba(255, 248, 242, 0.2) 100%);
 }
 
-.page--horizon .hz-horizon {
+/* The three artwork layers share one box - the founders ridge box - so the
+   massif, the ridge and the route are all in the same coordinate space and
+   stay registered to each other at every width. */
+.page--horizon .hz-massif,
+.page--horizon .hz-ridge,
+.page--horizon .hz-route {
   position: absolute;
   left: 0;
-  top: calc(var(--scene-cross) - 0.16944 * var(--hz-art-w));
-  z-index: -2;
+  top: calc(var(--scene-cross) - 0.24047 * var(--hz-art-w));
   width: var(--hz-art-w);
   height: auto;
-  aspect-ratio: 1440 / 759;
-  color: var(--hz-field);
+  aspect-ratio: 1443 / 658;
   pointer-events: none;
 }
 
-.page--horizon .hz-horizon path {
+/* Mirrored exactly as on the founders page: the mass sits right, the copy
+   column falls on open sky. */
+.page--horizon .hz-ridge {
+  z-index: -2;
+  transform: scaleX(-1);
+  color: var(--hz-field);
+}
+
+.page--horizon .hz-ridge__land {
   fill: currentColor;
 }
 
-.page--horizon .scene-ground {
-  top: calc(var(--scene-cross) + 0.35764 * var(--hz-art-w) - 1px);
+/* Basia asked for depth behind the ridge rather than a second mountain, so
+   this is a lit face and a shaded face meeting on one crease, blurred and
+   hazed out towards its base. It carries no outline of its own: at these
+   opacities it is atmosphere, and it disappears entirely under the ridge
+   below the skyline. */
+.page--horizon .hz-massif {
+  z-index: -3;
 }
 
-/* The route is pinned to the horizon, not to the hero: in the Figma frame it
-   starts 871/1440 across and 6/759 down from the horizon's own top-left, so
-   the summit dot always lands on the summit. */
-.page--horizon .hz-chart {
-  position: absolute;
-  left: calc(0.60486 * var(--hz-art-w));
-  top: calc(var(--scene-cross) - 0.16527 * var(--hz-art-w));
+/* The route is not mirrored - it is authored in screen coordinates on the
+   mirrored skyline, so it runs left to right, uphill, and ends on the
+   summit. */
+.page--horizon .hz-route {
   z-index: -1;
-  width: calc(0.19864 * var(--hz-art-w));
-  height: auto;
-  aspect-ratio: 288.436 / 512.628;
   color: var(--hz-accent);
   filter: drop-shadow(0 0 5px var(--trail-glow));
-  pointer-events: none;
 }
 
-.page--horizon .hz-chart path {
+.page--horizon .hz-route__line {
+  fill: none;
   stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
+}
+
+.page--horizon .scene-ground {
+  top: calc(var(--scene-cross) + 0.21553 * var(--hz-art-w) - 1px);
 }
 
 /* Hero type: white on the darkened pattern, nav left light. */
@@ -11230,7 +11273,7 @@ a.contact-channels__value:focus-visible {
 }
 
 .page--horizon .hero-content .eyebrow {
-  color: rgba(255, 236, 227, 0.72);
+  color: rgba(var(--hz-ink), 0.62);
   letter-spacing: 0.24em;
 }
 
@@ -11244,28 +11287,28 @@ a.contact-channels__value:focus-visible {
 
 .page--horizon .hero-title {
   max-width: min(960px, 66vw);
-  color: #fbf5f2;
-  text-shadow: 0 2px 22px rgba(8, 10, 16, 0.4);
+  color: rgb(var(--hz-ink));
+  text-shadow: none;
 }
 
 .page--horizon .hero-tagline {
   max-width: min(700px, 47vw);
-  color: rgba(248, 241, 237, 0.82);
-  text-shadow: 0 1px 12px rgba(8, 10, 16, 0.45);
+  color: rgba(var(--hz-ink), 0.76);
+  text-shadow: none;
 }
 
 .page--horizon .primary-cta {
-  color: var(--scene-cream);
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(250, 242, 237, 0.5);
+  color: rgb(var(--hz-ink));
+  background: transparent;
+  border-color: rgba(var(--hz-ink), 0.45);
   box-shadow: none;
 }
 
 .page--horizon .primary-cta:hover,
 .page--horizon .primary-cta:focus-visible {
-  color: rgb(var(--hz-ink));
-  background: var(--scene-cream);
-  border-color: var(--scene-cream);
+  color: var(--hz-sky);
+  background: rgb(var(--hz-ink));
+  border-color: rgb(var(--hz-ink));
 }
 
 .page--horizon .top-nav .wordmark {
@@ -11288,10 +11331,10 @@ a.contact-channels__value:focus-visible {
 }
 
 /* Below laptop width the headline breaks over more lines than Figma's, so
-   the horizon drops to keep clear of it. */
+   the ridge drops to keep clear of it. */
 @media (max-width: 1180px) {
   .page--horizon {
-    --scene-cross: min(calc(100svh - 40px), max(62svh, 625px));
+    --scene-cross: min(calc(100svh - 36px), max(70svh, 585px + 7.74vw));
   }
 }
 
