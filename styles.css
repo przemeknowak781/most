@@ -8431,6 +8431,13 @@ a.contact-channels__value:focus-visible {
 
 /* ---------- PHOTO BREAK: warm duotone tied to the palette ---------- */
 
+/* The photographs are baked into the site ramp (navy through terracotta to
+   latte) and cropped clear of open sky, so they need no further grading -
+   the cool steel-blue originals read off-palette (client, 14.09). */
+.page--about .photo-break img {
+  filter: none;
+}
+
 .page--about .photo-break::after {
   background:
     radial-gradient(820px 460px at 16% 80%, rgba(255, 97, 44, 0.18), transparent 66%),
@@ -9538,12 +9545,14 @@ a.contact-channels__value:focus-visible {
   max-width: none;
 }
 
-/* --- Expertise palette: warm beige; the ridge carries the cream of the
-       areas section below so the hero pours straight into it --- */
+/* --- Expertise palette: the Figma sky - slate navy on the left warming
+       through mauve into a strong orange on the right - with the cream ridge
+       of the areas section below as light land against it. The sepia
+       version read pale and flat next to the home page (client, 14.09). --- */
 .page--expertise {
-  --aud-accent: #c2a173;
-  --aud-accent-rgb: 194, 161, 115;
-  --aud-tint-rgb: 194, 161, 115;
+  --aud-accent: #ee6533;
+  --aud-accent-rgb: 238, 101, 51;
+  --aud-tint-rgb: 238, 101, 51;
 }
 
 /* The ridge used to scale with the viewport width while the hero's height
@@ -9558,9 +9567,11 @@ a.contact-channels__value:focus-visible {
   --exp-slack: 90px;
   /* the 920px cap existed to fight the void the old ridge left; the band
      closes it, so the hero can fill a tall window again */
-  min-height: clamp(680px, 92svh, 1100px);
+  /* 86svh, not 92: the band sat above ~160px of empty cream on a laptop
+     screen (client, 14.09); the areas heading now shows in the first view */
+  min-height: clamp(640px, 86svh, 1100px);
   overflow: hidden;
-  background: #c7b6a2;
+  background: #2f3a55;
 }
 
 .page--expertise .hero-ridges {
@@ -9593,73 +9604,101 @@ a.contact-channels__value:focus-visible {
 }
 
 .page--expertise .hero-media {
-  background: linear-gradient(180deg, #c7b6a2 0%, #d8cab8 38%, #e8ddce 68%, #f3ede4 100%);
+  background:
+    radial-gradient(58% 46% at 84% 74%, rgba(240, 178, 148, 0.6), transparent 72%),
+    linear-gradient(90deg, #2f3a55 0%, #39425a 20%, #675e6d 40%, #9c7a72 56%, #d37655 74%, #ee6533 100%);
 }
 
+/* Architecture as texture, not a building: the close-up of the louvre fins,
+   greyscale and multiplied into the sky so the fins read as dark strokes and
+   the sky between them leaves the gradient untouched. */
+.page--expertise .hero-bg {
+  object-position: 50% 40%;
+  filter: grayscale(1) contrast(1.15) brightness(1.08);
+  mix-blend-mode: multiply;
+  opacity: 0.44;
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.35), #000 46%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.35), #000 46%);
+}
+
+/* a navy veil on the copy side, as on the home hero */
 .page--expertise .hero-wash {
   background:
-    linear-gradient(180deg, rgba(248, 243, 236, 0.5), transparent 24%),
-    linear-gradient(90deg, rgba(250, 245, 238, 0.55), rgba(250, 245, 238, 0.2) 42%, transparent 66%);
+    linear-gradient(180deg, rgba(22, 26, 42, 0.42), transparent 30%),
+    linear-gradient(90deg, rgba(26, 31, 50, 0.6), rgba(26, 31, 50, 0.24) 44%, transparent 68%);
 }
 
 .page--expertise .hero-content::before {
   background: radial-gradient(
     54% 52% at 36% 44%,
-    rgba(250, 245, 238, 0.55),
-    rgba(245, 238, 228, 0.28) 55%,
+    rgba(20, 24, 38, 0.34),
+    rgba(20, 24, 38, 0.14) 55%,
     transparent 76%
   );
 }
 
 .page--expertise .hero-glow__sun {
+  left: auto;
+  right: -18%;
+  bottom: 12%;
+  width: min(80vw, 1300px);
   background: radial-gradient(
-    ellipse at 48% 44%,
-    rgba(232, 210, 180, 0.92),
-    rgba(190, 160, 124, 0.7) 30%,
-    rgba(134, 110, 82, 0.38) 52%,
-    rgba(88, 70, 50, 0.16) 68%,
-    transparent 84%
+    ellipse at 50% 50%,
+    rgba(255, 170, 120, 0.9),
+    rgba(238, 101, 51, 0.55) 34%,
+    rgba(160, 70, 40, 0.2) 60%,
+    transparent 80%
   );
+  opacity: 0.42;
 }
 
 .page--expertise .hero-ridges__img {
-  filter: drop-shadow(0 -22px 46px rgba(146, 124, 98, 0.35));
+  filter: drop-shadow(0 -22px 46px rgba(14, 16, 28, 0.32));
 }
 
 .page--expertise .hero-content .eyebrow {
-  color: rgba(94, 74, 50, 0.9);
+  color: rgba(255, 196, 160, 0.86);
 }
 
 .page--expertise .hero-title {
-  color: #1b150e;
+  color: var(--scene-cream, #f4ece7);
+  text-shadow: 0 2px 30px rgba(10, 12, 22, 0.28);
 }
 
 .page--expertise .hero-tagline {
-  color: rgba(27, 21, 14, 0.78);
+  color: rgba(244, 236, 231, 0.84);
+  text-shadow: none;
 }
 
 .page--expertise .primary-cta {
-  color: #1b150e;
-  border-color: rgba(27, 21, 14, 0.4);
-  box-shadow:
-    inset 0 0 0 1px rgba(27, 21, 14, 0.08),
-    0 16px 44px -20px rgba(120, 96, 66, 0.45);
+  color: #f4ece7;
+  background: rgba(22, 24, 34, 0.18);
+  border-color: rgba(244, 236, 231, 0.55);
+  box-shadow: 0 16px 44px -20px rgba(10, 12, 22, 0.55);
 }
 
+.page--expertise .primary-cta:hover,
+.page--expertise .primary-cta:focus-visible {
+  color: var(--navy);
+  background: #f4ece7;
+  border-color: #f4ece7;
+}
+
+/* light nav at rest over the dark sky, as on the home page */
 .page--expertise .top-nav .wordmark {
-  color: #201910;
+  color: var(--light);
 }
 
 .page--expertise .top-nav__menu a {
-  color: rgba(32, 25, 16, 0.78);
+  color: var(--light-80);
 }
 
 .page--expertise .top-nav .top-nav__menu--right a {
-  color: rgba(32, 25, 16, 0.62);
+  color: var(--light-60);
 }
 
 .page--expertise .top-nav .top-nav__lead {
-  color: rgba(32, 25, 16, 0.5);
+  color: rgba(240, 235, 233, 0.5);
 }
 
 .page--expertise .top-nav__menu a:hover,
@@ -9667,12 +9706,27 @@ a.contact-channels__value:focus-visible {
 .page--expertise .top-nav__menu a[aria-current="page"],
 .page--expertise .top-nav .top-nav__menu--right a:hover,
 .page--expertise .top-nav .top-nav__menu--right a:focus-visible {
-  color: #201910;
+  color: var(--light);
 }
 
 .page--expertise .top-nav .nav-cta {
-  color: #201910;
-  border-color: rgba(32, 25, 16, 0.45);
+  color: var(--light);
+  border-color: rgba(240, 235, 233, 0.55);
+}
+
+/* The trail keeps the site's marker recipe unmuted. It runs over the cream
+   land, so the line takes the full brand orange rather than the pale line
+   the dark heroes use - the one hue change the background forces. */
+.page--expertise .hero-trail__path {
+  --trail-line: rgba(255, 97, 44, 0.9);
+  --trail-glow: rgba(255, 138, 92, 0.35);
+}
+
+.page--expertise .hero-trail-point {
+  --marker-core: #ff612c;
+  --marker-ring: rgba(255, 97, 44, 0.18);
+  --marker-halo: rgba(255, 138, 92, 0.55);
+  --marker-aura: rgba(255, 188, 140, 0.3);
 }
 
 /* the photo may peek a few px below the ridge - close the seam in cream */
@@ -9693,6 +9747,7 @@ a.contact-channels__value:focus-visible {
 .page--expertise .ex-areas {
   position: relative;
   z-index: 20;
+  padding-top: clamp(48px, 7vh, 88px);
 }
 
 /* nothing anchors the dotted trail leaders here - drop them */
@@ -11667,4 +11722,20 @@ a.contact-channels__value:focus-visible {
 .top-nav .top-nav__lead,
 .top-nav .nav-cta {
   transition: color 240ms ease, border-color 240ms ease, background 240ms ease;
+}
+
+/* ============ HORIZON HEROES: depth on scroll ============
+   The sky and its architecture fall behind the land as the page moves: the
+   photograph drifts down at a third of the scroll, the blurred massif at an
+   eighth, and the ridge, the route and the copy scroll as normal. The shift
+   is capped so a long page never drags the pattern out of its box. */
+@media (prefers-reduced-motion: no-preference) {
+  .page--horizon .hz-photo img {
+    translate: 0 calc(min(var(--scroll-y, 0px), 1100px) * 0.34);
+    will-change: translate;
+  }
+
+  .page--horizon .hz-massif {
+    translate: 0 calc(min(var(--scroll-y, 0px), 1100px) * 0.12);
+  }
 }
