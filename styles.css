@@ -91,7 +91,7 @@ a {
 .wordmark {
   display: inline-flex;
   align-items: center;
-  color: #ffffff;
+  color: var(--light);
   line-height: 1;
 }
 
@@ -3196,13 +3196,13 @@ body.menu-open {
   z-index: -1;
   top: clamp(110px, 18vh, 180px);
   left: 0;
-  width: 9px;
-  height: 9px;
-  margin: -4px 0 0 -4px;
+  width: var(--ring-size);
+  height: var(--ring-size);
+  margin: calc(var(--ring-size) / -2) 0 0 calc(var(--ring-size) / -2 + 0.5px);
   border-radius: 50%;
   box-shadow:
-    inset 0 0 0 1.5px rgb(var(--audience-r) var(--audience-g) var(--audience-b) / 0.8),
-    0 0 0 4px rgb(var(--audience-r) var(--audience-g) var(--audience-b) / 0.12);
+    inset 0 0 0 var(--ring-stroke) rgb(var(--audience-r) var(--audience-g) var(--audience-b) / 0.8),
+    0 0 0 var(--ring-halo) rgb(var(--audience-r) var(--audience-g) var(--audience-b) / 0.12);
   pointer-events: none;
   transform: translate3d(var(--audience-title-bg-x), var(--audience-title-bg-y), 0);
   transition: box-shadow 560ms ease;
@@ -6554,14 +6554,17 @@ a.photo-break__line:focus-visible {
 .member__expertise-section::after {
   content: "";
   position: absolute;
-  left: -4px;
-  top: 3px;
-  width: 9px;
-  height: 9px;
+  /* centred where the 9px dot used to be; the dark fill hides the line
+     behind it, so it reads as the site's open start ring */
+  left: -6px;
+  top: 1px;
+  width: var(--ring-size);
+  height: var(--ring-size);
   border-radius: 50%;
   background: #070912;
-  border: 2px solid #FF612C;
-  box-shadow: 0 0 8px rgba(255, 97, 44, 0.5);
+  box-shadow:
+    inset 0 0 0 var(--ring-stroke) var(--orange),
+    0 0 0 var(--ring-halo) rgba(255, 97, 44, 0.14);
 }
 
 .member__expertise-label {
@@ -7223,11 +7226,13 @@ a.photo-break__line:focus-visible {
   position: absolute;
   top: 0;
   left: 50%;
-  width: 14px;
-  height: 14px;
-  border: 2px solid var(--orange);
+  width: var(--ring-size);
+  height: var(--ring-size);
   border-radius: 50%;
   background: transparent;
+  box-shadow:
+    inset 0 0 0 var(--ring-stroke) var(--orange),
+    0 0 0 var(--ring-halo) rgba(255, 97, 44, 0.14);
   transform: translate(-50%, -50%);
 }
 
@@ -10067,14 +10072,11 @@ a.contact-channels__value:focus-visible {
     0 0 0 calc(var(--marker-size) * 0.33) var(--marker-ring),
     0 0 calc(var(--marker-size) * 1.25) var(--marker-halo),
     0 0 calc(var(--marker-size) * 2.5) var(--marker-aura);
-}
-
-/* the audience block's torn edge hangs over whatever follows it, so the
-   terrain heading needs to clear the overhang */
-.audience-intro + .exwork--terrain {
-  /* --audience-cut-depth is local to that section, so it needs the same
-     value as a fallback here or the whole declaration is dropped */
-  padding-top: calc(var(--audience-cut-depth, clamp(130px, 11vw, 190px)) + clamp(70px, 9vh, 110px));
+  /* Every line on the site starts on the same open ring: 13px, a 2px
+     stroke and a 5px halo. Only the colour follows the line it starts. */
+  --ring-size: 13px;
+  --ring-stroke: 2px;
+  --ring-halo: 5px;
 }
 
 /* ============ TRAIL LINES ============
@@ -11191,7 +11193,7 @@ a.contact-channels__value:focus-visible {
 }
 
 .page--horizon .top-nav .top-nav__menu--right a {
-  color: rgba(var(--hz-ink), 0.68);
+  color: rgba(var(--hz-ink), 0.8);
 }
 
 .page--horizon .top-nav .top-nav__lead {
