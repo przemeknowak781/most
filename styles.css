@@ -3176,10 +3176,33 @@ body.menu-open {
   z-index: -1;
   inset: clamp(110px, 18vh, 180px) clamp(4px, 1.4vw, 18px) clamp(52px, 9vh, 102px) 0;
   border-left: 1px solid rgb(var(--audience-r) var(--audience-g) var(--audience-b) / 0.36);
+  -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent);
+  mask-image: linear-gradient(180deg, #000 72%, transparent);
   opacity: 0.86;
   pointer-events: none;
   transform: translate3d(var(--audience-title-bg-x), var(--audience-title-bg-y), 0);
   transition: border-color 560ms ease, opacity 320ms ease;
+}
+
+/* The line gets a start, as every line on the site does: the open ring the
+   F/C/I spines begin on, riding with the line; it fades out at the foot
+   rather than stopping dead. */
+.audience-intro__head::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: clamp(110px, 18vh, 180px);
+  left: 0;
+  width: 9px;
+  height: 9px;
+  margin: -4px 0 0 -4px;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 1.5px rgb(var(--audience-r) var(--audience-g) var(--audience-b) / 0.8),
+    0 0 0 4px rgb(var(--audience-r) var(--audience-g) var(--audience-b) / 0.12);
+  pointer-events: none;
+  transform: translate3d(var(--audience-title-bg-x), var(--audience-title-bg-y), 0);
+  transition: box-shadow 560ms ease;
 }
 
 .audience-intro__head > * {
@@ -3489,6 +3512,9 @@ body.menu-open {
   }
   .audience-intro__head::before {
     inset: clamp(72px, 11vh, 120px) 0 clamp(32px, 7vh, 72px);
+  }
+  .audience-intro__head::after {
+    top: clamp(72px, 11vh, 120px);
   }
   .audience-intro__lede {
     grid-column: 1;
@@ -5287,13 +5313,16 @@ body.menu-open {
   }
 }
 
-/* ---------- MOBILE BLOCKER ---------- */
+/* ---------- MOBILE BLOCKER ----------
+   The declared desktop range is 1024-1920 (R2), so the gate covers
+   everything below it; 861-1023 used to fall through to a half-fitted
+   desktop layout. */
 
 .mobile-block {
   display: none;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1023px) {
   .mobile-block {
     position: fixed;
     inset: 0;
@@ -11249,7 +11278,7 @@ a.contact-channels__value:focus-visible {
   inset: 0;
   z-index: 0;
   background:
-    radial-gradient(820px 520px at 14% 0%, rgba(255, 97, 44, 0.07), transparent 68%),
+    radial-gradient(820px 520px at 14% 540px, rgba(255, 97, 44, 0.07), transparent 68%),
     radial-gradient(760px 520px at 88% 100%, rgba(128, 135, 173, 0.09), transparent 70%);
   pointer-events: none;
 }
