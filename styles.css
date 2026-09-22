@@ -126,8 +126,8 @@ a {
   z-index: -1;
   opacity: 0;
   background:
-    linear-gradient(180deg, rgba(22, 24, 34, 0.55) 0%, rgba(8, 11, 19, 0.32) 100%);
-  box-shadow: 0 18px 50px rgba(4, 6, 12, 0.28);
+    linear-gradient(180deg, rgba(22, 24, 34, 0.96) 0%, rgba(20, 23, 34, 0.92) 100%);
+  box-shadow: 0 18px 50px rgba(4, 6, 12, 0.22);
   transition: opacity 360ms var(--ease-out);
   pointer-events: none;
 }
@@ -202,6 +202,7 @@ a {
   color: var(--light-80);
   font: 400 14px / 1.2 "Outfit", system-ui, sans-serif;
   letter-spacing: 0;
+  white-space: nowrap;
   transition: color 240ms ease;
 }
 
@@ -9934,8 +9935,19 @@ a.contact-channels__value:focus-visible {
   color: rgba(32, 25, 16, 0.78);
 }
 
+.page--expertise .top-nav .top-nav__menu--right a {
+  color: rgba(32, 25, 16, 0.62);
+}
+
+.page--expertise .top-nav .top-nav__lead {
+  color: rgba(32, 25, 16, 0.5);
+}
+
 .page--expertise .top-nav__menu a:hover,
-.page--expertise .top-nav__menu a[aria-current="page"] {
+.page--expertise .top-nav__menu a:focus-visible,
+.page--expertise .top-nav__menu a[aria-current="page"],
+.page--expertise .top-nav .top-nav__menu--right a:hover,
+.page--expertise .top-nav .top-nav__menu--right a:focus-visible {
   color: #201910;
 }
 
@@ -11091,25 +11103,34 @@ a.contact-channels__value:focus-visible {
   border-color: var(--fnd-ink);
 }
 
-/* Light nav again over the saturated sky, as on the Figma frame - the
-   scrolled state drops its own dark backdrop underneath. */
+/* At rest the nav takes the hero's ink: cream on terracotta fell under 3:1.
+   Once the page scrolls the shared navy bar takes over (end of file). */
 .page--founders .top-nav .wordmark {
-  color: var(--scene-cream);
+  color: var(--fnd-ink);
 }
 
 .page--founders .top-nav__menu a {
-  color: rgba(250, 242, 237, 0.88);
+  color: rgba(20, 22, 31, 0.84);
+}
+
+.page--founders .top-nav .top-nav__menu--right a {
+  color: rgba(20, 22, 31, 0.66);
+}
+
+.page--founders .top-nav .top-nav__lead {
+  color: rgba(20, 22, 31, 0.52);
 }
 
 .page--founders .top-nav__menu a:hover,
 .page--founders .top-nav__menu a:focus-visible,
-.page--founders .top-nav__menu a[aria-current="page"] {
-  color: #fff;
+.page--founders .top-nav__menu a[aria-current="page"],
+.page--founders .top-nav .top-nav__menu--right a[aria-current="page"] {
+  color: var(--fnd-ink);
 }
 
 .page--founders .top-nav .nav-cta {
-  color: var(--scene-cream);
-  border-color: rgba(250, 242, 237, 0.55);
+  color: var(--fnd-ink);
+  border-color: rgba(20, 22, 31, 0.45);
 }
 
 /* ============ HORIZON SCENE (Figma 2795:1083 and 2795:945) ============
@@ -11339,23 +11360,34 @@ a.contact-channels__value:focus-visible {
   border-color: rgb(var(--hz-ink));
 }
 
+/* The nav at rest wears the hero ink, as the headline does: cream on the
+   approved skies measured under 3:1. */
 .page--horizon .top-nav .wordmark {
-  color: var(--scene-cream);
+  color: rgb(var(--hz-ink));
 }
 
 .page--horizon .top-nav__menu a {
-  color: rgba(250, 242, 237, 0.86);
+  color: rgba(var(--hz-ink), 0.86);
+}
+
+.page--horizon .top-nav .top-nav__menu--right a {
+  color: rgba(var(--hz-ink), 0.68);
+}
+
+.page--horizon .top-nav .top-nav__lead {
+  color: rgba(var(--hz-ink), 0.54);
 }
 
 .page--horizon .top-nav__menu a:hover,
 .page--horizon .top-nav__menu a:focus-visible,
-.page--horizon .top-nav__menu a[aria-current="page"] {
-  color: #fff;
+.page--horizon .top-nav__menu a[aria-current="page"],
+.page--horizon .top-nav .top-nav__menu--right a[aria-current="page"] {
+  color: rgb(var(--hz-ink));
 }
 
 .page--horizon .top-nav .nav-cta {
-  color: var(--scene-cream);
-  border-color: rgba(250, 242, 237, 0.5);
+  color: rgb(var(--hz-ink));
+  border-color: rgba(var(--hz-ink), 0.45);
 }
 
 /* Below laptop width the headline breaks over more lines than Figma's, so
@@ -11860,4 +11892,55 @@ a.contact-channels__value:focus-visible {
 
 @media (max-width: 860px) {
   .whoweare__cols { grid-template-columns: 1fr; }
+}
+
+/* ============ NAV: one rule set for every page ============
+   At rest the bar is transparent and its type wears the hero's ink (set per
+   page above). Once the page moves, every page gets the same navy bar with
+   light type, so the nav reads over cream and dark sections alike and the
+   audience group stays a step quieter than the primary pages. The current
+   page keeps the orange dot that otherwise only shows on hover. */
+.top-nav__menu a[aria-current="page"]::after {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+.top-nav.is-scrolled .wordmark {
+  color: var(--light);
+}
+
+.top-nav.is-scrolled .top-nav__menu a {
+  color: var(--light-80);
+}
+
+.top-nav.is-scrolled .top-nav__menu--right a {
+  color: var(--light-60);
+}
+
+.top-nav.is-scrolled .top-nav__lead {
+  color: rgba(240, 235, 233, 0.5);
+}
+
+.top-nav.is-scrolled .top-nav__menu a:hover,
+.top-nav.is-scrolled .top-nav__menu a:focus-visible,
+.top-nav.is-scrolled .top-nav__menu a[aria-current="page"] {
+  color: var(--light);
+}
+
+.top-nav.is-scrolled .nav-cta {
+  color: var(--light);
+  border-color: rgba(240, 235, 233, 0.55);
+}
+
+.top-nav.is-scrolled .nav-cta:hover,
+.top-nav.is-scrolled .nav-cta:focus-visible {
+  color: var(--navy);
+  background: var(--light);
+  border-color: var(--light);
+}
+
+.top-nav .wordmark,
+.top-nav .top-nav__lead,
+.top-nav .nav-cta {
+  transition: color 240ms ease, border-color 240ms ease, background 240ms ease;
 }
