@@ -6909,24 +6909,19 @@ a.photo-break__line:focus-visible {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  /* Founders: rich terracotta-orange, translucent so the local
-     architecture photo shows through */
-  background:
-    linear-gradient(155deg, rgba(218, 85, 40, 0.44) 0%, rgba(170, 58, 24, 0.34) 55%, rgba(60, 18, 8, 0.7) 100%);
+  /* The photos come pre-toned in each page's ramp, so the overlay only adds
+     depth: a light veil falling into the page ink at the foot. Founders. */
+  background: linear-gradient(180deg, rgba(20, 22, 31, 0.1) 0%, rgba(20, 22, 31, 0.08) 45%, rgba(20, 22, 31, 0.5) 100%);
 }
 
 .page--companies .aud-bleed::after {
-  /* Companies: muted grey-brown taupe, translucent so the local
-     architecture photo shows through */
-  background:
-    linear-gradient(155deg, rgba(138, 120, 106, 0.42) 0%, rgba(102, 88, 76, 0.3) 55%, rgba(26, 20, 16, 0.58) 100%);
+  /* Companies: the same depth in the taupe page's ink */
+  background: linear-gradient(180deg, rgba(28, 24, 27, 0.1) 0%, rgba(28, 24, 27, 0.08) 45%, rgba(28, 24, 27, 0.5) 100%);
 }
 
 .page--investors .aud-bleed::after {
-  /* Investors: steel blue, translucent so the local architecture photo
-     shows through */
-  background:
-    linear-gradient(155deg, rgba(75, 108, 158, 0.48) 0%, rgba(48, 78, 130, 0.36) 55%, rgba(10, 16, 38, 0.72) 100%);
+  /* Investors: the same depth in the slate page's ink */
+  background: linear-gradient(180deg, rgba(20, 25, 37, 0.1) 0%, rgba(20, 25, 37, 0.08) 45%, rgba(20, 25, 37, 0.5) 100%);
 }
 
 /* AUD WORK â€” orange peach 4-col with icons */
@@ -7919,7 +7914,9 @@ a.contact-channels__value:focus-visible {
 
 .page--audience .aud-bleed img {
   height: 128%;
-  filter: saturate(0.72) brightness(0.72) contrast(1.06);
+  /* every band photo is a sky-free close-up already baked into its page's
+     ramp (terracotta, taupe, slate), so it needs no further grading */
+  filter: none;
 }
 
 /* The Figma frames show the architecture photo clean, edge to edge - no
@@ -8910,11 +8907,7 @@ a.contact-channels__value:focus-visible {
   );
 }
 
-/* the companies bleed is a bright lattice - hold it back so the pattern
-   still reads under the duotone instead of blowing out */
-.page--companies .aud-bleed img {
-  filter: saturate(0.6) brightness(0.68) contrast(1.12);
-}
+
 .aud-grow__sub {
   margin: 14px auto 26px;
   max-width: 520px;
