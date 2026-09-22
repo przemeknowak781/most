@@ -1668,15 +1668,30 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
   const BAND_TOP = 0.26;
   const BAND_BOTTOM = 0.72;
 
-  icons.forEach((svg) =>
-    svg.querySelectorAll("path").forEach((path) => {
-      let len = 4000;
-      try {
-        len = Math.ceil(path.getTotalLength());
-      } catch {}
-      path.style.setProperty("--len", len);
-    })
-  );
+  // A non-scaling stroke is dashed in screen pixels, not in the path's own
+  // units, so its length has to be measured on screen - otherwise a path
+  // drawn larger than its viewBox (the audience trail at 1920) stops short
+  // of its end. Re-measured on resize for the same reason.
+  const measure = (path) => {
+    let len = 4000;
+    try {
+      len = path.getTotalLength();
+      if (getComputedStyle(path).vectorEffect === "non-scaling-stroke") {
+        const m = path.getScreenCTM();
+        if (m) len *= Math.hypot(m.a, m.b);
+      }
+      len = Math.ceil(len);
+    } catch {}
+    path.style.setProperty("--len", len);
+  };
+  const measureAll = () =>
+    icons.forEach((svg) => svg.querySelectorAll("path").forEach(measure));
+  measureAll();
+  let measureTimer = 0;
+  window.addEventListener("resize", () => {
+    window.clearTimeout(measureTimer);
+    measureTimer = window.setTimeout(measureAll, 160);
+  });
 
   // One drawing at a time, and it is always the row you are looking at: a row
   // arriving in the band takes over and the previous stroke snaps to finished.
