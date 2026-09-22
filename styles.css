@@ -11357,3 +11357,263 @@ a.contact-channels__value:focus-visible {
   color: rgba(28, 20, 25, 0.7);
   font: 400 clamp(13px, 0.92vw, 15px) / 1.55 "Outfit", system-ui, sans-serif;
 }
+
+/* ===================================================================
+   ROUTE SHORTCUTS
+   The client's review asks for the same three-route shortcut on Our
+   Expertise as on About Us, so it is one block used twice rather than two
+   that drift apart. Each card borrows the tint its own audience page runs
+   on, which is what makes the row readable at a glance.
+   =================================================================== */
+
+.routes-strip {
+  position: relative;
+  padding: clamp(84px, 12vh, 148px) var(--container-x);
+  background: var(--navy-deep);
+  isolation: isolate;
+}
+
+.routes-strip::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(820px 520px at 14% 0%, rgba(255, 97, 44, 0.07), transparent 68%),
+    radial-gradient(760px 520px at 88% 100%, rgba(128, 135, 173, 0.09), transparent 70%);
+  pointer-events: none;
+}
+
+.routes-strip__head {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 0 clamp(40px, 5.2vh, 64px);
+}
+
+.routes-strip__eyebrow {
+  margin: 0 0 18px;
+  color: rgba(255, 168, 110, 0.84);
+  font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+.routes-strip__title {
+  margin: 0;
+  color: var(--light);
+  font: 500 clamp(30px, 3.8vw, 50px) / 1.06 "Urbanist", system-ui, sans-serif;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.routes-strip__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 1.8vw, 28px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.routes-strip__card {
+  --aud-tint-rgb: 209, 126, 95;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(26px, 2.4vw, 38px);
+  border: 1px solid rgba(var(--aud-tint-rgb), 0.24);
+  border-radius: 2px;
+  background: linear-gradient(155deg, rgba(var(--aud-tint-rgb), 0.11), transparent 62%);
+  transition: border-color 280ms ease, background 280ms ease, transform 280ms var(--ease-out);
+}
+
+.routes-strip__card--companies { --aud-tint-rgb: 155, 139, 149; }
+.routes-strip__card--investors { --aud-tint-rgb: 91, 122, 176; }
+
+.routes-strip__card:hover,
+.routes-strip__card:focus-within {
+  border-color: rgba(var(--aud-tint-rgb), 0.46);
+  background: linear-gradient(155deg, rgba(var(--aud-tint-rgb), 0.18), transparent 64%);
+  transform: translateY(-3px);
+}
+
+.routes-strip__kicker {
+  margin: 0 0 14px;
+  color: rgba(var(--aud-tint-rgb), 0.9);
+  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.routes-strip__name {
+  margin: 0 0 12px;
+  color: var(--light);
+  font: 500 clamp(22px, 2vw, 28px) / 1.1 "Urbanist", system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.routes-strip__copy {
+  /* The three lines wrap unevenly; reserving the tallest keeps the links
+     on one baseline across the row. */
+  min-height: 3.2em;
+  margin: 0 0 clamp(22px, 2.6vh, 32px);
+  color: var(--light-60);
+  font: 400 clamp(14px, 1vw, 16px) / 1.6 "Outfit", system-ui, sans-serif;
+}
+
+.routes-strip__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  color: var(--light);
+  font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition: color 240ms ease, gap 240ms var(--ease-out);
+}
+
+.routes-strip__link svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.routes-strip__card:hover .routes-strip__link,
+.routes-strip__link:focus-visible {
+  color: rgb(var(--aud-tint-rgb));
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .routes-strip__grid { grid-template-columns: 1fr; }
+  .routes-strip__copy { min-height: 0; }
+}
+
+/* ===================================================================
+   CLIENT MARKS
+   One row, one direction, no controls - the review liked the carousel
+   itself and only asked that the copy above it change. The track is
+   duplicated so the loop has no seam; the duplicate is hidden from
+   assistive tech so the marks are announced once.
+   =================================================================== */
+
+.clients {
+  position: relative;
+  padding: clamp(72px, 10vh, 120px) 0;
+  background: var(--navy);
+  overflow: hidden;
+}
+
+.clients__head {
+  max-width: 760px;
+  margin: 0 0 clamp(36px, 4.6vh, 56px);
+  padding: 0 var(--container-x);
+}
+
+.clients__eyebrow {
+  margin: 0 0 16px;
+  color: rgba(255, 168, 110, 0.84);
+  font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+.clients__title {
+  margin: 0 0 14px;
+  color: var(--light);
+  font: 500 clamp(26px, 3.2vw, 40px) / 1.1 "Urbanist", system-ui, sans-serif;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.clients__lede {
+  margin: 0;
+  color: var(--light-60);
+  font: 400 clamp(14px, 1vw, 16px) / 1.6 "Outfit", system-ui, sans-serif;
+}
+
+.clients__viewport {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  /* the row fades into the page rather than stopping at a hard edge */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+}
+
+.clients__track {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: clamp(48px, 6vw, 96px);
+  padding-right: clamp(48px, 6vw, 96px);
+  animation: clients-marquee 42s linear infinite;
+}
+
+.clients__mark {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: clamp(120px, 11vw, 168px);
+  height: clamp(48px, 4.4vw, 62px);
+  border: 1px dashed var(--light-28);
+  border-radius: 2px;
+  color: var(--light-40);
+  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+@keyframes clients-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clients__track { animation: none; }
+  .clients__viewport { overflow-x: auto; }
+}
+
+/* The team page's closing band now answers "where does this go?" by naming
+   the address it opens - so it must not be shouted in caps. */
+.aud-grow__btn--mail {
+  text-transform: none;
+  letter-spacing: 0.01em;
+}
+
+/* The review noticed both closing buttons landing on the same page. The
+   quiet second route sits under the button, not beside it - the band is a
+   centred block, so an inline-block would just share the line. */
+.aud-grow__alt {
+  /* the base inner grid is title | button, so the alt takes the second
+     column's second row and lines up under the button it qualifies */
+  grid-column: 2;
+  justify-self: end;
+  margin-top: -6px;
+  color: rgba(240, 235, 233, 0.62);
+  font: 400 14px / 1.4 "Outfit", system-ui, sans-serif;
+  border-bottom: 1px solid rgba(240, 235, 233, 0.22);
+  padding-bottom: 3px;
+  transition: color 240ms ease, border-color 240ms ease;
+}
+
+.aud-grow__alt:hover,
+.aud-grow__alt:focus-visible {
+  color: var(--light);
+  border-color: rgba(240, 235, 233, 0.5);
+}
+
+@media (max-width: 760px) {
+  .aud-grow__alt {
+    grid-column: 1;
+    justify-self: center;
+  }
+}

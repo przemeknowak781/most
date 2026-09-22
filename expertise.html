@@ -376,23 +376,42 @@
         </div>
       </section>
 
-      <!-- CTA STRIP -->
-      <section class="cta-strip" aria-label="Get in touch">
-        <div class="cta-strip__inner">
-          <p class="cta-strip__eyebrow">— ready when you are —</p>
-          <h2 class="cta-strip__title">Let's make the&nbsp;most.</h2>
-          <a class="cta-strip__btn" href="contact.html">
-            <span>Start a conversation</span>
-            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10M11 6l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg>
-          </a>
-        </div>
+      <!-- ROUTE SHORTCUTS: the same three-card block on About Us and Our Expertise -->
+      <section class="routes-strip" aria-labelledby="routes-strip-title">
+        <header class="routes-strip__head" data-reveal>
+          <p class="routes-strip__eyebrow">&mdash; ready for the next step &mdash;</p>
+          <h2 class="routes-strip__title" id="routes-strip-title">Find the route built for your&nbsp;stage.</h2>
+        </header>
+        <ul class="routes-strip__grid">
+          <li class="routes-strip__card routes-strip__card--founders" data-reveal>
+            <p class="routes-strip__kicker">for founders</p>
+            <h3 class="routes-strip__name">Founders</h3>
+            <p class="routes-strip__copy">Building from zero&nbsp;&mdash; foundations, funding, talent, and&nbsp;IP.</p>
+            <a class="routes-strip__link" href="for-founders.html">
+              <span>Explore more</span><span class="sr-only"> about how we work with founders</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg>
+            </a>
+          </li>
+          <li class="routes-strip__card routes-strip__card--companies" data-reveal>
+            <p class="routes-strip__kicker">for companies</p>
+            <h3 class="routes-strip__name">Companies</h3>
+            <p class="routes-strip__copy">Scaling with structure&nbsp;&mdash; contracts, governance, cross-border&nbsp;growth.</p>
+            <a class="routes-strip__link" href="for-companies.html">
+              <span>Explore more</span><span class="sr-only"> about how we work with companies</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg>
+            </a>
+          </li>
+          <li class="routes-strip__card routes-strip__card--investors" data-reveal>
+            <p class="routes-strip__kicker">for investors</p>
+            <h3 class="routes-strip__name">Investors</h3>
+            <p class="routes-strip__copy">Deals that close&nbsp;&mdash; structuring, diligence, protected&nbsp;value.</p>
+            <a class="routes-strip__link" href="for-investors.html">
+              <span>Explore more</span><span class="sr-only"> about how we work with investors</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg>
+            </a>
+          </li>
+        </ul>
       </section>
-    </main>
-
-    <div class="footer-ridge" aria-hidden="true">
-      <img class="footer-ridge__bg" src="background.webp" alt="" loading="lazy" decoding="async" />
-      <img class="footer-ridge__overlay" src="footer.svg" alt="" loading="lazy" decoding="async" />
-    </div>
 
       <section class="aud-grow" aria-labelledby="aud-grow-title">
         <div class="aud-grow__bg" aria-hidden="true">
@@ -410,9 +429,15 @@
         </div>
       </section>
 
+    </main>
+
+    <div class="footer-ridge" aria-hidden="true">
+      <img class="footer-ridge__bg" src="background.webp" alt="" loading="lazy" decoding="async" />
+      <img class="footer-ridge__overlay" src="footer.svg" alt="" loading="lazy" decoding="async" />
+    </div>
+
     <footer class="site-footer">
       <div class="site-footer__inner">
-
         <div class="site-footer__top">
           <div class="site-footer__brand">
             <a class="wordmark" href="index.html" aria-label="MOST Partners home">
