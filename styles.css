@@ -10976,8 +10976,11 @@ a.contact-channels__value:focus-visible {
   --scene-ground: var(--fnd-land);
   --spine-line: rgba(244, 236, 231, 0.6);
   --spine-line-fade: rgba(244, 236, 231, 0.22);
-  --spine-dot: var(--scene-cream);
-  --spine-dot-ring: 0 0 0 5px rgba(244, 236, 231, 0.15);
+  /* Every spine starts on the same open ring with a soft halo (Founders,
+     Companies, Investors alike); only its colour follows the spine line,
+     cream here because orange vanishes on terracotta. */
+  --spine-dot: transparent;
+  --spine-dot-ring: inset 0 0 0 2px var(--scene-cream), 0 0 0 5px rgba(244, 236, 231, 0.15);
   /* 67svh is the Figma ratio; the px+vw floor keeps the small left peak clear
      of the CTA on short, wide windows, where the art scales by width but the
      copy still has to fit the height; the cap stops the crossing falling out
@@ -11133,7 +11136,7 @@ a.contact-channels__value:focus-visible {
   --spine-line: var(--hz-accent);
   --spine-line-fade: rgba(255, 97, 44, 0.5);
   --spine-dot: transparent;
-  --spine-dot-ring: inset 0 0 0 2px var(--hz-accent);
+  --spine-dot-ring: inset 0 0 0 2px var(--hz-accent), 0 0 0 5px rgba(255, 97, 44, 0.14);
   --spine-line-2: rgba(244, 236, 231, 0.34);
   --spine-dot-2: rgba(244, 236, 231, 0.72);
 }
