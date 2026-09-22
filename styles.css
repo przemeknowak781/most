@@ -9671,14 +9671,15 @@ a.contact-channels__value:focus-visible {
   right: -18%;
   bottom: 12%;
   width: min(80vw, 1300px);
+  /* the breathe keyframes own opacity, so the light is dimmed in the
+     gradient itself */
   background: radial-gradient(
     ellipse at 50% 50%,
-    rgba(255, 170, 120, 0.9),
-    rgba(238, 101, 51, 0.55) 34%,
-    rgba(160, 70, 40, 0.2) 60%,
+    rgba(255, 170, 120, 0.68),
+    rgba(238, 101, 51, 0.41) 34%,
+    rgba(160, 70, 40, 0.15) 60%,
     transparent 80%
   );
-  opacity: 0.42;
 }
 
 .page--expertise .hero-ridges__img {
@@ -9741,6 +9742,13 @@ a.contact-channels__value:focus-visible {
 .page--expertise .top-nav .nav-cta {
   color: var(--light);
   border-color: rgba(240, 235, 233, 0.55);
+}
+
+.page--expertise .top-nav .nav-cta:hover,
+.page--expertise .top-nav .nav-cta:focus-visible {
+  color: var(--navy);
+  background: var(--light);
+  border-color: var(--light);
 }
 
 /* The trail keeps the site's marker recipe unmuted. It runs over the cream
@@ -11713,6 +11721,27 @@ a.contact-channels__value:focus-visible {
   transform: translateX(-50%) scale(1);
 }
 
+.top-nav__menu a[aria-current="page"] {
+  color: var(--light);
+}
+
+/* On Contact the current page is the pill itself: same dot, under it. */
+.top-nav .nav-cta[aria-current="page"] {
+  position: relative;
+}
+
+.top-nav .nav-cta[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -9px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--orange);
+  transform: translateX(-50%);
+}
+
 .top-nav.is-scrolled .wordmark {
   color: var(--light);
 }
@@ -11748,9 +11777,8 @@ a.contact-channels__value:focus-visible {
 }
 
 .top-nav .wordmark,
-.top-nav .top-nav__lead,
-.top-nav .nav-cta {
-  transition: color 240ms ease, border-color 240ms ease, background 240ms ease;
+.top-nav .top-nav__lead {
+  transition: color 240ms ease;
 }
 
 /* ============ HORIZON HEROES: depth on scroll ============
