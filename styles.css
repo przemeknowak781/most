@@ -9233,7 +9233,12 @@ a.contact-channels__value:focus-visible {
 }
 
 .ex-areas__list li {
-  padding: 15px 0 15px 16px;
+  /* The G1 lists run to eight rows, and above 800px tall the Commercial
+     Contracts title takes two lines as well, so the rows give way with the
+     window's height instead of pushing the pinned column past its bottom
+     edge: 15px from 1000px tall, about 7px just above 800px, where the
+     short-window rules below take over. */
+  padding: clamp(6px, 4.1vh - 26px, 15px) 0 clamp(6px, 4.1vh - 26px, 15px) 16px;
   border-top: 1px solid rgba(28, 20, 25, 0.14);
   color: rgba(28, 20, 25, 0.85);
   font: 400 clamp(14.5px, 1.02vw, 16px) / 1.5 "Outfit", system-ui, sans-serif;
@@ -9275,9 +9280,10 @@ a.contact-channels__value:focus-visible {
     margin-bottom: clamp(18px, 2.8vh, 30px);
   }
 
+  /* eight rows still have to fit a 691px window at 1680px wide */
   .ex-areas__list li {
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: clamp(6px, 2vh - 8px, 10px);
+    padding-bottom: clamp(6px, 2vh - 8px, 10px);
   }
 }
 
