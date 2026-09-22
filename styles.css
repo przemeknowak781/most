@@ -2576,7 +2576,9 @@ body.menu-open {
   z-index: 7;
   min-height: 100svh;
   padding: clamp(88px, 11vh, 130px) var(--container-x);
-  background: #0a0d18;
+  /* ::before paints the whole box through its torn-edge masks; a flat fill
+     here showed as a hard-edged strip under the bottom edge where it climbs */
+  background: transparent;
   overflow: visible;
   isolation: isolate;
   display: flex;
@@ -11589,8 +11591,12 @@ a.contact-channels__value:focus-visible {
    =================================================================== */
 
 .whoweare {
+  /* Starts under the torn bottom edge of Three routes (one cut depth up), so
+     the facade fills right up to that edge's rim instead of a flat line. */
+  --whoweare-under: clamp(130px, 11vw, 190px);
   position: relative;
-  padding: clamp(88px, 12vh, 150px) var(--container-x);
+  margin-top: calc(-1 * var(--whoweare-under));
+  padding: calc(clamp(88px, 12vh, 150px) + var(--whoweare-under)) var(--container-x) clamp(88px, 12vh, 150px);
   background: var(--navy);
   color: var(--light);
   overflow: hidden;
