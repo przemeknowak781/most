@@ -7683,16 +7683,6 @@ a.contact-channels__value:focus-visible {
   box-shadow: none;
 }
 
-.contact-form__success {
-  margin: 0;
-  color: #7a3418;
-  font: 400 14.5px / 1.55 "Outfit", system-ui, sans-serif;
-  text-wrap: pretty;
-}
-
-.contact-form__success:focus {
-  outline: none;
-}
 
 .page--contact .site-footer {
   margin-top: 0;
@@ -11616,4 +11606,55 @@ a.contact-channels__value:focus-visible {
     grid-column: 1;
     justify-self: center;
   }
+}
+
+/* The form's consent line, its honeypot, and the one place it reports what
+   actually happened to a submission. */
+.contact-form__consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 4px 0 0;
+  color: rgba(28, 20, 25, 0.72);
+  font: 400 13px / 1.55 "Outfit", system-ui, sans-serif;
+}
+
+.contact-form__consent input {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+  accent-color: var(--orange);
+}
+
+.contact-form__consent a {
+  color: #1c1419;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.contact-form__trap {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.contact-form__status {
+  margin: 4px 0 0;
+  color: #7a3418;
+  font: 400 14.5px / 1.55 "Outfit", system-ui, sans-serif;
+  text-wrap: pretty;
+}
+
+.contact-form__status:focus {
+  outline: none;
+}
+
+.contact-form__status.is-error {
+  color: #9c2415;
 }

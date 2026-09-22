@@ -1766,3 +1766,108 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     sweep();
   }
 })();
+
+/* ------------------------------------------------------------------
+   CONTACT FORM
+
+   The client review asked, reasonably, how the form works. It used to
+   show a "your message is on the way" note and send nothing at all.
+
+   It now has one real delivery path and one honest fallback. Put the
+   mail service's URL in the form's data-endpoint and the message is
+   POSTed there as JSON; leave it empty and the form opens the visitor's
+   mail client with the message prefilled, which at least reaches the
+   firm. What it never does is claim a delivery that did not happen.
+------------------------------------------------------------------- */
+(function contactForm() {
+  const form = document.getElementById("contact-form");
+  if (!form) return;
+
+  const status = form.querySelector(".contact-form__status");
+  const submit = form.querySelector('button[type="submit"]');
+  const trap = form.querySelector('input[name="company"]');
+  const mailto = (form.dataset.mailto || "").trim();
+  const submitLabel = submit ? submit.textContent : "Submit";
+
+  // read at submit time, so the endpoint can be injected after load
+  const endpointNow = () => (form.dataset.endpoint || "").trim();
+
+  function say(text, kind) {
+    if (!status) return;
+    status.textContent = text;
+    status.hidden = false;
+    status.classList.toggle("is-error", kind === "error");
+    status.focus();
+  }
+
+  function fields() {
+    const data = new FormData(form);
+    data.delete("company");
+    data.delete("consent");
+    return data;
+  }
+
+  function handOverToMailClient() {
+    const data = fields();
+    const body = [
+      `Name: ${data.get("name") || ""}`,
+      `Email: ${data.get("email") || ""}`,
+      `Phone: ${data.get("phone") || ""}`,
+      "",
+      data.get("message") || "",
+    ].join("\n");
+    const href =
+      `mailto:${mailto}` +
+      `?subject=${encodeURIComponent("Enquiry from mostpartners.com")}` +
+      `&body=${encodeURIComponent(body)}`;
+    window.location.href = href;
+    say(
+      "Your mail app should be opening with the message ready to send. " +
+        `If nothing happens, write to ${mailto} directly.`
+    );
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    // a bot filled the hidden field: accept quietly, deliver nothing
+    if (trap && trap.value) {
+      say("Thanks — your message is with us.");
+      return;
+    }
+
+    if (!form.reportValidity()) return;
+
+    const endpoint = endpointNow();
+    if (!endpoint) {
+      handOverToMailClient();
+      return;
+    }
+
+    if (submit) {
+      submit.disabled = true;
+      submit.textContent = "Sending…";
+    }
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(Object.fromEntries(fields())),
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      form.reset();
+      say("Thanks — your message is on the way. We will get back within two business days.");
+      if (submit) submit.textContent = "Sent";
+    } catch (error) {
+      if (submit) {
+        submit.disabled = false;
+        submit.textContent = submitLabel;
+      }
+      say(
+        `That did not go through${mailto ? ` — please write to ${mailto} instead.` : "."}`,
+        "error"
+      );
+    }
+  });
+})();
