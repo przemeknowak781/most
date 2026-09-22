@@ -4,6 +4,7 @@
   --light: #f0ebe9;
   --light-80: rgba(240, 235, 233, 0.8);
   --light-60: rgba(240, 235, 233, 0.6);
+  --light-40: rgba(240, 235, 233, 0.4);
   --light-28: rgba(240, 235, 233, 0.28);
   --light-10: rgba(240, 235, 233, 0.1);
   --purple-dark: #6a6e86;
@@ -160,15 +161,40 @@ a {
   margin-right: clamp(20px, 2.4vw, 32px);
 }
 
-.top-nav__menu--right a {
+/* The audience group reads as a labelled aside, not a second menu: the
+   "explore as" lead is plain text, never a link, and the three routes sit a
+   class below the primary pages so the two halves cannot be confused.
+   Specificity is raised on purpose — the generic `.top-nav__menu a` rule below
+   is written at the same weight and would otherwise win on source order. */
+.top-nav .top-nav__lead {
+  color: var(--light-40);
+  font: italic 300 12px / 1.2 "Outfit", system-ui, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  white-space: nowrap;
+  cursor: default;
+  margin-right: -6px;
+}
+
+.top-nav .top-nav__menu--right a {
   font-size: 13px;
+  font-weight: 300;
   color: var(--light-60);
   letter-spacing: 0.06em;
 }
 
-.top-nav__menu--right a:hover,
-.top-nav__menu--right a:focus-visible {
+.top-nav .top-nav__menu--right a:hover,
+.top-nav .top-nav__menu--right a:focus-visible {
   color: var(--light);
+}
+
+.mobile-menu__lead {
+  display: block;
+  margin: 18px 0 2px;
+  color: var(--light-40);
+  font: italic 300 13px / 1.2 "Outfit", system-ui, sans-serif;
+  letter-spacing: 0.08em;
+  cursor: default;
 }
 
 .top-nav__menu a {
