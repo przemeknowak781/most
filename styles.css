@@ -739,12 +739,15 @@ body.menu-open {
   content: "";
   position: absolute;
   inset: -14% 0;
-  background-image: url("background.webp");
+  /* Architecture, not mountains (client, 9.09): a close-up of roof trusses
+     with no building edge, baked into the hero's light - terracotta where the
+     sun catches the steel, cooling to dusk violet at the foot - so the gap
+     reads as the same sunset seen through steel and glass. */
+  background-image: url("arch-edge-truss.webp");
   background-size: cover;
-  background-position: 56% 25%;
+  background-position: 50% 30%;
   transform: scaleX(-1) translate3d(0, calc((var(--ridge-progress, 0.5) - 0.5) * 12vh), 0);
   transform-origin: center center;
-  filter: saturate(1.02) contrast(1.07) brightness(0.88);
   z-index: 0;
   will-change: transform;
 }
@@ -11761,11 +11764,13 @@ a.contact-channels__value:focus-visible {
   z-index: 0;
 }
 
+/* A close-up of facade mullions, pre-toned to the navy ramp - no tower
+   silhouette or sky edge (client, 9.09 and 14.09). */
 .whoweare__bg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: saturate(0.45) brightness(0.5) contrast(1.05);
+  opacity: 0.9;
 }
 
 .whoweare__wash {
