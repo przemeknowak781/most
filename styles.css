@@ -6119,53 +6119,15 @@ a.photo-break__line:focus-visible {
   text-wrap: balance;
 }
 
-.team-editorial__quote {
-  position: relative;
+/*
+  With the pull-quote gone, the firm's own TEAM paragraph is the only text in
+  the section head, so it takes over the prominence the quote used to have.
+*/
+.team-editorial__lead {
   max-width: 760px;
   margin: 0 auto;
-  padding: 0 clamp(28px, 4vw, 56px);
-  color: var(--light);
-}
-
-.team-editorial__quote::before,
-.team-editorial__quote::after {
-  position: absolute;
-  color: rgba(255, 97, 44, 0.28);
-  font: 500 clamp(54px, 6vw, 96px) / 0.8 "Urbanist", system-ui, sans-serif;
-}
-
-.team-editorial__quote::before {
-  content: "\201C";
-  left: 0;
-  top: -0.08em;
-}
-
-.team-editorial__quote::after {
-  content: "\201D";
-  right: 0;
-  bottom: -0.45em;
-}
-
-.team-editorial__quote p {
-  margin: 0;
-  font: 500 clamp(32px, 4.2vw, 58px) / 1.08 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.005em;
-  text-wrap: balance;
-}
-
-.team-editorial__quote em {
-  font-style: italic;
-}
-
-.team-editorial__quote span {
-  color: #FF612C;
-}
-
-.team-editorial__lead {
-  max-width: 640px;
-  margin: 24px auto 0;
-  color: var(--light-60);
-  font: 400 clamp(15px, 1.2vw, 18px) / 1.55 "Outfit", system-ui, sans-serif;
+  color: var(--light-80);
+  font: 400 clamp(18px, 1.5vw, 22px) / 1.6 "Outfit", system-ui, sans-serif;
   text-wrap: pretty;
 }
 
