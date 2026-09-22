@@ -167,7 +167,8 @@ a {
    Specificity is raised on purpose — the generic `.top-nav__menu a` rule below
    is written at the same weight and would otherwise win on source order. */
 .top-nav .top-nav__lead {
-  color: var(--light-40);
+  /* quiet, but not under 3:1 on the sunset heroes */
+  color: rgba(240, 235, 233, 0.56);
   font: italic 300 12px / 1.2 "Outfit", system-ui, sans-serif;
   letter-spacing: 0.08em;
   text-transform: lowercase;
@@ -9724,11 +9725,12 @@ a.contact-channels__value:focus-visible {
 }
 
 .page--expertise .top-nav .top-nav__menu--right a {
-  color: var(--light-60);
+  /* 0.6 fell just under 3:1 over the orange end of the sky */
+  color: rgba(240, 235, 233, 0.78);
 }
 
 .page--expertise .top-nav .top-nav__lead {
-  color: rgba(240, 235, 233, 0.5);
+  color: rgba(240, 235, 233, 0.68);
 }
 
 .page--expertise .top-nav__menu a:hover,
@@ -10135,7 +10137,9 @@ a.contact-channels__value:focus-visible {
   /* the eyebrow's first line, which is where the Figma dot sits */
   top: calc(var(--nav-height) + clamp(64px, 10vh, 120px) + 7px);
   bottom: 0;
-  background: linear-gradient(180deg, var(--spine-line), var(--spine-line-fade, var(--spine-line)));
+  /* the line leaves the open start ring from its lower edge instead of
+     showing as a stub inside it */
+  background: linear-gradient(180deg, var(--spine-line), var(--spine-line-fade, var(--spine-line))) 0 100% / 100% calc(100% - var(--rail-dot-end) / 2) no-repeat;
 }
 
 .scene-spine--hero::before {
@@ -10932,7 +10936,7 @@ a.contact-channels__value:focus-visible {
 }
 
 .page--founders .top-nav .top-nav__lead {
-  color: rgba(20, 22, 31, 0.52);
+  color: rgba(20, 22, 31, 0.66);
 }
 
 .page--founders .top-nav__menu a:hover,
@@ -11189,7 +11193,7 @@ a.contact-channels__value:focus-visible {
 }
 
 .page--horizon .top-nav .top-nav__lead {
-  color: rgba(var(--hz-ink), 0.54);
+  color: rgba(var(--hz-ink), 0.68);
 }
 
 .page--horizon .top-nav__menu a:hover,
@@ -11795,4 +11799,13 @@ a.contact-channels__value:focus-visible {
   .page--horizon .hz-massif {
     translate: 0 calc(min(var(--scroll-y, 0px), 1100px) * 0.12);
   }
+}
+
+/* On the Expertise band the trail borrows the home silhouette's anchors, and
+   where the ridge dips at its saddles the line lifted off the cream into the
+   now-dark sky. The trail and its markers sit a little lower here so the line
+   always runs on land. */
+.page--expertise .hero-trail,
+.page--expertise .hero-trail-points {
+  translate: 0 clamp(18px, 1.8vw, 34px);
 }
