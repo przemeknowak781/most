@@ -1695,7 +1695,7 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
       });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       form.reset();
-      say("Thanks — your message is on the way. We will get back within two business days.");
+      say("Thanks — your message is on the way. We will get back to you shortly.");
       if (submit) submit.textContent = "Sent";
     } catch (error) {
       if (submit) {
