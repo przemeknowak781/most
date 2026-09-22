@@ -2126,8 +2126,12 @@ body.menu-open {
 }
 
 .big-stat__num--word {
-  font-size: clamp(40px, 5.6vw, 84px);
+  /* The three jurisdictions read as one unit, as in the home hero and the
+     wireframe, so they hold one line even in the narrowest column (277px at
+     1280). */
+  font-size: clamp(40px, 4.2vw, 68px);
   line-height: 0.96;
+  white-space: nowrap;
 }
 
 .big-stat__num span {
@@ -2138,15 +2142,6 @@ body.menu-open {
   vertical-align: 0.6em;
   letter-spacing: 0;
   font-weight: 500;
-}
-
-.big-stat__num--word span {
-  display: block;
-  font-size: 0.36em;
-  margin-left: 0;
-  vertical-align: baseline;
-  color: rgba(240, 235, 233, 0.5);
-  letter-spacing: 0.04em;
 }
 
 .big-stat__label {
@@ -2369,80 +2364,94 @@ body.menu-open {
   text-wrap: balance;
 }
 
-.manifesto__split {
+/* The review approved the wireframe's pair as drawn (22.09): Mission as text
+   beside a photograph, then Commitment the other way round, each under its
+   own heading. The section keeps its background and trail; the rows replace
+   the centred split on About. */
+.manifesto__row {
+  width: 100%;
   max-width: 1180px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(40px, 6vw, 96px);
-  align-items: stretch;
+  align-items: center;
   text-align: left;
 }
 
-.manifesto__col {
+.manifesto__row + .manifesto__row {
+  margin-top: clamp(72px, 12vh, 136px);
+}
+
+.manifesto__text {
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
 
-.manifesto__col--right {
-  text-align: right;
+.manifesto__text .manifesto__step {
+  margin: 0;
 }
 
-.manifesto__col-label {
-  margin: 0 0 8px;
-  color: rgba(255, 168, 110, 0.85);
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
+/* In a half-width column the centred statement size would run to five lines;
+   this matches the page's other section headings instead. */
+.manifesto__text .manifesto__title {
+  margin: 0 0 6px;
+  max-width: none;
+  font-size: clamp(30px, 3.4vw, 48px);
+  line-height: 1.06;
 }
 
-.manifesto__col p {
+.manifesto__copy,
+.manifesto__list {
   margin: 0;
   color: var(--light-80);
   font: 400 clamp(15px, 1.2vw, 18px) / 1.6 "Outfit", system-ui, sans-serif;
   text-wrap: pretty;
 }
 
-.manifesto__col--right p {
-  margin-left: auto;
+.manifesto__list {
+  display: grid;
+  gap: 6px;
+  padding: 0;
+  list-style: none;
 }
 
-.manifesto__divider {
+/* G1 sets the four points as a dashed list. The dash is drawn, so each item
+   holds the client's words and nothing else. */
+.manifesto__list li {
   position: relative;
-  width: 1px;
-  align-self: stretch;
-  background: linear-gradient(180deg, transparent, rgba(255, 97, 44, 0.6) 30%, rgba(255, 176, 119, 0.4) 70%, transparent);
+  padding-left: 30px;
 }
 
-.manifesto__divider-node {
+.manifesto__list li::before {
+  content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: var(--marker-size);
-  height: var(--marker-size);
-  background: var(--marker-core);
-  border-radius: 50%;
-  box-shadow: var(--marker-shadow);
-  transform: translate(-50%, -50%);
+  left: 0;
+  top: 0.8em;
+  width: 16px;
+  height: 1px;
+  background: rgba(255, 168, 110, 0.85);
+}
+
+.manifesto__media {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--navy);
+}
+
+.manifesto__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 @media (max-width: 860px) {
-  .manifesto__split {
+  .manifesto__row {
     grid-template-columns: 1fr;
-    gap: 32px;
-  }
-  .manifesto__col--right {
-    text-align: left;
-  }
-  .manifesto__col--right p {
-    margin-left: 0;
-  }
-  .manifesto__divider {
-    width: 60%;
-    height: 1px;
-    align-self: center;
-    background: linear-gradient(90deg, transparent, rgba(255, 97, 44, 0.6), transparent);
   }
 }
 
@@ -11460,6 +11469,14 @@ a.contact-channels__value:focus-visible {
 .clients__track {
   display: flex;
   flex: 0 0 auto;
+  /* Never narrower than the row. Six placeholder marks make one copy about
+     1600px wide, so at 1920 and 2560 the loop ran out before the second copy
+     reached the right edge. A short set now spreads out evenly; a set wider
+     than the screen is unaffected. */
+  min-width: 100%;
+  justify-content: space-around;
+  /* the list's default indent made every sixth gap 40px wider */
+  padding-left: 0;
   align-items: center;
   gap: clamp(48px, 6vw, 96px);
   padding-right: clamp(48px, 6vw, 96px);
