@@ -1143,6 +1143,22 @@ function setupMemberReadmore() {
   });
 }
 
+/* Team portrait frames are a proposal for the client, so the page keeps the
+   neutral silhouettes unless a frame is asked for: ?portraits=a (terracotta
+   sky) or ?portraits=b (latte sky), or data-portraits on <html> for a
+   preview build. Members with a processed photo swap it in; the rest keep
+   the silhouette inside the same frame. */
+function setupPortraitProposal() {
+  const root = document.documentElement;
+  const asked = new URLSearchParams(window.location.search).get("portraits");
+  if (asked === "a" || asked === "b") root.dataset.portraits = asked;
+  if (!root.dataset.portraits) return;
+  document.querySelectorAll(".member__portrait[data-photo]").forEach((img) => {
+    img.src = img.dataset.photo;
+    img.closest(".member")?.classList.add("has-photo");
+  });
+}
+
 function setupParallax() {
   const images = Array.from(document.querySelectorAll(".photo-break img, .aud-bleed img"));
   if (!images.length) return;
@@ -1185,6 +1201,7 @@ setupHeroTrail();
 setupAudienceTriptych();
 setupAudienceConnectors();
 setupMemberReadmore();
+setupPortraitProposal();
 
 // Defer the expensive aboutfold setup (builds ~550 bars + SVG path computeLength)
 // until the section is near the viewport. Falls back to immediate init.

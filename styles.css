@@ -11795,3 +11795,59 @@ a.contact-channels__value:focus-visible {
 .page--expertise .hero-trail-points {
   translate: 0 clamp(18px, 1.8vw, 34px);
 }
+
+/* ============ TEAM PORTRAIT FRAME: proposal A and B ============
+   'Each on their own summit': the cut-out figure stands in a window shaped
+   like a peak of the audience ridge, with the brightest sky behind the head,
+   the orange route passing behind the shoulders and a ridge cut into the
+   foot of the window, which also hides the stool and the photo's lower
+   edge. A is a terracotta sky, B a latte one. Off by default (see
+   setupPortraitProposal); the plain page keeps the neutral silhouettes. */
+[data-portraits] .member__halo,
+[data-portraits] .member__index {
+  display: none;
+}
+
+[data-portraits] .member__photo::before {
+  opacity: 0.55;
+}
+
+[data-portraits] .member__plate {
+  inset: 0;
+  border-radius: 0;
+  box-shadow: none;
+  /* the peak above, and the ridge along the foot cut out of the same shape,
+     so the stage shows through below it whatever its colour */
+  clip-path: polygon(0% 88%, 0% 56%, 7% 50%, 14% 43%, 22% 35%, 29% 27%, 35% 20%, 41% 12%, 46% 6%, 50% 3%, 54% 7%, 59% 12%, 66% 20%, 74% 29%, 82% 37%, 90% 45%, 100% 51%, 100% 87%, 95% 85.5%, 90% 88%, 84% 86%, 78% 89.5%, 71% 87%, 63% 88.5%, 57% 85%, 50% 90%, 44% 88%, 37% 89.5%, 30% 86.5%, 22% 89%, 15% 87%, 8% 90%, 0% 88%);
+  background: radial-gradient(60% 44% at 50% 30%, #f7caa6 0%, #ea9564 34%, #c8663f 64%, #7c4037 100%);
+}
+
+[data-portraits="b"] .member__plate {
+  background: radial-gradient(60% 44% at 50% 30%, #fbf2ea 0%, #f0dfcf 38%, #dbc1ab 72%, #b89e8a 100%);
+}
+
+[data-portraits] .member:hover .member__plate {
+  transform: none;
+  box-shadow: none;
+}
+
+/* the route runs behind the figure, from the left edge up past the shoulder */
+[data-portraits] .member__plate::before {
+  z-index: 1;
+  mix-blend-mode: normal;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 700' preserveAspectRatio='none'%3E%3Cpath d='M0 612 C 70 600, 110 588, 160 560 S 250 520, 300 522 S 400 470, 470 438 S 560 400, 600 392' fill='none' stroke='%23ff612c' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='470' cy='438' r='7' fill='%23ff612c'/%3E%3Ccircle cx='470' cy='438' r='13' fill='%23ff612c' fill-opacity='0.22'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+
+[data-portraits] .member__plate::after {
+  display: none;
+}
+
+[data-portraits] .member__portrait {
+  width: 100%;
+  max-height: none;
+  filter: none;
+}
+
+[data-portraits] .member:hover .member__portrait {
+  filter: none;
+}
