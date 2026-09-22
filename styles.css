@@ -11018,11 +11018,13 @@ a.contact-channels__value:focus-visible {
     linear-gradient(179deg, var(--fnd-sky-high) 0%, var(--fnd-sky) 46%, var(--fnd-sky-low) 100%);
 }
 
-/* The ridge and the wanderer are the ones from the Coming Soon page, brought
-   over as the single path they are there - the figure comes with the land
-   rather than being posed on it. The relationship carries over intact too:
-   a dark silhouette against a bright sky, which is what lets a figure that
-   size read at all.
+/* The ridge is the one from the Coming Soon page, with its own wanderer cut
+   out of the silhouette - the same figure-free ridge the Companies and
+   Investors pages carry. The wanderer standing on it now is a separate
+   figure, stepping off the outcrop towards the summit, drawn in the land's
+   colour so that where it meets the rock the two are one silhouette. The
+   relationship carries over intact: a dark silhouette against a bright sky,
+   which is what lets a figure that size read at all.
 
    The artwork's own constants, measured off the path: it is 0.45600 as tall
    as it is wide (1443 x 658), and the outcrop the wanderer stands on sits
