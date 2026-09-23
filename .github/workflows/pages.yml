@@ -36,6 +36,15 @@ jobs:
             | grep -zv -E '(\.md$|^docs/|^\.github/|^\.gitignore$)' \
             | xargs -0 cp --parents -t _site
 
+      # Ship the stylesheet and scripts without comments and whitespace (about
+      # half the transfer size). The sources in the repo stay readable; the
+      # rendered pages are pixel-identical to the unminified build.
+      - name: Minify CSS and JS
+        working-directory: _site
+        run: |
+          npx --yes esbuild@0.24.0 styles.css --minify --outfile=styles.css --allow-overwrite --log-level=warning
+          npx --yes esbuild@0.24.0 script.js copy-review.js --minify --outdir=. --allow-overwrite --log-level=warning
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
