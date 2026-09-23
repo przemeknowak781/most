@@ -1247,13 +1247,57 @@ function markCopyReview(data) {
   legend.className = "copy-legend";
   legend.setAttribute("aria-label", "Copy review legend");
   legend.lang = "pl";
+  /* the legend folds down to its title, so it never has to sit on the
+     texts it is explaining */
   legend.innerHTML =
-    '<p class="copy-legend__title">Teksty robocze na tej stronie</p>' +
+    '<button type="button" class="copy-legend__toggle" aria-expanded="true" aria-controls="copy-legend-body">' +
+    'Teksty robocze na tej stronie<span class="copy-legend__sign" aria-hidden="true">–</span></button>' +
+    '<div class="copy-legend__body" id="copy-legend-body">' +
     `<p><span class="copy-legend__swatch copy-legend__swatch--ours"></span>nasze, nowe (${counts.ours})</p>` +
     `<p><span class="copy-legend__swatch copy-legend__swatch--wireframe"></span>nasze, z wireframe'u (${counts.wireframe})</p>` +
     `<p><span class="copy-legend__swatch copy-legend__swatch--g1-edited"></span>tekst klienta skrócony przez nas (${counts["g1-edited"]})</p>` +
-    '<p class="copy-legend__note">Bez ramki: tekst klienta (dokument) lub z Figmy, 1:1. Najedź na ramkę, żeby zobaczyć źródło.</p>';
+    '<p class="copy-legend__note">Bez ramki: tekst klienta (dokument) lub z Figmy, 1:1. Najedź na ramkę, żeby zobaczyć źródło.</p>' +
+    "</div>";
+  const toggle = legend.querySelector(".copy-legend__toggle");
+  toggle.addEventListener("click", () => {
+    const folded = legend.classList.toggle("is-collapsed");
+    toggle.setAttribute("aria-expanded", String(!folded));
+    toggle.querySelector(".copy-legend__sign").textContent = folded ? "+" : "–";
+  });
   document.body.appendChild(legend);
+
+  /* and it takes whichever corner covers the fewest lines of text on the
+     first screen - the heroes put their copy on different sides. Chosen
+     again once the webfonts have set the lines. */
+  const placeLegend = () => {
+    const lines = [];
+    document.querySelectorAll("main h1, main h2, main h3, main p, main li, main a, main button").forEach((el) => {
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      Array.from(range.getClientRects()).forEach((r) => {
+        if (r.width && r.height && r.top < window.innerHeight) lines.push(r);
+      });
+    });
+    const covered = () => {
+      const box = legend.getBoundingClientRect();
+      return lines.filter((r) => r.right > box.left && r.left < box.right && r.bottom > box.top && r.top < box.bottom).length;
+    };
+    let best = "";
+    let least = Infinity;
+    ["", "copy-legend--bl", "copy-legend--br"].forEach((corner) => {
+      legend.classList.remove("copy-legend--bl", "copy-legend--br");
+      if (corner) legend.classList.add(corner);
+      const n = covered();
+      if (n < least) {
+        least = n;
+        best = corner;
+      }
+    });
+    legend.classList.remove("copy-legend--bl", "copy-legend--br");
+    if (best) legend.classList.add(best);
+  };
+  placeLegend();
+  if (document.fonts) document.fonts.ready.then(placeLegend);
 }
 
 function setupParallax() {
@@ -1562,8 +1606,40 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     strikes = 0;
     schedule();
   });
-  if (typeof ResizeObserver === "function") new ResizeObserver(schedule).observe(stage);
+  /* The column is as tall as its tallest topic, so once it parks on the
+     last, shorter one the difference shows as a blank before How We Work.
+     The next section is pulled up over that blank - never by more than one
+     topic's worth of scroll, so it cannot reach a taller panel that is
+     still pinned above it. Measured from layout, so fonts and resizes just
+     change the answer; without a track (short windows, reduced motion) it
+     is zero. */
+  const section = track.closest(".ex-areas");
+  const nav = stage.querySelector(".ex-areas__nav");
+  const lastPanel = panels[panels.length - 1];
+  const slack = () => {
+    if (!section) return;
+    const g = geometry();
+    let px = 0;
+    if (g) {
+      const end = lastPanel.lastElementChild;
+      const floor = Math.max(
+        end ? end.getBoundingClientRect().bottom : 0,
+        nav ? nav.getBoundingClientRect().bottom : 0
+      );
+      px = Math.min(stage.getBoundingClientRect().bottom - floor, g.travel / tabs.length - 24);
+    }
+    section.style.setProperty("--ex-park-slack", Math.max(0, Math.round(px)) + "px");
+  };
+
+  if (typeof ResizeObserver === "function") {
+    new ResizeObserver(() => {
+      schedule();
+      slack();
+    }).observe(stage);
+  }
+  if (document.fonts) document.fonts.ready.then(slack);
   read();
+  slack();
 })();
 
 /* Scroll-in reveals, plus one-at-a-time icon drawing.

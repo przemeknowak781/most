@@ -29,7 +29,15 @@
      under the cap, so they do not move. */
   --hero-ridge-room: calc(18.75vw - 12.5vh - 84px);
   --hero-ridge-drop: clamp(0px, var(--hero-ridge-room), clamp(28px, 5vh, 48px));
+  /* The band under the hero keeps the full drop: the cap above is for the
+     hero trail and its first checkpoint, and when the band rose with it the
+     truss crest climbed into the stat copy on 4:3 and 5:4 windows. Its top
+     edge is still tucked well under the hero silhouette. */
+  --ridge-edge-drop: clamp(28px, 5vh, 48px);
   --nav-height: 84px;
+  /* depth of the Three routes torn edges; Who we are tucks under the bottom
+     one by exactly this much, so both read it from here */
+  --audience-cut-depth: clamp(130px, 11vw, 190px);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -40,6 +48,7 @@
 @media (min-height: 880px) {
   :root {
     --hero-ridge-drop: clamp(0px, var(--hero-ridge-room), clamp(52px, 8vh, 96px));
+    --ridge-edge-drop: clamp(52px, 8vh, 96px);
   }
 }
 
@@ -727,7 +736,7 @@ body.menu-open {
 .ridge-edge {
   position: relative;
   z-index: 6;
-  margin-top: calc(clamp(-260px, -20vh, -120px) + var(--hero-ridge-drop) - 2px);
+  margin-top: calc(clamp(-260px, -20vh, -120px) + var(--ridge-edge-drop) - 2px);
   margin-bottom: -1px;
   pointer-events: none;
   line-height: 0;
@@ -2127,17 +2136,25 @@ body.menu-open {
   border-right: 1px solid rgba(255, 168, 110, 0.18);
 }
 
+.big-stat {
+  --big-stat-num-size: clamp(56px, 8.4vw, 132px);
+}
+
 .big-stat__num {
   margin: 0;
   color: var(--light);
-  font: 500 clamp(56px, 8.4vw, 132px) / 0.88 "Urbanist", system-ui, sans-serif;
+  font: 500 var(--big-stat-num-size) / 0.88 "Urbanist", system-ui, sans-serif;
   letter-spacing: -0.025em;
 }
 
 .big-stat__num--word {
   /* The three jurisdictions read as one unit, as in the home hero and the
      wireframe, so they hold one line even in the narrowest column (277px at
-     1280). */
+     1280). The line keeps the height of 200+ and 300+ and sits at its foot,
+     so the three labels and copy lines below share one row. */
+  display: flex;
+  align-items: flex-end;
+  min-height: calc(var(--big-stat-num-size) * 0.88);
   font-size: clamp(40px, 4.2vw, 68px);
   line-height: 0.96;
   white-space: nowrap;
@@ -2588,7 +2605,6 @@ body.menu-open {
 
 .audience-intro {
   --audience-cut-offset: clamp(-180px, -10vw, -118px);
-  --audience-cut-depth: clamp(130px, 11vw, 190px);
   --audience-bottom-lift: clamp(54px, 6vh, 86px);
   position: relative;
   z-index: 7;
@@ -6529,7 +6545,8 @@ a.photo-break__line:focus-visible {
   content: "";
   position: absolute;
   left: 0;
-  top: 16px;
+  /* leaves the start ring from its lower edge, as on the other rails */
+  top: calc(1px + var(--ring-size));
   bottom: 8px;
   width: 1.5px;
   background: linear-gradient(180deg, rgba(255, 97, 44, 0.55) 0%, rgba(255, 97, 44, 0.08) 100%);
@@ -6538,14 +6555,13 @@ a.photo-break__line:focus-visible {
 .member__expertise-section::after {
   content: "";
   position: absolute;
-  /* centred where the 9px dot used to be; the dark fill hides the line
-     behind it, so it reads as the site's open start ring */
+  /* centred where the 9px dot used to be: the site's open start ring */
   left: -6px;
   top: 1px;
   width: var(--ring-size);
   height: var(--ring-size);
   border-radius: 50%;
-  background: #070912;
+  background: transparent;
   box-shadow:
     inset 0 0 0 var(--ring-stroke) var(--orange),
     0 0 0 var(--ring-halo) rgba(255, 97, 44, 0.14);
@@ -9776,6 +9792,14 @@ a.contact-channels__value:focus-visible {
   position: relative;
   z-index: 20;
   padding-top: clamp(48px, 7vh, 88px);
+  /* script measures how much of the column is blank once it parks on the
+     last topic (--ex-park-slack); How We Work slides up over that blank and
+     paints above the column's empty lower edge */
+  margin-bottom: calc(-1 * var(--ex-park-slack, 0px));
+}
+
+.page--expertise .exwork--terrain {
+  z-index: 21;
 }
 
 /* nothing anchors the dotted trail leaders here - drop them */
@@ -11588,7 +11612,7 @@ a.contact-channels__value:focus-visible {
 .whoweare {
   /* Starts under the torn bottom edge of Three routes (one cut depth up), so
      the facade fills right up to that edge's rim instead of a flat line. */
-  --whoweare-under: clamp(130px, 11vw, 190px);
+  --whoweare-under: var(--audience-cut-depth);
   position: relative;
   margin-top: calc(-1 * var(--whoweare-under));
   padding: calc(clamp(88px, 12vh, 150px) + var(--whoweare-under)) var(--container-x) clamp(88px, 12vh, 150px);
@@ -11940,9 +11964,11 @@ a.contact-channels__value:focus-visible {
 }
 
 .copy-legend {
+  /* top right under the nav: the first screens keep their stats and trail
+     markers bottom left, and the right side under the menu is sky */
   position: fixed;
-  left: 16px;
-  bottom: 16px;
+  top: calc(var(--nav-height) + 16px);
+  right: 16px;
   z-index: 9000;
   max-width: 300px;
   padding: 14px 16px;
@@ -11953,6 +11979,17 @@ a.contact-channels__value:focus-visible {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
+.copy-legend--bl,
+.copy-legend--br {
+  top: auto;
+  bottom: 16px;
+}
+
+.copy-legend--bl {
+  right: auto;
+  left: 16px;
+}
+
 .copy-legend p {
   margin: 4px 0;
   display: flex;
@@ -11960,9 +11997,40 @@ a.contact-channels__value:focus-visible {
   gap: 8px;
 }
 
-.copy-legend__title {
-  font-weight: 500;
+.copy-legend__toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  width: 100%;
+  margin: 0 0 4px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: 500 12px / 1.45 "Outfit", system-ui, sans-serif;
   letter-spacing: 0.04em;
+  text-align: left;
+  cursor: pointer;
+}
+
+.copy-legend__toggle:focus-visible {
+  outline: 2px solid #ff612c;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.copy-legend__sign {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.copy-legend.is-collapsed .copy-legend__toggle {
+  margin: 0;
+}
+
+.copy-legend.is-collapsed .copy-legend__body {
+  display: none;
 }
 
 .copy-legend__note {
