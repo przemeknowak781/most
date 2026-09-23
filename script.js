@@ -548,6 +548,9 @@ function setupAudienceTriptych() {
   let sectionHeight = 1;
   let sectionScrollable = 1;
   let activeIndex = null;
+  /* A card the reader opened or closed stays that way until the section has
+     left the screen; only then does the scroll take the cards back. */
+  let chosen = null;
 
   function updateBackdrop(progress) {
     if (reducedMotion) {
@@ -615,14 +618,22 @@ function setupAudienceTriptych() {
   }
 
   function updateFromScroll() {
+    const scrollY = window.scrollY || 0;
+    const vh = window.innerHeight || 1;
+    if (chosen !== null) {
+      if (scrollY + vh < sectionTop || scrollY > sectionTop + sectionHeight) chosen = null;
+      else {
+        if (!reducedMotion) updateBackdrop(clamp((scrollY - sectionTop) / sectionScrollable, 0, 1));
+        return;
+      }
+    }
+
     if (reducedMotion) {
       updateBackdrop(0);
       setActiveCard(0);
       return;
     }
 
-    const scrollY = window.scrollY || 0;
-    const vh = window.innerHeight || 1;
     const revealStart = sectionTop - vh * 0.08;
     updateBackdrop(clamp((scrollY - sectionTop) / sectionScrollable, 0, 1));
 
@@ -653,7 +664,9 @@ function setupAudienceTriptych() {
     });
     toggle.addEventListener("click", (e) => {
       e.preventDefault();
-      setActiveCard(cards.indexOf(card));
+      /* show less closes the card; read more opens it */
+      chosen = card.classList.contains("is-expanded") ? -1 : cards.indexOf(card);
+      setActiveCard(chosen);
     });
   });
 
@@ -1153,6 +1166,16 @@ function setupAboutfold() {
   update();
 }
 
+function setupMarqueePause() {
+  const btn = document.querySelector("[data-marquee-pause]");
+  const row = document.querySelector(".clients__viewport");
+  if (!btn || !row) return;
+  btn.addEventListener("click", () => {
+    const paused = row.classList.toggle("is-paused");
+    btn.setAttribute("aria-pressed", String(paused));
+  });
+}
+
 function setupMemberReadmore() {
   const buttons = document.querySelectorAll("[data-readmore]");
   buttons.forEach((btn) => {
@@ -1350,6 +1373,7 @@ setupHeroTrail();
 setupAudienceTriptych();
 setupAudienceConnectors();
 setupMemberReadmore();
+setupMarqueePause();
 setupPortraitProposal();
 setupCopyReview();
 

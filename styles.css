@@ -3447,6 +3447,13 @@ main:focus {
 
 .preview.is-expanded .preview__list {
   align-self: end;
+  /* The card is a fixed-height stage. If the reader's own text spacing
+     makes the copy taller than the room left, the list keeps to its row and
+     scrolls, instead of printing over the copy (WCAG 1.4.12). At the
+     site's own spacing it fits and nothing changes. */
+  max-height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   margin: 0;
   padding-top: clamp(16px, 2vh, 24px);
   border-top-color: color-mix(in srgb, var(--accent) 42%, rgba(240, 235, 233, 0.12));
@@ -11587,9 +11594,39 @@ a.contact-channels__value:focus-visible {
   to { transform: translateX(-100%); }
 }
 
+/* The row moves on its own for longer than five seconds, so it stops on
+   hover and focus, and a button stops it for good (WCAG 2.2.2). */
+.clients__viewport:hover .clients__track,
+.clients__viewport:focus-within .clients__track,
+.clients__viewport.is-paused .clients__track {
+  animation-play-state: paused;
+}
+
+.clients__pause {
+  display: block;
+  margin: clamp(18px, 2.4vh, 28px) auto 0;
+  padding: 7px 14px;
+  border: 1px solid var(--light-28);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--light-80);
+  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 220ms ease, color 220ms ease;
+}
+
+.clients__pause:hover,
+.clients__pause[aria-pressed="true"] {
+  border-color: rgba(255, 168, 110, 0.7);
+  color: var(--light);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .clients__track { animation: none; }
   .clients__viewport { overflow-x: auto; }
+  .clients__pause { display: none; }
 }
 
 /* The team page's closing band now answers "where does this go?" by naming
