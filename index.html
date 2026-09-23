@@ -35,6 +35,7 @@
     <script src="script.js" defer></script>
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
       <symbol id="most-logo" viewBox="0 0 160 58">
         <path d="M46.1176 16.6761V2.64803L25.4118 34.1921H23.0588L2.82353 2.64803V34.8539H0V0.000976562H4L24.2989 31.1793L44.6596 0.000976562H48.9412V16.6761H46.1176Z" />
@@ -109,7 +110,7 @@
       </div>
     </div>
 
-    <main>
+    <main id="main" tabindex="-1">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-media" aria-hidden="true">
           <img class="hero-bg" src="background.webp" alt="" fetchpriority="high" decoding="async" />
@@ -227,6 +228,10 @@
                 <p class="preview__name">Founders</p>
                 <p class="preview__hint">building from&nbsp;zero</p>
               </header>
+              <button class="preview__toggle" type="button" aria-expanded="true" data-audience-toggle>
+                <span class="preview__toggle-label">show less</span>
+                <span class="preview__toggle-icon" aria-hidden="true"></span>
+              </button>
               <div class="preview__body">
                 <p class="preview__copy">
                   We take over the legal aspects of running your business so that you can focus on building and growing it. Have us as your legal partner at every stage&nbsp;— from formation and hiring to funding, expansion, and&nbsp;exit.
@@ -242,10 +247,6 @@
                   <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10M11 6l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
                 </a>
               </div>
-              <button class="preview__toggle" type="button" aria-expanded="true" data-audience-toggle>
-                <span class="preview__toggle-label">show less</span>
-                <span class="preview__toggle-icon" aria-hidden="true"></span>
-              </button>
             </article>
           </div>
 
@@ -271,7 +272,11 @@
                 <p class="preview__name">Companies</p>
                 <p class="preview__hint">scaling with&nbsp;confidence</p>
               </header>
-              <div class="preview__body">
+              <button class="preview__toggle" type="button" aria-expanded="false" data-audience-toggle>
+                <span class="preview__toggle-label">read more</span>
+                <span class="preview__toggle-icon" aria-hidden="true"></span>
+              </button>
+              <div class="preview__body" inert>
                 <p class="preview__copy">
                   We take care of the legal processes that each business needs, so you can scale and expand with confidence. From commercial contracts to cross-border transactions and complex deals&nbsp;— we support operational, structural, and international growth at every&nbsp;stage.
                 </p>
@@ -286,10 +291,6 @@
                   <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10M11 6l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
                 </a>
               </div>
-              <button class="preview__toggle" type="button" aria-expanded="false" data-audience-toggle>
-                <span class="preview__toggle-label">read more</span>
-                <span class="preview__toggle-icon" aria-hidden="true"></span>
-              </button>
             </article>
           </div>
 
@@ -315,7 +316,11 @@
                 <p class="preview__name">Investors</p>
                 <p class="preview__hint">deploying capital</p>
               </header>
-              <div class="preview__body">
+              <button class="preview__toggle" type="button" aria-expanded="false" data-audience-toggle>
+                <span class="preview__toggle-label">read more</span>
+                <span class="preview__toggle-icon" aria-hidden="true"></span>
+              </button>
+              <div class="preview__body" inert>
                 <p class="preview__copy">
                   We structure, negotiate, and close deals so you can focus on sourcing opportunities and maximising value. Partner with us to turn potential into performance&nbsp;— and investments into lasting&nbsp;returns.
                 </p>
@@ -330,10 +335,6 @@
                   <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10M11 6l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
                 </a>
               </div>
-              <button class="preview__toggle" type="button" aria-expanded="false" data-audience-toggle>
-                <span class="preview__toggle-label">read more</span>
-                <span class="preview__toggle-icon" aria-hidden="true"></span>
-              </button>
             </article>
           </div>
         </div>

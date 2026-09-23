@@ -594,6 +594,11 @@ function setupAudienceTriptych() {
       const toggle = card.querySelector("[data-audience-toggle]");
       if (toggle) toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
 
+      /* a folded card's copy and link are invisible, so they leave the Tab
+         order and the accessibility tree with it */
+      const body = card.querySelector(".preview__body");
+      if (body) body.inert = !expanded;
+
       const label = toggle?.querySelector(".preview__toggle-label");
       if (label) label.textContent = expanded ? "show less" : "read more";
     });
@@ -1158,6 +1163,9 @@ function setupMemberReadmore() {
       const isExpanded = card.classList.toggle("is-expanded");
       btn.setAttribute("aria-expanded", String(isExpanded));
       if (label) label.textContent = isExpanded ? "Read less" : "Read more";
+      /* the paragraphs open above the button and push it down - keep it,
+         and its new label, on screen */
+      requestAnimationFrame(() => btn.scrollIntoView({ block: "nearest" }));
     });
   });
 }
@@ -1432,7 +1440,13 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
        winds back to, so the two always pass each other rather than stacking. */
     const from = index;
     index = i;
-    tabs.forEach((t, n) => t.setAttribute("aria-selected", String(n === i)));
+    /* a panel that goes inert while it has focus would drop focus to <body>,
+       so it is handed on to the panel taking its place */
+    const hadFocus = from >= 0 && panels[from].contains(document.activeElement);
+    tabs.forEach((t, n) => {
+      t.setAttribute("aria-selected", String(n === i));
+      t.tabIndex = n === i ? 0 : -1;
+    });
     threads.forEach((t, n) => {
       t.classList.toggle("is-leaving", n === from);
       t.classList.toggle("is-current", n === i);
@@ -1443,6 +1457,7 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
       if (n === i) p.removeAttribute("inert");
       else p.setAttribute("inert", "");
     });
+    if (hadFocus) panels[i].focus({ preventScroll: true });
   };
 
   /* Where the column is pinned, and for how long. Both come out of layout, so
@@ -1577,6 +1592,13 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
   tabs.forEach((tab, i) => {
     tab.addEventListener("click", () => go(i));
     tab.addEventListener("keydown", (e) => {
+      if (e.key === "Home" || e.key === "End") {
+        e.preventDefault();
+        const n = e.key === "Home" ? 0 : tabs.length - 1;
+        tabs[n].focus();
+        go(n);
+        return;
+      }
       const step = e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : e.key === "ArrowUp" || e.key === "ArrowLeft" ? -1 : 0;
       if (!step) return;
       e.preventDefault();

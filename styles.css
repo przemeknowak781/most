@@ -928,6 +928,40 @@ body.menu-open {
 
 /* ---------- ACCESSIBILITY UTILS ---------- */
 
+/* first Tab stop on every page: past the eight header links to the content */
+.skip-link {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.skip-link:focus-visible {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 10000;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 10px 16px;
+  overflow: visible;
+  clip: auto;
+  border-radius: 999px;
+  background: #f0ebe9;
+  color: #070912;
+  font: 500 14px / 1.2 "Outfit", system-ui, sans-serif;
+  outline: 2px solid #ff612c;
+  outline-offset: 2px;
+}
+
+main:focus {
+  outline: none;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -3385,6 +3419,9 @@ body.menu-open {
 
 .preview.is-expanded .preview__body {
   display: grid;
+  /* clip, not hidden, so the CTA's focus ring (4px out) is not cut off */
+  overflow: clip;
+  overflow-clip-margin: 8px;
   grid-template-rows: auto minmax(0, 1fr) auto;
   gap: clamp(16px, 2vh, 24px);
   flex: 1 1 auto;
@@ -7400,12 +7437,14 @@ a.contact-channels__value:focus-visible {
 .contact-form__field input:focus,
 .contact-form__field textarea:focus {
   outline: none;
-  border-bottom-color: var(--orange);
+  border-bottom-color: #c2410c;
 }
 
+/* the site's orange at half strength was 1.6:1 on the form band; this
+   darker orange is 4.4:1 */
 .contact-form__field input:focus-visible,
 .contact-form__field textarea:focus-visible {
-  outline: 2px solid rgba(255, 97, 44, 0.5);
+  outline: 2px solid #c2410c;
   outline-offset: 4px;
 }
 
@@ -9115,7 +9154,16 @@ a.contact-channels__value:focus-visible {
 
 .ex-areas__panel {
   grid-area: 2 / 1;
+}
+
+.ex-areas__panel:focus {
   outline: none;
+}
+
+.ex-areas__panel:focus-visible {
+  outline: 2px solid #1c1419;
+  outline-offset: 8px;
+  border-radius: 4px;
 }
 
 /* ---------- THE THREAD ----------

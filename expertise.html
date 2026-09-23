@@ -29,6 +29,7 @@
     <script src="script.js" defer></script>
   </head>
   <body class="page page--audience page--expertise">
+    <a class="skip-link" href="#main">Skip to content</a>
     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
       <symbol id="most-logo" viewBox="0 0 160 58">
         <path d="M46.1176 16.6761V2.64803L25.4118 34.1921H23.0588L2.82353 2.64803V34.8539H0V0.000976562H4L24.2989 31.1793L44.6596 0.000976562H48.9412V16.6761H46.1176Z" />
@@ -103,7 +104,7 @@
       </div>
     </div>
 
-    <main>
+    <main id="main" tabindex="-1">
       <!-- PAGE HERO -->
       <!-- EXPERTISE HERO: the audience-hero construction in the Figma navy-to-orange sky;
            the ridge matches the cream of the section below so they merge -->
@@ -171,13 +172,13 @@
             <nav class="ex-areas__nav" aria-label="Areas of expertise">
               <ul role="tablist" aria-orientation="vertical">
                 <li><button type="button" role="tab" id="area-tab-1" aria-controls="area-panel-1" aria-selected="true">Company Incorporation and&nbsp;Structuring</button></li>
-                <li><button type="button" role="tab" id="area-tab-2" aria-controls="area-panel-2" aria-selected="false">Funding and Investment&nbsp;Rounds</button></li>
-                <li><button type="button" role="tab" id="area-tab-3" aria-controls="area-panel-3" aria-selected="false">Hiring and&nbsp;Talent</button></li>
-                <li><button type="button" role="tab" id="area-tab-4" aria-controls="area-panel-4" aria-selected="false">Commercial Contracts and <span class="nowrap">Day-to-Day</span>&nbsp;Operations</button></li>
-                <li><button type="button" role="tab" id="area-tab-5" aria-controls="area-panel-5" aria-selected="false">IP and&nbsp;Technology</button></li>
-                <li><button type="button" role="tab" id="area-tab-6" aria-controls="area-panel-6" aria-selected="false">Cross-Border&nbsp;Expansion</button></li>
-                <li><button type="button" role="tab" id="area-tab-7" aria-controls="area-panel-7" aria-selected="false">M&amp;A, Exits and Strategic&nbsp;Transactions</button></li>
-                <li><button type="button" role="tab" id="area-tab-8" aria-controls="area-panel-8" aria-selected="false">Ongoing Legal&nbsp;Support</button></li>
+                <li><button type="button" role="tab" id="area-tab-2" tabindex="-1" aria-controls="area-panel-2" aria-selected="false">Funding and Investment&nbsp;Rounds</button></li>
+                <li><button type="button" role="tab" id="area-tab-3" tabindex="-1" aria-controls="area-panel-3" aria-selected="false">Hiring and&nbsp;Talent</button></li>
+                <li><button type="button" role="tab" id="area-tab-4" tabindex="-1" aria-controls="area-panel-4" aria-selected="false">Commercial Contracts and <span class="nowrap">Day-to-Day</span>&nbsp;Operations</button></li>
+                <li><button type="button" role="tab" id="area-tab-5" tabindex="-1" aria-controls="area-panel-5" aria-selected="false">IP and&nbsp;Technology</button></li>
+                <li><button type="button" role="tab" id="area-tab-6" tabindex="-1" aria-controls="area-panel-6" aria-selected="false">Cross-Border&nbsp;Expansion</button></li>
+                <li><button type="button" role="tab" id="area-tab-7" tabindex="-1" aria-controls="area-panel-7" aria-selected="false">M&amp;A, Exits and Strategic&nbsp;Transactions</button></li>
+                <li><button type="button" role="tab" id="area-tab-8" tabindex="-1" aria-controls="area-panel-8" aria-selected="false">Ongoing Legal&nbsp;Support</button></li>
               </ul>
             </nav>
 
