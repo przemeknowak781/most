@@ -193,8 +193,8 @@ window.MOST_COPY_REVIEW = {
   {
    "t": "We support you through every stage of fundraising and lead M&A transactions — so deals are clear, fair, and future-proof.",
    "c": "g1-edited",
-   "s": "G1 EXPERTISE 2 (\"We support you through every stage of fundraising\") + wireframe S5c",
-   "a": ""
+   "s": "G1:193 (obszar 2: \"We support you through every stage of fundraising\") + wireframe S5c:58 (\"and lead M&A transactions – so deals are clear, fair, and future-proof\")",
+   "a": "Zdanie mówi, że prowadzimy transakcje M&A; w dokumencie tego sformułowania nie ma (obszar 7: \"We support buy- and sell-side deals\"). Pytanie 5 w pakiecie."
   },
   {
    "t": "From everyday agreements to commercial partnerships — contracts that support your product, platform, and operations.",
@@ -255,6 +255,24 @@ window.MOST_COPY_REVIEW = {
    "c": "g1-edited",
    "s": "G1:4 (skrót) / G1:6 (skrót)",
    "a": ""
+  },
+  {
+   "t": "Company setup & structuring",
+   "c": "wireframe",
+   "s": "S5c:49; w dokumencie (l. 11) \"Company setup and structuring\"",
+   "a": ""
+  },
+  {
+   "t": "Hiring & incentive programs",
+   "c": "wireframe",
+   "s": "S5c:52; w dokumencie (l. 12) \"Hiring and incentive programs\"",
+   "a": ""
+  },
+  {
+   "t": "Commercial contracts & operations",
+   "c": "wireframe",
+   "s": "S5c:60; w dokumencie (l. 14) \"Commercial contracts and operations\"",
+   "a": ""
   }
  ],
  "about-us.html": [
@@ -295,9 +313,9 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
-   "t": "Working with emerging companies, founders, and investors expanding across Europe, the US, and the UK.",
+   "t": "We have been working with emerging companies, founders, and investors expanding across Europe, the US, and the UK.",
    "c": "g1-edited",
-   "s": "G1:124",
+   "s": "G1:124 bez \"Since 2016,\"",
    "a": ""
   },
   {
@@ -662,8 +680,8 @@ window.MOST_COPY_REVIEW = {
  "our-team.html": [
   {
    "t": "Over 20 years of experience across Polish, English, and US law — in one team.",
-   "c": "g1-edited",
-   "s": "G1 l.148 (\"We bring over 20 years of broad experience... backgrounds in Polish, English and US law\"); dokładnie ta wersja w S5c l.434",
+   "c": "wireframe",
+   "s": "S5c:434, słowo w słowo; skrót pierwszych zdań sekcji TEAM z G1:148",
    "a": ""
   },
   {
@@ -689,6 +707,12 @@ window.MOST_COPY_REVIEW = {
    "c": "g1-edited",
    "s": "G1 l.150 \"Barbara is a cross-border transactional lawyer advising tech companies, founders, and investors on venture capital, M&A, and growth transactions acros",
    "a": ""
+  },
+  {
+   "t": "Incentive Programs (ESOPs and VSOPs — virtual/phantom programs)",
+   "c": "g1-edited",
+   "s": "G1 \"Incentive Programs (ESOPs and VSOPs (virtual/phantom programs))\"; myślnik z wireframe'u",
+   "a": "Pytanie 4 w pakiecie: myślnik (wireframe) czy nawias w nawiasie (dokument)?"
   }
  ],
  "for-founders.html": [

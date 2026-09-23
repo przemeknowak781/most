@@ -27,10 +27,19 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      # Publish the site only: the working notes (*.md, docs/) and the repo
+      # plumbing stay out of the public build.
+      - name: Stage site files
+        run: |
+          mkdir _site
+          git ls-files -z \
+            | grep -zv -E '(\.md$|^docs/|^\.github/|^\.gitignore$)' \
+            | xargs -0 cp --parents -t _site
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: '_site'
 
       - name: Deploy to GitHub Pages
         id: deployment
