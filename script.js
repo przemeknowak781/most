@@ -1164,12 +1164,14 @@ function setupMemberReadmore() {
 
 /* Team portrait frames are a proposal for the client, so the page keeps the
    neutral silhouettes unless a frame is asked for: ?portraits=a (terracotta
-   sky) or ?portraits=b (latte sky), or data-portraits on <html> for a
-   preview build. Members with a processed photo swap it in; the rest keep
-   the silhouette inside the same frame. */
+   sky) or ?portraits=b (latte sky) - #portraits-a / #portraits-b where a
+   preview host drops the query - or data-portraits on <html> for a preview
+   build. Members with a processed photo swap it in; the rest keep the
+   silhouette inside the same frame. */
 function setupPortraitProposal() {
   const root = document.documentElement;
-  const asked = new URLSearchParams(window.location.search).get("portraits");
+  const hashed = window.location.hash.match(/^#portraits-([ab])$/);
+  const asked = new URLSearchParams(window.location.search).get("portraits") || (hashed && hashed[1]);
   if (asked === "a" || asked === "b") root.dataset.portraits = asked;
   if (!root.dataset.portraits) return;
   document.querySelectorAll(".member__portrait[data-photo]").forEach((img) => {
@@ -1183,9 +1185,12 @@ function setupPortraitProposal() {
    element): "ours" - written by us and never seen by the client as text;
    "wireframe" - ours, already shown in the wireframe; "g1-edited" - the
    client's text, shortened or reworded by us. Untagged text is the client's
-   (G1) or Figma's, 1:1. Off by default; the page is unchanged without it. */
+   (G1) or Figma's, 1:1. Off by default; the page is unchanged without it.
+   #copy-draft does the same where a preview host drops the query. */
 function setupCopyReview() {
-  if (new URLSearchParams(window.location.search).get("copy") !== "draft") return;
+  const asked = new URLSearchParams(window.location.search).get("copy") === "draft"
+    || window.location.hash === "#copy-draft";
+  if (!asked) return;
   document.documentElement.dataset.copyReview = "on";
   const run = () => markCopyReview(window.MOST_COPY_REVIEW || {});
   if (window.MOST_COPY_REVIEW) return run();
