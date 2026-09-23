@@ -178,15 +178,20 @@ function syncTrailContainersToRidge() {
   const left = imgRect.left - heroRect.left;
   const top = imgRect.top - heroRect.top;
 
+  const box = { left: `${left}px`, top: `${top}px`, right: "auto", bottom: "auto", width: `${imgRect.width}px`, height: `${imgRect.height}px` };
   for (const el of [trailSvg, pointsHost]) {
     if (!el) continue;
-    el.style.left = `${left}px`;
-    el.style.top = `${top}px`;
-    el.style.right = "auto";
-    el.style.bottom = "auto";
-    el.style.width = `${imgRect.width}px`;
-    el.style.height = `${imgRect.height}px`;
+    for (const prop in box) if (el.style[prop] !== box[prop]) el.style[prop] = box[prop];
   }
+}
+
+/* Parked elements (display: none in the stylesheet) are left alone; the
+   answer is read once per element, as the stylesheet does not change it. */
+const parkedCache = new WeakMap();
+function shownOrNull(el) {
+  if (!el) return null;
+  if (!parkedCache.has(el)) parkedCache.set(el, getComputedStyle(el).display === "none");
+  return parkedCache.get(el) ? null : el;
 }
 
 function positionTrailOverlay() {
@@ -242,9 +247,9 @@ function positionTrailOverlay() {
 
   let climberWrite = null;
   let sunWrite = null;
-  const climbers = document.querySelector(".hero-climbers");
-  const climbersSun = document.querySelector(".hero-climbers-sun");
-  if (TRAIL.climbers) {
+  const climbers = shownOrNull(document.querySelector(".hero-climbers"));
+  const climbersSun = shownOrNull(document.querySelector(".hero-climbers-sun"));
+  if (TRAIL.climbers && (climbers || climbersSun)) {
     const ridgesImg = document.querySelector(".hero-ridges__img");
     if (ridgesImg) {
       const imgRect = ridgesImg.getBoundingClientRect();
@@ -310,32 +315,28 @@ const topNav = document.querySelector(".top-nav");
 const heroEl = document.querySelector(".hero");
 const ridgeEdgeEl = document.querySelector(".ridge-edge");
 
+const scrollProgressEl = document.querySelector(".scroll-progress");
+
+/* Every read first, then every write - and each value is written on the one
+   element whose subtree uses it. A custom property set on <html> is
+   inherited by the whole document, so writing these there on every frame
+   restyled every element twice a frame. */
 function updateScroll() {
   const scrollY = window.scrollY || 0;
-  const scrollHeight = Math.max(
-    document.documentElement.scrollHeight,
-    document.body.scrollHeight,
-  );
-  const maxScroll = Math.max(1, scrollHeight - window.innerHeight);
-  const scrollProgress = Math.min(1, scrollY / maxScroll);
+  const scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+  const vh = window.innerHeight || 1;
+  const heroHeight = heroEl ? heroEl.offsetHeight || vh : 0;
+  const edgeRect = ridgeEdgeEl ? ridgeEdgeEl.getBoundingClientRect() : null;
 
-  root.style.setProperty("--scroll-y", `${scrollY}px`);
-  root.style.setProperty("--scroll-progress", scrollProgress.toFixed(4));
-  root.style.setProperty("--scroll-progress-percent", `${(scrollProgress * 100).toFixed(2)}%`);
-
+  const scrollProgress = Math.min(1, scrollY / Math.max(1, scrollHeight - vh));
+  if (scrollProgressEl) setCssVar(scrollProgressEl, "--scroll-progress", scrollProgress.toFixed(4));
   if (heroEl) {
-    const heroHeight = heroEl.offsetHeight || window.innerHeight;
-    const heroProgress = Math.min(1, Math.max(0, scrollY / heroHeight));
-    root.style.setProperty("--hero-progress", heroProgress.toFixed(4));
+    setCssVar(heroEl, "--scroll-y", `${scrollY}px`);
+    setCssVar(heroEl, "--hero-progress", Math.min(1, Math.max(0, scrollY / heroHeight)).toFixed(4));
   }
-
-  if (ridgeEdgeEl) {
-    const rect = ridgeEdgeEl.getBoundingClientRect();
-    const vh = window.innerHeight || 1;
-    const total = rect.height + vh;
-    const offset = vh - rect.top;
-    const ridgeProgress = Math.min(1, Math.max(0, offset / total));
-    root.style.setProperty("--ridge-progress", ridgeProgress.toFixed(4));
+  if (edgeRect) {
+    const ridgeProgress = Math.min(1, Math.max(0, (vh - edgeRect.top) / (edgeRect.height + vh)));
+    setCssVar(ridgeEdgeEl, "--ridge-progress", ridgeProgress.toFixed(4));
   }
 
   if (topNav) topNav.classList.toggle("is-scrolled", scrollY > 12);
@@ -499,6 +500,16 @@ function setupMobileMenu() {
 
 let ticking = false;
 
+/* The hero trail tracks a ridge that moves with parallax, so it only needs
+   re-measuring while the hero is on screen; coming back re-seats it. */
+let heroInView = true;
+if (heroEl && "IntersectionObserver" in window) {
+  new IntersectionObserver((entries) => {
+    heroInView = entries[entries.length - 1].isIntersecting;
+    if (heroInView) scheduleTrailOverlay(true);
+  }).observe(heroEl);
+}
+
 window.addEventListener(
   "scroll",
   () => {
@@ -506,7 +517,7 @@ window.addEventListener(
 
     window.requestAnimationFrame(() => {
       updateScroll();
-      scheduleTrailOverlay();
+      if (heroInView) scheduleTrailOverlay();
       ticking = false;
     });
     ticking = true;

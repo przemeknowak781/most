@@ -61,7 +61,6 @@ html {
      The root cannot get in its own way. */
   overflow-x: clip;
   scroll-behavior: smooth;
-  scroll-snap-type: y proximity;
   scroll-padding-top: calc(var(--nav-height) + clamp(56px, 9vh, 120px));
 }
 
@@ -674,7 +673,6 @@ body.menu-open {
   border-radius: 50%;
   background: var(--marker-core);
   box-shadow: var(--marker-shadow);
-  animation: trail-point-pulse 3.4s ease-in-out infinite;
 }
 
 .hero-trail-labels {
@@ -708,18 +706,44 @@ body.menu-open {
   text-transform: uppercase;
 }
 
+/* The pulse is a second, wider glow on ::after that breathes in and out.
+   Only its opacity and scale move, so it runs on the compositor - a
+   box-shadow keyframe repainted every marker 60 times a second, and its
+   fixed orange also overrode the per-page marker tokens. */
 @keyframes trail-point-pulse {
-  0%, 100% {
-    box-shadow:
-      0 0 0 3px rgba(255, 168, 110, 0.18),
-      0 0 12px rgba(255, 168, 110, 0.6),
-      0 0 26px rgba(255, 188, 140, 0.32);
-  }
-  50% {
-    box-shadow:
-      0 0 0 6px rgba(255, 168, 110, 0.26),
-      0 0 20px rgba(255, 168, 110, 0.82),
-      0 0 40px rgba(255, 188, 140, 0.48);
+  0%, 100% { opacity: 0; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+.hero-trail-point::after,
+.page--horizon .hz-trail__point::after,
+.member-trail__dot::after,
+.has-trail__dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 calc(var(--marker-size) * 0.55) var(--marker-ring),
+    0 0 calc(var(--marker-size) * 1.8) var(--marker-halo),
+    0 0 calc(var(--marker-size) * 3.6) var(--marker-aura);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hero-trail-point::after,
+.page--horizon .hz-trail__point::after,
+.member-trail.is-visible .member-trail__dot::after,
+.has-trail.is-visible .has-trail__dot::after {
+  animation: trail-point-pulse 3.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-trail-point::after,
+  .page--horizon .hz-trail__point::after,
+  .member-trail__dot::after,
+  .has-trail__dot::after {
+    animation: none;
   }
 }
 
@@ -881,7 +905,6 @@ body.menu-open {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: clamp(16px, 3vw, 36px) clamp(16px, 3vw, 36px);
-  scroll-snap-align: start;
   scroll-margin-top: 0;
 }
 
@@ -6266,7 +6289,6 @@ a.photo-break__line:focus-visible {
 
 .member-trail.is-visible .member-trail__dot {
   opacity: 1;
-  animation: trail-point-pulse 3.4s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -8636,7 +8658,6 @@ a.contact-channels__value:focus-visible {
 
 .has-trail.is-visible .has-trail__dot {
   opacity: 1;
-  animation: trail-point-pulse 3.4s ease-in-out infinite;
 }
 
 /* Dot positions map 1:1 to the stretched SVG (left = x/1200, top = y/120) */
@@ -11216,7 +11237,6 @@ a.contact-channels__value:focus-visible {
   border-radius: 50%;
   background: var(--marker-core);
   box-shadow: var(--marker-shadow);
-  animation: trail-point-pulse 3.4s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
