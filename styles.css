@@ -9908,7 +9908,9 @@ a.contact-channels__value:focus-visible {
   gap: clamp(26px, 4vh, 58px);
 }
 
-.ex-rail__spine {
+/* the rail's spine - a pseudo-element, as an <ol> may only hold <li> */
+.ex-rail::before {
+  content: "";
   position: absolute;
   top: 0;
   bottom: 0;
@@ -10030,7 +10032,7 @@ a.contact-channels__value:focus-visible {
 }
 
 @media (max-width: 900px) {
-  .ex-rail__spine {
+  .ex-rail::before {
     left: 6px;
   }
 
