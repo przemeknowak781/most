@@ -1813,3 +1813,127 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     }
   });
 })();
+
+/* ---------- MOBILE & TABLET (<=1023px) — PAGES ---------- */
+
+/* Team (our-team.html), compact only (<=1023px): width-appropriate files for
+   the portrait proposal. With ?portraits=a|b, setupPortraitProposal
+   (script.js) swaps each member's silhouette for the photo named in its
+   data-photo (1200x1400) and marks the card .has-photo. Below 1024px that
+   frame is 230-420px wide, so each swapped portrait also gets
+   srcset (-640 / -1024 / the original) and sizes = the width it is drawn at,
+   measured, and re-measured when the window is resized. At 1024px and up
+   srcset and sizes are taken off again, so the desktop image is chosen by
+   src exactly as before. Without the proposal (the default page) there are
+   no swapped portraits and nothing happens. The script cannot set srcset in
+   the markup: a srcset would replace the silhouette the page shows by
+   default.
+
+   INTEGRATION: this must run in the same task as setupPortraitProposal(),
+   directly after it - append this file to the end of script.js (after the
+   init calls there), or set srcset/sizes inside setupPortraitProposal
+   before it assigns src. Do NOT load it as its own <script defer>: the
+   browser picks the image at the microtask checkpoint between the two
+   scripts, so portraits near the fold fetch the full 1200px file first and
+   then the -640 one as well (seen in 2 of 3 runs at 768x1024, DPR 2).
+   Appended to script.js it requests only the -640 files (5 of 5 runs). */
+(() => {
+  if (!document.body || !document.body.classList.contains("page--team")) return;
+  const compact = window.matchMedia("(max-width: 1023px)");
+  const FULL_WIDTH = 1200;
+
+  const portraits = () =>
+    Array.from(document.querySelectorAll(".member.has-photo .member__portrait[data-photo]"));
+
+  const variants = (file) => {
+    const stem = file.replace(/\.webp$/, "");
+    return `${stem}-640.webp 640w, ${stem}-1024.webp 1024w, ${file} ${FULL_WIDTH}w`;
+  };
+
+  const measure = (img) => {
+    const width = Math.ceil(img.getBoundingClientRect().width);
+    if (width > 0) img.sizes = `${width}px`;
+  };
+
+  const apply = () => {
+    portraits().forEach((img) => {
+      if (compact.matches) {
+        if (!/\.webp$/.test(img.dataset.photo)) return;
+        measure(img); /* sizes first, so the pick is made with it */
+        if (!img.hasAttribute("srcset")) img.srcset = variants(img.dataset.photo);
+      } else {
+        img.removeAttribute("srcset");
+        img.removeAttribute("sizes");
+      }
+    });
+  };
+
+  let frame = 0;
+  const onResize = () => {
+    if (frame || !compact.matches) return;
+    frame = requestAnimationFrame(() => {
+      frame = 0;
+      portraits().forEach((img) => { if (img.hasAttribute("srcset")) measure(img); });
+    });
+  };
+
+  const start = () => {
+    if (!portraits().length) return;
+    apply();
+    if (compact.addEventListener) compact.addEventListener("change", apply);
+    else if (compact.addListener) compact.addListener(apply);
+    window.addEventListener("resize", onResize, { passive: true });
+  };
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
+})();
+
+/* Copy review legend below 1024px (from the contact page agent). It runs
+   on every page and does nothing unless the page is in review mode
+   (?copy=draft or #copy-draft). setupCopyReview builds the legend open,
+   which covers a quarter to a third of a phone screen and the hero
+   heading on a tablet, so below 1024px this folds it (to a 44px round
+   button, see contact.css) as soon as it appears - by clicking the legend's own toggle, so the class,
+   aria-expanded and the sign stay in step. Crossing 1024px either way
+   re-applies the default (folded below, open above, so a window grown to
+   desktop gets the desktop's open legend back) until the reader uses the
+   toggle; from then on their choice stands. */
+(function copyLegendCompact() {
+  const asked = new URLSearchParams(window.location.search).get("copy") === "draft"
+    || window.location.hash === "#copy-draft";
+  if (!asked || !window.matchMedia || !document.body) return;
+  const foldQuery = window.matchMedia("(max-width: 1023px)");
+  let legend = null;
+  let chosen = false;
+  let ours = false;
+
+  const apply = () => {
+    if (!legend || chosen) return;
+    const toggle = legend.querySelector(".copy-legend__toggle");
+    if (!toggle || legend.classList.contains("is-collapsed") === foldQuery.matches) return;
+    ours = true;
+    toggle.click();
+    ours = false;
+  };
+
+  const adopt = (el) => {
+    legend = el;
+    legend.addEventListener("click", (event) => {
+      if (!ours && event.target.closest(".copy-legend__toggle")) chosen = true;
+    });
+    apply();
+    if (foldQuery.addEventListener) foldQuery.addEventListener("change", apply);
+    else if (foldQuery.addListener) foldQuery.addListener(apply);
+  };
+
+  const found = document.querySelector(".copy-legend");
+  if (found) return adopt(found);
+  const watch = new MutationObserver(() => {
+    const el = document.querySelector("body > .copy-legend");
+    if (!el) return;
+    watch.disconnect();
+    adopt(el);
+  });
+  watch.observe(document.body, { childList: true });
+})();

@@ -3381,70 +3381,6 @@ main:focus {
   }
 }
 
-/* ---------- MOBILE BLOCKER ----------
-   The declared desktop range is 1024-1920 (R2), so the gate covers
-   everything below it; 861-1023 used to fall through to a half-fitted
-   desktop layout. */
-
-.mobile-block {
-  display: none;
-}
-
-@media (max-width: 1023px) {
-  .mobile-block {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    display: grid;
-    place-items: center;
-    padding: 32px;
-    background:
-      radial-gradient(720px 480px at 50% 28%, rgba(255, 97, 44, 0.22), transparent 70%),
-      radial-gradient(640px 480px at 50% 110%, rgba(255, 168, 110, 0.16), transparent 70%),
-      rgba(4, 6, 12, 0.96);
-    backdrop-filter: blur(28px) saturate(1.4);
-    -webkit-backdrop-filter: blur(28px) saturate(1.4);
-    color: var(--light);
-    text-align: center;
-    animation: mobile-block-in 600ms var(--ease-out) both;
-  }
-
-  .mobile-block__panel {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px;
-    max-width: 320px;
-  }
-
-  .mobile-block__eyebrow {
-    margin: 0;
-    color: rgba(255, 168, 110, 0.8);
-    font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-  }
-
-  .mobile-block__title {
-    margin: 0;
-    color: var(--light);
-    font: 500 clamp(22px, 6.4vw, 28px) / 1.25 "Urbanist", system-ui, sans-serif;
-    letter-spacing: -0.005em;
-    text-wrap: balance;
-  }
-
-  .mobile-block__hint {
-    margin: 0;
-    color: var(--light-60);
-    font: 400 15px / 1.45 "Outfit", system-ui, sans-serif;
-  }
-
-  html,
-  body {
-    overflow: hidden;
-  }
-}
-
 /* ============================================================
    PAGE-LEVEL ADDITIONS â€” multi-page architecture
    - .page-hero        mini-hero on sub-pages
@@ -4986,17 +4922,6 @@ a.contact-channels__value:focus-visible {
   .contact-form__submit,
   .contact-social {
     transition: none;
-  }
-}
-
-@keyframes mobile-block-in {
-  from {
-    opacity: 0;
-    transform: scale(0.985);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
   }
 }
 
@@ -11348,5 +11273,3992 @@ a.contact-channels__value:focus-visible {
     stroke-dasharray: none;
     stroke-dashoffset: 0;
     transition: none;
+  }
+}
+
+
+/* ============================================================
+   MOBILE & TABLET (<=1023px) — PAGES
+   Page-by-page compositions on top of the foundation above. Every rule
+   sits inside a max-width 1023px (or narrower) query and is scoped to its
+   page class, so desktop (1024px and up) is untouched.
+   ============================================================ */
+
+/* ---------- Home (index.html) ---------- */
+
+/* ===== HOME (index) — MOBILE & TABLET (<=1023px) ===== */
+/* The home page's own sections under 1024px: the hero's copy, trail and
+   stats, the truss band under it, Three routes' spacing and charts, Who we
+   are, and the Our Expertise rail. Everything is scoped to .page--home and
+   sits inside a max-width: 1023px query (or a narrower one), so neither
+   another page nor the desktop can see it. The shared pieces - bar, menu,
+   closing band, footer, the compact hero grid and the open route cards -
+   are the foundation's; this only refines them for this page.
+
+   Tiers as in the foundation: compact <=1023 | tablet 768-1023 |
+   phone <=767 | small phone <=374 | short landscape (<=500px tall). The
+   expertise rail and the route cards switch to two columns at 640px, so a
+   phone on its side reads like a small tablet. */
+
+/* ---------- hero: copy ---------- */
+@media (max-width: 1023px) {
+  /* the tagline is the hero's lede: it follows the shared lede size
+     rather than the desktop's 15px, which read as a caption under an h1
+     of 34-48px */
+  .page--home .hero-tagline {
+    max-width: 30em;
+    margin-top: 20px;
+    font-size: var(--m-lede);
+    line-height: 1.5;
+    text-wrap: balance;
+  }
+
+  .page--home .primary-cta {
+    min-height: 48px;
+    margin-top: 30px;
+    padding: 0 22px 0 26px;
+  }
+}
+
+/* A phone held upright: the picture is sized by the screen's height as
+   well as its width. The foundation draws it min(210vw, 800px) tall and
+   keeps 0.4 of it between the copy and the crest (the sky there is dark
+   enough for the copy); on a 667px screen - an iPhone SE, or any phone in
+   Safari with its bars showing (100svh ~ 660px) - that put the ridge, the
+   climbers and the trail a screen down, under empty sky. Tied to the
+   small viewport it ends at 165vw, so the whole scene - copy, sunset,
+   ridge, climbers and trail - is the first screen from ~660px tall, with
+   the copy still on the dark sky; tall phones keep the foundation's size. */
+@media (max-width: 767px) and (orientation: portrait) {
+  .page--home .hero {
+    --photo-h: min(210vw, 800px, max(165vw, 100svh - 60px));
+  }
+}
+
+/* ---------- hero: trail checkpoints ----------
+   The four checkpoints are the route's markers: they stay on the trail
+   at every width. On a tablet each still drops its dotted leader to its
+   figure (768-860 had lost both). A phone stacks the stats two by two, so
+   the markers ride the trail without leaders. */
+@media (max-width: 1023px) {
+  .page--home .hero-trail-points {
+    display: block;
+  }
+}
+
+/* The checkpoints climb with the route - 0.2, 0.425, 0.64 and 0.85 of the
+   width - so they sit a little right of four even columns. The
+   foundation's 6% left inset (from 861px) put every leader on its figure
+   but pushed the row off-centre, with EU · US · UK against the right
+   gutter. The row is balanced instead, as on desktop: 3.5% in on both
+   sides is the inset where every leader still lands on its figure, 16-38px
+   right of its centre (desktop at 1024 is 13-41px). Where a column is
+   narrower than BUSINESSES SCALED (14em, up to ~860px) a label may reach
+   into the gaps beside it, never past that width: that phrase keeps one
+   line, as on desktop, and two neighbouring labels never both widen into
+   one gap and run together. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .page--home .hero-trail__leader {
+    display: inline;
+  }
+
+  .page--home .hero-stats {
+    padding-right: 3.5%;
+    padding-left: 3.5%;
+  }
+
+  .page--home .hero-stat span {
+    max-width: max(100%, 14em);
+    margin-inline: calc(clamp(16px, 2.6vw, 28px) / -2 + 2px);
+  }
+}
+
+/* on a ridge a phone wide the desktop's 11px markers outweigh the climbers
+   they stand beside; the same recipe at 9px */
+@media (max-width: 767px) {
+  .page--home .hero-trail__leader {
+    display: none;
+  }
+
+  .page--home .hero-trail-points {
+    --marker-size: 9px;
+    --marker-shadow:
+      0 0 0 3px var(--marker-ring),
+      0 0 11px var(--marker-halo),
+      0 0 22px var(--marker-aura);
+  }
+}
+
+/* each note is a few centred lines under its figure: balanced, so none
+   ends on a lone word ("UK."). The units the balance must not split are
+   tied in the markup: "Series&nbsp;C", "US&nbsp;law&nbsp;—". */
+@media (max-width: 1023px) {
+  .page--home .hero-stat__copy {
+    text-wrap: balance;
+  }
+}
+
+/* ---------- Three routes: room against the edges ---------- */
+@media (max-width: 1023px) {
+  /* the route edge above falls to its low point at the left, right over
+     the eyebrow; the head starts a clear step under it, and the last card
+     ends well above the torn edge's spike on the right */
+  .page--home .audience-intro {
+    padding-top: min(calc(var(--m-section) + 16px), 100px);
+    padding-bottom: calc(var(--m-section) + 72px);
+  }
+
+  /* the charts are drawn at a third of their viewBox: hairlines stay
+     hairlines (1px) and the route keeps its 2px weight */
+  .page--home .preview__route line,
+  .page--home .preview__route path {
+    vector-effect: non-scaling-stroke;
+  }
+
+  /* ...and its start, stop and end markers grow with it, or at a third of
+     their size (2.6-3.4px) they barely outweigh the 2px line and the route
+     reads as a line with a blunt end: at 1.75x they are 4-10px across on
+     a phone, 2-5 times the line, a clear point at each end as on desktop */
+  .page--home .preview__route circle,
+  .page--home .preview__route rect {
+    transform: scale(1.75);
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+}
+
+/* the tablet chart is drawn larger (128px): the markers need less help */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .page--home .preview__route circle,
+  .page--home .preview__route rect {
+    transform: scale(1.4);
+  }
+}
+
+/* A phone on its side: "Choose your path" lands here with one short
+   screen under the bar. The tablet-tall padding (100px) and the three set
+   lines at 47-54px filled it with the head alone - no lede end, no card.
+   A slimmer step under the edge (its low point is ~145px above the
+   eyebrow at 667px, so there is room), the title at the landscape hero
+   h1's 36px, a tighter head and a shorter first leader put the eyebrow,
+   title, lede, the route's start ring and the top of card 01 on that one
+   screen. */
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page--home .audience-intro {
+    padding-top: 32px;
+  }
+
+  .page--home .audience-intro__eyebrow {
+    margin-bottom: 12px;
+  }
+
+  .page--home .audience-intro__title {
+    margin-bottom: 14px;
+    font-size: 36px;
+  }
+
+  .page--home .audience-col--founders .audience-col__connector {
+    height: 48px;
+  }
+}
+
+/* ---------- Who we are ---------- */
+@media (max-width: 1023px) {
+  .page--home .whoweare {
+    padding-bottom: var(--m-section);
+  }
+
+  .page--home .whoweare__head {
+    max-width: 40rem;
+    margin-bottom: 44px;
+  }
+
+  .page--home .whoweare__eyebrow {
+    margin-bottom: 16px;
+    font-size: var(--m-label);
+  }
+
+  .page--home .whoweare__title {
+    margin-bottom: 20px;
+    font-size: var(--m-h2);
+    line-height: 1.12;
+  }
+
+  .page--home .whoweare__lede {
+    max-width: var(--m-measure);
+    margin-bottom: 18px;
+    font-size: var(--m-body);
+    line-height: 1.62;
+  }
+
+  /* a 48px target that still looks like the desktop's underlined label:
+     the rule is drawn just under the words, not at the foot of the box */
+  .page--home .whoweare__link {
+    min-height: 48px;
+    padding: 0;
+    border-bottom: 0;
+    background: linear-gradient(rgba(240, 235, 233, 0.28), rgba(240, 235, 233, 0.28)) left calc(50% + 15px) / 100% 1px no-repeat;
+  }
+
+  .page--home .whoweare__link:hover,
+  .page--home .whoweare__link:focus-visible {
+    background-image: linear-gradient(rgba(255, 176, 119, 0.6), rgba(255, 176, 119, 0.6));
+  }
+
+  .page--home .whoweare__link:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
+  .page--home .whoweare__col dt {
+    margin-bottom: 12px;
+    font-size: var(--m-label);
+  }
+
+  .page--home .whoweare__col dd {
+    max-width: var(--m-measure);
+    font-size: var(--m-body);
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 639px) {
+  .page--home .whoweare__cols {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+}
+
+/* From 640px (a phone on its side, a tablet) one column of notes runs to
+   80-100 characters a line, and three columns squeeze each to ~30 with
+   one note twice as long as the others. The list reads as what it is,
+   a definition list: each note is a row under its own rule, the label on
+   the left and the text beside it at the body size, inside the shared
+   measure, two to four lines each. */
+@media (min-width: 640px) and (max-width: 919px) {
+  .page--home .whoweare__cols {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .page--home .whoweare__col {
+    display: grid;
+    grid-template-columns: clamp(168px, 26%, 212px) minmax(0, 1fr);
+    align-items: baseline;
+    column-gap: 32px;
+    padding: 22px 0 26px;
+  }
+
+  .page--home .whoweare__col dt {
+    margin: 0;
+  }
+}
+
+/* three columns once each is ~260px wide, as on desktop */
+@media (min-width: 920px) and (max-width: 1023px) {
+  .page--home .whoweare__cols {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Our Expertise: head and link ---------- */
+@media (max-width: 1023px) {
+  /* it follows Who we are on the same near-black, with no edge between
+     them: two full section paddings read as a hole, so this one is lighter */
+  .page--home .expertise-cards {
+    padding: calc(var(--m-section) * 0.75) var(--m-gutter) calc(var(--m-section) + 8px);
+  }
+
+  .page--home .expertise-cards__head {
+    margin-bottom: 48px;
+  }
+
+  .page--home .expertise-cards__eyebrow {
+    margin-bottom: 16px;
+    font-size: var(--m-label);
+  }
+
+  .page--home .expertise-cards__title {
+    font-size: var(--m-h2);
+    line-height: 1.12;
+  }
+
+  .page--home .expertise-cards__lede {
+    margin-top: 18px;
+    font-size: var(--m-lede);
+    text-wrap: balance;
+  }
+
+  .page--home .expertise-cards__cta-wrap {
+    margin-top: 48px;
+  }
+
+  .page--home .expertise-cards__cta {
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 28px;
+    font-size: var(--m-label);
+    white-space: nowrap;
+  }
+
+  .page--home .expertise-cards__cta:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 4px;
+  }
+}
+
+/* a phone reads the section down its left edge, like the rail under it */
+@media (max-width: 639px) {
+  .page--home .expertise-cards__head {
+    text-align: left;
+  }
+
+  .page--home .expertise-cards__lede {
+    margin-left: 0;
+  }
+
+  .page--home .expertise-cards__cta-wrap {
+    text-align: left;
+  }
+
+  .page--home .expertise-cards__cta {
+    width: 100%;
+  }
+}
+
+/* the label keeps one line at 320px */
+@media (max-width: 374px) {
+  .page--home .expertise-cards__cta {
+    padding-inline: 16px;
+    letter-spacing: 0.12em;
+  }
+}
+
+/* a tap leaves :hover stuck on a touch screen: the lifts stay on devices
+   that can hover (the foundation's rule for the shared buttons) */
+@media (max-width: 1023px) and (hover: none) {
+  .page--home .primary-cta:hover,
+  .page--home .expertise-cards__cta:hover {
+    transform: none;
+  }
+
+  .page--home .whoweare__link:hover {
+    gap: 10px;
+  }
+}
+
+/* ---------- Our Expertise: the rail ----------
+   Phone: one column threaded on a spine down the left. Each area is its
+   drawing and then its number, name and text; the drawings alternate
+   left and right across the column, the desktop's zig-zag in one column,
+   and each area's marker sits on the spine level with its number - the
+   checkpoint the text hangs from.
+   From 640px (a tablet, a phone on its side) the desktop's two-column
+   zig-zag comes back, on the centre spine: the old <=900px rule had
+   stacked it into one column that left the right half of a tablet empty. */
+@media (max-width: 1023px) {
+  .page--home .ex-rail {
+    --art-h: 80px;
+    --art-gap: 16px;
+  }
+
+  .page--home .ex-rail__name {
+    margin-bottom: 12px;
+    font-size: clamp(22px, 18.5px + 1vw, 26px);
+    line-height: 1.18;
+  }
+
+  .page--home .ex-rail__copy {
+    font-size: var(--m-body);
+    line-height: 1.6;
+  }
+
+  /* gentle rises, not slides across the narrow screen */
+  .page--home .ex-rail__art,
+  .page--home .ex-rail__body,
+  .page--home .ex-rail__step:nth-of-type(even) .ex-rail__art,
+  .page--home .ex-rail__step:nth-of-type(even) .ex-rail__body {
+    transform: translateY(16px);
+  }
+
+  .page--home .ex-rail__step.is-in .ex-rail__art,
+  .page--home .ex-rail__step.is-in .ex-rail__body {
+    transform: none;
+  }
+}
+
+@media (max-width: 639px) {
+  .page--home .ex-rail {
+    --rail-x: 6px;
+    gap: 48px;
+  }
+
+  /* the spine starts on the first marker and fades out under the last area */
+  .page--home .ex-rail::before {
+    top: calc(var(--art-h) + var(--art-gap) + 6px);
+    left: var(--rail-x);
+    background: linear-gradient(180deg, rgba(240, 235, 233, 0.18), rgba(240, 235, 233, 0.18) 88%, transparent);
+  }
+
+  .page--home .ex-rail__step,
+  .page--home .ex-rail__step:nth-of-type(even) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--art-gap);
+    min-height: 0;
+    padding-left: 34px;
+  }
+
+  .page--home .ex-rail__art {
+    height: var(--art-h);
+    justify-content: flex-start;
+  }
+
+  .page--home .ex-rail__step:nth-of-type(even) .ex-rail__art {
+    order: 0;
+    justify-content: flex-end;
+  }
+
+  .page--home .ex-rail .ex-icon {
+    height: 100%;
+  }
+
+  /* level with the number's line (13px caps, line-height 1) */
+  .page--home .ex-rail__node {
+    top: calc(var(--art-h) + var(--art-gap) + 6.5px);
+    left: var(--rail-x);
+  }
+
+  .page--home .ex-rail__body,
+  .page--home .ex-rail__step:nth-of-type(even) .ex-rail__body {
+    padding: 0;
+    text-align: left;
+  }
+
+  .page--home .ex-rail__step:nth-of-type(even) .ex-rail__copy {
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .page--home .ex-rail {
+    gap: 40px;
+  }
+
+  .page--home .ex-rail::before {
+    left: 50%;
+  }
+
+  .page--home .ex-rail__step,
+  .page--home .ex-rail__step:nth-of-type(even) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(40px, 6vw, 64px);
+    min-height: 0;
+    padding: 12px 0;
+  }
+
+  .page--home .ex-rail__node {
+    top: 50%;
+    left: 50%;
+  }
+
+  .page--home .ex-rail__art {
+    justify-content: center;
+  }
+
+  .page--home .ex-rail .ex-icon {
+    height: clamp(84px, 11vw, 112px);
+  }
+
+  .page--home .ex-rail__step:nth-of-type(even) .ex-rail__art {
+    order: 2;
+  }
+
+  .page--home .ex-rail__body {
+    padding: 0;
+  }
+
+  .page--home .ex-rail__step:nth-of-type(even) .ex-rail__body {
+    padding: 0;
+    text-align: right;
+  }
+
+  .page--home .ex-rail__step:nth-of-type(even) .ex-rail__copy {
+    margin-left: auto;
+  }
+}
+
+/* ---------- Expertise ---------- */
+
+/* ===== EXPERTISE (<=1023px) ===== */
+
+/* ---------- hero: shared ---------- */
+@media (max-width: 1023px) {
+  .page--expertise .hero {
+    --exp-ridge-h: 60vw;
+    --exp-pad-top: calc(var(--nav-height) + clamp(28px, 8vw, 64px));
+  }
+
+  .page--expertise .hero-content .eyebrow {
+    margin-bottom: 16px;
+    font-size: var(--m-label);
+  }
+
+  .page--expertise .hero-title {
+    font-size: var(--m-h1);
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+
+  .page--expertise .hero-tagline {
+    margin-top: 18px;
+    font-size: var(--m-lede);
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+
+  .page--expertise .primary-cta {
+    min-height: 48px;
+    margin-top: 28px;
+    padding-inline: 26px 22px;
+  }
+
+  /* the louvre photo at its own proportions, as tall as the hero */
+  .page--expertise .hero-bg {
+    inset: 0 auto 0 50%;
+    width: auto;
+    max-width: none;
+    height: 100%;
+    aspect-ratio: 2200 / 863;
+    translate: -50% 0;
+    transform: scaleX(-1);
+    transform-origin: 50% 50%;
+  }
+
+  .page--expertise .hero-trail-points {
+    display: block;
+  }
+}
+
+/* ---------- hero: portrait ---------- */
+@media (max-width: 1023px) and (orientation: portrait) {
+  .page--expertise .hero {
+    grid-template-rows: auto auto;
+    min-height: 0;
+    padding: var(--exp-pad-top) var(--m-gutter) 0;
+  }
+
+  .page--expertise .hero-content {
+    grid-row: 1;
+    width: 100%;
+  }
+
+  .page--expertise .hero-title,
+  .page--expertise .hero-tagline {
+    max-width: none;
+  }
+
+  .page--expertise .hero-ridges {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    grid-row: 2;
+    height: var(--exp-ridge-h);
+    /* the art's lowest 22% is plain land under the trail (which is never
+       lower than 61.4% down it): the hero ends there, and the areas'
+       own cream carries on */
+    margin: clamp(0px, 10vw - 16px, 40px) calc(-1 * var(--m-gutter)) calc(var(--exp-ridge-h) * -0.22);
+    transform: none;
+  }
+
+  /* dusk runs down the screen here: navy behind the copy, and the low sun
+     warming the sky on the right, behind the peak */
+  .page--expertise .hero-media {
+    background:
+      radial-gradient(118vw 70vw at 98% calc(100% - var(--exp-ridge-h) * 0.7), rgba(240, 104, 54, 0.98), rgba(214, 112, 76, 0.8) 30%, rgba(156, 110, 105, 0.4) 58%, transparent 80%),
+      linear-gradient(180deg, #2f3a55 0%, #343e58 36%, #4a4a62 calc(100% - var(--exp-ridge-h) * 1.1), #7d6470 calc(100% - var(--exp-ridge-h) * 0.55), #b86c55 100%);
+  }
+
+  .page--expertise .hero-wash {
+    background: linear-gradient(180deg, rgba(22, 26, 42, 0.42), rgba(22, 26, 42, 0.26) calc(100% - var(--exp-ridge-h) - 64px), transparent calc(100% - var(--exp-ridge-h) * 0.5));
+  }
+
+  .page--expertise .hero-glow__sun {
+    top: auto;
+    right: -34%;
+    bottom: calc(var(--exp-ridge-h) * 0.3);
+    left: auto;
+    width: 118%;
+    height: calc(var(--exp-ridge-h) * 1.3);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) and (orientation: portrait) {
+  .page--expertise .hero {
+    --exp-ridge-h: 46vw;
+  }
+
+  .page--expertise .hero-title {
+    max-width: 14em;
+  }
+
+  .page--expertise .hero-tagline {
+    max-width: 30em;
+  }
+}
+
+/* ---------- hero: landscape ----------
+   Held sideways the screen is wide and short, so the desktop composition
+   returns: the copy on the navy half of the sky, the orange on the right,
+   the ridge a band across the foot rising towards the right. The band is
+   sized from the screen's height and the hero never outgrows the screen:
+   the copy ends where the band's low left end begins (47% down the art;
+   the button keeps 16px over the crest). The band's parallax slack goes:
+   nothing moves here, and 90px of hidden art under a short band pushed
+   the trail off the hero. */
+@media (max-width: 1023px) and (orientation: landscape) {
+  .page--expertise .hero {
+    --exp-band: clamp(150px, 34svh, 320px);
+    --exp-slack: 0px;
+    min-height: 86svh;
+    padding: calc(var(--nav-height) + clamp(10px, 9svh - 24px, 84px)) var(--m-gutter) calc(var(--exp-band) * 0.58 + 16px);
+  }
+
+  .page--expertise .hero-title {
+    max-width: min(17em, 66vw);
+    font-size: clamp(30px, min(4.4vw, 7svh), 48px);
+  }
+
+  .page--expertise .hero-tagline {
+    max-width: min(30em, 58vw);
+  }
+
+  /* the copy runs to two thirds of the width here, further than on
+     desktop, so the sky warms a little later: the tagline stays on the
+     navy half (4.5:1 and up) and the orange keeps the right-hand third */
+  .page--expertise .hero-media {
+    background:
+      radial-gradient(52% 46% at 88% 74%, rgba(240, 178, 148, 0.55), transparent 72%),
+      linear-gradient(90deg, #2f3a55 0%, #39425a 26%, #564f65 48%, #82696f 62%, #c4704f 80%, #ee6533 100%);
+  }
+
+  .page--expertise .hero-glow__sun {
+    right: -32%;
+    width: 72vw;
+  }
+
+  /* a wide, short window made the photo (as tall as the hero, at its own
+     proportions) narrower than the screen: it crops instead */
+  .page--expertise .hero-bg {
+    min-width: 100%;
+    object-fit: cover;
+  }
+}
+
+/* A phone on its side: the whole hero on one screen. The copy is the same
+   height on every phone held sideways (a 3-line title, a 2-line tagline and
+   the button), so the screen's height decides the rest: the eyebrow gets a
+   little air under the bar, the button 16px over the crest (the crest under
+   it is 58% of the band up), and the band takes what is left: 60px on a
+   360px tall screen, 82px at 375, 106px at 390, 150px from about 417px.
+   The hero is then never taller than the screen. The title stays at 30px and the
+   page's section titles come down to the phone h2 (28px, below), so the
+   h1 leads again. */
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  /* on main: the trail overlay is the hero's sibling and follows the band */
+  .page--expertise main {
+    --exp-band-sl: clamp(60px, 160svh - 518px, 150px);
+  }
+
+  .page--expertise .hero {
+    --exp-band: var(--exp-band-sl);
+    padding-top: calc(var(--nav-height) + clamp(10px, 10svh - 18px, 22px));
+    padding-bottom: calc(var(--exp-band) * 0.58 + 16px);
+  }
+
+  .page--expertise .hero-content .eyebrow {
+    margin-bottom: 8px;
+  }
+
+  .page--expertise .hero-title {
+    max-width: min(22em, 74vw);
+    font-size: 30px;
+  }
+
+  /* the tagline stays on the navy half: past ~60% of the width the sky
+     warms and cream body text drops under 4.5:1 */
+  .page--expertise .hero-tagline {
+    max-width: min(36em, 58vw);
+    margin-top: 8px;
+    font-size: var(--m-body);
+    line-height: 1.5;
+  }
+
+  .page--expertise .primary-cta {
+    min-height: 44px;
+    margin-top: 14px;
+  }
+
+  /* the trail is drawn to the band; the fixed 18-34px that sets it lower
+     on the tall desktop band put the first marker on the fold of a 60px
+     one. A tenth of the band keeps the line on the land, clear of both. */
+  .page--expertise .hero-trail,
+  .page--expertise .hero-trail-points {
+    translate: 0 calc(var(--exp-band-sl) * 0.1 + 3px);
+  }
+}
+
+/* 320px tall (a small phone on its side): 264px under the bar cannot hold
+   the copy and a band. The tagline takes a little more width to stay on
+   two lines and the gaps close up, so the button is on the first screen and
+   the band's crest meets its foot; the rest of the band is below it. */
+@media (max-width: 1023px) and (max-height: 340px) and (orientation: landscape) {
+  .page--expertise .hero {
+    padding-top: calc(var(--nav-height) + 10px);
+  }
+
+  .page--expertise .hero-content .eyebrow {
+    margin-bottom: 6px;
+  }
+
+  .page--expertise .hero-tagline {
+    max-width: min(36em, 64vw);
+  }
+
+  .page--expertise .primary-cta {
+    margin-top: 12px;
+  }
+}
+
+/* ---------- Our Areas ----------
+   The foundation lays the eight areas out in order, each under its drawing.
+   Here: the section meets the hero's land without a second gap, and each
+   area carries its number (01-08) above its title, in the same tracked
+   label the home route cards use - eight long areas read as a sequence
+   you can place yourself in. The number is generated and silent to
+   assistive tech (the heading says what the area is). */
+@media (max-width: 1023px) {
+  .page--expertise .ex-areas {
+    padding-top: clamp(24px, 7vw, 56px);
+    /* How We Work follows on the same cream: one section's space between */
+    padding-bottom: clamp(24px, 6vw, 48px);
+  }
+
+  .page--expertise .ex-areas__panels {
+    counter-reset: ex-area;
+  }
+
+  .page--expertise .ex-areas__panel {
+    counter-increment: ex-area;
+  }
+
+  /* balanced, so a long title never leaves one word on a line of its own,
+     and no paragraph ends on a lone word */
+  .page--expertise .ex-areas__panel h3 {
+    text-wrap: balance;
+  }
+
+  .page--expertise .ex-areas__panel > p,
+  .page--expertise .exwork-terrain__labels p {
+    text-wrap: pretty;
+  }
+
+  .page--expertise .ex-areas__panel::before {
+    content: counter(ex-area, decimal-leading-zero);
+    content: counter(ex-area, decimal-leading-zero) / "";
+    display: block;
+    grid-column: 1 / -1;
+    margin: 0 0 12px;
+    color: #b3401a;
+    font: 500 var(--m-label) / 1 "Montserrat", system-ui, sans-serif;
+    letter-spacing: 0.28em;
+  }
+}
+
+/* "Day-to-Day Operations" does not break (it is set that way), and at the
+   area title size it left "and" alone on a line under 375px */
+@media (max-width: 374px) {
+  .page--expertise .ex-areas__panel h3 {
+    font-size: 22px;
+  }
+}
+
+/* ---------- How We Work ----------
+   On desktop the six steps stand along a ridge, left to right, each hung
+   from its node on the crest by a dotted leader. Here the ridge is the
+   horizon between the cream above and the navy rock below, cropped to its
+   climbing half, and the route leaves the crest on the site's open start
+   ring and runs down the left edge of the rock: a dotted leader through a
+   lit marker on each step, in order. The rock deepens to the navy of the
+   route shortcuts below, so the seam stays invisible, as on desktop.
+
+   The landscape is drawn --tw wide, its right edge on the screen's (the
+   summit stays in view) and cropped top and bottom by margins, which as
+   percentages resolve against the width like --tw: the top at y=200 of
+   the 1100 viewBox, the bottom at y=720. --crest is how far the crest
+   sits above that bottom where the route leaves it (measured on the path:
+   within 3px at every width). */
+@media (max-width: 1023px) {
+  .page--expertise .exwork--terrain {
+    padding: var(--m-section) var(--m-gutter) 0;
+    overflow: clip;
+  }
+
+  /* the landscape below is pulled up under the head by its crop (the
+     crop margin collapses through .exwork-terrain, so its box - positioned,
+     painted later - lies over the head too): the head sits above it, so
+     its text takes taps, long-presses and selection */
+  .page--expertise .exwork--terrain .exwork__head {
+    position: relative;
+    z-index: 2;
+    max-width: 36em;
+    margin: 0 0 8px;
+  }
+
+  .page--expertise .exwork--terrain .exwork__title {
+    margin-bottom: 12px;
+    font-size: var(--m-h2);
+    line-height: 1.12;
+  }
+
+  .page--expertise .exwork--terrain .exwork__lede {
+    font-size: var(--m-lede);
+    line-height: 1.55;
+  }
+
+  .page--expertise .exwork-terrain {
+    --tw: 170%;
+    --crest: 12.95vw;
+    width: auto;
+    margin: 0 calc(-1 * var(--m-gutter));
+    aspect-ratio: auto;
+    /* it fades in as it arrives; a block this tall does not slide */
+    transform: none;
+  }
+
+  .page--expertise .exwork-terrain__svg {
+    position: relative;
+    inset: auto;
+    display: block;
+    width: var(--tw);
+    height: auto;
+    aspect-ratio: 2000 / 1100;
+    margin: calc(var(--tw) * -0.1) 0 calc(var(--tw) * -0.19) calc(100% - var(--tw));
+    /* decoration: its cropped-off sky never takes a tap */
+    pointer-events: none;
+  }
+
+  /* the nodes and leaders belong to the desktop layout; the route below
+     carries the steps */
+  .page--expertise .exwork-terrain__node,
+  .page--expertise .exwork-terrain__leader {
+    display: none;
+  }
+
+  .page--expertise .exwork-terrain__labels {
+    --route-x: calc(var(--m-gutter) + 7px);
+    --step-pad: 44px;
+    --step-mark: calc(var(--m-h3) * 1.3 / 2);
+    --lab-pt: 36px;
+    position: relative;
+    z-index: 1;
+    display: block;
+    /* the route shortcuts follow on the same navy with their own section
+       padding: that is the gap, this only rounds it off */
+    padding: var(--lab-pt) var(--m-gutter) clamp(16px, 5vw, 40px);
+    /* the rock's own colour at the crop line, deepening to the band below */
+    background: linear-gradient(180deg, #1a253f 0%, #172039 28%, #0e1322 72%, #080b13 100%);
+  }
+
+  /* the open ring every line on the site starts on, sitting on the crest */
+  .page--expertise .exwork-terrain__labels::before {
+    content: "";
+    position: absolute;
+    top: calc(-1 * var(--crest));
+    left: var(--route-x);
+    width: var(--ring-size);
+    height: var(--ring-size);
+    border-radius: 50%;
+    box-shadow:
+      inset 0 0 0 var(--ring-stroke) var(--orange),
+      0 0 0 var(--ring-halo) rgba(255, 97, 44, 0.14);
+    transform: translate(-50%, -50%);
+  }
+
+  /* and the leader from the ring down to the first step */
+  .page--expertise .exwork-terrain__labels::after {
+    content: "";
+    position: absolute;
+    top: calc(var(--ring-size) / 2 + 4px - var(--crest));
+    left: calc(var(--route-x) - 0.5px);
+    width: 1px;
+    height: calc(var(--crest) + var(--lab-pt) + var(--step-mark) - var(--ring-size) / 2 - var(--marker-size) / 2 - 8px);
+    background: repeating-linear-gradient(180deg, var(--trail-leader) 0 2px, transparent 2px 6px);
+  }
+
+  .page--expertise .exwork-terrain__labels li,
+  .page--expertise .exwork-terrain__labels li.is-above,
+  .page--expertise .exwork-terrain__labels li.is-below {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    max-width: 40em;
+    padding: 0 0 40px var(--step-pad);
+    transform: none;
+    text-align: left;
+  }
+
+  .page--expertise .exwork-terrain__labels li:last-child {
+    padding-bottom: 0;
+  }
+
+  .page--expertise .exwork-terrain__labels h3 {
+    margin: 0 0 8px;
+    color: #f4f0ec;
+    font-size: var(--m-h3);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .page--expertise .exwork-terrain__labels p,
+  .page--expertise .exwork-terrain__labels li.is-above p,
+  .page--expertise .exwork-terrain__labels li.is-below p {
+    max-width: var(--m-measure);
+    color: rgba(232, 227, 222, 0.76);
+    font-size: var(--m-body);
+    line-height: 1.6;
+  }
+
+  /* the lit marker on each step, level with the first line of its title */
+  .page--expertise .exwork-terrain__labels li::after {
+    content: "";
+    position: absolute;
+    top: var(--step-mark);
+    left: calc(var(--route-x) - var(--m-gutter));
+    width: var(--marker-size);
+    height: var(--marker-size);
+    border-radius: 50%;
+    background: var(--marker-core);
+    box-shadow: var(--marker-shadow);
+    transform: translate(-50%, -50%);
+  }
+
+  /* the dotted leader from each marker to the next */
+  .page--expertise .exwork-terrain__labels li::before {
+    content: "";
+    position: absolute;
+    top: calc(var(--step-mark) + var(--marker-size) / 2 + 4px);
+    bottom: calc(4px + var(--marker-size) / 2 - var(--step-mark));
+    left: calc(var(--route-x) - var(--m-gutter) - 0.5px);
+    width: 1px;
+    background: repeating-linear-gradient(180deg, var(--trail-leader) 0 2px, transparent 2px 6px);
+  }
+
+  .page--expertise .exwork-terrain__labels li:last-child::before {
+    content: none;
+  }
+}
+
+/* tablets and the larger phones on their side: the landscape at a gentler
+   crop, and each step a row - its title beside its text */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .page--expertise .exwork-terrain {
+    --tw: 125%;
+    --crest: calc(9.54vw - 23.9px);
+  }
+
+  .page--expertise .exwork-terrain__labels li,
+  .page--expertise .exwork-terrain__labels li.is-above,
+  .page--expertise .exwork-terrain__labels li.is-below {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    column-gap: clamp(28px, 4vw, 48px);
+    /* the text's first line sits on the title's first line */
+    align-items: baseline;
+    max-width: none;
+    padding-bottom: 48px;
+  }
+
+  .page--expertise .exwork-terrain__labels li:last-child {
+    padding-bottom: 0;
+  }
+
+  .page--expertise .exwork-terrain__labels h3 {
+    margin: 0;
+  }
+}
+
+/* Held sideways (EXP-2): the crop above, sized from the width alone, filled
+   a short screen with mountain before the first step. Here the whole ridge
+   runs across the screen and the band's height is capped by the screen's
+   (the art is drawn with preserveAspectRatio="none", so a capped band
+   flattens the slope; the line keeps its width, it is non-scaling). The
+   crop is y=240 (just over the summit) to y=690 (just under the lowest
+   saddle, so the rock spans the whole bottom edge). --crest is the crest
+   at the route's x over that bottom: 0.27-0.29 of the band at every
+   landscape width, within 1px. */
+@media (max-width: 1023px) and (orientation: landscape) {
+  .page--expertise .exwork-terrain {
+    --band: min(22.5vw, 34svh);
+    --crest: calc(var(--band) * 0.28);
+  }
+
+  .page--expertise .exwork-terrain__svg {
+    width: 100%;
+    height: calc(var(--band) * 1100 / 450);
+    aspect-ratio: auto;
+    margin: calc(var(--band) * -240 / 450) 0 calc(var(--band) * -410 / 450);
+  }
+
+  .page--expertise .exwork-terrain__labels {
+    --lab-pt: 28px;
+  }
+}
+
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page--expertise .exwork-terrain__labels {
+    padding-bottom: 16px;
+  }
+}
+
+/* without script nothing adds .is-in, and the steps would stay invisible */
+@media (max-width: 1023px) and (scripting: none) {
+  .page--expertise .exwork-terrain.io-reveal {
+    opacity: 1;
+  }
+}
+
+/* Type on a phone on its side: the shared scale follows the width, so on a
+   667-915px wide screen the section titles (35-38px) outgrew the hero's
+   30px title. Here they take the phone h2 and the area titles the h3, so
+   the h1 leads again (EXP-4). Last in the file: it must beat the section
+   rules above. */
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page--expertise .ex-areas__title,
+  .page--expertise .exwork--terrain .exwork__title,
+  .page--expertise .routes-strip__title,
+  .page--expertise .aud-grow__title {
+    font-size: 28px;
+  }
+
+  .page--expertise .ex-areas__panel h3 {
+    font-size: 24px;
+  }
+}
+
+/* ---------- About us ---------- */
+
+/* ===== ABOUT (<=1023px) ===== */
+/* The About page below 1024px: hero, the three architecture photo bands,
+   Perspective, Track record, Ascent, Philosophy, Mission & Commitment and
+   the client marks. The route shortcuts and the closing band are the
+   foundation's. Every rule is scoped to .page--about and sits in a compact
+   (or narrower) query; desktop is untouched.
+
+   Tiers: compact <=1023 | tablet 768-1023 | phone <=767 | small phone <=374
+   | short landscape: compact and max-height 500px in landscape. */
+
+/* ---------- shared: section boxes, labels, trails ---------- */
+@media (max-width: 1023px) {
+  .page--about {
+    /* the trail at the top of a chapter is this tall (desktop clamp); the
+       chapter's first line clears it by --ab-trail-gap */
+    --ab-trail-h: clamp(72px, 9vw, 120px);
+    --ab-trail-gap: clamp(24px, 6vw, 44px);
+    /* the hairline between the figures (desktop's divider colour) */
+    --ab-rule-soft: rgba(255, 168, 110, 0.18);
+  }
+
+  /* chapters are content-sized: a 100svh box on a phone is a screen of
+     nothing around a short statement */
+  .page--about .perspective,
+  .page--about .track-record,
+  .page--about .ascent,
+  .page--about .philosophy,
+  .page--about .manifesto {
+    min-height: 0;
+    padding: var(--m-section) var(--m-gutter);
+  }
+
+  .page--about .perspective.has-trail,
+  .page--about .ascent.has-trail,
+  .page--about .manifesto.has-trail {
+    padding-top: calc(var(--ab-trail-h) + var(--ab-trail-gap));
+  }
+
+  /* the numbered chapter labels: 12px, their own tracking */
+  .page--about .perspective__step,
+  .page--about .track-record__step,
+  .page--about .philosophy__step,
+  .page--about .manifesto__step {
+    font-size: var(--m-label);
+    line-height: 1.3;
+  }
+
+  .page--about .perspective__step span,
+  .page--about .track-record__step span,
+  .page--about .philosophy__step span,
+  .page--about .manifesto__step span {
+    font-size: 15px;
+  }
+
+  /* chapter headings on the shared scale */
+  .page--about .track-record__title,
+  .page--about .ascent__title,
+  .page--about .philosophy__title,
+  .page--about .clients__title {
+    font-size: var(--m-h2);
+    line-height: 1.12;
+  }
+}
+
+/* Where a chapter runs straight into another of the same colour
+   (Perspective into Track record, Ascent into Philosophy) both kept a full
+   section's padding: a 190px hole on a tablet, twice the pause before a
+   photo band. The second chapter starts closer, so the join reads as a
+   turn of the page rather than a missing element. */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .page--about .track-record,
+  .page--about .philosophy {
+    padding-top: calc(var(--m-section) * 0.5);
+  }
+}
+
+/* A phone draws half of each chapter trail across its width: the whole
+   1200-unit line squeezed into 390px was a comb of spikes. The checkpoint
+   follows its peak into the half that shows. */
+@media (max-width: 767px) {
+  .page--about .has-trail--a::before {
+    background-size: 200% 100%;
+    background-position: 100% 0;
+  }
+
+  /* peak (968, 28): (968 - 600) / 600 */
+  .page--about .has-trail--a .has-trail__dot {
+    left: 61.33%;
+  }
+
+  .page--about .has-trail--b::before {
+    background-size: 200% 100%;
+    background-position: 0 0;
+  }
+
+  /* peak (168, 36): 168 / 600 */
+  .page--about .has-trail--b .has-trail__dot {
+    left: 28%;
+  }
+}
+
+/* ---------- hero ----------
+   Content on the sky, the ridge across the foot. The photo is drawn at
+   its own proportions as tall as the hero, so the <img> box is the
+   picture that shows (sizes names that width) and its 56% point stays
+   where desktop's object-position puts it. The bottom padding keeps the
+   tagline and button above the ridge's crest, which climbs to the full
+   height of the art on the right.
+   The hero is content-sized: the sky over the copy is a set pause that
+   grows with the screen's height (about 60px at 568 high, 100px at 844,
+   120px at most), not whatever a min-height left over - on a tall phone
+   that was a third of the screen of empty haze. So the copy always starts
+   at the same point below the bar, and the sun can be placed from it. */
+@media (max-width: 1023px) {
+  .page--about .page-hero {
+    --ab-hero-sky: clamp(48px, 14svh - 20px, 120px);
+    min-height: 0;
+    /* the ridge (42.5vw tall at full width) is sunk by a third, into its
+       solid foot, so what shows is 27.6vw of silhouette; the copy clears
+       the crest where it rises highest behind it */
+    padding: calc(var(--nav-height) + var(--ab-hero-sky)) var(--m-gutter) max(48px, 27.6vw - 60px);
+  }
+
+  .page--about .page-hero__ridges {
+    bottom: -14.9vw;
+  }
+
+  .page--about .page-hero__bg {
+    inset: 0 auto 0 56%;
+    width: auto;
+    min-width: 100%;
+    max-width: none;
+    height: 100%;
+    aspect-ratio: 2496 / 1696;
+    translate: -56% 0;
+  }
+
+  /* The light behind the heading, as on desktop (it sat behind the logo
+     in the bar). Its centre is 55% of its radius below the eyebrow's top,
+     on the heading, so the small eyebrow falls in the glow's softer outer
+     half and keeps 4.5:1. A little quieter than desktop's, with no blur:
+     the glow is already soft, and a blur on top is an offscreen pass. */
+  .page--about .page-hero__sun {
+    --ab-sun: clamp(240px, 62vw, 400px);
+    top: calc(var(--nav-height) + var(--ab-hero-sky) - var(--ab-sun) * 0.225);
+    left: -12%;
+    width: var(--ab-sun);
+    height: var(--ab-sun);
+    filter: none;
+    background: radial-gradient(closest-side, rgba(255, 168, 110, 0.4), rgba(255, 97, 44, 0.16) 55%, transparent);
+  }
+
+  .page--about .page-hero__content {
+    width: 100%;
+    max-width: 46rem;
+  }
+
+  /* on a phone the label sits on the sun's glow: the lighter latte the
+     photo captions use keeps it above 4.5:1 there */
+  .page--about .page-hero__eyebrow {
+    margin-bottom: 16px;
+    color: #ffc9a3;
+    font-size: var(--m-label);
+    text-shadow: 0 1px 6px rgba(8, 11, 19, 0.5);
+  }
+
+  /* On the h1 scale. "cross-border growth." is one unit (a no-break
+     space ties it) 9.3em wide: on the narrowest phones the heading steps
+     down just enough to hold it, instead of splitting "cross-" from
+     "border" at the hyphen (34px needs 316px; a 320px phone has 280px). */
+  .page--about .page-hero__title {
+    margin-bottom: 18px;
+    font-size: min(var(--m-h1), (100vw - 2 * var(--m-gutter)) / 9.4);
+    line-height: 1.08;
+    text-shadow: 0 2px 14px rgba(8, 11, 19, 0.35);
+  }
+
+  /* the desktop line break is for a 62px two-liner; here the heading
+     balances itself */
+  .page--about .page-hero__title br {
+    display: none;
+  }
+
+  .page--about .page-hero__tagline {
+    max-width: 34em;
+    font-size: var(--m-lede);
+    line-height: 1.55;
+    text-shadow: 0 1px 10px rgba(8, 11, 19, 0.4);
+  }
+
+  .page--about .page-hero .primary-cta {
+    min-height: 48px;
+    margin-top: 28px;
+    padding: 12px 22px 12px 26px;
+  }
+}
+
+/* From 600px the copy is wider and shorter, and a 62vw sun (up to 400px)
+   spread its bright core from the eyebrow down over the tagline: a
+   smaller sun, about desktop's share of the width, keeps the tagline at
+   4.5:1 with the sun at full strength (as it is with reduced motion). */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .page--about .page-hero__sun {
+    --ab-sun: clamp(240px, 44vw, 360px);
+  }
+}
+
+/* ---------- photo bands ----------
+   Full-bleed as on desktop, but a 21:9 strip is 167px on a phone - a
+   letterbox, not a picture. Phones show 4:3, tablets a fixed band, a phone
+   on its side a wide band. The parallax is off here, so the photo fills
+   the band exactly (no 120% overscan). Captions sit on the gutter. */
+@media (max-width: 1023px) {
+  .page--about .photo-break {
+    aspect-ratio: 4 / 3;
+  }
+
+  .page--about .photo-break img {
+    height: 100%;
+  }
+
+  .page--about .photo-break__caption,
+  .page--about .photo-break--right .photo-break__caption {
+    left: var(--m-gutter);
+    right: var(--m-gutter);
+    bottom: clamp(20px, 5vw, 36px);
+    max-width: none;
+    gap: 8px;
+  }
+
+  .page--about .photo-break__index {
+    color: #ffd2b3;
+    font-size: var(--m-label);
+  }
+
+  /* a 4:3 band gives the caption a larger share of the picture: the scrim
+     under it runs deeper and the warm glow behind it is fainter, so the
+     caption holds 4.5:1 over the brightest concrete */
+  .page--about .photo-break::after {
+    background:
+      radial-gradient(90% 60% at 16% 86%, rgba(255, 97, 44, 0.08), transparent 70%),
+      linear-gradient(90deg, rgba(8, 11, 19, 0.5) 0%, rgba(8, 11, 19, 0.12) 62%, rgba(8, 11, 19, 0.2) 100%),
+      linear-gradient(180deg, rgba(8, 11, 19, 0.28) 0%, transparent 28%, rgba(8, 11, 19, 0.18) 42%, rgba(8, 11, 19, 0.82) 100%);
+  }
+
+  .page--about .photo-break--right::after {
+    background:
+      radial-gradient(90% 60% at 84% 86%, rgba(255, 97, 44, 0.08), transparent 70%),
+      linear-gradient(270deg, rgba(8, 11, 19, 0.5) 0%, rgba(8, 11, 19, 0.12) 62%, rgba(8, 11, 19, 0.2) 100%),
+      linear-gradient(180deg, rgba(8, 11, 19, 0.28) 0%, transparent 28%, rgba(8, 11, 19, 0.18) 42%, rgba(8, 11, 19, 0.82) 100%);
+  }
+
+  .page--about .photo-break__line {
+    max-width: 17em;
+    font-size: var(--m-h3);
+    line-height: 1.22;
+    text-shadow: 0 1px 10px rgba(8, 11, 19, 0.45);
+  }
+
+  .page--about .photo-break--right .photo-break__line {
+    align-self: flex-end;
+  }
+
+  /* the one caption that is a link: a 44px target without growing the
+     type. Its box is sized to the two balanced lines it breaks into (a
+     balanced block keeps its unbalanced width), so the focus ring and the
+     tap area end with the words rather than across the bare photo */
+  .page--about a.photo-break__line {
+    max-width: 9.5em;
+    padding-block: 8px;
+    margin-block: -8px;
+  }
+}
+
+/* a large phone or small tablet held upright: 4:3 would be 500px of photo */
+@media (min-width: 600px) and (max-width: 767px) {
+  .page--about .photo-break {
+    aspect-ratio: 3 / 2;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .page--about .photo-break {
+    aspect-ratio: auto;
+    height: clamp(340px, 42vw, 430px);
+  }
+}
+
+/* ---------- perspective ---------- */
+@media (max-width: 1023px) {
+  .page--about .perspective__step {
+    margin-bottom: 20px;
+    color: rgba(240, 235, 233, 0.6);
+  }
+
+  /* the marks bracket the quote from above-left and below-right: beside a
+     centred line on a phone they only squeezed it to three words a line */
+  .page--about .perspective__frame {
+    display: block;
+    max-width: 36rem;
+    margin: 0 auto 40px;
+    padding: 30px 0 26px;
+  }
+
+  .page--about .perspective__quote {
+    position: absolute;
+    font-size: clamp(72px, 18vw, 104px);
+    line-height: 1;
+    color: rgba(255, 97, 44, 0.24);
+  }
+
+  .page--about .perspective__quote--open {
+    top: -14px;
+    left: 0;
+  }
+
+  .page--about .perspective__quote--close {
+    right: 0;
+    bottom: -58px;
+  }
+
+  .page--about .perspective__title {
+    font-size: calc(var(--m-h2) + 2px);
+    line-height: 1.14;
+  }
+
+  .page--about .perspective__pillars {
+    max-width: 44rem;
+    gap: 28px;
+  }
+
+  .page--about .perspective__pillars p {
+    padding-top: 20px;
+    font-size: var(--m-body);
+    line-height: 1.6;
+  }
+
+  /* labels a readable 12px; the two lower ones wrap under their vertex */
+  .page--about .perspective__triangulation {
+    width: min(100%, 380px);
+    margin-top: 52px;
+  }
+
+  .page--about .perspective__triangulation b {
+    color: rgba(240, 235, 233, 0.62);
+    font-size: var(--m-label);
+    line-height: 1.35;
+    letter-spacing: 0.16em;
+  }
+
+  .page--about .perspective__triangulation b:nth-of-type(1),
+  .page--about .perspective__triangulation b:nth-of-type(2) {
+    width: 9em;
+    white-space: normal;
+    text-align: center;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1023px) {
+  /* the frame is as wide as the quote's two balanced lines (10.2em of the
+     title's size, plus a little), so the marks bracket the words instead
+     of floating 50-65px off them on a 36rem frame */
+  .page--about .perspective__frame {
+    max-width: calc((var(--m-h2) + 2px) * 11);
+  }
+
+  .page--about .perspective__pillars {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .page--about .perspective__triangulation {
+    width: 400px;
+  }
+
+  .page--about .perspective__triangulation b:nth-of-type(1),
+  .page--about .perspective__triangulation b:nth-of-type(2) {
+    width: auto;
+    white-space: nowrap;
+  }
+}
+
+/* ---------- track record ----------
+   Numbers stay the layout: on a phone one figure a row between the warm
+   rules, on the gutter; on a tablet 200+ and 300+ side by side and the
+   three jurisdictions across the width under them. */
+@media (max-width: 1023px) {
+  /* the glows are sized to the section, so none is cut off at its edge
+     (a px-sized desktop glow ran past the top and bottom of a tall phone
+     section and drew a hard line there) */
+  .page--about .track-record {
+    background:
+      radial-gradient(80% 26% at 90% 30%, rgba(255, 97, 44, 0.15), transparent 100%),
+      radial-gradient(75% 18% at 6% 78%, rgba(48, 62, 89, 0.22), transparent 100%),
+      linear-gradient(180deg, #070912 0%, #050810 50%, #0a0d18 100%);
+  }
+
+  .page--about .track-record__head {
+    margin-bottom: 36px;
+    gap: 14px;
+  }
+
+  /* a flex item with auto side margins shrinks to its content: the rules
+     stopped 8px short of the gutter on each side */
+  .page--about .track-record__numbers,
+  .page--about .track-record__foot {
+    width: 100%;
+  }
+
+  .page--about .track-record__lede {
+    margin-top: 2px;
+    font-size: var(--m-lede);
+  }
+
+  .page--about .big-stat {
+    --big-stat-num-size: clamp(68px, 19vw, 104px);
+    gap: 10px;
+    padding: 28px 0 30px;
+  }
+
+  .page--about .big-stat__num span {
+    margin-left: 4px;
+  }
+
+  .page--about .big-stat__num--word {
+    min-height: 0;
+    font-size: clamp(40px, 11.5vw, 60px);
+    line-height: 1;
+  }
+
+  .page--about .big-stat__label {
+    font-size: var(--m-label);
+    letter-spacing: 0.16em;
+  }
+
+  .page--about .big-stat__copy {
+    max-width: 30em;
+    font-size: 15px;
+  }
+
+  /* about 70 characters a line beside its rule (68ch of Outfit ran to 95) */
+  .page--about .track-record__foot {
+    max-width: calc(min(var(--m-measure), 32rem) + 20px);
+    margin-top: 36px;
+    padding-left: 20px;
+  }
+
+  .page--about .track-record__foot p {
+    font-size: var(--m-body);
+    line-height: 1.6;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1023px) {
+  .page--about .track-record__numbers {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .page--about .big-stat {
+    --big-stat-num-size: clamp(88px, 11vw, 112px);
+    padding: 36px 32px 36px 0;
+  }
+
+  .page--about .big-stat:nth-child(1) {
+    border-right: 1px solid var(--ab-rule-soft);
+  }
+
+  .page--about .big-stat:nth-child(2) {
+    padding-left: 32px;
+    padding-right: 0;
+  }
+
+  .page--about .big-stat:nth-child(1),
+  .page--about .big-stat:nth-child(2) {
+    border-bottom: 1px solid var(--ab-rule-soft);
+  }
+
+  /* the jurisdictions across the width: the word, then what it means */
+  .page--about .big-stat--small {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: 40px;
+    row-gap: 8px;
+    align-items: end;
+    padding-right: 0;
+  }
+
+  .page--about .big-stat--small .big-stat__num {
+    grid-row: 1 / span 2;
+    font-size: clamp(52px, 6.6vw, 64px);
+  }
+
+  .page--about .big-stat--small .big-stat__label {
+    align-self: end;
+  }
+
+  .page--about .big-stat--small .big-stat__copy {
+    grid-column: 2;
+    align-self: start;
+  }
+}
+
+/* ---------- ascent ----------
+   Phones: the four stages are one route. Each stage's icon ring is a
+   checkpoint on a dotted leader that runs down the left, with the stage
+   beside it - no four boxed cards in a row after a page of boxes.
+   Tablets keep the two-by-two cards. */
+@media (max-width: 1023px) {
+  .page--about .ascent {
+    background:
+      radial-gradient(85% 26% at 92% 66%, rgba(255, 97, 44, 0.14), transparent 100%),
+      radial-gradient(75% 14% at 4% 18%, rgba(48, 62, 89, 0.2), transparent 100%),
+      linear-gradient(180deg, #0c0e1a 0%, #050810 100%);
+  }
+
+  .page--about .ascent__head {
+    margin-bottom: 40px;
+    gap: 16px;
+  }
+
+  .page--about .ascent__eyebrow {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    max-width: none;
+    color: rgba(240, 235, 233, 0.62);
+    font-size: var(--m-label);
+    letter-spacing: 0.24em;
+  }
+
+  .page--about .ascent__eyebrow-rule {
+    flex: 0 0 32px;
+    width: 32px;
+    margin: 0.66em 0 0;
+  }
+
+  .page--about .ascent__title {
+    text-wrap: pretty;
+  }
+
+  /* a flex item with auto side margins shrinks to its content: between
+     about 620 and 720px the list sat centred, 24-40px in from the gutter
+     the eyebrow and title hang on */
+  .page--about .ascent__stages {
+    width: 100%;
+  }
+
+  .page--about .ascent__step {
+    font-size: var(--m-label);
+    line-height: 1.2;
+    letter-spacing: 0.24em;
+    color: rgba(255, 168, 110, 0.78);
+  }
+
+  .page--about .ascent__copy {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  /* follow the ascent: the label, then three 44px links */
+  .page--about .ascent__paths {
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px 28px;
+    margin: 36px 0 0;
+  }
+
+  .page--about .ascent__paths-label {
+    flex: 1 0 100%;
+    text-wrap: balance;
+    color: rgba(240, 235, 233, 0.62);
+    font-size: var(--m-label);
+    letter-spacing: 0.24em;
+  }
+
+  .page--about .ascent__paths a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 17px;
+  }
+
+  .page--about .ascent__paths a::after {
+    bottom: 8px;
+  }
+}
+
+@media (max-width: 767px) {
+  /* one route at every phone width: the legacy one-column rule stops at
+     720px, and desktop's bottom alignment (for its staircase) hung stage 04
+     below stage 03 in the two columns left between 721 and 767 */
+  .page--about .ascent__stages {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 0;
+  }
+
+  .page--about .ascent__stage {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr;
+    column-gap: 18px;
+    row-gap: 8px;
+    padding: 0 0 32px;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .page--about .ascent__stage:last-child {
+    padding-bottom: 0;
+  }
+
+  /* the leader from this checkpoint to the next */
+  .page--about .ascent__stage:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    top: 60px;
+    bottom: 8px;
+    left: 26px;
+    width: 1px;
+    margin-left: -0.5px;
+    background: repeating-linear-gradient(180deg, var(--trail-leader) 0 2px, transparent 2px 6px);
+    pointer-events: none;
+  }
+
+  .page--about .ascent__icon {
+    grid-row: 1 / span 3;
+    align-self: start;
+    margin: 0;
+    background: #0d101c;
+    box-shadow: 0 0 0 5px rgba(255, 168, 110, 0.04);
+  }
+
+  .page--about .ascent__step {
+    grid-column: 2;
+    margin-top: 8px;
+  }
+
+  .page--about .ascent__name {
+    grid-column: 2;
+    font-size: var(--m-h3);
+    line-height: 1.2;
+  }
+
+  .page--about .ascent__copy {
+    grid-column: 2;
+    margin: 2px 0 0;
+    max-width: 34em;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* a level two-by-two: desktop's bottom alignment (for its staircase)
+     left a card with a shorter text hanging lower than its neighbour */
+  .page--about .ascent__stages {
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .page--about .ascent__stage {
+    padding: 26px 24px 28px;
+  }
+
+  .page--about .ascent__icon {
+    margin-bottom: 8px;
+  }
+
+  .page--about .ascent__name {
+    font-size: var(--m-h3);
+  }
+}
+
+/* ---------- philosophy ----------
+   The three sayings stay a stack of cards read in order. The dotted leader
+   that joins them across the middle on desktop runs down the left here,
+   through a marker on each card's top edge, level with the text. Tablets
+   put each saying's lead-in beside it. */
+@media (max-width: 1023px) {
+  .page--about .philosophy {
+    --ab-card-x: 22px;
+    background:
+      radial-gradient(560px 420px at 50% 104%, rgba(255, 97, 44, 0.14), transparent 70%),
+      /* starts on the Ascent's last colour: no seam where they meet */
+      linear-gradient(180deg, #050810 0%, #0a0d18 100%);
+  }
+
+  .page--about .philosophy__head {
+    margin-bottom: 36px;
+  }
+
+  .page--about .philosophy__step {
+    margin-bottom: 18px;
+  }
+
+  /* one column at every compact width (the three-up row reached down to
+     861px), without desktop's staggered offsets */
+  .page--about .philosophy__stack {
+    width: 100%;
+    max-width: 44rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+
+  .page--about .philosophy__card--a,
+  .page--about .philosophy__card--b,
+  .page--about .philosophy__card--c {
+    transform: none;
+  }
+
+  .page--about .philosophy__stack::before {
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: var(--ab-card-x);
+    right: auto;
+    width: 1px;
+    height: auto;
+    background: repeating-linear-gradient(180deg, var(--trail-leader) 0 2px, transparent 2px 6px);
+  }
+
+  /* opaque cards: a 22px backdrop blur over three card-sized areas is
+     real work on a phone, and the leader must not show through */
+  .page--about .philosophy__card {
+    padding: 26px var(--ab-card-x) 24px;
+    background: linear-gradient(160deg, #161a27, #0f121d);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: 0 18px 44px rgba(4, 6, 12, 0.3);
+    gap: 10px;
+  }
+
+  .page--about .philosophy__card--b {
+    background: linear-gradient(160deg, #2a1c1b, #15141c);
+  }
+
+  .page--about .philosophy__card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: var(--ab-card-x);
+    width: var(--marker-size);
+    height: var(--marker-size);
+    margin: calc(var(--marker-size) / -2) 0 0 calc(var(--marker-size) / -2);
+    border-radius: 50%;
+    background: var(--marker-core);
+    box-shadow: var(--marker-shadow);
+  }
+
+  .page--about .philosophy__card-tag {
+    font-size: 15px;
+  }
+
+  .page--about .philosophy__card p {
+    font-size: clamp(19px, 17px + 0.5vw, 22px);
+    line-height: 1.38;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1023px) {
+  .page--about .philosophy {
+    --ab-card-x: 32px;
+  }
+
+  .page--about .philosophy__card {
+    display: grid;
+    grid-template-columns: 9.5rem minmax(0, 1fr);
+    column-gap: 28px;
+    align-items: baseline;
+    padding: 30px var(--ab-card-x) 30px;
+  }
+}
+
+/* ---------- mission & commitment ----------
+   Phones: each row reads heading, copy, then its photograph, which runs
+   off the page on the side desktop puts it - right for the mission, left
+   for the commitment - so the pair still alternates. Tablets keep the
+   desktop's text-beside-photograph rows. */
+@media (max-width: 1023px) {
+  .page--about .manifesto {
+    background:
+      radial-gradient(85% 22% at 94% 72%, rgba(255, 176, 119, 0.12), transparent 100%),
+      linear-gradient(180deg, #070912 0%, #0a0d18 100%);
+  }
+
+  .page--about .manifesto__row {
+    gap: 36px;
+  }
+
+  .page--about .manifesto__row + .manifesto__row {
+    margin-top: clamp(64px, 16vw, 104px);
+  }
+
+  .page--about .manifesto__text {
+    gap: 16px;
+  }
+
+  .page--about .manifesto__text > * {
+    max-width: var(--m-measure);
+  }
+
+  /* 68ch of Outfit is about 95 characters a line where the text gets the
+     whole width (a phone held sideways, a small tablet upright); 32rem
+     holds about 70 */
+  .page--about .manifesto__copy,
+  .page--about .manifesto__list {
+    max-width: min(var(--m-measure), 32rem);
+  }
+
+  .page--about .manifesto__text .manifesto__title {
+    margin: 2px 0 4px;
+    font-size: var(--m-h2);
+    line-height: 1.12;
+  }
+
+  .page--about .manifesto__copy,
+  .page--about .manifesto__list {
+    font-size: var(--m-body);
+    line-height: 1.6;
+  }
+
+  .page--about .manifesto__list {
+    gap: 8px;
+  }
+
+  .page--about .manifesto__list li {
+    padding-left: 28px;
+  }
+}
+
+@media (max-width: 767px) {
+  .page--about .manifesto__media {
+    aspect-ratio: 4 / 3;
+    margin-right: calc(-1 * var(--m-gutter));
+  }
+
+  .page--about .manifesto__row--flip .manifesto__media {
+    order: 2;
+    margin-right: 0;
+    margin-left: calc(-1 * var(--m-gutter));
+  }
+}
+
+@media (min-width: 600px) and (max-width: 767px) {
+  .page--about .manifesto__media {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px),
+  (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page--about .manifesto__row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(28px, 5vw, 48px);
+    align-items: center;
+  }
+
+  .page--about .manifesto__media {
+    aspect-ratio: 4 / 5;
+    margin-right: calc(-1 * var(--m-gutter));
+    margin-left: 0;
+  }
+
+  .page--about .manifesto__row--flip .manifesto__media {
+    order: 0;
+    margin-right: 0;
+    margin-left: calc(-1 * var(--m-gutter));
+  }
+}
+
+/* ---------- client marks ----------
+   The row keeps moving (the review liked it) at a phone's scale, and its
+   Pause button is a real 44px control. */
+@media (max-width: 1023px) {
+  .page--about .clients {
+    padding: var(--m-section) 0;
+  }
+
+  .page--about .clients__head {
+    margin-bottom: 32px;
+    padding: 0 var(--m-gutter);
+  }
+
+  .page--about .clients__eyebrow {
+    margin-bottom: 14px;
+    font-size: var(--m-label);
+  }
+
+  .page--about .clients__title {
+    margin-bottom: 12px;
+  }
+
+  .page--about .clients__lede {
+    max-width: var(--m-measure);
+    font-size: var(--m-body);
+  }
+
+  .page--about .clients__track {
+    gap: 28px;
+    padding-right: 28px;
+  }
+
+  /* placeholder marks until the logos land: their word at 4.5:1 */
+  .page--about .clients__mark {
+    width: 132px;
+    height: 56px;
+    color: rgba(240, 235, 233, 0.6);
+    font-size: var(--m-label);
+  }
+
+  .page--about .clients__pause {
+    min-height: 44px;
+    margin-top: 24px;
+    padding: 0 22px;
+    font-size: var(--m-label);
+  }
+}
+
+/* ---------- short landscape: a phone on its side ----------
+   The hero is one screen at most: the copy on the left in two lines of
+   heading, the ridge sunk so only its high right-hand peaks rise beside
+   it. The photo bands are a wide strip, and Mission and Commitment go
+   back to text beside photograph (above), each photograph shorter than
+   the screen. */
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page--about .page-hero {
+    min-height: 0;
+    padding: calc(var(--nav-height) + 20px) var(--m-gutter) 28px;
+  }
+
+  .page--about .page-hero__content {
+    max-width: min(72%, 40rem);
+  }
+
+  .page--about .page-hero__eyebrow {
+    margin-bottom: 12px;
+  }
+
+  .page--about .page-hero__title {
+    margin-bottom: 14px;
+    font-size: clamp(28px, 4.5vw, 36px);
+  }
+
+  .page--about .page-hero__tagline {
+    font-size: 16px;
+  }
+
+  /* a small sun, high in the corner: at full size it filled the height
+     of the hero behind the copy */
+  .page--about .page-hero__sun {
+    top: -40%;
+    left: -8%;
+    width: 280px;
+    height: 280px;
+  }
+
+  /* the copy runs across 72% of a wide, short hero, further into the lit
+     peaks than desktop's; the wash's dark side reaches as far */
+  .page--about .page-hero__wash {
+    background:
+      radial-gradient(60% 70% at 18% 38%, rgba(255, 97, 44, 0.26), transparent 68%),
+      linear-gradient(90deg, rgba(4, 6, 12, 0.86) 0%, rgba(11, 14, 25, 0.72) 50%, rgba(18, 20, 31, 0.5) 76%, rgba(8, 10, 17, 0.34) 100%),
+      linear-gradient(180deg, rgba(8, 11, 19, 0.36) 0%, rgba(8, 11, 19, 0.55) 58%, rgba(8, 11, 19, 0.95) 100%);
+  }
+
+  .page--about .page-hero .primary-cta {
+    min-height: 46px;
+    margin-top: 20px;
+  }
+
+  /* 39% of the art shows: the left half's crest stays under the hero's
+     foot, the right-hand peaks climb beside the copy */
+  .page--about .page-hero__ridges {
+    bottom: -25.9vw;
+  }
+
+  .page--about .photo-break {
+    aspect-ratio: auto;
+    height: min(72svh, 300px);
+  }
+
+  .page--about .manifesto__media {
+    aspect-ratio: 5 / 4;
+  }
+}
+
+/* ---------- small phones: the heading ladder ----------
+   The smallest phones: the h1 steps down to hold "cross-border growth."
+   on one line (29.8px at 320), so the chapter headings step down in
+   proportion and never outrank it. From about 360px up these resolve to
+   the shared scale. */
+@media (max-width: 374px) {
+  .page--about .track-record__title,
+  .page--about .ascent__title,
+  .page--about .philosophy__title,
+  .page--about .clients__title,
+  .page--about .manifesto__text .manifesto__title {
+    font-size: min(var(--m-h2), (100vw - 2 * var(--m-gutter)) / 9.4 * 0.87);
+  }
+
+  .page--about .perspective__title {
+    font-size: min(var(--m-h2) + 2px, (100vw - 2 * var(--m-gutter)) / 9.4 * 0.9);
+  }
+}
+
+/* The shortest phones on their side (568x320, 640x360, 740x360): the
+   hero above still ran to 375px at 320px high, the button under the fold.
+   Tighter padding and type keep the whole hero on one screen. */
+@media (max-width: 1023px) and (max-height: 360px) and (orientation: landscape) {
+  .page--about .page-hero {
+    padding-top: calc(var(--nav-height) + 12px);
+    padding-bottom: 18px;
+  }
+
+  .page--about .page-hero__content {
+    max-width: min(78%, 40rem);
+  }
+
+  .page--about .page-hero__eyebrow {
+    margin-bottom: 10px;
+  }
+
+  .page--about .page-hero__title {
+    margin-bottom: 10px;
+    font-size: clamp(26px, 4.2vw, 32px);
+  }
+
+  .page--about .page-hero__tagline {
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .page--about .page-hero .primary-cta {
+    min-height: 44px;
+    margin-top: 14px;
+  }
+}
+
+/* ---------- less motion: the marks hold still ----------
+   The row stops and becomes a short horizontal scroller (the base rule).
+   The loop's duplicate set has no job in a still row - swiping through it
+   showed every mark twice - so only the real list shows, from gutter to
+   gutter. The fade is the gutter's width at each edge: marks passing under
+   an edge soften, and at either end of the scroll the fade falls on the
+   empty gutter. */
+@media (max-width: 1023px) and (prefers-reduced-motion: reduce) {
+  .page--about .clients__track[aria-hidden="true"] {
+    display: none;
+  }
+
+  .page--about .clients__track {
+    padding-inline: var(--m-gutter);
+  }
+
+  .page--about .clients__viewport {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--m-gutter), #000 calc(100% - var(--m-gutter)), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 var(--m-gutter), #000 calc(100% - var(--m-gutter)), transparent);
+  }
+}
+
+/* ---------- focus: the site's orange ring on this page's own controls ---------- */
+@media (max-width: 1023px) {
+  .page--about .page-hero .primary-cta:focus-visible,
+  .page--about a.photo-break__line:focus-visible,
+  .page--about .ascent__paths a:focus-visible,
+  .page--about .clients__pause:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 3px;
+  }
+
+  .page--about a.photo-break__line:focus-visible,
+  .page--about .ascent__paths a:focus-visible {
+    border-radius: 4px;
+  }
+}
+
+/* ---------- touch: the hover underline is always drawn ---------- */
+@media (max-width: 1023px) and (hover: none) {
+  .page--about a.photo-break__line {
+    text-decoration-color: rgba(255, 168, 110, 0.7);
+  }
+}
+
+/* ---------- Our team ---------- */
+
+/* ===== TEAM (<=1023px) ===== */
+/* The Team page below 1024px: the hero, the ridge cut under it, the TEAM
+   intro, the seven member cards with the trails between them and the
+   portrait proposal (?portraits=a / b). The bar, menu, footer and the
+   closing band are the foundation's - its Team rules (subline, mail button)
+   already hold at every width, so the band needs nothing here; only the
+   sizes of its photo changed, in the markup. Every rule is scoped to
+   .page--team and sits in a compact (or narrower) query; desktop is
+   untouched. team.js gives the proposal's photos width-appropriate files.
+
+   Two compositions:
+   - phones held upright: one column in reading order - the hero copy
+     left-aligned low on the sky with the sun above it (up to 767px), each
+     portrait offset to alternate sides with its big number in the space it
+     leaves and the text under it (up to 599px), the trails between them
+     turning towards the next portrait.
+   - tablets and phones on their side: the desktop page, scaled - the hero
+     copy right-aligned on the ridge with the sun on the left, the intro
+     centred, and each portrait beside its text on alternate sides.
+
+   Tiers: compact <=1023 | tablet 768-1023 | phone <=767 | small phone <=374
+   | short landscape: compact and max-height 500px in landscape. */
+
+/* ---------- hero ----------
+   Content-sized with a floor; the copy stands low, on the sky, and the
+   ridge crosses the foot. The photo is drawn at its own proportions as tall
+   as the hero, so the <img> box is the picture that shows (the sizes
+   attribute names that width) and --team-hero-focus is the point of the
+   photo that stays in the middle. */
+@media (max-width: 1023px) {
+  .page--team .page-hero {
+    --team-hero-focus: 58%;
+    min-height: clamp(520px, 86svh, 720px);
+    padding: calc(var(--nav-height) + clamp(32px, 8vw, 64px)) var(--m-gutter) clamp(112px, 30vw, 168px);
+    align-items: end;
+  }
+
+  .page--team .page-hero__bg {
+    inset: 0 auto 0 var(--team-hero-focus);
+    width: auto;
+    min-width: 100%;
+    max-width: none;
+    height: 100%;
+    aspect-ratio: 2496 / 1696;
+    translate: calc(var(--team-hero-focus) * -1) 0;
+  }
+
+  /* the glow is already soft, so no blur on top of it (an offscreen pass
+     per frame); where it stands is set per composition below */
+  .page--team .page-hero__sun {
+    filter: none;
+    background: radial-gradient(closest-side, rgba(255, 168, 110, 0.5), rgba(255, 97, 44, 0.2) 55%, transparent);
+  }
+
+  .page--team .page-hero__content {
+    justify-self: stretch;
+    width: 100%;
+    max-width: 40rem;
+    text-align: left;
+  }
+
+  /* desktop's orange at 92% sits on navy; here the photo's sky behind the
+     label is a mid-tone rust or a lit ridge, so the label is a lighter
+     peach of the same family (5.2:1 or more at every width, AA) */
+  .page--team .page-hero__eyebrow {
+    margin-bottom: 16px;
+    color: #ffbf94;
+    font-size: var(--m-label);
+  }
+
+  .page--team .page-hero__title {
+    margin-bottom: 18px;
+    font-size: var(--m-h1);
+    line-height: 1.08;
+  }
+
+  .page--team .page-hero__tagline {
+    max-width: 30em;
+    margin-left: 0;
+    font-size: var(--m-lede);
+    line-height: 1.55;
+  }
+
+  .page--team .page-hero .primary-cta {
+    min-height: 48px;
+    margin-top: 28px;
+    padding: 12px 22px 12px 26px;
+    white-space: nowrap;
+  }
+
+  .page--team .page-hero .primary-cta:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 3px;
+  }
+}
+
+/* Phones held upright: the copy stands left, so the sun and the warm light
+   of the wash go to the right. The sun hangs from the copy itself (the
+   content's ::before, the hero's own sun is hidden), just above and to the
+   right of the eyebrow: on a tall phone that is the empty sky, on a short
+   one (320x568, 375x667) where the copy fills the hero it rises to the bar
+   instead of glowing behind the first line of the title. The wash keeps its
+   dark gradient and moves its orange to the sun's corner, off the copy
+   column. */
+@media (max-width: 767px) and (orientation: portrait),
+  (max-width: 767px) and (min-height: 501px) {
+  .page--team .page-hero__sun {
+    display: none;
+  }
+
+  .page--team .page-hero__content::before {
+    --team-sun: clamp(220px, 68vw, 400px);
+    content: "";
+    position: absolute;
+    z-index: -1;
+    right: calc(var(--m-gutter) * -1 - var(--team-sun) * 0.24);
+    bottom: calc(100% - var(--team-sun) * 0.2);
+    width: var(--team-sun);
+    height: var(--team-sun);
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(255, 168, 110, 0.5), rgba(255, 97, 44, 0.2) 55%, transparent);
+    pointer-events: none;
+  }
+
+  .page--team .page-hero__wash {
+    background:
+      radial-gradient(120% 52% at 90% 12%, rgba(255, 97, 44, 0.32), transparent 70%),
+      linear-gradient(180deg, rgba(8, 11, 19, 0.32) 0%, rgba(8, 11, 19, 0.6) 60%, rgba(8, 11, 19, 0.96) 100%);
+  }
+
+  /* a phone's measure at every upright width: two lines that break after
+     "Polish," rather than one long line and "in one team." under it */
+  .page--team .page-hero__tagline {
+    max-width: 22em;
+  }
+}
+
+/* 320px, where it takes three lines: three even ones rather than
+   "in one team." left on its own */
+@media (max-width: 359px) {
+  .page--team .page-hero__tagline {
+    text-wrap: balance;
+  }
+}
+
+/* Tablets, and phones on their side, have the width for the desktop
+   composition: the copy right-aligned on the ridge, the sun low on the
+   left, the photo centred as on desktop. */
+@media (min-width: 768px) and (max-width: 1023px),
+  (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page--team .page-hero {
+    --team-hero-focus: 50%;
+  }
+
+  .page--team .page-hero__content {
+    justify-self: end;
+    max-width: min(36rem, 74%);
+    text-align: right;
+  }
+
+  /* two even lines instead of one long line and "in one team." under it */
+  .page--team .page-hero__tagline {
+    margin-left: auto;
+    text-wrap: balance;
+  }
+
+  .page--team .page-hero__sun {
+    top: 22%;
+    left: 4%;
+    right: auto;
+    width: clamp(240px, 40vw, 380px);
+    height: clamp(240px, 40vw, 380px);
+  }
+}
+
+/* a tablet: less floor under the button, so the button to the intro's
+   eyebrow is about desktop's 180-210px rather than 264px of empty land */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .page--team .page-hero {
+    min-height: clamp(520px, 62svh, 700px);
+    padding-bottom: clamp(96px, 13vw, 120px);
+  }
+}
+
+/* a phone on its side: one screen at most, the sun above the ridge */
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page--team .page-hero {
+    min-height: 0;
+    padding: calc(var(--nav-height) + 16px) var(--m-gutter) clamp(40px, 7vw, 64px);
+  }
+
+  .page--team .page-hero__content {
+    max-width: min(40rem, 76%);
+  }
+
+  .page--team .page-hero__sun {
+    top: 4%;
+    left: 6%;
+    width: clamp(200px, 34vw, 300px);
+    height: clamp(200px, 34vw, 300px);
+  }
+
+  .page--team .page-hero__eyebrow {
+    margin-bottom: 12px;
+  }
+
+  .page--team .page-hero__title {
+    margin-bottom: 12px;
+    font-size: clamp(28px, 4.4vw, 36px);
+  }
+
+  .page--team .page-hero__tagline {
+    max-width: none;
+    font-size: 16px;
+  }
+
+  .page--team .page-hero .primary-cta {
+    min-height: 46px;
+    margin-top: 20px;
+  }
+}
+
+/* ---------- ridge cut under the hero ----------
+   Desktop's cut is 96px at its smallest, which on a phone is a quarter of
+   the width - a cliff. It keeps its proportions here. */
+@media (max-width: 1023px) {
+  .page--team .ridge-edge--light {
+    --team-ridge-height: clamp(64px, 17vw, 132px);
+  }
+}
+
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page--team .ridge-edge--light {
+    --team-ridge-height: clamp(56px, 10vw, 96px);
+  }
+}
+
+/* ---------- intro ----------
+   Seven lines on a phone read better from a straight left edge; with a
+   tablet's width (or a phone's on its side) the paragraph is four lines and
+   centres, as on desktop. The warm glow at the top of the section starts
+   below the ridge cut, so the cut's flat navy does not end on a line. */
+@media (max-width: 1023px) {
+  .page--team .team-editorial {
+    padding: var(--m-section) var(--m-gutter);
+    background:
+      radial-gradient(ellipse 100% 380px at 50% 360px, rgba(255, 97, 44, 0.06) 0%, transparent 70%),
+      #070912;
+  }
+
+  .page--team .team-editorial__head {
+    max-width: 40rem;
+    margin: 0 0 clamp(56px, 14vw, 96px);
+    text-align: left;
+  }
+
+  .page--team .team-editorial__eyebrow {
+    margin-bottom: 18px;
+    font-size: var(--m-label);
+  }
+
+  .page--team .team-editorial__lead {
+    max-width: var(--m-measure);
+    margin: 0;
+    font-size: var(--m-lede);
+    line-height: 1.6;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px),
+  (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page--team .team-editorial__head {
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .page--team .team-editorial__lead {
+    margin-inline: auto;
+  }
+}
+
+/* ---------- members: shared ---------- */
+@media (max-width: 1023px) {
+  .page--team .member__role {
+    margin-bottom: 10px;
+    font-size: var(--m-label);
+  }
+
+  .page--team .member__name {
+    margin-bottom: 20px;
+    font-size: var(--m-h2);
+    line-height: 1.08;
+    gap: 14px;
+  }
+
+  .page--team .member--01 .member__name {
+    font-size: calc(var(--m-h2) * 1.12);
+  }
+
+  .page--team .member__bio {
+    max-width: var(--m-measure);
+    margin-bottom: 14px;
+    font-size: var(--m-body);
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
+  /* 44px tall without growing the text: the row it sits on is the target */
+  .page--team .member__readmore {
+    min-height: 44px;
+    margin: 0 0 8px -10px;
+    padding: 0 10px;
+    font-size: 15px;
+  }
+
+  .page--team .member__readmore:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  /* the bio opens in place, under the button: the arrow says so */
+  .page--team .member__readmore svg {
+    transform: rotate(90deg);
+  }
+
+  .page--team .member.is-expanded .member__readmore svg {
+    transform: rotate(-90deg);
+  }
+
+  .page--team .member__expertise-section {
+    margin-top: 24px;
+  }
+
+  .page--team .member__expertise-label {
+    margin-bottom: 14px;
+    font-size: var(--m-label);
+  }
+
+  .page--team .member__expertise {
+    gap: 10px;
+  }
+
+  .page--team .member__expertise li {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  /* the spotlight is a gradient that is already soft: it fades out inside
+     its own box instead of under a 32px blur, one per card */
+  .page--team .member__photo::before {
+    inset: -16% -14%;
+    filter: none;
+    background: radial-gradient(closest-side, rgba(255, 176, 119, 0.3), rgba(255, 97, 44, 0.16) 42%, rgba(255, 97, 44, 0.05) 70%, transparent);
+  }
+}
+
+/* a shorter rise than desktop's 36px; once a card is in, it gives its
+   compositor layer back */
+@media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+  .page--team .member {
+    transform: translateY(24px);
+  }
+
+  .page--team .member.is-visible {
+    transform: none;
+    will-change: auto;
+  }
+}
+
+/* with less motion nothing animates, so no card keeps a layer at all */
+@media (max-width: 1023px) and (prefers-reduced-motion: reduce) {
+  .page--team .member {
+    will-change: auto;
+  }
+}
+
+/* ---------- members: phones held upright ----------
+   One column. The portrait takes four fifths of the width on alternate
+   sides - the desktop zigzag, folded - and its number stands in the fifth
+   it leaves, behind the frame. (A small phone on its side, 568x320, is
+   under 600px too, but has the width for the zigzag below.) */
+@media (max-width: 599px) and (orientation: portrait),
+  (max-width: 599px) and (min-height: 501px) {
+  .page--team .member,
+  .page--team .member--reverse {
+    gap: 28px;
+  }
+
+  .page--team .member__photo {
+    width: 80%;
+    max-width: 340px;
+  }
+
+  .page--team .member--reverse .member__photo {
+    margin-left: auto;
+  }
+
+  .page--team .member__index {
+    right: -24%;
+    bottom: -0.04em;
+    font-size: clamp(96px, 28vw, 150px);
+    color: rgba(255, 168, 110, 0.12);
+  }
+
+  .page--team .member--reverse .member__index {
+    right: auto;
+    left: -24%;
+  }
+}
+
+/* ---------- members: tablets and phones on their side ----------
+   The desktop zigzag: the portrait beside the text on alternate sides. The
+   portrait stands level with the name rather than centred on the text, so
+   it stays put when a bio opens under it. */
+@media (min-width: 600px) and (max-width: 1023px),
+  (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page--team .member,
+  .page--team .member--reverse {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(36px, 6vw, 64px);
+    align-items: start;
+    direction: ltr;
+  }
+
+  .page--team .member--reverse {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+
+  .page--team .member--reverse .member__photo {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .page--team .member--reverse .member__body {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .page--team .member__photo {
+    max-width: none;
+  }
+
+  .page--team .member__index {
+    font-size: clamp(110px, 15vw, 150px);
+    color: rgba(255, 168, 110, 0.1);
+  }
+}
+
+/* on its side a phone shows the whole portrait on one screen, under the bar */
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page--team .member__photo {
+    width: min(100%, (100svh - var(--nav-height) - 40px) * 6 / 7);
+  }
+
+  .page--team .member--reverse .member__photo {
+    justify-self: end;
+  }
+}
+
+/* Desktop's halo stands 8% out from the frame; at these widths the frame
+   sits on the gutter, so that would take the curves to the screen's edge
+   (2px from it at 1023px) and cut the rim dot. A tighter orbit keeps them
+   inside: on tablets at least 16px from the edge. */
+@media (max-width: 767px) {
+  .page--team .member__halo {
+    inset: -4.5%;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1023px),
+  (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page--team .member__halo {
+    inset: -4%;
+  }
+}
+
+/* the narrowest phones give the list its width back: a shorter indent */
+@media (max-width: 374px) {
+  .page--team .member__expertise-section {
+    padding-left: 24px;
+  }
+
+  .page--team .member__expertise li {
+    padding-left: 16px;
+  }
+}
+
+/* ---------- trails between members ---------- */
+@media (max-width: 1023px) {
+  .page--team .member-trail {
+    height: clamp(48px, 10vw, 72px);
+    margin: clamp(48px, 12vw, 80px) 0;
+  }
+}
+
+/* A phone draws half of the trail across its width: the whole 1200-unit
+   line squeezed into 350px is a comb of spikes. The checkpoint follows its
+   peak into the half that shows. The portraits alternate sides here, so
+   the trail does too: the one that leads to a portrait on the left is
+   mirrored, and each checkpoint stands on the side of the next portrait. */
+@media (max-width: 767px) {
+  .page--team .member-trail::before {
+    background-size: 200% 100%;
+    background-position: 100% 0;
+  }
+
+  /* peak (968, 28): (968 - 600) / 600 */
+  .page--team .member-trail__dot {
+    left: 61.33%;
+  }
+
+  .page--team .member--reverse + .member-trail::before {
+    transform: scaleX(-1);
+  }
+
+  .page--team .member--reverse + .member-trail .member-trail__dot {
+    left: 38.67%;
+  }
+}
+
+/* ---------- touch: no hover left behind ----------
+   A tap leaves :hover on the card it landed on; the lift and the turned
+   curves are pointer effects, so a touch screen keeps the card at rest. */
+@media (max-width: 1023px) and (hover: none) {
+  .page--team .member:hover .member__curve {
+    transform: none;
+    stroke: rgba(255, 168, 110, 0.16);
+  }
+
+  .page--team .member:hover .member__curve--outer {
+    stroke: rgba(255, 97, 44, 0.1);
+  }
+
+  .page--team .member:hover .member__plate {
+    transform: none;
+    box-shadow:
+      0 0 0 1px rgba(255, 168, 110, 0.13),
+      0 24px 64px -16px rgba(0, 0, 0, 0.72),
+      0 0 80px -20px rgba(255, 97, 44, 0.16);
+  }
+
+  [data-portraits] .page--team .member:hover .member__plate {
+    box-shadow: none;
+  }
+
+  .page--team .member:hover .member__portrait {
+    filter: saturate(0.55) contrast(1.08) brightness(1.04);
+  }
+
+  [data-portraits] .page--team .member:hover .member__portrait {
+    filter: none;
+  }
+
+  .page--team .member__readmore:hover {
+    color: #ffa86e;
+    gap: 8px;
+  }
+}
+
+/* ---------- Contact (and the copy-review legend on every page) ---------- */
+
+/* ===== CONTACT (<=1023px) ===== */
+
+@media (max-width: 1023px) {
+  .page--contact {
+    --ct-rail-x: calc(var(--m-gutter) / 2 - var(--rail-width) / 2);
+    --ct-ring-top: calc(var(--nav-height) + 14px);
+    --ct-ink: #1c1419;
+    --ct-focus: #a8380b;
+  }
+
+  /* ---------- hero ---------- */
+  .page--contact .page-hero {
+    min-height: 0;
+    padding: calc(var(--nav-height) + 56px) var(--m-gutter) clamp(72px, 18vw, 128px);
+    align-items: start;
+  }
+
+  /* the site's soft orange: the 92% one fell to 4.5:1 where the warm
+     wash sits behind it on tablets */
+  .page--contact .page-hero__eyebrow {
+    margin-bottom: 16px;
+    color: var(--orange-soft);
+    font-size: var(--m-label);
+  }
+
+  .page--contact .page-hero__title {
+    margin: 0;
+    font-size: var(--m-h1);
+    line-height: 1.08;
+  }
+
+  /* the sun sits behind the heading's right-hand words, as it does on
+     desktop; left where it was (16%) it lit up the small orange eyebrow */
+  .page--contact .page-hero__sun {
+    top: calc(var(--nav-height) + 64px);
+    left: clamp(128px, 36vw, 340px);
+    width: clamp(200px, 46vw, 320px);
+    height: clamp(200px, 46vw, 320px);
+  }
+
+  .page--contact .contact-rail {
+    top: var(--ct-ring-top);
+    left: var(--ct-rail-x);
+  }
+
+  .page--contact .contact-channels {
+    margin-top: 32px;
+    gap: 22px;
+  }
+
+  .page--contact .contact-channels__item {
+    position: relative;
+    grid-template-columns: 24px minmax(0, 1fr);
+    column-gap: 14px;
+  }
+
+  .page--contact .contact-channels__label {
+    font-size: 18px;
+    line-height: 1.3;
+  }
+
+  .page--contact .contact-channels__value {
+    font-size: var(--m-body);
+  }
+
+  /* the whole channel row is the mail link's target, not just its text */
+  .page--contact a.contact-channels__value::after {
+    content: "";
+    position: absolute;
+    inset: -8px 0;
+  }
+
+  .page--contact a.contact-channels__value:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
+  .page--contact .contact-social {
+    width: 44px;
+    height: 44px;
+    margin-top: 32px;
+  }
+
+  .page--contact .contact-social svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .page--contact .contact-social:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 3px;
+  }
+
+  /* ---------- form band ---------- */
+  .page--contact .contact-band {
+    padding: var(--m-section) var(--m-gutter) calc(var(--m-section) + 8px);
+  }
+
+  .page--contact .contact-band::before {
+    left: var(--ct-rail-x);
+    height: 44px;
+  }
+
+  .page--contact .contact-band__inner {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .page--contact .contact-band__title {
+    font-size: var(--m-h2);
+    line-height: 1.12;
+  }
+
+  .page--contact .contact-form {
+    gap: 10px;
+  }
+
+  .page--contact .contact-form__field {
+    position: relative;
+  }
+
+  .page--contact .contact-form__field input,
+  .page--contact .contact-form__field textarea {
+    padding: 22px 0 10px;
+    font-size: 16px;
+    scroll-margin-block: 24px;
+  }
+
+  /* the message box grows with what is typed where the browser can; the
+     corner grip is then noise (and no use to a finger) */
+  .page--contact .contact-form__field textarea {
+    min-height: 124px;
+  }
+
+  @supports (field-sizing: content) {
+    .page--contact .contact-form__field textarea {
+      field-sizing: content;
+      max-height: 50svh;
+      resize: none;
+    }
+  }
+
+  /* the label rides above the value once there is one */
+  .page--contact .contact-form__field label.sr-only {
+    top: 2px;
+    left: 0;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    color: rgba(28, 20, 25, 0.72);
+    font: 500 var(--m-label) / 1.2 "Montserrat", system-ui, sans-serif;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    pointer-events: none;
+    opacity: 0;
+    translate: 0 8px;
+    transition: opacity 180ms ease, translate 180ms ease, color 180ms ease;
+  }
+
+  .page--contact .contact-form__field:has(:is(input, textarea):focus, :is(input, textarea):not(:placeholder-shown)) label.sr-only {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  .page--contact .contact-form__field:has(:is(input, textarea):focus) label.sr-only {
+    color: var(--ct-focus);
+  }
+
+  .page--contact .contact-form__field :is(input, textarea):focus::placeholder {
+    color: transparent;
+  }
+
+  /* Phone is the one optional field and its placeholder is where that is
+     said; the floated label carries the same words, so the hint is still
+     there while the field is focused or filled */
+  .page--contact .contact-form__field label[for="cf-phone"]::after {
+    content: " (optional)";
+  }
+
+  .page--contact .contact-form__field :is(input, textarea):focus,
+  .page--contact .contact-form__field :is(input, textarea):focus-visible {
+    outline: none;
+    border-bottom-color: var(--ct-focus);
+    box-shadow: 0 1px 0 0 var(--ct-focus);
+  }
+
+  /* autofill keeps the cream band instead of the browser's tint */
+  .page--contact .contact-form__field :is(input, textarea):-webkit-autofill {
+    -webkit-text-fill-color: var(--ct-ink);
+    box-shadow: inset 0 0 0 100px #f0ebe9;
+  }
+
+  .page--contact .contact-form__field :is(input, textarea):-webkit-autofill:focus {
+    box-shadow: inset 0 0 0 100px #f0ebe9, 0 1px 0 0 var(--ct-focus);
+  }
+
+  /* consent */
+  .page--contact .contact-form__consent {
+    gap: 14px;
+    margin-top: 14px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .page--contact .contact-form__consent input {
+    position: relative;
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    margin: -1px 0 0;
+    appearance: none;
+    -webkit-appearance: none;
+    display: grid;
+    place-content: center;
+    background: transparent;
+    border: 1.5px solid rgba(28, 20, 25, 0.62);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease;
+  }
+
+  .page--contact .contact-form__consent input::before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M2.5 7.4 5.6 10.3 11.5 3.8' fill='none' stroke='%23f0ebe9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 160ms ease, transform 160ms ease;
+  }
+
+  /* a 44px square to hit, centred on the 24px box */
+  .page--contact .contact-form__consent input::after {
+    content: "";
+    position: absolute;
+    inset: -11px;
+  }
+
+  .page--contact .contact-form__consent input:checked {
+    background: var(--navy-deep);
+    border-color: var(--navy-deep);
+  }
+
+  .page--contact .contact-form__consent input:checked::before {
+    opacity: 1;
+    transform: none;
+  }
+
+  .page--contact .contact-form__consent input:focus-visible {
+    outline: 2px solid var(--ct-focus);
+    outline-offset: 3px;
+  }
+
+  .page--contact .contact-form__consent label {
+    cursor: pointer;
+  }
+
+  /* inline padding grows the hit area to 24px+ without moving the line
+     (an inline-block would let the full stop wrap on its own) */
+  .page--contact .contact-form__consent a {
+    padding-block: 5px;
+    white-space: nowrap;
+  }
+
+  /* focus is drawn on the words themselves - a tint, the focus orange and
+     a heavier underline - not as a ring: a ring around the tap padding
+     crossed the line above, and one around the words touched the full
+     stops either side. The tap padding is dropped while focused (inline
+     padding moves nothing), so the tint stays inside its own line. The
+     transparent outline is what forced-colours modes draw instead. */
+  .page--contact .contact-form__consent a:focus-visible {
+    padding-block: 0;
+    outline: 2px solid transparent;
+    background: rgba(168, 56, 11, 0.14);
+    border-radius: 2px;
+    color: var(--ct-focus);
+    text-decoration-color: var(--ct-focus);
+    text-decoration-thickness: 2px;
+  }
+
+  /* the honeypot is clipped out of sight and reach; say so outright */
+  .page--contact .contact-form__trap input {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .page--contact .contact-form__submit {
+    min-height: 52px;
+    margin-top: 18px;
+    padding: 0 24px;
+  }
+
+  .page--contact .contact-form__submit:focus-visible {
+    outline: 2px solid var(--ct-focus);
+    outline-offset: 3px;
+  }
+
+  .page--contact .contact-form__status {
+    margin-top: 6px;
+    padding: 12px 14px;
+    border-left: 2px solid var(--ct-focus);
+    background: rgba(255, 97, 44, 0.07);
+    color: #7a3418;
+    font-size: 15px;
+    line-height: 1.5;
+    scroll-margin-block: calc(var(--nav-height) + 16px) 24px;
+  }
+
+  .page--contact .contact-form__status.is-error {
+    border-left-color: #9c2415;
+    background: rgba(156, 36, 21, 0.07);
+  }
+}
+
+/* ---------- tablet ---------- */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .page--contact .page-hero {
+    padding-top: calc(var(--nav-height) + 80px);
+    padding-bottom: clamp(104px, 14vw, 136px);
+  }
+}
+
+/* From 640px (tablets, a phone on its side) the band is the desktop's
+   pair again - the heading on the left, the form beside it - rather than
+   one column of 600px-long field lines. */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .page--contact .contact-band__inner {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: clamp(40px, 6vw, 56px);
+  }
+
+  /* beside the form the heading is a column title, as on the desktop
+     (26.6px at 1024), not a full-width h2: two or three lines, not four.
+     The top padding matches the room the fields keep for their floating
+     labels, so the heading starts level with the first field's text. */
+  .page--contact .contact-band__title {
+    padding-top: 18px;
+    font-size: clamp(28px, 3.2vw, 34px);
+  }
+}
+
+/* ---------- tablets, and anything compact held sideways ----------
+   There is width for the ways to reach the firm to share one row: the
+   two channels, then the LinkedIn badge closing it. */
+@media (min-width: 768px) and (max-width: 1023px), (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page--contact .page-hero__content {
+    max-width: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    column-gap: 40px;
+  }
+
+  .page--contact .page-hero__eyebrow,
+  .page--contact .page-hero__title {
+    flex: 0 0 100%;
+  }
+
+  .page--contact .contact-channels {
+    display: flex;
+    flex: 0 1 auto;
+    column-gap: 48px;
+  }
+
+  .page--contact .contact-social {
+    flex: none;
+    margin-top: 0;
+  }
+}
+
+/* short: the hero keeps inside the screen */
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page--contact .page-hero {
+    padding-top: calc(var(--nav-height) + 36px);
+    padding-bottom: 56px;
+  }
+
+  .page--contact .contact-channels {
+    margin-top: 26px;
+  }
+}
+
+/* a phone's width on its side: the three still share one row. The
+   channels take what the badge leaves (never more than they need), so
+   where the row is short - under ~655px, 640x360, 592x360, 568x320 - the
+   address folds after its postcode instead of the badge dropping to a
+   row of its own under the mail link's hit area. The e-mail never
+   breaks; the badge stays at the row's foot. */
+@media (max-width: 767px) and (max-height: 500px) and (orientation: landscape) {
+  .page--contact .page-hero__content {
+    column-gap: 20px;
+  }
+
+  .page--contact .contact-channels {
+    flex: 1 1 0;
+    max-width: max-content;
+    column-gap: 24px;
+  }
+
+  .page--contact .contact-channels__item:first-child {
+    flex: none;
+  }
+}
+
+/* the narrow ones are also the short ones (320-375px tall), and any
+   phone under 350px tall is short whatever its width: a heading sized to
+   the height and tighter bands keep the hero inside the screen */
+@media (max-width: 666px) and (max-height: 500px) and (orientation: landscape), (max-width: 767px) and (max-height: 350px) and (orientation: landscape) {
+  .page--contact .page-hero {
+    padding-top: calc(var(--nav-height) + clamp(20px, 7svh, 32px));
+    padding-bottom: clamp(32px, 11svh, 48px);
+  }
+
+  .page--contact .page-hero__eyebrow {
+    margin-bottom: 12px;
+  }
+
+  .page--contact .page-hero__title {
+    font-size: clamp(34px, 10.6svh, 40px);
+  }
+
+  .page--contact .contact-channels {
+    margin-top: 20px;
+    column-gap: 20px;
+  }
+}
+
+/* ---------- touch ----------
+   A tap leaves :hover stuck, so the lifts and the badge's orange stay on
+   screens that can hover; a finger gets the press state instead. */
+@media (max-width: 1023px) and (hover: none) {
+  .page--contact .contact-social:hover {
+    transform: none;
+    background: rgba(8, 11, 19, 0.72);
+    border-color: rgba(240, 235, 233, 0.16);
+  }
+
+  .page--contact .contact-social:active {
+    background: var(--orange);
+    border-color: transparent;
+  }
+
+  /* the hover colours stick too: Submit would stay in its pressed shade
+     after a tap, the mail link orange after a trip to the mail app */
+  .page--contact .contact-form__submit:not(:disabled):hover {
+    background: var(--navy-deep);
+    transform: none;
+    box-shadow: none;
+  }
+
+  .page--contact .contact-form__submit:not(:disabled):active {
+    background: #1c2436;
+  }
+
+  .page--contact a.contact-channels__value:hover:not(:focus-visible) {
+    color: rgba(240, 235, 233, 0.76);
+    text-decoration-color: rgba(255, 168, 110, 0.34);
+  }
+
+  .page--contact a.contact-channels__value:active:not(:focus-visible) {
+    color: rgba(255, 168, 110, 0.95);
+    text-decoration-color: rgba(255, 168, 110, 0.9);
+  }
+}
+
+@media (max-width: 1023px) and (prefers-reduced-motion: reduce) {
+  .page--contact .contact-form__field label.sr-only,
+  .page--contact .contact-form__consent input,
+  .page--contact .contact-form__consent input::before {
+    transition: none;
+  }
+}
+
+/* ---------- copy review legend (?copy=draft, every page) ----------
+   Not scoped to the contact page: the legend is the review tool's own
+   box, on every page, and only exists in review mode. It is fixed over
+   whatever page is open, so on a small screen it has to earn its room: a
+   44px toggle row; a 44px round button when folded (it starts folded
+   below 1024px, see contact.js - the outlines on the page are what is
+   being reviewed and the key is a tap away); never wider than the space
+   between the gutters; clear of the bar and the home indicator; hidden
+   while the menu dialog is open (it sits above the dialog's z-index).
+   The corner is still copy-review's choice (placeLegend in script.js):
+   whichever covers the fewest lines of the first screen. */
+@media (max-width: 1023px) {
+  [data-copy-review] .copy-legend {
+    top: calc(var(--nav-height) + 8px);
+    right: var(--m-gutter);
+    max-width: min(320px, calc(100vw - 2 * var(--m-gutter)));
+    padding: 0 16px 12px;
+    border: 1px solid rgba(240, 235, 233, 0.12);
+    border-radius: 16px;
+    background: rgba(10, 12, 20, 0.95);
+    font-size: 12.5px;
+  }
+
+  [data-copy-review] .copy-legend--bl,
+  [data-copy-review] .copy-legend--br {
+    top: auto;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+
+  [data-copy-review] .copy-legend--bl {
+    right: auto;
+    left: var(--m-gutter);
+  }
+
+  [data-copy-review] .copy-legend__toggle {
+    min-height: 44px;
+    align-items: center;
+    margin: 0;
+    font-size: 12.5px;
+  }
+
+  [data-copy-review] .copy-legend__toggle:focus-visible {
+    outline-offset: 0;
+  }
+
+  [data-copy-review] .copy-legend__sign {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border: 1px solid rgba(240, 235, 233, 0.28);
+    border-radius: 50%;
+    font-size: 14px;
+  }
+
+  [data-copy-review] .copy-legend p {
+    margin: 0;
+    padding: 3px 0;
+  }
+
+  [data-copy-review] .copy-legend__note {
+    margin-top: 4px;
+  }
+
+  /* folded, it is a 44px round button on the right gutter, under the
+     menu button: the pill (243px) sat on the left-aligned hero eyebrows
+     and headings of most pages. The title text stays in the button as
+     its accessible name, clipped and transparent; the sign shows. */
+  [data-copy-review] .copy-legend.is-collapsed {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 50%;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.36);
+  }
+
+  [data-copy-review] .copy-legend.is-collapsed .copy-legend__toggle {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+    border-radius: 50%;
+    color: transparent;
+    white-space: nowrap;
+  }
+
+  [data-copy-review] .copy-legend.is-collapsed .copy-legend__sign {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    color: #f0ebe9;
+    border-color: rgba(255, 61, 127, 0.75);
+    border-style: dashed;
+  }
+
+  html.menu-open .copy-legend {
+    visibility: hidden;
+  }
+}
+
+/* ---------- For founders / for companies / for investors ---------- */
+
+/* ===== AUDIENCE (for-founders, for-companies, for-investors) — MOBILE & TABLET (<=1023px) ===== */
+/* The three audience pages under 1024px: the scene heroes (the Founders
+   ridge and wanderer, the Companies and Investors horizon with its
+   architecture, massif and trail), the left scene spine, the intro on the
+   ground, What We Help You Achieve, the photo band, How We Work, Our
+   Expertise and the closing band's details. One system for all three: the
+   same ridge lands in the same place on every page, only the sky, the
+   ground and the photographs change.
+
+   Every rule sits inside a max-width: 1023px query (or a narrower one) and
+   every selector is scoped to the three pages' body classes, so neither the
+   desktop nor another page (Expertise also carries .page--audience) can
+   see it.
+
+   Tiers as in the foundation: compact <=1023 | tablet 768-1023 | phone
+   <=767 | small phone <=374 | short landscape (<=500px tall).
+
+   ---------- the scene ----------
+   On desktop the hero is a full screen and the artwork is pinned to a
+   crossing measured from its top (--scene-cross), with the intro pulled up
+   by 100svh to meet it. Below 1024px the hero is content-sized instead:
+   the copy in the flow, and the artwork anchored to the hero's foot, so the
+   ridge always starts just under the copy whatever the headline wraps to
+   and whatever the screen's height.
+
+   The artwork is the Figma ridge, 1443 x 658 (0.456 as tall as wide),
+   mirrored so its mass rises on the right. Its constants, measured off the
+   path as fractions of its width W, down from the art's top edge:
+     0.1386W  the wanderer's head (Founders)
+     0.2058W  the plateau, the highest land left of the far slope
+     0.2266W  the highest land in the art's left third (under the button
+              when the art is drawn at the screen's width)
+     0.2959W  the valley floor, the lowest point of the skyline
+     0.2602W  the art's left edge (the ground a plain can carry on)
+   On a phone held upright the art is drawn 145vw wide and right-aligned,
+   so the far peak stands at the screen's edge and the wanderer is a figure
+   rather than a speck (60px tall at 390); on a tablet it is drawn at the
+   screen's width, as on desktop; on a phone on its side it is drawn
+   narrower, right of the button, and the hero is exactly one screen (see
+   the short-landscape tokens).
+
+     --aud-art-w     W
+     --aud-hero-pb   the hero's bottom padding, i.e. how far the art's foot
+                     reaches below the button. The art is 0.456W tall, so
+                     upright on a phone (the wanderer under the button)
+                     0.3174W + 28px leaves 28px of sky over his head;
+                     on a tablet 0.2294W + 88px leaves 88px between the
+                     button and the land under it, and the far peak rises
+                     beside the copy.
+     --aud-intro-gap the lead's distance below the valley floor; the intro
+                     is pulled up onto the art's solid foot (0.1601W below
+                     the valley) by the rest, so the scene's ground and the
+                     intro's are one surface.
+
+   The photographs (the horizon skies and the band) are sized to the box
+   they are drawn in, so srcset/sizes pick honestly; see the notes there. */
+
+/* ---------- tokens ---------- */
+@media (max-width: 1023px) {
+  :is(.page--founders, .page--companies, .page--investors) {
+    --aud-art-w: 100vw;
+    --aud-hero-pt: clamp(40px, 8svh, 72px);
+    --aud-hero-pb: calc(0.2294 * var(--aud-art-w) + 88px);
+    --aud-intro-gap: 40px;
+    /* tablet: the spine in the middle of the gutter, as on desktop */
+    --aud-spine-x: calc(var(--m-gutter) / 2 - var(--rail-width) / 2);
+    --aud-indent: 0px;
+    --aud-lead-fs: clamp(20px, 18px + 0.52vw, 23px);
+  }
+}
+
+/* A phone's 20px gutter has no room for the ring beside the copy (it came
+   within 3px of the eyebrow). The spine takes the gutter's inner edge
+   instead - the line every section below starts on - and the scene's copy
+   hangs 16px to its right. */
+@media (max-width: 767px) {
+  :is(.page--founders, .page--companies, .page--investors) {
+    --aud-spine-x: calc(var(--m-gutter) - var(--rail-width) / 2);
+    --aud-indent: 16px;
+  }
+}
+
+@media (max-width: 767px) and (orientation: portrait) {
+  :is(.page--founders, .page--companies, .page--investors) {
+    --aud-art-w: 145vw;
+    /* the wanderer stands under the button: 28px of sky between them */
+    --aud-hero-pb: calc(0.3174 * var(--aud-art-w) + 28px);
+    --aud-intro-gap: 32px;
+  }
+}
+
+/* A phone on its side: the hero is one screen (100svh), never more. At the
+   screen's width the art alone would be 0.456 x 667 = 304px of a 375px
+   screen, so here it is drawn narrower and right-aligned, starting just
+   right of the button (--aud-cta-w is the button's width), and hangs below
+   the fold: its valley floor sits --aud-valley-m above the hero's foot and
+   the solid foot underneath runs on into the intro. The far peak rises
+   beside the tagline, the valley, the trail and the wanderer stand in the
+   first screen. Left of the art, a flat plain (.scene-ground) continues the
+   art's own left-edge ground (0.2602W down, 0.0357W above the valley floor)
+   to the screen's edge, under the button:
+     --aud-hero-pb   the plain's height plus --aud-land-gap of air between
+                     the button and the plain. */
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  :is(.page--founders, .page--companies, .page--investors) {
+    --aud-hero-pt: 16px;
+    --aud-cta-w: 190px;
+    --aud-art-w: calc(100vw - var(--m-gutter) - var(--aud-indent) - var(--aud-cta-w) - 12px);
+    --aud-valley-m: 12px;
+    --aud-land-gap: 16px;
+    --aud-plain-h: calc(var(--aud-valley-m) + 0.03569 * var(--aud-art-w));
+    --aud-hero-pb: calc(var(--aud-plain-h) + var(--aud-land-gap));
+  }
+}
+
+/* ---------- the scene: hero ---------- */
+@media (max-width: 1023px) {
+  :is(.page--founders, .page--companies, .page--investors) .hero {
+    --fnd-art-w: var(--aud-art-w);
+    --hz-art-w: var(--aud-art-w);
+    min-height: 0;
+    padding: calc(var(--nav-height) + var(--aud-hero-pt)) var(--m-gutter) var(--aud-hero-pb) calc(var(--m-gutter) + var(--aud-indent));
+  }
+
+  /* the artwork stands on the hero's foot, its right edge on the screen's */
+  .page--founders .fnd-ridge,
+  :is(.page--companies, .page--investors) :is(.hz-massif, .hz-ridge, .hz-trail) {
+    top: auto;
+    right: 0;
+    bottom: -1px;
+    left: auto;
+    width: var(--aud-art-w);
+  }
+
+  /* The architecture covers the sky as on desktop; the element takes the
+     size the photo is drawn at (1920 x 1371), so the file the sizes
+     attribute picks - about 1000px upright, the screen's width on its
+     side - is measured against what is on screen. */
+  :is(.page--companies, .page--investors) .hz-photo {
+    container-type: size;
+  }
+
+  :is(.page--companies, .page--investors) .hz-photo img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max(100cqw, 140.04cqh);
+    max-width: none;
+    height: max(100cqh, 71.41cqw);
+    transform: translate(-50%, -50%);
+  }
+
+  /* the art runs to the hero's foot and the intro's ground takes over
+     above it, so the filler under the art has nothing left to fill */
+  :is(.page--founders, .page--companies, .page--investors) .scene-ground {
+    display: none;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .hero-content {
+    width: 100%;
+    min-width: 0;
+    max-width: 44rem;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .hero-content .eyebrow {
+    margin: 0 0 16px;
+    font-size: var(--m-label);
+    line-height: 1.1;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .hero-title {
+    max-width: 15em;
+    font-size: var(--m-h1);
+    line-height: 1.08;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .hero-tagline {
+    max-width: 34em;
+    margin-top: 18px;
+    font-size: var(--m-lede);
+    line-height: 1.55;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .primary-cta {
+    min-height: 48px;
+    margin-top: 28px;
+    padding: 0 22px 0 26px;
+  }
+}
+
+/* Upright, a phone cannot hold the desktop's first headline line at the
+   h1 size, so the break goes and the headline balances on its own (the
+   markup keeps a space before each <br> so the words stay apart). */
+@media (max-width: 767px) and (orientation: portrait) {
+  :is(.page--founders, .page--companies, .page--investors) .hero-title br {
+    display: none;
+  }
+}
+
+/* A phone on its side has one short screen for the copy: the headline is
+   capped (the h1 floor, 34px, on a 375px-tall screen) and the stack
+   tightens, as on the home page, so copy, plain and scene share 100svh. */
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  :is(.page--founders, .page--companies, .page--investors) .hero {
+    min-height: 100svh;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .hero-content .eyebrow {
+    margin-bottom: 10px;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .hero-title {
+    max-width: 18em;
+    font-size: clamp(34px, 9svh, 36px);
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .hero-tagline {
+    max-width: 30em;
+    margin-top: 10px;
+    font-size: 17px;
+    line-height: 1.45;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .primary-cta {
+    min-height: 44px;
+    margin-top: 16px;
+  }
+
+  /* the valley floor --aud-valley-m above the hero's foot; the rest of the
+     art's solid foot is clipped by the hero and carried on by the intro */
+  .page--founders .fnd-ridge,
+  :is(.page--companies, .page--investors) :is(.hz-massif, .hz-ridge, .hz-trail) {
+    bottom: calc(var(--aud-valley-m) - 0.16009 * var(--aud-art-w));
+  }
+
+  /* the plain: the art's left-edge ground carried flat to the screen's
+     edge (2px under the art, so the seam never opens) */
+  :is(.page--founders, .page--companies, .page--investors) .scene-ground {
+    display: block;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: calc(100vw - var(--aud-art-w) + 2px);
+    height: var(--aud-plain-h);
+  }
+
+  /* the route starts at the art's left edge now, mid-screen: it comes in
+     out of the haze instead of starting on a cut */
+  :is(.page--companies, .page--investors) .hz-trail__svg {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%);
+    mask-image: linear-gradient(90deg, transparent, #000 12%);
+  }
+}
+
+/* ---------- the scene: spine ----------
+   The hairline starts on its open ring level with the eyebrow and hands
+   over to the intro's segment, whose dot sits on the lead's first line.
+   On a tablet it runs down the middle of the gutter, as on desktop and as
+   the Contact rail does; on a phone it takes the gutter's inner edge and
+   the scene's copy is indented 16px (--aud-indent, set with the tokens). */
+@media (max-width: 1023px) {
+  :is(.page--founders, .page--companies, .page--investors) .scene-spine {
+    left: var(--aud-spine-x);
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .scene-spine--hero {
+    top: calc(var(--nav-height) + var(--aud-hero-pt) + 6.6px);
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .scene-spine--intro {
+    bottom: calc(var(--m-section) * 0.6);
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .scene-spine--intro::before {
+    top: calc(var(--aud-lead-fs) * 0.65);
+  }
+}
+
+/* ---------- the scene: intro on the ground ---------- */
+@media (max-width: 1023px) {
+  :is(.page--founders, .page--companies, .page--investors) .scene-intro {
+    margin-top: calc(var(--aud-intro-gap) - 0.1601 * var(--aud-art-w));
+    padding: 0 var(--m-gutter) var(--m-section) calc(var(--m-gutter) + var(--aud-indent));
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .scene-intro__lead {
+    max-width: 34ch;
+    font-size: var(--aud-lead-fs);
+    line-height: 1.3;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .scene-intro__body {
+    max-width: 60ch;
+    margin-top: 16px;
+    font-size: var(--m-body);
+    line-height: 1.6;
+  }
+}
+
+/* On its side the hero ends --aud-valley-m under the valley floor, so the
+   intro starts at the hero's foot and keeps the lead --aud-intro-gap below
+   the valley floor with its own top padding. */
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  :is(.page--founders, .page--companies, .page--investors) .scene-intro {
+    margin-top: 0;
+    padding-top: calc(var(--aud-intro-gap) - var(--aud-valley-m));
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .scene-spine--intro::before {
+    top: calc(var(--aud-intro-gap) - var(--aud-valley-m) + var(--aud-lead-fs) * 0.65);
+  }
+}
+
+/* ---------- What We Help You Achieve ---------- */
+@media (max-width: 1023px) {
+  :is(.page--founders, .page--companies, .page--investors) .aud-help {
+    padding: var(--m-section) var(--m-gutter);
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-help__head {
+    display: block;
+    margin-bottom: 28px;
+    padding-bottom: 22px;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-help__title {
+    margin-bottom: 12px;
+    font-size: var(--m-h2);
+    line-height: 1.12;
+    text-wrap: balance;
+  }
+
+  /* balanced, the Companies lede breaks near its middle instead of at
+     "cross- / border" */
+  :is(.page--founders, .page--companies, .page--investors) .aud-help__lede {
+    max-width: 46ch;
+    font-size: var(--m-lede);
+    line-height: 1.55;
+    text-wrap: balance;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-help__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-help__item {
+    grid-column: auto;
+    grid-template-columns: 18px minmax(0, 1fr);
+    gap: 14px;
+    padding: 18px 20px;
+    border-radius: 14px;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-help__rule {
+    margin-top: 12px;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-help__item p,
+  :is(.page--founders, .page--companies, .page--investors) .aud-help__item:is(:first-child, :last-child) p {
+    max-width: 40ch;
+    font-size: var(--m-body);
+    line-height: 1.5;
+  }
+}
+
+/* short items: two to a row on a tablet and on a phone on its side; an odd
+   count closes on one card across the row */
+@media (min-width: 640px) and (max-width: 1023px) {
+  :is(.page--founders, .page--companies, .page--investors) .aud-help__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-help__item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---------- photo band ----------
+   No parallax below 1024px, so the photo is no longer drawn 128% tall for
+   a drift that never comes: it covers the band exactly and is centred.
+   The element is given the size the photo is actually drawn at (container
+   units against the band, the photo's own proportions in --band-ratio), so
+   srcset/sizes can pick the file honestly: the sizes attribute states the
+   same widths - 120vw / 210vw on a phone, 100vw / 120vw from 640px. */
+@media (max-width: 1023px) {
+  :is(.page--founders, .page--companies, .page--investors) .aud-bleed {
+    --band-ratio: 2.7907;
+    container-type: size;
+    aspect-ratio: 4 / 3;
+    min-height: 0;
+  }
+
+  .page--founders .aud-bleed {
+    --band-ratio: 1.6;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-bleed img {
+    top: 50%;
+    left: 50%;
+    width: max(100cqw, 100cqh * var(--band-ratio));
+    max-width: none;
+    height: max(100cqh, 100cqw / var(--band-ratio));
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  :is(.page--founders, .page--companies, .page--investors) .aud-bleed {
+    aspect-ratio: 21 / 9;
+  }
+}
+
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  :is(.page--founders, .page--companies, .page--investors) .aud-bleed {
+    max-height: 62svh;
+  }
+}
+
+/* ---------- How We Work ---------- */
+@media (max-width: 1023px) {
+  :is(.page--founders, .page--companies, .page--investors) .aud-work {
+    padding: var(--m-section) var(--m-gutter);
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-work__head {
+    display: block;
+    margin-bottom: 32px;
+    padding-bottom: 22px;
+  }
+
+  /* The generated "how we work" tag sits apart from the title on desktop,
+     at the far end of the header row. Stacked in one column it would read
+     "HOW WE WORK / How We Work with ..." - the same words twice, and the
+     only lower section with an eyebrow - so the decorative duplicate goes. */
+  :is(.page--founders, .page--companies, .page--investors) .aud-work__head::after {
+    content: none;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-work__title {
+    font-size: var(--m-h2);
+    line-height: 1.12;
+    text-wrap: balance;
+  }
+
+  /* one route down the left: each point a lit marker level with its name,
+     joined to the next by the site's dotted leader */
+  :is(.page--founders, .page--companies, .page--investors) .hww {
+    --hww-gap: 28px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--hww-gap);
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .hww__item {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--marker-size) minmax(0, 1fr);
+    column-gap: 18px;
+    row-gap: 6px;
+    align-items: start;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .hww__item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: calc(var(--marker-size) / 2 - 0.5px);
+    top: calc(var(--hww-dot-y) + var(--marker-size) + 10px);
+    bottom: calc(10px - var(--hww-gap) - var(--hww-dot-y));
+    width: 1px;
+    background: repeating-linear-gradient(180deg, rgba(var(--aud-accent-rgb), 0.5) 0 2px, transparent 2px 6px);
+    pointer-events: none;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .hww__item {
+    --hww-dot-y: calc((var(--m-h3) * 1.25 - var(--marker-size)) / 2);
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .hww__dot {
+    grid-column: 1;
+    grid-row: 1;
+    margin: var(--hww-dot-y) 0 0;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .hww__name {
+    grid-column: 2;
+    min-height: 0;
+    font-size: var(--m-h3);
+    line-height: 1.25;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .hww__copy {
+    grid-column: 2;
+    max-width: 52ch;
+    font-size: var(--m-body);
+    line-height: 1.55;
+  }
+
+  /* A compound in a point's name breaks at a space, never at its own
+     hyphen ("product- / minded", "business- / ready"), which text-wrap:
+     balance prefers.
+     - Founders and Investors: of all their names only "Practical,
+       business-ready guidance" and "Reliable long-term partnership" ever
+       wrap, and plain greedy wrapping takes them to two lines at the space
+       at every width from 320px (the whole compound always fits the first
+       line), so these two pages simply do not balance their names.
+     - Companies: "Commercial and product-minded guidance" would break at
+       the hyphen greedy or balanced, so the markup opens a span right after
+       the hyphen, closed at the heading's end - where the desktop always
+       wraps the line anyway, so the desktop glyphs are untouched (a span
+       around the compound shifted them by a subpixel) - and the span starts
+       with a zero-width WORD JOINER, which forbids a break on either side
+       of it. Desktop sees a bare span. */
+  :is(.page--founders, .page--investors) .hww__name {
+    text-wrap: wrap;
+  }
+
+  .page--companies .hww__name .aud-join::before {
+    content: "\2060";
+    content: "\2060" / "";
+  }
+}
+
+/* a tablet has the width for each point's name and note side by side */
+@media (min-width: 768px) and (max-width: 1023px) {
+  :is(.page--founders, .page--companies, .page--investors) .hww {
+    --hww-gap: 32px;
+  }
+
+  /* the name takes a little more of the row than its note: at 0.8fr the
+     names broke on almost every point; at 1.1fr they sit on one line from
+     820px (all but the longest) and on two balanced lines at 768px */
+  :is(.page--founders, .page--companies, .page--investors) .hww__item {
+    grid-template-columns: var(--marker-size) minmax(0, 1.1fr) minmax(0, 1fr);
+    column-gap: 20px;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .hww__copy {
+    grid-column: 3;
+    grid-row: 1;
+    padding-top: calc((var(--m-h3) * 1.25 - var(--m-body) * 1.55) / 2);
+  }
+}
+
+/* ---------- Our Expertise ---------- */
+@media (max-width: 1023px) {
+  :is(.page--founders, .page--companies, .page--investors) .aud-expertise {
+    padding: var(--m-section) var(--m-gutter);
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-expertise::before {
+    top: calc(var(--m-section) - 26px);
+    left: var(--m-gutter);
+    width: 72px;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__inner,
+  :is(.page--companies, .page--investors) .aud-expertise:not(:has(.aud-expertise__inner)) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+    max-width: none;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__copy {
+    max-width: 40rem;
+    padding: 24px 22px 22px;
+    border-radius: 16px;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__title {
+    margin-bottom: 12px;
+    font-size: var(--m-h2);
+    line-height: 1.12;
+    text-wrap: balance;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__copy p {
+    font-size: var(--m-body);
+    line-height: 1.6;
+  }
+
+  /* a 44px target; inline rather than flex, so where the label has to wrap
+     it balances over two lines and the arrow follows its last word instead
+     of standing at the card's far edge */
+  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__more {
+    display: inline-block;
+    min-height: 44px;
+    /* the side padding gives the focus ring room; the negative margin
+       keeps the words on the card's text edge */
+    margin: 8px -8px 0;
+    padding: 13px 8px;
+    line-height: 1.5;
+    letter-spacing: 0.12em;
+    text-wrap: balance;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__more svg {
+    display: inline-block;
+    margin-left: 6px;
+    vertical-align: -4px;
+  }
+
+  /* the list keeps the card's measure and its right edge: one column
+     40rem wide (about 57ch of list text), not a card and a list of two
+     unrelated widths */
+  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__list-wrap {
+    --exp-rail-gutter: 36px;
+    --exp-row-gap: 4px;
+    --exp-dot-y: calc(12px + 0.775em);
+    width: 100%;
+    max-width: 40rem;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__list li {
+    padding: 12px 0;
+    font-size: var(--m-body);
+    line-height: 1.55;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__list li:last-child {
+    border-bottom: 0;
+  }
+}
+
+/* ---------- touch ----------
+   The cards are not controls: a tap must not leave the hover wash on. */
+@media (max-width: 1023px) and (hover: none) {
+  :is(.page--founders, .page--companies, .page--investors) .aud-help__item:hover {
+    border-color: rgba(28, 20, 25, 0.12);
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-help__item:hover::after {
+    opacity: 0;
+  }
+
+  /* the button keeps its resting look after a tap (it scrolls the page
+     away anyway); a keyboard still gets the filled focus state */
+  .page--founders .primary-cta:hover:not(:focus-visible) {
+    color: var(--fnd-ink);
+    background: transparent;
+    border-color: rgba(20, 22, 31, 0.45);
+    transform: none;
+  }
+
+  :is(.page--companies, .page--investors) .primary-cta:hover:not(:focus-visible) {
+    color: rgb(var(--hz-ink));
+    background: transparent;
+    border-color: rgba(var(--hz-ink), 0.45);
+    transform: none;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__more:hover:not(:focus-visible) {
+    color: rgba(28, 20, 25, 0.66);
+  }
+}
+
+/* ---------- focus ----------
+   The site's ring, in a colour that holds 3:1 where it lands: the hero's
+   own ink on the sunlit skies (the orange all but vanishes there), the
+   deeper terracotta on the cream sections. */
+@media (max-width: 1023px) {
+  :is(.page--founders, .page--companies, .page--investors) .primary-cta:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  .page--founders .primary-cta:focus-visible {
+    outline-color: var(--fnd-ink);
+  }
+
+  :is(.page--companies, .page--investors) .primary-cta:focus-visible {
+    outline-color: rgb(var(--hz-ink));
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__more:focus-visible {
+    outline: 2px solid #b3401a;
+    outline-offset: 0;
+    border-radius: 6px;
   }
 }
