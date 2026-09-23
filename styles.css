@@ -185,8 +185,8 @@ a {
    Specificity is raised on purpose — the generic `.top-nav__menu a` rule below
    is written at the same weight and would otherwise win on source order. */
 .top-nav .top-nav__lead {
-  /* quiet, but not under 3:1 on the sunset heroes */
-  color: rgba(240, 235, 233, 0.56);
+  /* quiet, but still 4.5:1 on the sunset heroes - it is small text */
+  color: rgba(240, 235, 233, 0.72);
   font: italic 300 12px / 1.2 "Outfit", system-ui, sans-serif;
   letter-spacing: 0.08em;
   text-transform: lowercase;
@@ -2843,7 +2843,7 @@ main:focus {
 
 .preview--founders { --accent: #D17E5F; }
 .preview--companies { --accent: #AB8E82; }
-.preview--investors { --accent: #5B7AB0; }
+.preview--investors { --accent: #7391c4; } /* #5b7ab0 lightened: small text on it and in it reaches 4.5:1 */
 
 .preview:hover,
 .preview.is-expanded {
@@ -5819,7 +5819,9 @@ main:focus {
 }
 
 .photo-break__index {
-  color: rgba(255, 168, 110, 0.92);
+  /* lighter than the site orange: it sits on the photographs */
+  color: #ffc9a3;
+  text-shadow: 0 1px 6px rgba(8, 11, 19, 0.55);
   font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
   letter-spacing: 0.24em;
   text-transform: uppercase;
@@ -7411,7 +7413,8 @@ a.contact-channels__value:focus-visible {
   padding: 4px 0 10px;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid rgba(28, 20, 25, 0.28);
+  /* once text is typed this line is the field's only edge - 3.8:1 */
+  border-bottom: 1px solid rgba(28, 20, 25, 0.55);
   border-radius: 0;
   color: #1c1419;
   font: 400 16px / 1.5 "Outfit", system-ui, sans-serif;
@@ -7425,7 +7428,8 @@ a.contact-channels__value:focus-visible {
 
 .contact-form__field input::placeholder,
 .contact-form__field textarea::placeholder {
-  color: rgba(28, 20, 25, 0.5);
+  /* the placeholders are the visible labels, so they are held to 4.5:1 */
+  color: rgba(28, 20, 25, 0.66);
   opacity: 1;
 }
 
@@ -9108,7 +9112,7 @@ a.contact-channels__value:focus-visible {
   border: 0;
   background: none;
   text-align: left;
-  color: rgba(28, 20, 25, 0.58);
+  color: rgba(28, 20, 25, 0.66);
   font: 400 clamp(15px, 1.15vw, 17.5px) / 1.35 "Outfit", system-ui, sans-serif;
   cursor: pointer;
   transition: color 0.25s ease;
@@ -9134,7 +9138,9 @@ a.contact-channels__value:focus-visible {
 }
 
 .ex-areas__nav button[aria-selected="true"] {
-  color: #ff612c;
+  /* the site orange is 2.5:1 on the cream; this darker one is 4.9:1, and the
+     rail dot keeps the bright orange so the choice is not colour alone */
+  color: #b3401a;
   font-weight: 500;
 }
 
@@ -9522,7 +9528,7 @@ a.contact-channels__value:focus-visible {
 
 .exwork--terrain .exwork__lede {
   margin: 0;
-  color: rgba(28, 31, 43, 0.6);
+  color: rgba(28, 31, 43, 0.7);
   font: 400 clamp(15px, 1.15vw, 17.5px) / 1.55 "Outfit", system-ui, sans-serif;
 }
 
@@ -9583,6 +9589,12 @@ a.contact-channels__value:focus-visible {
 
 .exwork-terrain__labels li.is-above {
   transform: translate(-50%, -100%);
+}
+
+/* above the ridge the copy sits on the cream, where the grey that works on
+   the navy below was 3.5:1 */
+.exwork-terrain__labels li.is-above p {
+  color: #5f6574;
 }
 
 .exwork-terrain__labels h3 {
@@ -9773,17 +9785,32 @@ a.contact-channels__value:focus-visible {
   color: var(--light);
 }
 
+/* Our Team's hero sky is brightest behind the menu */
+.page--team .top-nav__menu a {
+  color: rgba(240, 235, 233, 0.9);
+}
+
+.page--team .top-nav .top-nav__lead {
+  color: rgba(240, 235, 233, 0.84);
+}
+
+.page--team .top-nav__menu a:hover,
+.page--team .top-nav__menu a:focus-visible {
+  color: var(--light);
+}
+
 .page--expertise .top-nav__menu a {
   color: var(--light-80);
 }
 
 .page--expertise .top-nav .top-nav__menu--right a {
-  /* 0.6 fell just under 3:1 over the orange end of the sky */
-  color: rgba(240, 235, 233, 0.78);
+  /* the right group sits over the orange end of the sky, so it needs more
+     than the links on the navy end to reach 4.5:1 */
+  color: rgba(240, 235, 233, 0.9);
 }
 
 .page--expertise .top-nav .top-nav__lead {
-  color: rgba(240, 235, 233, 0.68);
+  color: rgba(240, 235, 233, 0.82);
 }
 
 .page--expertise .top-nav__menu a:hover,
@@ -10257,7 +10284,8 @@ a.contact-channels__value:focus-visible {
 .scene-intro__body {
   max-width: 62ch;
   margin: clamp(18px, 2.4vh, 30px) 0 0;
-  color: rgba(244, 236, 231, 0.66);
+  /* 0.66 was 3.6:1 on the Companies taupe ground */
+  color: rgba(244, 236, 231, 0.84);
   font: 400 clamp(14px, 1.05vw, 17px) / 1.62 "Outfit", system-ui, sans-serif;
 }
 
@@ -10953,7 +10981,7 @@ a.contact-channels__value:focus-visible {
 }
 
 .page--founders .hero-content .eyebrow {
-  color: rgba(26, 18, 16, 0.6);
+  color: rgba(26, 18, 16, 0.88);
   letter-spacing: 0.24em;
 }
 
@@ -10963,7 +10991,7 @@ a.contact-channels__value:focus-visible {
 }
 
 .page--founders .hero-tagline {
-  color: rgba(20, 22, 31, 0.74);
+  color: rgb(20, 22, 31);
   text-shadow: none;
 }
 
@@ -10992,11 +11020,11 @@ a.contact-channels__value:focus-visible {
 }
 
 .page--founders .top-nav .top-nav__menu--right a {
-  color: rgba(20, 22, 31, 0.66);
+  color: rgba(20, 22, 31, 0.76);
 }
 
 .page--founders .top-nav .top-nav__lead {
-  color: rgba(20, 22, 31, 0.66);
+  color: rgba(20, 22, 31, 0.76);
 }
 
 .page--founders .top-nav__menu a:hover,
@@ -11200,7 +11228,7 @@ a.contact-channels__value:focus-visible {
 }
 
 .page--horizon .hero-content .eyebrow {
-  color: rgba(var(--hz-ink), 0.62);
+  color: rgba(var(--hz-ink), 0.88);
   letter-spacing: 0.24em;
 }
 
@@ -11220,7 +11248,7 @@ a.contact-channels__value:focus-visible {
 
 .page--horizon .hero-tagline {
   max-width: min(700px, 47vw);
-  color: rgba(var(--hz-ink), 0.76);
+  color: rgb(var(--hz-ink));
   text-shadow: none;
 }
 
@@ -11249,11 +11277,11 @@ a.contact-channels__value:focus-visible {
 }
 
 .page--horizon .top-nav .top-nav__menu--right a {
-  color: rgba(var(--hz-ink), 0.8);
+  color: rgba(var(--hz-ink), 0.86);
 }
 
 .page--horizon .top-nav .top-nav__lead {
-  color: rgba(var(--hz-ink), 0.68);
+  color: rgba(var(--hz-ink), 0.88);
 }
 
 .page--horizon .top-nav__menu a:hover,
@@ -11405,7 +11433,7 @@ a.contact-channels__value:focus-visible {
    chrome still uses: the sky is the colour a visitor meets on that page. As
    the kicker on this navy it reads at 5.4:1; the ridge (#5f5853) at 2.5:1. */
 .routes-strip__card--companies { --aud-tint-rgb: 171, 142, 130; }
-.routes-strip__card--investors { --aud-tint-rgb: 91, 122, 176; }
+.routes-strip__card--investors { --aud-tint-rgb: 115, 145, 196; }
 
 .routes-strip__card:hover,
 .routes-strip__card:focus-within {
