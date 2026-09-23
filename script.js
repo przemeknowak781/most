@@ -1222,6 +1222,7 @@ function markCopyReview(data) {
   const legend = document.createElement("aside");
   legend.className = "copy-legend";
   legend.setAttribute("aria-label", "Copy review legend");
+  legend.lang = "pl";
   legend.innerHTML =
     '<p class="copy-legend__title">Teksty robocze na tej stronie</p>' +
     `<p><span class="copy-legend__swatch copy-legend__swatch--ours"></span>nasze, nowe (${counts.ours})</p>` +

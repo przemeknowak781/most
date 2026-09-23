@@ -2624,11 +2624,11 @@ body.menu-open {
     linear-gradient(180deg, #070912 0%, #161822 100%);
   -webkit-mask:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath d='M0 94 L52 95 L137 94 L221 98 L318 97 L398 101 L432 96 L506 86 L552 89 L589 72 L652 64 L701 69 L746 51 L817 42 L858 46 L917 28 L971 32 L1004 21 L1058 24 L1096 7 L1130 15 L1164 6 L1186 4 L1200 1 L1200 160 L0 160 Z' fill='%23fff'/%3E%3C/svg%3E") top / 100% var(--audience-cut-depth) no-repeat,
-    linear-gradient(#fff, #fff) 0 var(--audience-cut-depth) / 100% calc(100% - var(--audience-cut-depth) * 2) no-repeat,
+    linear-gradient(#fff, #fff) 0 calc(var(--audience-cut-depth) - 1px) / 100% calc(100% - var(--audience-cut-depth) * 2 + 2px) no-repeat,
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath d='M0 0 L1200 0 L1186 51 L1164 46 L1130 67 L1096 59 L1058 76 L1004 73 L971 84 L917 80 L858 98 L817 94 L746 103 L701 121 L652 116 L589 124 L552 141 L506 138 L432 148 L398 153 L318 149 L221 150 L137 146 L52 147 L0 146 Z' fill='%23fff'/%3E%3C/svg%3E") bottom / 100% var(--audience-cut-depth) no-repeat;
   mask:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath d='M0 94 L52 95 L137 94 L221 98 L318 97 L398 101 L432 96 L506 86 L552 89 L589 72 L652 64 L701 69 L746 51 L817 42 L858 46 L917 28 L971 32 L1004 21 L1058 24 L1096 7 L1130 15 L1164 6 L1186 4 L1200 1 L1200 160 L0 160 Z' fill='%23fff'/%3E%3C/svg%3E") top / 100% var(--audience-cut-depth) no-repeat,
-    linear-gradient(#fff, #fff) 0 var(--audience-cut-depth) / 100% calc(100% - var(--audience-cut-depth) * 2) no-repeat,
+    linear-gradient(#fff, #fff) 0 calc(var(--audience-cut-depth) - 1px) / 100% calc(100% - var(--audience-cut-depth) * 2 + 2px) no-repeat,
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath d='M0 0 L1200 0 L1186 51 L1164 46 L1130 67 L1096 59 L1058 76 L1004 73 L971 84 L917 80 L858 98 L817 94 L746 103 L701 121 L652 116 L589 124 L552 141 L506 138 L432 148 L398 153 L318 149 L221 150 L137 146 L52 147 L0 146 Z' fill='%23fff'/%3E%3C/svg%3E") bottom / 100% var(--audience-cut-depth) no-repeat;
 }
 
@@ -3195,7 +3195,8 @@ body.menu-open {
   content: "";
   position: absolute;
   z-index: -1;
-  inset: clamp(110px, 18vh, 180px) clamp(4px, 1.4vw, 18px) clamp(52px, 9vh, 102px) 0;
+  /* starts half a ring below the ring's centre, at its lower edge */
+  inset: calc(clamp(110px, 18vh, 180px) + var(--ring-size) / 2) clamp(4px, 1.4vw, 18px) clamp(52px, 9vh, 102px) 0;
   border-left: 1px solid rgb(var(--audience-r) var(--audience-g) var(--audience-b) / 0.36);
   -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent);
   mask-image: linear-gradient(180deg, #000 72%, transparent);
@@ -3532,7 +3533,7 @@ body.menu-open {
     contain: none;
   }
   .audience-intro__head::before {
-    inset: clamp(72px, 11vh, 120px) 0 clamp(32px, 7vh, 72px);
+    inset: calc(clamp(72px, 11vh, 120px) + var(--ring-size) / 2) 0 clamp(32px, 7vh, 72px);
   }
   .audience-intro__head::after {
     top: clamp(72px, 11vh, 120px);
@@ -7191,7 +7192,8 @@ a.photo-break__line:focus-visible {
   left: max(16px, calc(var(--container-x) - clamp(12px, 1.2vw, 18px)));
   width: var(--rail-width);
   z-index: 4;
-  background: linear-gradient(180deg, var(--orange), rgba(255, 97, 44, 0.55));
+  /* leaves the start ring from its lower edge, as the F/C/I spines do */
+  background: linear-gradient(180deg, var(--orange), rgba(255, 97, 44, 0.55)) 0 100% / 100% calc(100% - var(--ring-size) / 2) no-repeat;
   pointer-events: none;
 }
 
@@ -11974,3 +11976,9 @@ a.contact-channels__value:focus-visible {
 .copy-legend__swatch--ours { outline: 2px dashed #ff3d7f; }
 .copy-legend__swatch--wireframe { outline: 2px dashed #f5b400; }
 .copy-legend__swatch--g1-edited { outline: 2px dotted #36c2b4; }
+
+/* 'Day-to-Day' keeps its ordinary hyphens (the webfonts have no
+   non-breaking hyphen glyph) and simply does not wrap */
+.nowrap {
+  white-space: nowrap;
+}
