@@ -1159,6 +1159,31 @@ function setupPortraitProposal() {
   });
 }
 
+/* Copy review for the client: ?copy=draft outlines every text that is not
+   the client's own wording, by where it comes from (data-copy on the
+   element): "ours" - written by us and never seen by the client as text;
+   "wireframe" - ours, already shown in the wireframe; "g1-edited" - the
+   client's text, shortened or reworded by us. Untagged text is the client's
+   (G1) or Figma's, 1:1. Off by default; the page is unchanged without it. */
+function setupCopyReview() {
+  if (new URLSearchParams(window.location.search).get("copy") !== "draft") return;
+  document.documentElement.dataset.copyReview = "on";
+  const counts = { ours: 0, wireframe: 0, "g1-edited": 0 };
+  document.querySelectorAll("[data-copy]").forEach((el) => {
+    if (el.dataset.copy in counts) counts[el.dataset.copy] += 1;
+  });
+  const legend = document.createElement("aside");
+  legend.className = "copy-legend";
+  legend.setAttribute("aria-label", "Copy review legend");
+  legend.innerHTML =
+    '<p class="copy-legend__title">Teksty robocze na tej stronie</p>' +
+    `<p><span class="copy-legend__swatch copy-legend__swatch--ours"></span>nasze, nowe (${counts.ours})</p>` +
+    `<p><span class="copy-legend__swatch copy-legend__swatch--wireframe"></span>nasze, z wireframe'u (${counts.wireframe})</p>` +
+    `<p><span class="copy-legend__swatch copy-legend__swatch--g1-edited"></span>tekst klienta skrócony przez nas (${counts["g1-edited"]})</p>` +
+    '<p class="copy-legend__note">Bez ramki: tekst klienta (dokument) lub z Figmy, 1:1.</p>';
+  document.body.appendChild(legend);
+}
+
 function setupParallax() {
   const images = Array.from(document.querySelectorAll(".photo-break img, .aud-bleed img"));
   if (!images.length) return;
@@ -1202,6 +1227,7 @@ setupAudienceTriptych();
 setupAudienceConnectors();
 setupMemberReadmore();
 setupPortraitProposal();
+setupCopyReview();
 
 // Defer the expensive aboutfold setup (builds ~550 bars + SVG path computeLength)
 // until the section is near the viewport. Falls back to immediate init.
