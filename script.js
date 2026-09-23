@@ -675,12 +675,31 @@ function setupAudienceConnectors() {
   const connectors = Array.from(section.querySelectorAll(".audience-col__connector"));
   if (!connectors.length) return;
 
+  // The top edge of the section is the Home route: a smooth curve through
+  // these points (Catmull-Rom, the same path the CSS mask and stroke draw),
+  // so the connector dots land on the line and not on a notch.
   const trailPoints = [
-    [0, 94], [52, 95], [137, 94], [221, 98], [318, 97], [398, 101],
-    [432, 96], [506, 86], [552, 89], [589, 72], [652, 64], [701, 69],
-    [746, 51], [817, 42], [858, 46], [917, 28], [971, 32], [1004, 21],
-    [1058, 24], [1096, 7], [1130, 15], [1164, 6], [1186, 4], [1200, 1],
+    [0, 94], [221, 98], [432, 96], [589, 72], [746, 51],
+    [917, 28], [1058, 24], [1164, 6], [1200, 1],
   ];
+  const trailSamples = [];
+  for (let i = 0; i < trailPoints.length - 1; i++) {
+    const a = trailPoints[i - 1] || trailPoints[i];
+    const b = trailPoints[i];
+    const c = trailPoints[i + 1];
+    const e = trailPoints[i + 2] || c;
+    const c1 = [b[0] + (c[0] - a[0]) / 6, b[1] + (c[1] - a[1]) / 6];
+    const c2 = [c[0] - (e[0] - b[0]) / 6, c[1] - (e[1] - b[1]) / 6];
+    for (let step = 0; step < 24; step++) {
+      const t = step / 24;
+      const u = 1 - t;
+      trailSamples.push([
+        u * u * u * b[0] + 3 * u * u * t * c1[0] + 3 * u * t * t * c2[0] + t * t * t * c[0],
+        u * u * u * b[1] + 3 * u * u * t * c1[1] + 3 * u * t * t * c2[1] + t * t * t * c[1],
+      ]);
+    }
+  }
+  trailSamples.push(trailPoints[trailPoints.length - 1]);
 
   function cssClamp(min, preferred, max) {
     return Math.min(Math.max(preferred, min), max);
@@ -693,15 +712,15 @@ function setupAudienceConnectors() {
 
   function trailYAt(x) {
     const clampedX = clamp(x, 0, 1200);
-    for (let i = 1; i < trailPoints.length; i++) {
-      const [prevX, prevY] = trailPoints[i - 1];
-      const [nextX, nextY] = trailPoints[i];
+    for (let i = 1; i < trailSamples.length; i++) {
+      const [prevX, prevY] = trailSamples[i - 1];
+      const [nextX, nextY] = trailSamples[i];
       if (clampedX <= nextX) {
-        const t = (clampedX - prevX) / Math.max(1, nextX - prevX);
+        const t = (clampedX - prevX) / Math.max(0.001, nextX - prevX);
         return prevY + (nextY - prevY) * t;
       }
     }
-    return trailPoints[trailPoints.length - 1][1];
+    return trailSamples[trailSamples.length - 1][1];
   }
 
   let cachedPseudo = null;
