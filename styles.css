@@ -8996,3 +8996,2357 @@ a.contact-channels__value:focus-visible {
 .nowrap {
   white-space: nowrap;
 }
+
+/* ===== MOBILE & TABLET (<=1023px) — FOUNDATION ===== */
+/* Everything below 1024px that every page shares: the tokens, the top bar,
+   the menu dialog, the closing CTA band, the route shortcuts and the footer.
+   1024px and up is the approved desktop and nothing here reaches it - every
+   rule sits inside a max-width: 1023px query (or a narrower one). Page
+   sections build on the tokens below rather than restating numbers.
+
+   Tiers: compact <=1023 | tablet 768-1023 | phone <=767 | small phone <=374
+   | short landscape: compact and max-height 500px in landscape.
+
+   Tokens (defined on :root inside the compact query):
+     --m-gutter    side padding of every section: 20px phone, 32px tablet.
+                   --container-x follows it, so sections that pad with the
+                   desktop token line up with the new ones.
+     --m-section   vertical padding of a section: clamp(56px, 13vw, 96px).
+     --m-nav-h     height of the fixed top bar: 64px (56px in short
+                   landscape). --nav-height follows it plus the safe area, so
+                   the heroes that already clear the bar keep clearing it.
+     Type scale - sizes grow from 375px to 768px and then hold:
+     --m-h1    34 -> 48px, line-height 1.08
+     --m-h2    28 -> 38px, line-height 1.12
+     --m-h3    20 -> 24px, line-height 1.25
+     --m-lede  17 -> 18px, line-height 1.55
+     --m-body  16px, line-height 1.6 (and --m-measure: 68ch at most)
+     --m-small 13px - meta, captions, legal
+     --m-label 12px - uppercase labels and eyebrows, keep their tracking
+   Nothing visible goes under 11px.
+
+   Safe areas: the pages do not opt into viewport-fit=cover, so iOS
+   letterboxes a phone on its side (the html/body colour fills the bars
+   beside the notch) and every env(safe-area-inset-*) below resolves to 0.
+   That is deliberate - it keeps full-bleed photos and bands clear of the
+   notch without per-section work. The chrome still pads with the insets
+   and --m-gutter already takes the larger of itself and the side insets,
+   so adding cover later is the viewport meta alone.
+
+   Adjacent targets are 44px tall and 8px apart (SPEC 4), full-width list
+   rows included: the menu and footer rows keep their pitch by trading row
+   height for the gap, so the rhythm reads the same. */
+
+@media (max-width: 1023px) {
+  :root {
+    --m-gutter: max(32px, env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
+    --m-section: clamp(56px, 13vw, 96px);
+    --m-nav-h: 64px;
+    --m-h1: clamp(34px, 20.64px + 3.56vw, 48px);
+    --m-h2: clamp(28px, 18.46px + 2.54vw, 38px);
+    --m-h3: clamp(20px, 16.18px + 1.02vw, 24px);
+    --m-lede: clamp(17px, 16.05px + 0.25vw, 18px);
+    --m-body: 16px;
+    --m-small: 13px;
+    --m-label: 12px;
+    --m-measure: 68ch;
+    --nav-height: calc(var(--m-nav-h) + env(safe-area-inset-top, 0px));
+    --container-x: var(--m-gutter);
+  }
+
+  /* an anchor lands just under the bar, not a screen further down */
+  html {
+    scroll-padding-top: calc(var(--nav-height) + 16px);
+  }
+
+  /* Decoration that bleeds past the sides (the home trail overlay sized to
+     its ridge, glows, marquees) must never widen the page: on a phone a
+     wider document widens the layout viewport, and the fixed bar and the
+     menu grow with it and slide their right-hand controls off screen.
+     clip, not hidden: it makes no scroll container, so nothing sticky or
+     scroll-linked inside changes. */
+  main {
+    overflow-x: clip;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --m-gutter: max(20px, env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
+  }
+}
+
+/* a phone on its side has ~390px of height; the bar gives some of it back */
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  :root {
+    --m-nav-h: 56px;
+  }
+}
+
+/* ---------- compact: top bar ----------
+   The wordmark on the left, the menu button on the right, and on tablets the
+   Contact pill beside it - there is room for the one action every page
+   leads to. At rest the bar is transparent and wears the hero's ink, as on
+   desktop; once the page moves it is the shared navy bar. */
+@media (max-width: 1023px) {
+  .top-nav {
+    height: var(--nav-height);
+    gap: 12px;
+    padding:
+      env(safe-area-inset-top, 0px)
+      max(var(--m-gutter), env(safe-area-inset-right, 0px))
+      0
+      max(var(--m-gutter), env(safe-area-inset-left, 0px));
+  }
+
+  /* The frosted glass costs a blur every frame on a phone, so it goes - and
+     with it the bar turns solid: without the blur the desktop's 2-4% of
+     see-through no longer smears what passes under it, it shows it as
+     sharp ghost text behind the wordmark. */
+  .top-nav.is-scrolled::before {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: linear-gradient(180deg, rgb(22, 24, 34) 0%, rgb(20, 23, 34) 100%);
+  }
+
+  .top-nav__menu,
+  .top-nav .nav-cta {
+    display: none;
+  }
+
+  .top-nav .wordmark,
+  .mobile-menu .wordmark {
+    min-width: 44px;
+    min-height: 44px;
+    margin-right: auto;
+  }
+
+  .top-nav .wordmark__logo,
+  .mobile-menu .wordmark__logo {
+    width: 104px;
+    height: 38px;
+  }
+
+  .icon-button,
+  .close-button {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    padding: 0;
+    color: var(--light);
+    background: rgba(240, 235, 233, 0.07);
+    border: 1px solid rgba(240, 235, 233, 0.16);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 200ms ease, border-color 200ms ease, color 200ms ease;
+  }
+
+  .icon-button:hover,
+  .icon-button:active,
+  .close-button:hover,
+  .close-button:active {
+    background: rgba(240, 235, 233, 0.16);
+  }
+
+  .top-nav .wordmark:focus-visible,
+  .mobile-menu a:focus-visible,
+  .icon-button:focus-visible,
+  .close-button:focus-visible,
+  .site-footer a:focus-visible,
+  .aud-grow a:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  .icon-button:focus-visible,
+  .close-button:focus-visible,
+  .mobile-menu__social:focus-visible,
+  .site-footer__social:focus-visible {
+    border-radius: 50%;
+  }
+
+  .mobile-menu__cta:focus-visible,
+  .aud-grow__btn:focus-visible {
+    border-radius: 999px;
+  }
+
+  /* at rest the button takes the ink of its hero, like the wordmark:
+     dark on the sunlit founder and horizon skies, light everywhere else */
+  .page--founders .top-nav .icon-button {
+    color: var(--fnd-ink);
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(20, 22, 31, 0.3);
+  }
+
+  .page--horizon .top-nav .icon-button {
+    color: rgb(var(--hz-ink));
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(var(--hz-ink), 0.3);
+  }
+
+  .top-nav.is-scrolled .icon-button {
+    color: var(--light);
+    background: rgba(240, 235, 233, 0.07);
+    border-color: rgba(240, 235, 233, 0.16);
+  }
+
+  /* the tablet Contact pill wears the site's ring, not the browser's */
+  .top-nav .nav-cta:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 3px;
+  }
+
+  /* Over the sunlit founder and horizon skies the orange ring all but
+     vanishes (1.0-1.3:1 against the sky beside it; focus needs 3:1), and
+     over the lit glass at the top right of Expertise it is 2:1. While the
+     bar is transparent the ring takes the hero's ink instead, like the
+     controls it circles (5:1 and up). The scrolled navy bar keeps the
+     orange. */
+  .page--founders .top-nav:not(.is-scrolled) :is(.wordmark, .icon-button, .nav-cta):focus-visible {
+    outline-color: var(--fnd-ink);
+  }
+
+  .page--horizon .top-nav:not(.is-scrolled) :is(.wordmark, .icon-button, .nav-cta):focus-visible {
+    outline-color: rgb(var(--hz-ink));
+  }
+
+  .page--expertise .top-nav:not(.is-scrolled) :is(.wordmark, .icon-button, .nav-cta):focus-visible {
+    outline-color: var(--light);
+  }
+
+  /* the reading progress runs along the bar's lower edge */
+  .scroll-progress {
+    top: calc(var(--nav-height) - 2px);
+  }
+
+  .skip-link:focus-visible {
+    top: calc(env(safe-area-inset-top, 0px) + 10px);
+    left: max(12px, env(safe-area-inset-left, 0px));
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 18px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .top-nav .nav-cta {
+    display: inline-flex;
+    min-height: 44px;
+    padding: 0 22px;
+  }
+
+  /* On Contact the pill is where you are: the marker sits inside it, as in
+     the menu. Under it, it landed on the bar's lower edge, on the reading
+     progress line. */
+  .top-nav .nav-cta[aria-current="page"] {
+    gap: 10px;
+    padding-left: 18px;
+  }
+
+  .top-nav .nav-cta[aria-current="page"]::after {
+    position: static;
+    order: -1;
+    width: 5px;
+    height: 5px;
+    transform: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .top-nav .wordmark__logo,
+  .mobile-menu .wordmark__logo {
+    width: 96px;
+    height: 35px;
+  }
+}
+
+/* ---------- compact: the menu dialog ----------
+   A full-screen navy sheet. The three pages are the headline: large rows
+   strung on a thin rail, the current one lit with the orange trail marker
+   and the rest open rings. "Explore as" sits below as a quieter group, each
+   route tagged with the hue its own page is painted in. Contact, the mail
+   address and LinkedIn close the sheet, standing on the site's ridge in a
+   low sunset glow. The top row mirrors the bar exactly, so the menu button
+   turns into the close button without moving. */
+@media (max-width: 1023px) {
+  html.menu-open,
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  html.menu-open {
+    /* a desktop browser narrowed below 1024px has a real scrollbar; keep
+       its gutter so the page behind does not reflow sideways */
+    scrollbar-gutter: stable;
+  }
+
+  .mobile-menu {
+    z-index: 120;
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: var(--navy);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    opacity: 0;
+    transition: opacity 240ms var(--ease-out);
+  }
+
+  .mobile-menu.is-open {
+    opacity: 1;
+  }
+
+  .mobile-menu__panel {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 100%;
+    padding:
+      env(safe-area-inset-top, 0px)
+      max(var(--m-gutter), env(safe-area-inset-right, 0px))
+      calc(24px + env(safe-area-inset-bottom, 0px))
+      max(var(--m-gutter), env(safe-area-inset-left, 0px));
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--navy) 0%, #11131b 100%);
+  }
+
+  .mobile-menu__top {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--m-nav-h);
+  }
+
+  .mobile-menu__links {
+    display: block;
+    margin: clamp(12px, 4svh, 36px) 0 0;
+  }
+
+  /* rows 8px apart (SPEC 4): the gap comes out of the row height, so the
+     pitch - and the rail's rhythm - is what it was */
+  .mobile-menu__primary,
+  .mobile-menu__audience {
+    display: grid;
+    row-gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* the rail: a hairline through the three markers */
+  .mobile-menu__primary {
+    position: relative;
+  }
+
+  .mobile-menu__primary::before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 26px;
+    bottom: 26px;
+    width: 1px;
+    background: rgba(240, 235, 233, 0.14);
+  }
+
+  .mobile-menu__links .mobile-menu__primary a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    padding: 4px 0 4px 30px;
+    color: rgba(240, 235, 233, 0.84);
+    font: 500 clamp(30px, 8.6vw, 40px) / 1.1 "Urbanist", system-ui, sans-serif;
+    letter-spacing: -0.01em;
+    transition: color 200ms ease;
+  }
+
+  .mobile-menu__primary a::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 11px;
+    height: 11px;
+    margin-top: -5.5px;
+    border-radius: 50%;
+    background: var(--navy);
+    box-shadow: inset 0 0 0 1.5px rgba(240, 235, 233, 0.38);
+  }
+
+  .mobile-menu__links .mobile-menu__primary a:hover,
+  .mobile-menu__links .mobile-menu__primary a:active,
+  .mobile-menu__links .mobile-menu__primary a[aria-current="page"] {
+    color: var(--light);
+  }
+
+  .mobile-menu__primary a[aria-current="page"]::before,
+  .mobile-menu__route[aria-current="page"]::before {
+    background: var(--marker-core);
+    box-shadow: var(--marker-shadow);
+  }
+
+  .mobile-menu__group {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(240, 235, 233, 0.1);
+  }
+
+  .mobile-menu__lead {
+    margin: 0 0 4px;
+    color: rgba(240, 235, 233, 0.62);
+    font: italic 300 15px / 1.2 "Outfit", system-ui, sans-serif;
+    letter-spacing: 0.08em;
+  }
+
+  .mobile-menu__route {
+    --route-tint: 209, 126, 95;
+  }
+
+  .mobile-menu__route--companies {
+    --route-tint: 171, 142, 130;
+  }
+
+  .mobile-menu__route--investors {
+    --route-tint: 115, 145, 196;
+  }
+
+  .mobile-menu__links .mobile-menu__route {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 44px;
+    color: rgba(240, 235, 233, 0.8);
+    font: 400 19px / 1.2 "Outfit", system-ui, sans-serif;
+    letter-spacing: 0.01em;
+    transition: color 200ms ease;
+  }
+
+  .mobile-menu__route::before {
+    content: "";
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgb(var(--route-tint));
+  }
+
+  .mobile-menu__links .mobile-menu__route:hover,
+  .mobile-menu__links .mobile-menu__route:active,
+  .mobile-menu__links .mobile-menu__route[aria-current="page"] {
+    color: var(--light);
+  }
+
+  .mobile-menu__foot {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 32px;
+  }
+
+  .mobile-menu__cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 52px;
+    padding: 0 28px;
+    border-radius: 999px;
+    background: var(--light);
+    color: #1c1419;
+    font: 500 14px / 1 "Outfit", system-ui, sans-serif;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.6);
+    transition: background 200ms ease, color 200ms ease;
+  }
+
+  .mobile-menu__cta svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .mobile-menu__cta:hover,
+  .mobile-menu__cta:active {
+    background: #fff;
+  }
+
+  /* on Contact the button is where you are: the same marker, inside it */
+  .mobile-menu__cta[aria-current="page"]::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--orange);
+  }
+
+  .mobile-menu__contact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .mobile-menu__mail {
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+    min-height: 44px;
+    color: rgba(240, 235, 233, 0.8);
+    font: 400 15px / 1.3 "Outfit", system-ui, sans-serif;
+    overflow-wrap: anywhere;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 168, 110, 0.45);
+    text-underline-offset: 5px;
+  }
+
+  .mobile-menu__social {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(240, 235, 233, 0.16);
+    border-radius: 50%;
+    background: rgba(240, 235, 233, 0.06);
+    color: rgba(240, 235, 233, 0.8);
+  }
+
+  .mobile-menu__social svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .mobile-menu__social:hover,
+  .mobile-menu__social:active {
+    color: var(--light);
+    background: rgba(255, 168, 110, 0.16);
+  }
+
+  .mobile-menu__mail:hover,
+  .mobile-menu__mail:active {
+    color: var(--light);
+    text-decoration-color: var(--orange-soft);
+  }
+
+  /* the ridge the sheet stands on: the hero's silhouette in the sheet's own
+     navy, lit only by the glow behind it */
+  .mobile-menu__ridge {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    display: flex;
+    justify-content: flex-end;
+    line-height: 0;
+    pointer-events: none;
+  }
+
+  /* the sunset sits behind the crest, not at the foot of the sheet, so it
+     follows the ridge whatever height the sheet grows to */
+  .mobile-menu__ridge::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 38%;
+    left: 0;
+    z-index: -1;
+    height: 90%;
+    background:
+      radial-gradient(62% 46% at 30% 74%, rgba(255, 97, 44, 0.2), transparent 76%),
+      radial-gradient(48% 40% at 76% 54%, rgba(255, 168, 110, 0.1), transparent 74%);
+  }
+
+  .mobile-menu__ridge img {
+    flex: none;
+    width: max(100%, 620px);
+    height: auto;
+  }
+}
+
+@media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+  .mobile-menu__primary li,
+  .mobile-menu__group,
+  .mobile-menu__foot {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+    transition: opacity 320ms ease, transform 520ms var(--ease-out);
+  }
+
+  .mobile-menu.is-open .mobile-menu__primary li,
+  .mobile-menu.is-open .mobile-menu__group,
+  .mobile-menu.is-open .mobile-menu__foot {
+    opacity: 1;
+    transform: none;
+  }
+
+  .mobile-menu.is-open .mobile-menu__primary li:nth-child(2) {
+    transition-delay: 40ms;
+  }
+
+  .mobile-menu.is-open .mobile-menu__primary li:nth-child(3) {
+    transition-delay: 80ms;
+  }
+
+  .mobile-menu.is-open .mobile-menu__group {
+    transition-delay: 120ms;
+  }
+
+  .mobile-menu.is-open .mobile-menu__foot {
+    transition-delay: 160ms;
+  }
+}
+
+/* tablet and phones on their side: the pages and the routes side by side */
+@media (min-width: 768px) and (max-width: 1023px),
+  (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .mobile-menu__links {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 40px;
+  }
+
+  .mobile-menu__group {
+    margin-top: 0;
+    padding: 14px 0 0 32px;
+    border-top: 0;
+    border-left: 1px solid rgba(240, 235, 233, 0.1);
+  }
+
+  .mobile-menu__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .mobile-menu__cta {
+    min-width: 240px;
+  }
+
+  .mobile-menu__contact {
+    gap: 20px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* a portrait tablet has half a screen to spare: the pages come down
+     towards the optical centre instead of hugging the bar */
+  .mobile-menu__links {
+    margin-top: clamp(40px, 11svh, 150px);
+  }
+
+  .mobile-menu__links .mobile-menu__primary a {
+    min-height: 68px;
+    padding-left: 36px;
+    font-size: 48px;
+  }
+
+  .mobile-menu__primary::before {
+    top: 34px;
+    bottom: 34px;
+  }
+
+  .mobile-menu__links .mobile-menu__route {
+    font-size: 21px;
+  }
+
+  .mobile-menu__ridge img {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .mobile-menu__links {
+    margin-top: 4px;
+  }
+
+  .mobile-menu__links .mobile-menu__primary a {
+    min-height: 44px;
+    font-size: 30px;
+  }
+
+  .mobile-menu__primary::before {
+    top: 22px;
+    bottom: 22px;
+  }
+
+  .mobile-menu__group {
+    padding-top: 0;
+  }
+
+  .mobile-menu__links .mobile-menu__route {
+    font-size: 17px;
+  }
+
+  .mobile-menu__foot {
+    padding-top: 16px;
+  }
+
+  .mobile-menu__ridge img {
+    width: 100%;
+    max-height: 46svh;
+    object-fit: cover;
+    object-position: top;
+  }
+}
+
+/* short phones (SE-class, 667px and less): tighter rows so the whole sheet,
+   mail and LinkedIn included, still fits without scrolling */
+@media (max-width: 767px) and (max-height: 700px) and (orientation: portrait) {
+  .mobile-menu__links {
+    margin-top: 4px;
+  }
+
+  .mobile-menu__links .mobile-menu__primary a {
+    min-height: 44px;
+    font-size: clamp(28px, 8.4vw, 34px);
+  }
+
+  .mobile-menu__primary::before {
+    top: 22px;
+    bottom: 22px;
+  }
+
+  .mobile-menu__group {
+    margin-top: 14px;
+    padding-top: 12px;
+  }
+
+  .mobile-menu__links .mobile-menu__route {
+    font-size: 18px;
+  }
+
+  .mobile-menu__foot {
+    gap: 8px;
+    padding-top: 20px;
+  }
+
+  .mobile-menu__panel {
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* A screen that is shorter still - an SE-class phone once Safari's bars
+   are showing (about 320x460 or 375x550): the three routes share one row
+   under their lead, which gives back two rows and lets Contact, the mail
+   address and LinkedIn stay on the first screen. */
+@media (max-width: 767px) and (max-height: 600px) and (orientation: portrait) {
+  .mobile-menu__links .mobile-menu__primary a {
+    font-size: clamp(26px, 8vw, 30px);
+  }
+
+  .mobile-menu__group {
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+
+  .mobile-menu__lead {
+    margin-bottom: 0;
+  }
+
+  .mobile-menu__audience {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 12px;
+  }
+
+  .mobile-menu__links .mobile-menu__route {
+    gap: 8px;
+    font-size: 15px;
+  }
+
+  .mobile-menu__foot {
+    padding-top: 14px;
+  }
+
+  .mobile-menu__cta {
+    min-height: 48px;
+  }
+}
+
+/* ---------- compact: closing CTA band (.aud-grow) ----------
+   One centred column: the question, the Team page's subline, the button,
+   and the quiet second route under it. The photo, the ridge and the
+   climbers stay; the band leaves room at its foot for them to stand on. */
+@media (max-width: 1023px) {
+  .aud-grow {
+    /* the ridge is drawn at least 560px wide so its crest keeps its shape;
+       the climbers stand on that crest, 42% across the art, where it runs at
+       47% of the art's height - so their footing is measured from the art,
+       and the band's foot is tall enough to keep them clear of the button */
+    --ridge-w: max(100vw, 560px);
+    --climbers-w: clamp(60px, 14vw, 96px);
+    /* The art's foot hangs this share of --ridge-w below the band (clipped),
+       and the band's foot is shortened by as much: the climbers keep their
+       footing, and the band ends 40-80px under them as on desktop instead
+       of on a slab of empty silhouette that grew with the width and
+       stacked onto the footer's own ridge. The lowest point of the crest is
+       0.185 of --ridge-w above the art's foot, so the whole ridge line
+       stays in the band. */
+    --ridge-hang: 0.1;
+    padding:
+      var(--m-section)
+      var(--m-gutter)
+      calc(var(--ridge-w) * (0.225 - var(--ridge-hang)) + var(--climbers-w) * 0.84 + 28px);
+  }
+
+  .aud-grow__inner,
+  .page--team .aud-grow__inner {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 0;
+    max-width: 640px;
+    text-align: center;
+  }
+
+  .aud-grow__title {
+    font-size: var(--m-h2);
+    line-height: 1.12;
+    text-wrap: balance;
+  }
+
+  .aud-grow__sub,
+  .page--team .aud-grow__sub {
+    grid-column: 1;
+    margin: 14px 0 0;
+    max-width: 36ch;
+    color: rgba(240, 235, 233, 0.88);
+    font-size: var(--m-body);
+    line-height: 1.55;
+  }
+
+  .aud-grow__btn,
+  .page--team .aud-grow__btn {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: center;
+    justify-content: center;
+    min-height: 52px;
+    max-width: 100%;
+    margin-top: 28px;
+    padding: 0 28px;
+  }
+
+  .aud-grow__btn--mail span {
+    overflow-wrap: anywhere;
+  }
+
+  /* flex drops the space before the arrow span; the gap puts it back */
+  .aud-grow__alt {
+    grid-column: 1;
+    justify-self: center;
+    display: inline-flex;
+    align-items: center;
+    column-gap: 0.28em;
+    min-height: 44px;
+    margin-top: 10px;
+    padding: 0 4px;
+    border-bottom: 0;
+    color: rgba(240, 235, 233, 0.9);
+    font-size: 15px;
+    text-decoration: underline;
+    text-decoration-color: rgba(240, 235, 233, 0.36);
+    text-underline-offset: 5px;
+    text-shadow: 0 1px 12px rgba(7, 10, 18, 0.6);
+  }
+
+  /* stacked, the button and the line under it come down onto the lit
+     peaks; a dusk shadow behind the copy keeps them legible while the
+     sides and the climbers' ridge stay warm */
+  .aud-grow__wash {
+    background:
+      radial-gradient(120% 56% at 50% 36%, rgba(7, 10, 18, 0.72), rgba(7, 10, 18, 0.4) 64%, transparent 90%),
+      radial-gradient(900px 520px at 30% 62%, rgba(178, 118, 88, 0.2), transparent 74%),
+      linear-gradient(180deg, rgba(5, 13, 25, 0.8) 0%, rgba(8, 17, 31, 0.52) 34%, rgba(44, 38, 44, 0.34) 58%, rgba(8, 11, 19, 0.64) 100%);
+  }
+
+  .aud-grow__ridge {
+    bottom: calc(var(--ridge-w) * var(--ridge-hang) * -1);
+  }
+
+  .aud-grow__ridge img {
+    width: var(--ridge-w);
+    max-width: none;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .aud-grow__climbers {
+    left: calc(50% - var(--ridge-w) * 0.08);
+    bottom: calc(var(--ridge-w) * (0.225 - var(--ridge-hang)) - 3px);
+    width: var(--climbers-w);
+    translate: -50% 0;
+  }
+
+  /* The glow is a gradient that is already soft: a band-wide blur on top
+     of it is an offscreen pass per frame on a phone for nothing you can
+     see. It fades out inside its own box instead (closest-side), in the
+     colours saturate(0.72) used to give it, and it warms the climbers'
+     ridge only - any higher and it lifts the photo behind the second link
+     under 4.5:1 now that the band ends closer to the climbers. */
+  .aud-grow__bg::after {
+    left: -20%;
+    bottom: 0;
+    width: 140%;
+    height: 44%;
+    filter: none;
+    background: radial-gradient(closest-side at 45% 55%, rgba(229, 164, 121, 0.85), rgba(179, 102, 70, 0.6) 42%, rgba(122, 70, 50, 0.3) 70%, transparent);
+  }
+}
+
+/* wider bands, and phones on their side, hang more of the art: the foot
+   would otherwise grow past the climbers with the width */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .aud-grow {
+    --ridge-hang: 0.15;
+  }
+}
+
+/* on its side a phone sees the heading, the button and the climbers on one
+   screen: a lower top, smaller climbers and the deepest hang */
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .aud-grow {
+    --ridge-hang: 0.16;
+    --climbers-w: 64px;
+    padding-top: 40px;
+  }
+}
+
+/* ---------- compact: route shortcuts (.routes-strip) ----------
+   Each card is one target: the "Explore more" link stretches over the whole
+   card, so a tap anywhere on it goes there, and the focus ring draws round
+   the card. Phones stack the cards; tablets lay them as rows - name, line,
+   arrow - which reads better than three narrow columns. */
+@media (max-width: 1023px) {
+  .routes-strip {
+    padding: var(--m-section) var(--m-gutter);
+  }
+
+  .routes-strip__head {
+    margin-bottom: 28px;
+  }
+
+  .routes-strip__eyebrow {
+    margin-bottom: 14px;
+    font-size: var(--m-label);
+  }
+
+  .routes-strip__title {
+    font-size: var(--m-h2);
+    line-height: 1.12;
+  }
+
+  .routes-strip__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .routes-strip__card {
+    padding: 24px 22px 14px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .routes-strip__kicker {
+    margin-bottom: 10px;
+    font-size: var(--m-label);
+  }
+
+  .routes-strip__name {
+    margin-bottom: 8px;
+    font-size: var(--m-h3);
+    line-height: 1.2;
+  }
+
+  .routes-strip__copy {
+    min-height: 0;
+    margin-bottom: 6px;
+    max-width: var(--m-measure);
+    color: rgba(240, 235, 233, 0.68);
+    font-size: 15px;
+  }
+
+  .routes-strip__link {
+    align-self: flex-start;
+    min-height: 44px;
+  }
+
+  .routes-strip__link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .routes-strip__link:focus-visible {
+    outline: none;
+  }
+
+  .routes-strip__card:has(.routes-strip__link:focus-visible) {
+    outline: 2px solid rgb(var(--aud-tint-rgb));
+    outline-offset: 3px;
+  }
+
+  .routes-strip__card:active {
+    border-color: rgba(var(--aud-tint-rgb), 0.5);
+    background: linear-gradient(155deg, rgba(var(--aud-tint-rgb), 0.2), transparent 64%);
+  }
+}
+
+/* From 600px, and on a phone on its side, the cards are already rows: the
+   name beside its line and the link under the line. Stacked, the three
+   cards took 800px - two screens of a phone on its side. */
+@media (min-width: 600px) and (max-width: 767px),
+  (max-width: 767px) and (max-height: 500px) and (orientation: landscape) {
+  .routes-strip__card {
+    display: grid;
+    /* 150px keeps "for companies" on one line */
+    grid-template-columns: minmax(150px, 0.7fr) minmax(0, 1.6fr);
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas:
+      "kicker copy"
+      "name copy"
+      "name link";
+    column-gap: 24px;
+    padding: 22px 24px 10px;
+  }
+
+  .routes-strip__kicker {
+    grid-area: kicker;
+  }
+
+  .routes-strip__name {
+    grid-area: name;
+    margin: 0;
+  }
+
+  .routes-strip__copy {
+    grid-area: copy;
+    margin: 0;
+  }
+
+  .routes-strip__link {
+    grid-area: link;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .routes-strip__card {
+    display: grid;
+    grid-template-columns: minmax(150px, 0.8fr) minmax(0, 1.6fr) auto;
+    grid-template-areas:
+      "kicker copy link"
+      "name copy link";
+    align-items: center;
+    column-gap: 32px;
+    padding: 26px 28px;
+  }
+
+  .routes-strip__kicker {
+    grid-area: kicker;
+    align-self: end;
+  }
+
+  .routes-strip__name {
+    grid-area: name;
+    align-self: start;
+    margin: 0;
+  }
+
+  .routes-strip__copy {
+    grid-area: copy;
+    margin: 0;
+  }
+
+  .routes-strip__link {
+    grid-area: link;
+    align-self: center;
+  }
+}
+
+/* ---------- compact: footer ----------
+   Phones held upright put Pages and Explore as side by side, with Contact
+   across the width under them. From 600px, and on a phone on its side, the
+   brand runs across the top and the three lists stand side by side under
+   it, as on desktop: they share one grid row, so their rows line up across the
+   columns. Every link is a 44px row made of padding, not bigger type. The
+   ridge art grows past the edges on portrait phones so the climbers stay
+   figures rather than specks. */
+@media (max-width: 1023px) {
+  .footer-ridge__overlay {
+    width: var(--ridge-art, 100%);
+    max-width: none;
+    /* brings the climbers (37% across the art) towards the centre line,
+       never so far that the art's left edge comes into view */
+    margin-left: min(0%, 50% - var(--ridge-art, 100%) * 0.37);
+  }
+
+  .site-footer {
+    padding:
+      clamp(16px, 4vw, 32px)
+      max(var(--m-gutter), env(safe-area-inset-right, 0px))
+      calc(32px + env(safe-area-inset-bottom, 0px))
+      max(var(--m-gutter), env(safe-area-inset-left, 0px));
+  }
+
+  .site-footer__lede {
+    margin-bottom: 48px;
+  }
+
+  .site-footer__lede-eyebrow {
+    font-size: var(--m-label);
+  }
+
+  .site-footer__lede-text {
+    font-size: clamp(22px, 17px + 1.4vw, 30px);
+  }
+
+  .site-footer__top {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  .site-footer__brand {
+    grid-column: auto;
+  }
+
+  .site-footer__brand .wordmark {
+    min-height: 44px;
+    margin-bottom: 8px;
+  }
+
+  .site-footer__brand p {
+    font-size: 15px;
+  }
+
+  .site-footer__col-title {
+    margin-bottom: 6px;
+    font-size: var(--m-label);
+  }
+
+  /* 44px rows, 8px apart (SPEC 4) */
+  .site-footer__col ul {
+    gap: 8px;
+  }
+
+  .site-footer__col li {
+    font-size: 15px;
+  }
+
+  /* the address is text, not a link, but sits on the same rhythm */
+  .site-footer__col li:not(:has(a)) {
+    padding-block: 11px;
+  }
+
+  .site-footer__col a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    border-bottom: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .site-footer__col a:hover {
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 168, 110, 0.6);
+    text-underline-offset: 5px;
+  }
+
+  .site-footer__social {
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-top: 6px;
+  }
+
+  .site-footer__social svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .site-footer__col a.site-footer__social:hover {
+    text-decoration: none;
+  }
+
+  .site-footer__divider {
+    margin: 40px 0 20px;
+  }
+
+  .site-footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .site-footer__details,
+  .site-footer__legal {
+    font-size: var(--m-small);
+  }
+
+  .site-footer__details {
+    gap: 4px 18px;
+  }
+
+  .site-footer__details li {
+    white-space: nowrap;
+  }
+
+  .site-footer__legal {
+    gap: 0 24px;
+  }
+
+  .site-footer__legal a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    border-bottom: 0;
+  }
+
+  .site-footer__legal a:hover {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+  }
+}
+
+/* The contact list takes a little more of the width, and never less than
+   its longest line: under 700px its 1.35 share was narrower than the
+   address, which left "Poland" alone on a line. The two link lists give up
+   the difference - their longest label, "Our Expertise", still fits. */
+@media (min-width: 600px) and (max-width: 1023px),
+  (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .site-footer__top {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(max-content, 1.35fr);
+    gap: 28px clamp(24px, 4vw, 48px);
+  }
+
+  .site-footer__brand {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Phones held upright: Pages and Explore as are short lists of short
+   labels, so they stand side by side - "Our Expertise", the longest, takes
+   95px of the 130px a 320px phone gives each - and Contact runs across
+   the width under them. One column made the footer 914px tall, two
+   screens of a small phone. (Everything a phone on its side does not get:
+   that is the three-column rule above.) */
+@media (max-width: 599px) and (orientation: portrait),
+  (max-width: 599px) and (min-height: 501px) {
+  .site-footer__top {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 20px;
+  }
+
+  .site-footer__brand,
+  .site-footer__col:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .site-footer__bottom {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 32px;
+  }
+}
+
+/* Nearly twice the width on portrait phones, but never more than 760px of
+   art: past that the ridge grew with the screen (426px tall at 740px, more
+   than a phone on its side can show) and its empty foot with it. From
+   760px wide it is simply the width, as on tablets, so nothing jumps at
+   768. A phone on its side shows the whole ridge. */
+@media (max-width: 767px) {
+  .footer-ridge {
+    --ridge-art: max(100%, min(190%, 760px));
+  }
+}
+
+@media (max-width: 767px) and (max-height: 500px) and (orientation: landscape) {
+  .footer-ridge {
+    --ridge-art: 100%;
+  }
+}
+
+/* ---------- compact: shared photography ----------
+   The heroes, the CTA band and the footer ridge draw background.webp; the
+   <img>s pick a width with srcset/sizes. Nothing in CSS paints it. */
+
+/* ---------- compact: touch ----------
+   A tap leaves :hover stuck on touch screens, so the lift-on-hover moves
+   stay on devices that can actually hover. */
+@media (max-width: 1023px) and (hover: none) {
+  .nav-cta:hover,
+  .aud-grow__btn:hover,
+  .routes-strip__card:hover,
+  .routes-strip__card:focus-within,
+  .site-footer__social:hover {
+    transform: none;
+  }
+
+  .routes-strip__card:hover .routes-strip__link {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 1023px) and (prefers-reduced-motion: reduce) {
+  .mobile-menu {
+    transition: none;
+  }
+}
+
+/* ===== MOBILE & TABLET (<=1023px) — MOTION & INTERACTIVE COMPONENTS ===== */
+/* Below 1024px nothing on the site is driven by the scroll position: the
+   reader scrolls, the page moves, and that is all (SPEC 4 - no pinned
+   stages, no parallax, no card that changes as you pass it). This section
+   holds the compact form of every component that is scroll- or
+   script-driven on desktop. script.js asks the same query (compactQuery),
+   stands those components down while it matches and restores their desktop
+   state when the window grows past 1023px again.
+
+   - Three routes (home): the stage that widened one card at a time is three
+     open cards in reading order, joined by the route - an open start ring,
+     dotted leaders and the lit markers on each card's top edge.
+   - Our Areas (expertise): no pinned column and no stacking. The eight areas
+     follow one another, each under its own drawing, and the tab list is a
+     list of links down to them (the script swaps the tabs for links and
+     takes the tab ARIA off the panels).
+   - Parallax: the script drops --scroll-y, --hero-progress and
+     --ridge-progress instead of writing them, so every rule that reads them
+     rests at its top-of-page value; the band photos sit centred. The
+     compositor layers those effects kept are released below.
+   - Nothing sticks and no background is fixed (fixed is broken on iOS).
+   - Reveals: the section observer fires as an element arrives, whatever its
+     height (setupSectionReveal) - a 0.18 threshold never fires on an
+     element taller than about five screens.
+   - Less motion: the drawings are simply drawn; the rest already honours
+     prefers-reduced-motion. */
+
+/* ---------- compact: a still scene ----------
+   With the parallax off these layers never move, so they give their
+   compositor surfaces back - on a phone each one is memory. */
+@media (max-width: 1023px) {
+  .hero-bg,
+  .hero-ridges,
+  .hero-trail,
+  .hero-trail-points,
+  .hero-content,
+  .hero-stat__copy,
+  .ridge-edge::before,
+  .photo-break img,
+  .aud-bleed img {
+    will-change: auto;
+  }
+
+  .page--horizon .hz-photo img,
+  .page--horizon .hz-massif {
+    translate: none;
+    will-change: auto;
+  }
+
+  /* The hero glows are gradients that are already soft: a blur on top is
+     an offscreen pass over a large area of the first screen - about 1.1M
+     device pixels for the sun on a 3x phone - for nothing you can see.
+     Each fades out inside its own box instead (closest-side), in the
+     colours saturate(0.72) used to give it. */
+  .hero-glow__sun {
+    filter: none;
+    background: radial-gradient(closest-side at 48% 44%, rgba(231, 164, 121, 0.92), rgba(181, 102, 70, 0.7) 50%, rgba(123, 70, 50, 0.38) 76%, rgba(76, 41, 32, 0.16) 90%, transparent);
+  }
+
+  .page--expertise .hero-glow__sun {
+    background: radial-gradient(closest-side, rgba(237, 174, 138, 0.68), rgba(208, 108, 72, 0.41) 48%, rgba(141, 75, 53, 0.15) 80%, transparent);
+  }
+
+  .hero-glow__haze {
+    filter: none;
+    background: radial-gradient(closest-side, rgba(48, 84, 122, 0.28), rgba(48, 84, 122, 0.2) 55%, transparent);
+  }
+
+  .hero-climbers-sun,
+  .page--audience .hero-content::before {
+    filter: none;
+  }
+
+  /* On desktop the four stat notes surface under their figures as the hero
+     scrolls away, while the headline fades. The scene is still here, so
+     they would never surface: they are simply shown, on the land the home
+     hero gives them below. */
+  .hero-stat__copy {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  /* nothing pins: the pieces that are sticky on desktop go back in flow */
+  .audience-intro__grid {
+    position: relative;
+    top: auto;
+  }
+
+  .page--audience .aud-expertise__copy {
+    position: static;
+  }
+}
+
+/* ---------- compact: the home hero ----------
+   On desktop the stats stand at the hero's foot on the photo and their
+   notes surface on the navy land once the scroll has carried the scene up.
+   Nothing scrolls the scene here, so the hero is laid out in that scrolled
+   order, in the flow: the copy on the sky, the ridge with its climbers and
+   trail under it, and the stats on the land the ridge's navy runs into -
+   figures, labels and notes on solid ground, never on the sunset.
+
+   Three grid rows: the copy (tall enough on a tall screen that the land
+   starts at the fold), the ridge, the stats. The photo and its glow are
+   placed on rows 1-2 only (grid lines, not measurements) and the ridge
+   sinks its solid foot into row 3, so the photo always ends behind the
+   silhouette: no straight cut, no flat strip between photo and crest. The
+   band under the hero starts on the same navy, low enough that its truss
+   window stays clear of the notes.
+
+   The ridge art is drawn at the hero's full width - 2000x850, so it is
+   42.5vw tall - rather than 104% of a box that bleeds 2% past each side:
+   the bleed was for the parallax, which is off, and the trail overlay is
+   sized to the art, so it no longer reaches past the screen either. */
+@media (max-width: 1023px) {
+  .page--home .hero {
+    --hero-pad-top: calc(var(--nav-height) + clamp(48px, 10svh - 16px, 120px));
+    --hero-pad-bottom: clamp(32px, 8vw, 64px);
+    --ridge-art-h: 42.5vw;
+    --ridge-gap: clamp(16px, 6vw, 48px);
+    /* how deep the land reaches into the ridge's solid foot: the trail is
+       at most 61.4% down the art (its left end), and the figures keep 28px
+       clear of it */
+    --ridge-sink: max(0px, 16.5vw - 28px);
+    grid-template-rows:
+      minmax(calc(100svh - var(--hero-pad-top) - var(--ridge-gap) - var(--ridge-art-h) + var(--ridge-sink)), auto)
+      auto
+      auto;
+    min-height: 0;
+    padding: var(--hero-pad-top) var(--container-x) var(--hero-pad-bottom);
+  }
+
+  .page--home .hero-media,
+  .page--home .hero-glow {
+    grid-row: auto / 3;
+  }
+
+  /* the photo's lit valley sits behind the crest, not at the foot of the
+     box, where the picture is dark foreground rock */
+  .page--home .hero-bg {
+    top: -10%;
+    height: 150%;
+  }
+
+  .page--home .hero-content {
+    grid-row: 1;
+  }
+
+  /* one tracked line of capitals: balanced, so the last word never sits
+     alone on a narrow phone */
+  .page--home .hero-content .eyebrow {
+    font-size: var(--m-label);
+    text-wrap: balance;
+  }
+
+  /* the headline is on the shared scale like every other page's h1: the
+     old <=720px clamp (9.6vw) made it jump from 46px to 30px at 721px, so
+     a tablet showed a smaller headline than a phone */
+  .page--home .hero-title {
+    font-size: var(--m-h1);
+    line-height: 1.08;
+  }
+
+  .page--home .hero-ridges {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    grid-row: 2;
+    margin: var(--ridge-gap) calc(-1 * var(--container-x)) calc(-1 * var(--ridge-sink));
+    transform: none;
+  }
+
+  .page--home .hero-ridges__img {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  /* the glow behind the climbers is sized from them (5.6x) and centred just
+     right of them, which put its right edge past the screen */
+  .page--home .hero-climbers-sun {
+    max-width: 50vw;
+  }
+
+  .page--home .hero-stats {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    grid-row: 3;
+    align-self: start;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 40px clamp(16px, 2.6vw, 28px);
+    margin: 0;
+  }
+
+  /* the land: the ridge's own navy, from its foot to the band below */
+  .page--home .hero-stats::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    right: calc(-1 * var(--container-x));
+    bottom: calc(-1 * var(--hero-pad-bottom));
+    left: calc(-1 * var(--container-x));
+    background: var(--navy);
+  }
+
+  .page--home .hero-stat strong {
+    font-size: clamp(30px, 3.9vw, 34px);
+    white-space: nowrap;
+  }
+
+  .page--home .hero-stat span {
+    font-size: var(--m-label);
+  }
+
+  .page--home .hero-stat__copy {
+    position: static;
+    max-width: 30ch;
+    margin: 4px auto 0;
+    color: rgba(240, 235, 233, 0.7);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* The band is a window of truss photo between its ridge art, hung
+     upside down from the land, and the next section's route line. That
+     line climbs a fixed 118px into the band at the right edge while the
+     art scales with the width, so art drawn at a phone's width left only a
+     5-30px crag of photo above the line - a glitch, not a window. The art
+     is drawn at least 620px wide instead, its right end where the usual
+     104% ends and the rest overhanging the left edge: on every phone the
+     window's peak stands 80-100px clear of the line. From 596px it is the
+     usual 104%, so nothing jumps.
+
+     The window peaks 43.6% down the art (0.1853 of its width), and the
+     band comes up into the land until that peak is 24px under the hero.
+     The route line's right end is then 50px or more under the hero, clear
+     of the land that would cut its last stretch flat. */
+  .page--home .ridge-edge {
+    --edge-art: max(104%, 620px);
+    margin-top: calc(24px - 0.1853 * var(--edge-art));
+  }
+
+  .page--home .ridge-edge__img {
+    width: var(--edge-art);
+    max-width: none;
+    margin-left: min(-2%, 102% - var(--edge-art));
+  }
+
+  /* the truss is a sliver of window here: a width-appropriate file */
+  .page--home .ridge-edge::before {
+    background-image: url("arch-edge-truss-1024.webp");
+    background-image: -webkit-image-set(url("arch-edge-truss-1024.webp") 1x, url("arch-edge-truss.webp") 2x);
+    background-image: image-set(url("arch-edge-truss-1024.webp") 1x, url("arch-edge-truss.webp") 2x);
+  }
+}
+
+@media (max-width: 767px) {
+  .page--home .ridge-edge::before {
+    background-image: url("arch-edge-truss-640.webp");
+    background-image: -webkit-image-set(url("arch-edge-truss-640.webp") 1x, url("arch-edge-truss-1024.webp") 2x);
+    background-image: image-set(url("arch-edge-truss-640.webp") 1x, url("arch-edge-truss-1024.webp") 2x);
+  }
+}
+
+/* figures, labels and notes line up across a row whatever each label's
+   wrap: each stat's three parts share the row's tracks */
+@supports (grid-template-rows: subgrid) {
+  @media (max-width: 1023px) {
+    .page--home .hero-stat {
+      display: grid;
+      grid-row: span 3;
+      grid-template-rows: subgrid;
+      row-gap: 10px;
+      justify-items: center;
+      align-items: start;
+      align-content: start;
+    }
+  }
+}
+
+/* A phone, or any screen on its side: the photo is anchored to the ridge
+   rather than to the top of the hero, and sized by the width, so its sky
+   runs dark behind the copy and its lit valley sits just above the crest,
+   with the climbers against it - however tall the copy wraps. The copy
+   ends at least 0.4 of the picture above the crest (where the sky turns
+   bright), so the ridge comes down further on short screens; above the
+   picture's faded top edge is the hero's own navy. (A landscape tablet
+   anchored at the top put the tagline and the button on the bright band
+   of sky once the headline grew to the h1 size: 3.1:1.) */
+@media (max-width: 767px), (max-width: 1023px) and (orientation: landscape) {
+  .page--home .hero {
+    --photo-h: min(210vw, 800px);
+    --ridge-gap: max(clamp(16px, 6vw, 48px), 0.4 * var(--photo-h) + 16px - 21.25vw);
+  }
+
+  .page--home .hero-bg {
+    top: auto;
+    bottom: calc(0.5 * var(--ridge-art-h) - var(--ridge-sink) - 0.38 * var(--photo-h));
+    width: 100%;
+    max-width: none;
+    height: var(--photo-h);
+    object-position: 80% 50%;
+    transform: scaleX(-1);
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 18%);
+    mask-image: linear-gradient(180deg, transparent, #000 18%);
+  }
+
+  /* the low sun warms the valley behind the crest, not the copy */
+  .page--home .hero-glow__sun {
+    left: -10%;
+    bottom: calc(0.5 * var(--ridge-art-h) - var(--ridge-sink));
+    width: 120%;
+    height: min(70vw, 360px);
+  }
+}
+
+/* On its side the picture is drawn at its own proportions rather than up
+   to 800px tall: the copy keeps 0.4 of the picture between it and the
+   crest, so a taller picture pushed the ridge a screen of empty sky down. */
+@media (max-width: 1023px) and (orientation: landscape) {
+  .page--home .hero {
+    --photo-h: calc(100vw * 1696 / 2496);
+  }
+}
+
+/* A phone on its side has one short screen for the copy: the headline is
+   capped and the stack tightens, so "Choose your path" is on the first
+   screen and the ridge arrives just under the fold. */
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page--home .hero {
+    --hero-pad-top: calc(var(--nav-height) + clamp(12px, 8svh - 12px, 20px));
+  }
+
+  .page--home .hero-content .eyebrow {
+    margin-bottom: 14px;
+  }
+
+  .page--home .hero-title {
+    font-size: min(var(--m-h1), 36px);
+  }
+
+  .page--home .hero-tagline {
+    margin-top: 14px;
+  }
+
+  .page--home .primary-cta {
+    margin-top: 22px;
+  }
+}
+
+/* From 861px the checkpoints on the ridge drop their dotted leaders to the
+   stats, as on desktop. The checkpoints climb with the route - 0.2, 0.425,
+   0.64 and 0.85 of the art - while four even columns centre on 1/8, 3/8,
+   5/8 and 7/8, so the first two leaders hung in the gaps beside their
+   figures. Starting the columns 6% in puts every leader on its figure,
+   within 20px of its centre. */
+@media (min-width: 861px) and (max-width: 1023px) {
+  .page--home .hero-stats {
+    padding-left: 6%;
+  }
+}
+
+@media (max-width: 767px) {
+  .page--home .hero-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 36px;
+  }
+
+  .page--home .hero-stat strong {
+    font-size: clamp(26px, 16px + 3.2vw, 30px);
+  }
+}
+
+/* two columns under 375px squeeze each note to seven lines: one column
+   reads in three */
+@media (max-width: 374px) {
+  .page--home .hero-stats {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 32px;
+  }
+
+  /* "for Growth, Funding," no longer fits a line: the three set lines give
+     way to one balanced paragraph rather than leave "Funding," alone */
+  .page--home .hero-title span {
+    display: inline;
+  }
+}
+
+/* ---------- compact: Three routes (home) ----------
+   Three open cards read in order. The route that drops from the torn edge
+   to each card on desktop becomes one path down the left of the stack: it
+   starts on the open ring under the lede, and a dotted leader runs to the
+   lit marker on each card's top edge, level with the card's text.
+
+   The rules match every card, not .is-expanded: the markup folds the
+   Companies and Investors cards for the desktop stage, and without the
+   script (blocked, failed, or still on its way) they would stay 418px
+   empty boxes. So the open card's look - its border, its pill link, the
+   list's accent rule - is restated here for all three, and the markup
+   leaves the folded bodies out of inert: on desktop the script sets inert
+   on whichever cards the scroll folds, before the section is on screen.
+   The toggles are not needed. */
+@media (max-width: 1023px) {
+  .audience-intro {
+    /* where the route runs: the cards' text edge, through the marker centre */
+    --route-x: calc(22px + var(--marker-size) / 2);
+    transition: none;
+  }
+
+  /* the glows hold still and scroll with the section, not the viewport */
+  .audience-intro::before {
+    background:
+      radial-gradient(560px 420px at 50% 6%, rgb(var(--audience-r) var(--audience-g) var(--audience-b) / 0.18), transparent 70%),
+      radial-gradient(520px 460px at 88% 48%, rgb(var(--audience-r2) var(--audience-g2) var(--audience-b2) / 0.1), transparent 72%),
+      linear-gradient(180deg, #070912 0%, #161822 100%);
+    background-attachment: scroll;
+  }
+
+  .audience-intro__grid {
+    row-gap: 0;
+  }
+
+  .audience-intro__head {
+    width: 100%;
+    padding: 0;
+  }
+
+  /* the head's ring and line start the route on desktop; here the route
+     starts under the lede, where the cards begin */
+  .audience-intro__head::before,
+  .audience-intro__head::after {
+    content: none;
+  }
+
+  .audience-intro__eyebrow {
+    margin-bottom: 16px;
+    font-size: var(--m-label);
+  }
+
+  .audience-intro__title {
+    margin-bottom: 20px;
+    font-size: clamp(40px, 30px + 2.6vw, 56px);
+    line-height: 0.98;
+  }
+
+  /* the lede's rule stood 28px left of the route that starts under it, two
+     verticals that almost met; the lede sits on the title's edge instead
+     and the route starts on its own ring, over the cards' markers */
+  .audience-intro__lede {
+    max-width: 34em;
+    padding: 0;
+    border-left: 0;
+    font-size: var(--m-lede);
+  }
+
+  .audience-col {
+    gap: 0;
+  }
+
+  .audience-col__connector,
+  .audience-col--founders .audience-col__connector,
+  .audience-col--companies .audience-col__connector,
+  .audience-col--investors .audience-col__connector {
+    z-index: 3;
+    min-height: 0;
+    height: 44px;
+  }
+
+  .audience-col--founders .audience-col__connector {
+    height: 64px;
+  }
+
+  .audience-col__connector::before {
+    top: 0;
+    left: var(--route-x);
+  }
+
+  .audience-col__trail-marker {
+    display: none;
+  }
+
+  .audience-col__card-marker {
+    left: var(--route-x);
+  }
+
+  /* the open ring every line on the site starts on */
+  .audience-col--founders .audience-col__trail-marker {
+    display: block;
+    top: 12px;
+    width: var(--ring-size);
+    height: var(--ring-size);
+    left: var(--route-x);
+    background: transparent;
+    box-shadow:
+      inset 0 0 0 var(--ring-stroke) rgb(var(--audience-r) var(--audience-g) var(--audience-b) / 0.8),
+      0 0 0 var(--ring-halo) rgb(var(--audience-r) var(--audience-g) var(--audience-b) / 0.12);
+  }
+
+  .audience-col--founders .audience-col__connector::before {
+    top: calc(12px + var(--ring-size));
+  }
+
+  .audience-intro .preview[data-audience-card] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "head chart"
+      "copy copy"
+      "list list"
+      "cta cta";
+    align-items: start;
+    gap: 0 16px;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    padding: 26px 22px 24px;
+    overflow: visible;
+    background:
+      radial-gradient(340px 240px at 100% 0%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 72%),
+      linear-gradient(180deg, rgba(240, 235, 233, 0.07), rgba(240, 235, 233, 0.02));
+    border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+    box-shadow: 0 26px 60px -34px rgba(4, 6, 12, 0.8);
+    transition: none;
+  }
+
+  .audience-intro .preview[data-audience-card] .preview__chart {
+    grid-area: chart;
+    align-self: center;
+    width: clamp(72px, 22vw, 108px);
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    opacity: 1;
+    transition: none;
+  }
+
+  .audience-intro .preview__chart::after {
+    content: none;
+  }
+
+  .audience-intro .preview[data-audience-card] .preview__route {
+    width: 100%;
+    max-height: none;
+    margin: 0;
+  }
+
+  .audience-intro .preview[data-audience-card] .preview__head {
+    grid-area: head;
+    gap: 6px;
+    margin: 0;
+    align-items: flex-start;
+    text-align: left;
+    transform: none;
+    transition: none;
+  }
+
+  .audience-intro .preview[data-audience-card] .preview__num {
+    font-size: var(--m-label);
+  }
+
+  .audience-intro .preview[data-audience-card] .preview__name {
+    max-width: none;
+    font-size: clamp(27px, 22px + 1.2vw, 32px);
+    line-height: 1.08;
+    white-space: normal;
+  }
+
+  .audience-intro .preview[data-audience-card] .preview__hint {
+    display: block;
+    opacity: 1;
+    font-size: 15px;
+    transition: none;
+  }
+
+  .audience-intro .preview__toggle {
+    display: none;
+  }
+
+  /* the body's three parts join the card's own grid */
+  .audience-intro .preview[data-audience-card] .preview__body {
+    display: contents;
+    opacity: 1;
+  }
+
+  .audience-intro .preview[data-audience-card] .preview__body > * {
+    min-height: auto;
+    overflow: visible;
+    opacity: 1;
+    transform: none;
+  }
+
+  .audience-intro .preview[data-audience-card] .preview__copy {
+    grid-area: copy;
+    max-width: 60ch;
+    margin: 20px 0 0;
+    color: rgba(240, 235, 233, 0.84);
+    font-size: var(--m-body);
+    line-height: 1.6;
+    transition: none;
+  }
+
+  .audience-intro .preview[data-audience-card] .preview__list {
+    grid-area: list;
+    align-self: start;
+    gap: 10px;
+    max-height: none;
+    margin: 22px 0 0;
+    padding-top: 18px;
+    border-top-color: color-mix(in srgb, var(--accent) 42%, rgba(240, 235, 233, 0.12));
+    overflow: visible;
+    transition: none;
+  }
+
+  .audience-intro .preview[data-audience-card] .preview__list li {
+    padding-left: 20px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  /* the dash sits on the middle of the first line */
+  .audience-intro .preview[data-audience-card] .preview__list li::before {
+    top: 11px;
+  }
+
+  .audience-intro .preview[data-audience-card] .preview__cta {
+    grid-area: cta;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 52px;
+    margin-top: 26px;
+    padding: 14px 18px;
+    border: 1px solid color-mix(in srgb, var(--accent) 78%, rgba(255, 255, 255, 0.2));
+    border-radius: 999px;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 92%, #f0ebe9 8%), color-mix(in srgb, var(--accent) 82%, #070912 18%));
+    box-shadow:
+      0 16px 34px -24px var(--accent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    color: #070912;
+    font-size: var(--m-label);
+    letter-spacing: 0.18em;
+    transition:
+      color 240ms ease,
+      background 240ms ease,
+      border-color 240ms ease,
+      box-shadow 240ms ease;
+  }
+
+  .audience-intro .preview[data-audience-card] .preview__cta:hover {
+    border-color: color-mix(in srgb, var(--accent) 86%, #fff 14%);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 82%, #fff 18%), color-mix(in srgb, var(--accent) 90%, #070912 10%));
+    box-shadow:
+      0 20px 40px -22px var(--accent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.26);
+    color: #070912;
+    transform: translateY(-2px);
+  }
+
+  .audience-intro .preview[data-audience-card] .preview__cta:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--accent) 62%, #fff 38%);
+    outline-offset: 4px;
+  }
+}
+
+/* a 320px phone: the card gives its text a little more of the width, so
+   the longest link label still sits on one line */
+@media (max-width: 374px) {
+  .audience-intro {
+    --route-x: calc(16px + var(--marker-size) / 2);
+  }
+
+  .audience-intro .preview[data-audience-card] {
+    padding-inline: 16px;
+  }
+
+  .audience-intro .preview[data-audience-card] .preview__cta {
+    gap: 8px;
+    padding-inline: 10px;
+    letter-spacing: 0.12em;
+  }
+}
+
+/* Room for two columns in the card - a tablet, or a phone on its side: the
+   copy on the left, the list beside it, the drawing over the list and the
+   link under both, where its label has the width to stay on one line. One
+   column of copy that wide would run past 80 characters. */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .audience-intro {
+    --route-x: calc(32px + var(--marker-size) / 2);
+  }
+
+  .audience-col__connector,
+  .audience-col--founders .audience-col__connector,
+  .audience-col--companies .audience-col__connector,
+  .audience-col--investors .audience-col__connector {
+    height: 52px;
+  }
+
+  .audience-col--founders .audience-col__connector {
+    height: 72px;
+  }
+
+  .audience-intro .preview[data-audience-card] {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "head chart"
+      "copy list"
+      "cta cta";
+    column-gap: clamp(28px, 5vw, 56px);
+    padding: 32px;
+  }
+
+  .audience-intro .preview[data-audience-card] .preview__chart {
+    justify-self: end;
+    width: 128px;
+  }
+
+  /* side by side, the copy and the list start on one line: the list's
+     rule stood level with the copy's first line on its left, and its own
+     first item started 20px under it */
+  .audience-intro .preview[data-audience-card] .preview__list {
+    margin-top: 20px;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .audience-intro .preview[data-audience-card] .preview__cta {
+    justify-self: start;
+    width: auto;
+    margin-top: 30px;
+    padding-inline: 28px;
+  }
+}
+
+/* Desktop with scripting off. The markup no longer folds the Companies and
+   Investors bodies with a static inert (see above); on desktop the script
+   sets inert on whichever cards the scroll folds. With no script at all
+   the folded bodies are hidden instead, so their invisible links stay out
+   of the Tab order as before. With the script this never applies. */
+@media (min-width: 1024px) and (scripting: none) {
+  .preview:not(.is-expanded) .preview__body {
+    visibility: hidden;
+  }
+}
+
+/* ---------- compact: Our Areas (expertise) ----------
+   Eight areas in order, each a drawing, its title, its text and its list.
+   The drawings live in one stacked cell on desktop (.ex-art); here that box
+   steps aside (display: contents) and each drawing takes the grid row
+   above its own area, so the markup and the desktop stage stay untouched.
+   Rows: drawing n in row 2n-1, area n in row 2n - the panels follow .ex-art
+   in the markup, so area n is the (n+1)th child.
+
+   The tab list is shown only once the script has turned it into links
+   (.is-jump-list); without script the areas are simply all there. */
+@media (max-width: 1023px) {
+  .ex-areas__head {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    max-width: 680px;
+    margin: 0 0 clamp(32px, 8vw, 56px);
+  }
+
+  /* the section's h2 on the shared scale (never under its 34px desktop
+     floor) and its lede at lede size and measure: it was smaller than the
+     body text under it and ran to 100 characters a line on tablets */
+  .ex-areas__title {
+    font-size: max(var(--m-h2), 34px);
+    line-height: 1.1;
+  }
+
+  .ex-areas__lede {
+    max-width: 31em;
+    font-size: var(--m-lede);
+    line-height: 1.55;
+  }
+
+  .ex-areas__track,
+  .ex-areas__track.is-pinning {
+    padding: 0;
+  }
+
+  .ex-areas__body,
+  .ex-areas__body.is-pinned,
+  .ex-areas__body.is-parked {
+    position: static;
+    top: auto;
+    left: auto;
+    width: auto;
+    display: block;
+    max-width: none;
+    margin: 0;
+  }
+
+  /* the blank the parked column left on desktop does not exist here */
+  .page--expertise .ex-areas {
+    margin-bottom: 0;
+  }
+
+  .ex-areas__nav {
+    display: none;
+  }
+
+  .ex-areas__nav.is-jump-list {
+    display: block;
+    max-width: 560px;
+    margin: 0 0 clamp(48px, 12vw, 72px);
+  }
+
+  /* 44px rows, 8px apart (SPEC 4) */
+  .ex-areas__nav ul {
+    gap: 8px;
+    padding: 0;
+  }
+
+  /* the rail runs from the first stop to the last; nothing fills it */
+  .ex-areas__nav ul::before {
+    top: 22px;
+    bottom: 22px;
+  }
+
+  .ex-areas__nav ul::after {
+    content: none;
+  }
+
+  .ex-areas__jump {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-height: 44px;
+    padding: 6px 4px 6px 40px;
+    color: rgba(28, 20, 25, 0.78);
+    font: 400 var(--m-body) / 1.35 "Outfit", system-ui, sans-serif;
+    text-decoration: none;
+    transition: color 0.25s ease;
+  }
+
+  /* each stop on the rail is a flat open dot, the ends a size larger */
+  .ex-areas__jump::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    width: var(--rail-dot);
+    height: var(--rail-dot);
+    border-radius: 50%;
+    background: #f0ebe9;
+    box-shadow: inset 0 0 0 2px rgba(28, 20, 25, 0.3);
+    transform: translate(-50%, -50%);
+  }
+
+  .ex-areas__nav li:first-child .ex-areas__jump::before,
+  .ex-areas__nav li:last-child .ex-areas__jump::before {
+    width: var(--rail-dot-end);
+    height: var(--rail-dot-end);
+  }
+
+  .ex-areas__jump-label {
+    min-width: 0;
+  }
+
+  /* it leads down the page: the same arrow as the hero's Learn more */
+  .ex-areas__jump::after {
+    content: "";
+    flex: none;
+    width: 16px;
+    height: 16px;
+    margin-left: auto;
+    background: currentColor;
+    opacity: 0.55;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 4v12M6 12l4 4 4-4' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 4v12M6 12l4 4 4-4' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+
+  .ex-areas__jump:active {
+    color: #b3401a;
+  }
+
+  .ex-areas__jump:focus-visible {
+    outline: 2px solid #1c1419;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .ex-areas__panels {
+    --ex-draw-h: 84px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+  }
+
+  .ex-art {
+    --art-h: var(--ex-draw-h);
+    display: contents;
+  }
+
+  /* every drawing is drawn; one still below the fold waits (.is-pending)
+     and unwinds as it arrives - the transition lives on the drawn state */
+  .ex-art__thread,
+  .ex-art__thread.is-current,
+  .ex-art__thread.is-leaving {
+    grid-column: 1;
+    align-self: end;
+    height: var(--art-h);
+    margin: 0 0 20px;
+    visibility: visible;
+    /* without script there is no measured length: draw the whole stroke */
+    stroke-dasharray: var(--len, none);
+    stroke-dashoffset: 0;
+    transform: none;
+    transition: stroke-dashoffset 1400ms var(--thread-draw);
+    transition-delay: 0s;
+  }
+
+  .ex-art__thread.is-pending {
+    stroke-dashoffset: var(--len, 1200);
+    transition: none;
+  }
+
+  .ex-art__thread[data-thread="0"] { grid-row: 1; }
+  .ex-art__thread[data-thread="1"] { grid-row: 3; }
+  .ex-art__thread[data-thread="2"] { grid-row: 5; }
+  .ex-art__thread[data-thread="3"] { grid-row: 7; }
+  .ex-art__thread[data-thread="4"] { grid-row: 9; }
+  .ex-art__thread[data-thread="5"] { grid-row: 11; }
+  .ex-art__thread[data-thread="6"] { grid-row: 13; }
+  .ex-art__thread[data-thread="7"] { grid-row: 15; }
+
+  .ex-areas__panel:nth-child(2) { grid-row: 2; }
+  .ex-areas__panel:nth-child(3) { grid-row: 4; }
+  .ex-areas__panel:nth-child(4) { grid-row: 6; }
+  .ex-areas__panel:nth-child(5) { grid-row: 8; }
+  .ex-areas__panel:nth-child(6) { grid-row: 10; }
+  .ex-areas__panel:nth-child(7) { grid-row: 12; }
+  .ex-areas__panel:nth-child(8) { grid-row: 14; }
+  .ex-areas__panel:nth-child(9) { grid-row: 16; }
+
+  .ex-areas__panel,
+  .ex-areas__panels.is-stacked .ex-areas__panel {
+    grid-column: 1;
+    padding-bottom: clamp(56px, 14vw, 80px);
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition: none;
+    /* a link lands on the area with its drawing still in view */
+    scroll-margin-top: calc(var(--ex-draw-h) + 28px);
+  }
+
+  .ex-areas__panel:last-child {
+    padding-bottom: 0;
+  }
+
+  .ex-areas__panel[hidden] {
+    display: block;
+  }
+
+  .ex-areas__panel h3 {
+    margin-bottom: 12px;
+    font-size: clamp(24px, 19px + 1.4vw, 30px);
+    line-height: 1.18;
+  }
+
+  .ex-areas__panel > p {
+    max-width: var(--m-measure);
+    margin-bottom: 24px;
+    font-size: var(--m-body);
+  }
+
+  .ex-areas__list {
+    max-width: none;
+  }
+
+  .ex-areas__list li {
+    padding: 11px 0 11px 16px;
+    font-size: 15px;
+  }
+}
+
+/* 768px and up - tablets, and the larger phones on their side (844, 915):
+   the title across, the text beside the list - a title squeezed into a
+   half column broke the long ones word by word. A smaller phone on its
+   side (667x375) keeps the single column: in half of its width the list
+   rows wrap to two lines and the eight areas grow ~185px taller, on a
+   screen with the least height to spare. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .ex-areas__panels {
+    --ex-draw-h: 96px;
+  }
+
+  .ex-areas__panel,
+  .ex-areas__panel[hidden],
+  .ex-areas__panels.is-stacked .ex-areas__panel {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    column-gap: clamp(32px, 5vw, 56px);
+    align-items: start;
+  }
+
+  .ex-areas__panel h3 {
+    grid-column: 1 / -1;
+    margin-bottom: 20px;
+  }
+
+  .ex-areas__panel > p {
+    grid-column: 1;
+    margin-bottom: 0;
+  }
+
+  .ex-areas__panel .ex-areas__list {
+    grid-column: 2;
+  }
+}
+
+/* ---------- compact: touch and less motion ---------- */
+@media (max-width: 1023px) and (hover: none) {
+  .audience-intro .preview[data-audience-card] .preview__cta:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 1023px) and (hover: hover) {
+  .ex-areas__jump:hover {
+    color: #1c1419;
+  }
+}
+
+@media (max-width: 1023px) and (prefers-reduced-motion: reduce) {
+  .ex-art__thread,
+  .ex-art__thread.is-pending,
+  .ex-art__thread.is-current {
+    visibility: visible;
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+}

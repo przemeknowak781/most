@@ -43,38 +43,75 @@
     <div class="scroll-progress" aria-hidden="true"></div>
 
     <header class="top-nav" aria-label="Primary navigation">
-      <a class="wordmark" href="index.html" aria-label="MOST Partners home"><svg class="wordmark__logo" viewBox="0 0 160 58" role="img" aria-label="MOST Partners"><use href="#most-logo" /></svg></a>
+      <a class="wordmark" href="index.html" aria-label="MOST Partners home">
+        <svg class="wordmark__logo" viewBox="0 0 160 58" role="img" aria-label="MOST Partners">
+          <use href="#most-logo" />
+        </svg>
+      </a>
+
       <nav class="top-nav__menu top-nav__menu--left" aria-label="Primary sections">
         <a href="about-us.html">About us</a>
         <a href="expertise.html">Our Expertise</a>
         <a href="our-team.html">Our Team</a>
       </nav>
+
       <nav class="top-nav__menu top-nav__menu--right" aria-labelledby="nav-explore-as">
         <span class="top-nav__lead" id="nav-explore-as">explore as</span>
         <a href="for-founders.html">Founders</a>
         <a href="for-companies.html">Companies</a>
         <a href="for-investors.html" aria-current="page">Investors</a>
       </nav>
+
       <a class="nav-cta" href="contact.html">Contact us</a>
-      <button class="icon-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button>
+
+      <button class="icon-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span>
+        <span></span>
+      </button>
     </header>
 
-    <div class="mobile-menu" id="mobile-menu" hidden>
+    <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
       <div class="mobile-menu__panel">
         <div class="mobile-menu__top">
-          <a class="wordmark" href="index.html" aria-label="MOST Partners home"><svg class="wordmark__logo" viewBox="0 0 160 58" role="img" aria-label="MOST"><use href="#most-logo" /></svg></a>
-          <button class="close-button" type="button" aria-label="Close menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
+          <a class="wordmark" href="index.html" aria-label="MOST Partners home">
+            <svg class="wordmark__logo" viewBox="0 0 160 58" role="img" aria-label="MOST">
+              <use href="#most-logo" />
+            </svg>
+          </a>
+          <button class="close-button" type="button" aria-label="Close menu">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6l12 12M18 6 6 18" />
+            </svg>
+          </button>
         </div>
-        <nav class="mobile-menu__links" aria-label="Expanded mobile navigation">
-          <a href="about-us.html">About us</a>
-          <a href="expertise.html">Our Expertise</a>
-          <a href="our-team.html">Our Team</a>
-          <span class="mobile-menu__lead">explore as</span>
-          <a href="for-founders.html">Founders</a>
-          <a href="for-companies.html">Companies</a>
-          <a href="for-investors.html" aria-current="page">Investors</a>
+        <nav class="mobile-menu__links" aria-label="Site pages">
+          <ul class="mobile-menu__primary">
+            <li><a href="about-us.html">About us</a></li>
+            <li><a href="expertise.html">Our Expertise</a></li>
+            <li><a href="our-team.html">Our Team</a></li>
+          </ul>
+          <div class="mobile-menu__group">
+            <p class="mobile-menu__lead" id="mobile-menu-explore">explore as</p>
+            <ul class="mobile-menu__audience" aria-labelledby="mobile-menu-explore">
+              <li><a class="mobile-menu__route mobile-menu__route--founders" href="for-founders.html">Founders</a></li>
+              <li><a class="mobile-menu__route mobile-menu__route--companies" href="for-companies.html">Companies</a></li>
+              <li><a class="mobile-menu__route mobile-menu__route--investors" href="for-investors.html" aria-current="page">Investors</a></li>
+            </ul>
+          </div>
         </nav>
-        <a class="nav-cta" href="contact.html">Contact us</a>
+        <div class="mobile-menu__foot">
+          <a class="mobile-menu__cta" href="contact.html">
+            <span>Contact us</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10M11 6l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </a>
+          <div class="mobile-menu__contact">
+            <a class="mobile-menu__mail" href="mailto:bemost@mostpartners.com">bemost@mostpartners.com</a>
+            <a class="mobile-menu__social" href="#" aria-label="LinkedIn"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 6h3v11H3V6Zm1.5-3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM8 6h3v1.5c.5-1 1.6-1.7 3-1.7 2.2 0 3 1.4 3 3.8V17h-3v-6c0-1.4-.4-2-1.4-2-1 0-1.6.7-1.6 2v6H8V6Z" fill="currentColor"/></svg></a>
+          </div>
+        </div>
+        <div class="mobile-menu__ridge" aria-hidden="true">
+          <img src="gora-bez-tla-2000px.svg" width="2000" height="850" alt="" decoding="async" />
+        </div>
       </div>
     </div>
 
@@ -258,7 +295,7 @@
 
       <section class="aud-grow" aria-labelledby="aud-grow-title">
         <div class="aud-grow__bg" aria-hidden="true">
-          <img class="aud-grow__photo" src="background.webp" alt="" loading="lazy" decoding="async" />
+          <img class="aud-grow__photo" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, 100vw" width="2496" height="1696" alt="" loading="lazy" decoding="async" />
           <div class="aud-grow__wash"></div>
         </div>
         <div class="aud-grow__ridge" aria-hidden="true"><img src="gora-bez-tla-2000px.svg" width="2000" height="850" alt="" loading="lazy" decoding="async" /></div>
@@ -274,7 +311,7 @@
       </section>
     </main>
     <div class="footer-ridge" aria-hidden="true">
-      <img class="footer-ridge__bg" src="background.webp" alt="" loading="lazy" decoding="async" />
+      <img class="footer-ridge__bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, 100vw" width="2496" height="1696" alt="" loading="lazy" decoding="async" />
       <img class="footer-ridge__overlay" src="footer.svg" width="1440" height="437" alt="" loading="lazy" decoding="async" />
     </div>
 
@@ -283,7 +320,11 @@
       <div class="site-footer__inner">
         <div class="site-footer__top">
           <div class="site-footer__brand">
-            <a class="wordmark" href="index.html" aria-label="MOST Partners home"><svg class="wordmark__logo" viewBox="0 0 160 58" role="img" aria-label="MOST Partners"><use href="#most-logo" /></svg></a>
+            <a class="wordmark" href="index.html" aria-label="MOST Partners home">
+              <svg class="wordmark__logo" viewBox="0 0 160 58" role="img" aria-label="MOST Partners">
+                <use href="#most-logo" />
+              </svg>
+            </a>
             <p>Long-term partners in law and business.</p>
           </div>
           <nav class="site-footer__col" aria-label="Pages">

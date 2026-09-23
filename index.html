@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js" defer></script>
   </head>
-  <body>
+  <body class="page--home">
     <a class="skip-link" href="#main">Skip to content</a>
     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
       <symbol id="most-logo" viewBox="0 0 160 58">
@@ -83,7 +83,7 @@
       </button>
     </header>
 
-    <div class="mobile-menu" id="mobile-menu" hidden>
+    <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
       <div class="mobile-menu__panel">
         <div class="mobile-menu__top">
           <a class="wordmark" href="index.html" aria-label="MOST Partners home">
@@ -97,23 +97,41 @@
             </svg>
           </button>
         </div>
-        <nav class="mobile-menu__links" aria-label="Expanded mobile navigation">
-          <a href="about-us.html">About us</a>
-          <a href="expertise.html">Our Expertise</a>
-          <a href="our-team.html">Our Team</a>
-          <span class="mobile-menu__lead">explore as</span>
-          <a href="for-founders.html">Founders</a>
-          <a href="for-companies.html">Companies</a>
-          <a href="for-investors.html">Investors</a>
+        <nav class="mobile-menu__links" aria-label="Site pages">
+          <ul class="mobile-menu__primary">
+            <li><a href="about-us.html">About us</a></li>
+            <li><a href="expertise.html">Our Expertise</a></li>
+            <li><a href="our-team.html">Our Team</a></li>
+          </ul>
+          <div class="mobile-menu__group">
+            <p class="mobile-menu__lead" id="mobile-menu-explore">explore as</p>
+            <ul class="mobile-menu__audience" aria-labelledby="mobile-menu-explore">
+              <li><a class="mobile-menu__route mobile-menu__route--founders" href="for-founders.html">Founders</a></li>
+              <li><a class="mobile-menu__route mobile-menu__route--companies" href="for-companies.html">Companies</a></li>
+              <li><a class="mobile-menu__route mobile-menu__route--investors" href="for-investors.html">Investors</a></li>
+            </ul>
+          </div>
         </nav>
-        <a class="nav-cta" href="contact.html">Contact us</a>
+        <div class="mobile-menu__foot">
+          <a class="mobile-menu__cta" href="contact.html">
+            <span>Contact us</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10M11 6l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </a>
+          <div class="mobile-menu__contact">
+            <a class="mobile-menu__mail" href="mailto:bemost@mostpartners.com">bemost@mostpartners.com</a>
+            <a class="mobile-menu__social" href="#" aria-label="LinkedIn"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 6h3v11H3V6Zm1.5-3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM8 6h3v1.5c.5-1 1.6-1.7 3-1.7 2.2 0 3 1.4 3 3.8V17h-3v-6c0-1.4-.4-2-1.4-2-1 0-1.6.7-1.6 2v6H8V6Z" fill="currentColor"/></svg></a>
+          </div>
+        </div>
+        <div class="mobile-menu__ridge" aria-hidden="true">
+          <img src="gora-bez-tla-2000px.svg" width="2000" height="850" alt="" decoding="async" />
+        </div>
       </div>
     </div>
 
     <main id="main" tabindex="-1">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-media" aria-hidden="true">
-          <img class="hero-bg" src="background.webp" alt="" decoding="async" />
+          <img class="hero-bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, 1700px" width="2496" height="1696" alt="" decoding="async" />
           <div class="hero-wash"></div>
           <div class="hero-vignette"></div>
           <div class="hero-noise"></div>
@@ -276,7 +294,7 @@
                 <span class="preview__toggle-label">read more</span>
                 <span class="preview__toggle-icon" aria-hidden="true"></span>
               </button>
-              <div class="preview__body" inert>
+              <div class="preview__body">
                 <p class="preview__copy">
                   We take care of the legal processes that each business needs, so you can scale and expand with confidence. From commercial contracts to cross-border transactions and complex deals&nbsp;— we support operational, structural, and international growth at every&nbsp;stage.
                 </p>
@@ -320,7 +338,7 @@
                 <span class="preview__toggle-label">read more</span>
                 <span class="preview__toggle-icon" aria-hidden="true"></span>
               </button>
-              <div class="preview__body" inert>
+              <div class="preview__body">
                 <p class="preview__copy">
                   We structure, negotiate, and close deals so you can focus on sourcing opportunities and maximising value. Partner with us to turn potential into performance&nbsp;— and investments into lasting&nbsp;returns.
                 </p>
@@ -527,7 +545,7 @@
 
       <section class="aud-grow" aria-labelledby="aud-grow-title">
         <div class="aud-grow__bg" aria-hidden="true">
-          <img class="aud-grow__photo" src="background.webp" alt="" loading="lazy" decoding="async" />
+          <img class="aud-grow__photo" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, 1700px" width="2496" height="1696" alt="" loading="lazy" decoding="async" />
           <div class="aud-grow__wash"></div>
         </div>
         <div class="aud-grow__ridge" aria-hidden="true"><img src="gora-bez-tla-2000px.svg" width="2000" height="850" alt="" loading="lazy" decoding="async" /></div>
@@ -544,7 +562,7 @@
     </main>
 
     <div class="footer-ridge" aria-hidden="true">
-      <img class="footer-ridge__bg" src="background.webp" alt="" loading="lazy" decoding="async" />
+      <img class="footer-ridge__bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, 1700px" width="2496" height="1696" alt="" loading="lazy" decoding="async" />
       <img class="footer-ridge__overlay" src="footer.svg" width="1440" height="437" alt="" loading="lazy" decoding="async" />
     </div>
 

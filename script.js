@@ -9,6 +9,26 @@ function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
 }
 
+function clearCssVar(el, name) {
+  if (!el || el.style.getPropertyValue(name) === "") return;
+  el.style.removeProperty(name);
+}
+
+/* Below 1024px the site is read on phones and tablets, and nothing on it
+   follows the scroll position: no parallax, no pinned stage, no card that
+   changes as you pass it. The reader scrolls and the page simply moves.
+   Everything that is scroll-driven on desktop asks this query, stands down
+   while it matches, and puts its desktop state back when the window grows
+   past it again (a rotated tablet, a resized browser). The layout for those
+   components is in the stylesheet's MOTION & INTERACTIVE COMPONENTS
+   section. */
+const compactQuery = window.matchMedia("(max-width: 1023px)");
+
+function onCompactChange(fn) {
+  if (compactQuery.addEventListener) compactQuery.addEventListener("change", fn);
+  else if (compactQuery.addListener) compactQuery.addListener(fn);
+}
+
 // All coords use the GORA SVG viewBox (2000 x 850). Trail SVG is positioned/sized
 // to match the gora image rect at runtime, so trail path, dots, leaders, and climbers
 // all live in the same coordinate space and stay aligned across viewport changes.
@@ -127,6 +147,13 @@ function setupHeroTrail() {
     // in lockstep with it (was causing 3-4x scheduleTrailOverlay calls).
     setupHeroTrail._observer = new ResizeObserver(() => scheduleTrailOverlay(true));
     const ridgesImg = document.querySelector(".hero-ridges__img");
+    /* The ridge hangs from the hero's foot, so a hero that grows or shrinks
+       moves it without resizing it - late fonts rewrapping the copy, or the
+       stats taking a line more after a rotation. Below 1024px nothing else
+       re-seats the trail (it no longer follows the scroll), so the hero is
+       watched as well. */
+    const heroBox = ridgesImg && ridgesImg.closest(".hero");
+    if (heroBox) setupHeroTrail._observer.observe(heroBox);
     if (ridgesImg) {
       setupHeroTrail._observer.observe(ridgesImg);
       ridgesImg.addEventListener("load", () => scheduleTrailOverlay(true));
@@ -185,9 +212,11 @@ function syncTrailContainersToRidge() {
   }
 }
 
-/* Parked elements (display: none in the stylesheet) are left alone; the
-   answer is read once per element, as the stylesheet does not change it. */
-const parkedCache = new WeakMap();
+/* Parked elements (display: none in the stylesheet) are left alone. The
+   answer is read once per element and layout: a resize can cross a
+   breakpoint that parks or brings back an element (the climbers on a
+   phone turned on its side), so the resize handler starts it afresh. */
+let parkedCache = new WeakMap();
 function shownOrNull(el) {
   if (!el) return null;
   if (!parkedCache.has(el)) parkedCache.set(el, getComputedStyle(el).display === "none");
@@ -320,27 +349,40 @@ const scrollProgressEl = document.querySelector(".scroll-progress");
 /* Every read first, then every write - and each value is written on the one
    element whose subtree uses it. A custom property set on <html> is
    inherited by the whole document, so writing these there on every frame
-   restyled every element twice a frame. */
+   restyled every element twice a frame.
+
+   Below 1024px the scene holds still: the hero photo, its ridge and glow,
+   the copy fade, the ridge-edge band and the horizon photos all read these
+   properties, so instead of writing them the script drops them and every
+   rule falls back to its resting value - the page as it stands at the top.
+   The layout reads that only the parallax needs are skipped too. */
 function updateScroll() {
   const scrollY = window.scrollY || 0;
   const scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
   const vh = window.innerHeight || 1;
-  const heroHeight = heroEl ? heroEl.offsetHeight || vh : 0;
-  const edgeRect = ridgeEdgeEl ? ridgeEdgeEl.getBoundingClientRect() : null;
+  const still = compactQuery.matches;
+  const heroHeight = heroEl && !still ? heroEl.offsetHeight || vh : 0;
+  const edgeRect = ridgeEdgeEl && !still ? ridgeEdgeEl.getBoundingClientRect() : null;
 
   const scrollProgress = Math.min(1, scrollY / Math.max(1, scrollHeight - vh));
   if (scrollProgressEl) setCssVar(scrollProgressEl, "--scroll-progress", scrollProgress.toFixed(4));
-  if (heroEl) {
-    setCssVar(heroEl, "--scroll-y", `${scrollY}px`);
-    setCssVar(heroEl, "--hero-progress", Math.min(1, Math.max(0, scrollY / heroHeight)).toFixed(4));
-  }
-  if (edgeRect) {
-    const ridgeProgress = Math.min(1, Math.max(0, (vh - edgeRect.top) / (edgeRect.height + vh)));
-    setCssVar(ridgeEdgeEl, "--ridge-progress", ridgeProgress.toFixed(4));
+  if (still) {
+    clearCssVar(heroEl, "--scroll-y");
+    clearCssVar(heroEl, "--hero-progress");
+    clearCssVar(ridgeEdgeEl, "--ridge-progress");
+  } else {
+    if (heroEl) {
+      setCssVar(heroEl, "--scroll-y", `${scrollY}px`);
+      setCssVar(heroEl, "--hero-progress", Math.min(1, Math.max(0, scrollY / heroHeight)).toFixed(4));
+    }
+    if (edgeRect) {
+      const ridgeProgress = Math.min(1, Math.max(0, (vh - edgeRect.top) / (edgeRect.height + vh)));
+      setCssVar(ridgeEdgeEl, "--ridge-progress", ridgeProgress.toFixed(4));
+    }
   }
 
   if (topNav) topNav.classList.toggle("is-scrolled", scrollY > 12);
-  if (window.updateParallax) window.updateParallax();
+  if (!still && window.updateParallax) window.updateParallax();
 }
 
 function setupSectionReveal() {
@@ -352,47 +394,181 @@ function setupSectionReveal() {
     return;
   }
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add("is-visible");
-        observer.unobserve(entry.target);
-      });
-    },
-    { threshold: 0.18 }
-  );
+  /* On desktop a section shows once 18% of it is on screen. A ratio cannot
+     pass the share of the element the screen can hold, so on a phone -
+     a section in landscape can be six screens tall - it never fired and
+     the section's content stayed invisible. Below 1024px it shows as it
+     arrives instead: once its top is past the lower eighth of the screen,
+     whatever its height. The observer is rebuilt for whatever is still
+     hidden when the window crosses 1024px. */
+  const pending = new Set(targets);
+  let observer = null;
 
-  targets.forEach((el) => observer.observe(el));
+  function watch() {
+    if (observer) observer.disconnect();
+    observer = null;
+    if (!pending.size) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          pending.delete(entry.target);
+          io.unobserve(entry.target);
+        });
+      },
+      compactQuery.matches ? { threshold: 0, rootMargin: "0px 0px -12% 0px" } : { threshold: 0.18 }
+    );
+    pending.forEach((el) => io.observe(el));
+    observer = io;
+  }
+
+  watch();
+  onCompactChange(watch);
 }
 
+/* Below 1024px the header folds into one button that opens a full-screen
+   modal dialog. While it is open it behaves as a modal must: everything
+   behind it is inert (out of the tab order and the accessibility tree), the
+   page does not scroll underneath, Tab cycles inside it, Esc closes it, and
+   focus goes to the close button - which sits exactly where the menu button
+   was - and comes back to the menu button afterwards. The scroll lock is
+   overflow on the root rather than a fixed body, so closing never has to
+   put the reader back where they were: they never left. */
 function setupMobileMenu() {
-  const menu = document.querySelector(".mobile-menu");
-  const openButton = document.querySelector(".icon-button");
-  const closeButton = document.querySelector(".close-button");
-  const links = document.querySelectorAll(".mobile-menu a");
+  const menu = document.getElementById("mobile-menu");
+  const openButton = document.querySelector(".top-nav .icon-button");
+  const closeButton = menu && menu.querySelector(".close-button");
 
   if (!menu || !openButton || !closeButton) return;
 
-  function setOpen(isOpen) {
-    menu.hidden = !isOpen;
-    document.body.classList.toggle("menu-open", isOpen);
-    openButton.setAttribute("aria-expanded", String(isOpen));
+  const root = document.documentElement;
+  const desktop = window.matchMedia("(min-width: 1024px)");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let inerted = [];
+  let hideTimer = 0;
+
+  const isOpen = () => menu.classList.contains("is-open");
+  const focusables = () =>
+    Array.from(menu.querySelectorAll("a[href], button:not([disabled])")).filter((el) => el.getClientRects().length);
+
+  function onKeydown(event) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      close();
+      return;
+    }
+    if (event.key !== "Tab") return;
+    /* inert already keeps focus off the page; this keeps it off the browser
+       chrome too, so Tab and Shift+Tab simply go round the menu */
+    const items = focusables();
+    if (!items.length) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    const inside = menu.contains(document.activeElement);
+    if (event.shiftKey && (document.activeElement === first || !inside)) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && (document.activeElement === last || !inside)) {
+      event.preventDefault();
+      first.focus();
+    }
   }
 
-  openButton.addEventListener("click", () => setOpen(true));
-  closeButton.addEventListener("click", () => setOpen(false));
-  links.forEach((link) => link.addEventListener("click", () => setOpen(false)));
+  function open() {
+    if (isOpen()) return;
+    window.clearTimeout(hideTimer);
+    menu.hidden = false;
+    menu.inert = false;
+    inerted = Array.from(document.body.children).filter(
+      (el) => el !== menu && !el.inert && !/^(SCRIPT|STYLE|TEMPLATE)$/.test(el.tagName)
+    );
+    inerted.forEach((el) => (el.inert = true));
+    root.classList.add("menu-open");
+    document.body.classList.add("menu-open");
+    openButton.setAttribute("aria-expanded", "true");
+    /* commit the closed styles first, or the fade-in has nothing to run from */
+    menu.getBoundingClientRect();
+    menu.classList.add("is-open");
+    closeButton.focus({ preventScroll: true });
+    document.addEventListener("keydown", onKeydown);
+  }
 
-  window.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") setOpen(false);
+  function finishClose() {
+    if (!isOpen()) menu.hidden = true;
+  }
+
+  function close(restoreFocus = true) {
+    if (!isOpen()) return;
+    menu.classList.remove("is-open");
+    /* still fading out: not reachable, not tappable */
+    menu.inert = true;
+    inerted.forEach((el) => (el.inert = false));
+    inerted = [];
+    root.classList.remove("menu-open");
+    document.body.classList.remove("menu-open");
+    openButton.setAttribute("aria-expanded", "false");
+    document.removeEventListener("keydown", onKeydown);
+    if (restoreFocus) openButton.focus({ preventScroll: true });
+    window.clearTimeout(hideTimer);
+    /* the fade only exists below 1024px: past it (a tablet rotated with the
+       menu open) the sheet has no compact styles left and must go at once */
+    if (reducedMotion.matches || !compactQuery.matches) finishClose();
+    else hideTimer = window.setTimeout(finishClose, 320);
+  }
+
+  openButton.addEventListener("click", open);
+  closeButton.addEventListener("click", () => close());
+  menu.addEventListener("transitionend", (event) => {
+    if (event.target === menu && event.propertyName === "opacity") finishClose();
+  });
+  /* a link to another page or an anchor on this one: either way the menu
+     has done its job. A placeholder (href="#", the LinkedIn profile until
+     its address is confirmed) goes nowhere, so the menu stays open. */
+  menu.querySelectorAll('a[href]:not([href="#"])').forEach((link) => link.addEventListener("click", () => close()));
+
+  /* the dialog only exists below 1024px; growing the window past that (a
+     rotated tablet, a resized browser) puts the desktop header back. Focus
+     inside the menu would be left on an element that is about to be
+     hidden and fall to <body>, and the next Tab would skip the header, so
+     it moves to the same link in the desktop header (the wordmark when
+     there is none). The header is only reachable once close() has lifted
+     its inert. */
+  const onBreakpoint = (event) => {
+    if (!event.matches || !isOpen()) return;
+    const active = document.activeElement;
+    const hadFocus = active && menu.contains(active);
+    close(false);
+    if (!hadFocus) return;
+    const header = document.querySelector(".top-nav");
+    if (!header) return;
+    const href = active.getAttribute("href");
+    const twin =
+      (href && Array.from(header.querySelectorAll("a[href]")).find((a) => a.getAttribute("href") === href && a.getClientRects().length)) ||
+      header.querySelector(".wordmark");
+    if (twin) twin.focus({ preventScroll: true });
+  };
+  if (desktop.addEventListener) desktop.addEventListener("change", onBreakpoint);
+  else if (desktop.addListener) desktop.addListener(onBreakpoint);
+}
+
+/* LinkedIn, Privacy Policy and Terms still point at "#" until the client
+   confirms their addresses. Following one scrolls the reader back to the top
+   of the page - on a phone, a whole long page - so below 1024px a
+   placeholder simply stays put. The real fix is the address in the markup. */
+function setupPlaceholderLinks() {
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest && event.target.closest('a[href="#"]');
+    if (link && compactQuery.matches) event.preventDefault();
   });
 }
 
 let ticking = false;
 
 /* The hero trail tracks a ridge that moves with parallax, so it only needs
-   re-measuring while the hero is on screen; coming back re-seats it. */
+   re-measuring while the hero is on screen; coming back re-seats it. Below
+   1024px the ridge does not move with the scroll, so the trail is only
+   re-seated when the layout changes (resize, rotation, fonts, load). */
 let heroInView = true;
 if (heroEl && "IntersectionObserver" in window) {
   new IntersectionObserver((entries) => {
@@ -408,7 +584,7 @@ window.addEventListener(
 
     window.requestAnimationFrame(() => {
       updateScroll();
-      if (heroInView) scheduleTrailOverlay();
+      if (heroInView && !compactQuery.matches) scheduleTrailOverlay();
       ticking = false;
     });
     ticking = true;
@@ -421,6 +597,7 @@ window.addEventListener("resize", () => {
   if (resizeRaf) return;
   resizeRaf = window.requestAnimationFrame(() => {
     resizeRaf = 0;
+    parkedCache = new WeakMap();
     updateScroll();
     scheduleTrailOverlay(true);
   });
@@ -513,13 +690,58 @@ function setupAudienceTriptych() {
   }
 
   function measure() {
+    if (compactQuery.matches) return;
     const rect = section.getBoundingClientRect();
     sectionTop = (window.scrollY || 0) + rect.top;
     sectionHeight = section.offsetHeight || window.innerHeight;
     sectionScrollable = Math.max(1, sectionHeight - window.innerHeight);
   }
 
+  /* Below 1024px there is no stage: the three cards are read one after
+     another, every one of them open (the stylesheet lays them out and hides
+     the toggles), and the backdrop holds still. The scroll is not asked
+     anything. Growing past 1024px hands the cards back to the scroll, which
+     sets every class and attribute again from where the reader is - the
+     same state a fresh load at that position would have. */
+  let compactMode = null;
+
+  function openAll() {
+    activeIndex = null;
+    chosen = null;
+    root.classList.remove("has-no-active");
+    cards.forEach((card, idx) => {
+      root.classList.remove(`is-active-${idx}`);
+      card.classList.add("is-expanded");
+      card.classList.remove("is-active");
+      const toggle = card.querySelector("[data-audience-toggle]");
+      if (toggle) toggle.setAttribute("aria-expanded", "true");
+      const body = card.querySelector(".preview__body");
+      if (body) body.inert = false;
+      const label = toggle?.querySelector(".preview__toggle-label");
+      if (label) label.textContent = "show less";
+    });
+    audienceThemes.forEach((theme) => section.classList.remove(`is-audience-${theme}`));
+    ["--audience-bg-x", "--audience-bg-y", "--audience-bg-sweep", "--audience-title-bg-x", "--audience-title-bg-y", "--audience-title-bg-sweep", "--audience-bg-alpha"]
+      .forEach((name) => clearCssVar(section, name));
+  }
+
+  function syncMode() {
+    const compact = compactQuery.matches;
+    if (compact === compactMode) return;
+    compactMode = compact;
+    if (compact) {
+      openAll();
+      return;
+    }
+    activeIndex = null;
+    chosen = null;
+    measure();
+    updateFromScroll();
+    scheduleAudienceConnectors();
+  }
+
   function updateFromScroll() {
+    if (compactMode) return;
     const scrollY = window.scrollY || 0;
     const vh = window.innerHeight || 1;
     if (chosen !== null) {
@@ -550,7 +772,7 @@ function setupAudienceTriptych() {
 
   let raf = 0;
   function scheduleUpdate() {
-    if (raf) return;
+    if (raf || compactMode) return;
     raf = window.requestAnimationFrame(() => {
       raf = 0;
       updateFromScroll();
@@ -561,17 +783,21 @@ function setupAudienceTriptych() {
     const toggle = card.querySelector("[data-audience-toggle]");
     if (!toggle) return;
     card.addEventListener("transitionend", () => {
+      if (compactMode) return;
       measure();
       scheduleAudienceConnectors();
     });
     toggle.addEventListener("click", (e) => {
       e.preventDefault();
+      if (compactMode) return;
       /* show less closes the card; read more opens it */
       chosen = card.classList.contains("is-expanded") ? -1 : cards.indexOf(card);
       setActiveCard(chosen);
     });
   });
 
+  syncMode();
+  onCompactChange(syncMode);
   measure();
   updateFromScroll();
   window.addEventListener("scroll", scheduleUpdate, { passive: true });
@@ -657,7 +883,10 @@ function setupAudienceConnectors() {
     return cachedPseudo;
   }
 
+  /* below 1024px the connectors are short leaders between stacked cards,
+     drawn by the stylesheet alone; there is no edge for them to reach */
   function update() {
+    if (compactQuery.matches) return;
     const sectionRect = section.getBoundingClientRect();
     if (!sectionRect.width) return;
 
@@ -866,7 +1095,18 @@ function setupParallax() {
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reducedMotion) return;
 
+  /* Below 1024px the photos do not drift: each one sits centred in its band,
+     where the stylesheet puts it, and the scroll handler does not call in.
+     Growing past 1024px places them again from the scroll position. */
+  let resting = false;
+
   function tick() {
+    if (compactQuery.matches) {
+      if (!resting) images.forEach((img) => (img.style.transform = ""));
+      resting = true;
+      return;
+    }
+    resting = false;
     const vh = window.innerHeight;
     for (let i = 0; i < images.length; i++) {
       const img = images[i];
@@ -889,12 +1129,14 @@ function setupParallax() {
 
   window.updateParallax = tick;
   tick(); // Apply immediately on load
+  onCompactChange(tick);
 }
 
 setupParallax();
 updateScroll();
 setupSectionReveal();
 setupMobileMenu();
+setupPlaceholderLinks();
 setupHeroTrail();
 setupAudienceTriptych();
 setupAudienceConnectors();
@@ -920,7 +1162,9 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
 
    Without JS the markup is what it always was - topic one, the rest hidden.
    The stacking that makes the sticky column a constant height is applied
-   here, on the way in, so that fallback stays intact. */
+   here, on the way in, so that fallback stays intact.
+
+   Below 1024px none of this runs: see "compact" at the end. */
 (() => {
   const track = document.querySelector(".ex-areas__track");
   const stage = document.querySelector(".ex-areas__body");
@@ -1076,6 +1320,8 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
   };
 
   const read = () => {
+    syncMode();
+    if (compactMode) return;
     const g = geometry();
     if (!g) {
       track.style.setProperty("--ex-progress", "0");
@@ -1146,7 +1392,9 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     });
   };
 
-  addEventListener("scroll", schedule, { passive: true });
+  addEventListener("scroll", () => {
+    if (!compactMode) schedule();
+  }, { passive: true });
   /* A new layout can change the answer, so the test is run again from
      scratch - including putting the column back in flow so its pin offset
      and height can be measured afresh. */
@@ -1170,6 +1418,10 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
   const lastPanel = panels[panels.length - 1];
   const slack = () => {
     if (!section) return;
+    if (compactMode) {
+      setCssVar(section, "--ex-park-slack", "0px");
+      return;
+    }
     const g = geometry();
     let px = 0;
     if (g) {
@@ -1190,6 +1442,132 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     }).observe(stage);
   }
   if (document.fonts) document.fonts.ready.then(slack);
+
+  /* ---------- compact ----------
+     Below 1024px there is no pinned column and the scroll chooses nothing.
+     The eight areas are read one after another, each under its own drawing
+     (the stylesheet lays them out), and the tab list becomes what a reader
+     on a phone needs from it: links down to the areas. The widget's ARIA
+     leaves with the widget - the links sit in a plain navigation list, the
+     panels are plain blocks under their own headings, and none of them is
+     inert, hidden or a tab stop. Growing past 1023px puts the tabs, their
+     roles and the stacking back, and the scroll picks the topic again, as a
+     fresh load at that position would.
+
+     The tab buttons keep their listeners while they are out of the page, so
+     putting them back is all the restoring they need. */
+  const tabItems = tabs.map((tab) => tab.parentElement);
+  const tabList = tabItems[0] ? tabItems[0].parentElement : null;
+  const tabListAttrs = tabList
+    ? ["role", "aria-orientation", "aria-labelledby"].map((name) => [name, tabList.getAttribute(name)])
+    : [];
+  const jumps = tabs.map((tab, i) => {
+    const link = document.createElement("a");
+    const label = document.createElement("span");
+    link.className = "ex-areas__jump";
+    link.href = `#${panels[i].id}`;
+    label.className = "ex-areas__jump-label";
+    tab.childNodes.forEach((node) => label.appendChild(node.cloneNode(true)));
+    link.appendChild(label);
+    return link;
+  });
+  const titleId = tabList ? tabList.getAttribute("aria-labelledby") : null;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let compactMode = null;
+  let drawIo = null;
+
+  /* A drawing below the fold waits undrawn and unwinds as it arrives, the
+     same single stroke the desktop threads draw; one already on screen is
+     simply there. Without this (no observer, less motion) all are drawn. */
+  const drawOnArrival = () => {
+    if (!threads.length || !("IntersectionObserver" in window) || reduceMotion.matches) return;
+    const fold = window.innerHeight * 0.85;
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.remove("is-pending");
+          io.unobserve(entry.target);
+        }),
+      { rootMargin: "0px 0px -15% 0px" }
+    );
+    threads.forEach((thread) => {
+      if (thread.getBoundingClientRect().top < fold) return;
+      thread.classList.add("is-pending");
+      io.observe(thread);
+    });
+    drawIo = io;
+  };
+
+  function syncMode() {
+    const compact = compactQuery.matches;
+    if (compact === compactMode) return;
+    compactMode = compact;
+    const focused = document.activeElement;
+
+    if (compact) {
+      clearTimeout(holdTimer);
+      held = -1;
+      index = -1;
+      setPin("", { travel: 0 });
+      carry = "sticky";
+      strikes = 0;
+      track.style.setProperty("--ex-progress", "0");
+      setCssVar(section, "--ex-park-slack", "0px");
+      wrap.classList.remove("is-stacked");
+      tabListAttrs.forEach(([name]) => tabList.removeAttribute(name));
+      if (nav) {
+        nav.classList.add("is-jump-list");
+        nav.setAttribute("role", "navigation");
+        if (titleId) nav.setAttribute("aria-labelledby", titleId);
+      }
+      tabs.forEach((tab, i) => {
+        tabItems[i].removeAttribute("role");
+        tab.replaceWith(jumps[i]);
+        if (focused === tab) jumps[i].focus({ preventScroll: true });
+      });
+      panels.forEach((panel) => {
+        panel.hidden = false;
+        panel.classList.remove("is-current");
+        ["role", "aria-labelledby", "aria-hidden", "tabindex", "inert"].forEach((name) => panel.removeAttribute(name));
+      });
+      threads.forEach((thread) => thread.classList.remove("is-current", "is-leaving"));
+      drawOnArrival();
+      return;
+    }
+
+    if (drawIo) drawIo.disconnect();
+    drawIo = null;
+    threads.forEach((thread) => thread.classList.remove("is-pending"));
+    if (nav) {
+      nav.classList.remove("is-jump-list");
+      nav.removeAttribute("role");
+      nav.removeAttribute("aria-labelledby");
+    }
+    tabListAttrs.forEach(([name, value]) => {
+      if (value !== null) tabList.setAttribute(name, value);
+    });
+    jumps.forEach((link, i) => {
+      tabItems[i].setAttribute("role", "presentation");
+      if (link.isConnected) link.replaceWith(tabs[i]);
+      if (focused === link) tabs[i].focus({ preventScroll: true });
+    });
+    panels.forEach((panel, i) => {
+      panel.setAttribute("role", "tabpanel");
+      panel.setAttribute("aria-labelledby", tabs[i].id);
+      panel.setAttribute("tabindex", "0");
+    });
+    wrap.classList.add("is-stacked");
+    /* apply() runs from here on the next read, with nothing to wind back */
+    index = -1;
+  }
+
+  syncMode();
+  onCompactChange(() => {
+    syncMode();
+    schedule();
+    slack();
+  });
   read();
   slack();
 })();
