@@ -11807,11 +11807,14 @@ a.contact-channels__value:focus-visible {
 }
 
 /* ============ TEAM PORTRAIT FRAME: proposal A and B ============
-   'Each on their own summit': the cut-out figure stands in a window shaped
-   like a peak of the audience ridge, with the brightest sky behind the head,
-   the orange route passing behind the shoulders and a ridge cut into the
-   foot of the window, which also hides the stool and the photo's lower
-   edge. A is a terracotta sky, B a latte one. Off by default (see
+   A slice of the audience-page horizon behind each person, in the site's
+   own shapes rather than a frame: an asymmetric sky window with one wide
+   soft corner, the torn ridge climbing across it - low under the figure,
+   steep toward the far edge - and the land below in the stage colour, so the window
+   has no bottom edge and the ridge hides the stool. The orange trail runs
+   on the land with one checkpoint. Three ridge profiles take turns down the
+   page and mirror on the reversed cards. A is the dusk sky of the Expertise
+   hero (navy into orange), B a warm terracotta one. Off by default (see
    setupPortraitProposal); the plain page keeps the neutral silhouettes. */
 [data-portraits] .member__halo,
 [data-portraits] .member__index {
@@ -11819,21 +11822,63 @@ a.contact-channels__value:focus-visible {
 }
 
 [data-portraits] .member__photo::before {
-  opacity: 0.55;
+  opacity: 0.45;
+}
+
+[data-portraits] .member {
+  --sky-mask: url("portrait-sky-1.svg");
+  --sky-trail: url("portrait-trail-1.svg");
+  --sky-angle: 115deg;
+}
+
+[data-portraits] .member:nth-of-type(3n + 2) {
+  --sky-mask: url("portrait-sky-2.svg");
+  --sky-trail: url("portrait-trail-2.svg");
+}
+
+[data-portraits] .member:nth-of-type(3n + 3) {
+  --sky-mask: url("portrait-sky-3.svg");
+  --sky-trail: url("portrait-trail-3.svg");
+}
+
+[data-portraits] .member--reverse {
+  --sky-mask: url("portrait-sky-1r.svg");
+  --sky-trail: url("portrait-trail-1r.svg");
+  --sky-angle: 245deg;
+  --sky-sun: 36%;
+}
+
+[data-portraits] .member--reverse:nth-of-type(3n + 2) {
+  --sky-mask: url("portrait-sky-2r.svg");
+  --sky-trail: url("portrait-trail-2r.svg");
+}
+
+[data-portraits] .member--reverse:nth-of-type(3n + 3) {
+  --sky-mask: url("portrait-sky-3r.svg");
+  --sky-trail: url("portrait-trail-3r.svg");
 }
 
 [data-portraits] .member__plate {
   inset: 0;
-  border-radius: 0;
+  /* one wide soft corner on the side the ridge climbs to, small ones
+     elsewhere: a window, not a badge */
+  border-radius: 46% 18px 18px 18px / 30% 18px 18px 18px;
   box-shadow: none;
-  /* the peak above, and the ridge along the foot cut out of the same shape,
-     so the stage shows through below it whatever its colour */
-  clip-path: polygon(0% 88%, 0% 56%, 7% 50%, 14% 43%, 22% 35%, 29% 27%, 35% 20%, 41% 12%, 46% 6%, 50% 3%, 54% 7%, 59% 12%, 66% 20%, 74% 29%, 82% 37%, 90% 45%, 100% 51%, 100% 87%, 95% 85.5%, 90% 88%, 84% 86%, 78% 89.5%, 71% 87%, 63% 88.5%, 57% 85%, 50% 90%, 44% 88%, 37% 89.5%, 30% 86.5%, 22% 89%, 15% 87%, 8% 90%, 0% 88%);
-  background: radial-gradient(60% 44% at 50% 30%, #f7caa6 0%, #ea9564 34%, #c8663f 64%, #7c4037 100%);
+  background:
+    radial-gradient(46% 34% at var(--sky-sun, 64%) 34%, rgba(255, 196, 150, 0.5), transparent 74%),
+    linear-gradient(var(--sky-angle), #2f3a55 0%, #5b5469 34%, #a8705f 64%, #ec7a47 100%);
+  -webkit-mask: var(--sky-mask) center / 100% 100% no-repeat;
+  mask: var(--sky-mask) center / 100% 100% no-repeat;
+}
+
+[data-portraits] .member--reverse .member__plate {
+  border-radius: 18px 46% 18px 18px / 18px 30% 18px 18px;
 }
 
 [data-portraits="b"] .member__plate {
-  background: radial-gradient(60% 44% at 50% 30%, #fbf2ea 0%, #f0dfcf 38%, #dbc1ab 72%, #b89e8a 100%);
+  background:
+    radial-gradient(46% 34% at var(--sky-sun, 64%) 34%, rgba(255, 232, 210, 0.6), transparent 74%),
+    linear-gradient(var(--sky-angle), #f1d6c0 0%, #e6ae88 42%, #d0805b 74%, #b4603f 100%);
 }
 
 [data-portraits] .member:hover .member__plate {
@@ -11841,15 +11886,19 @@ a.contact-channels__value:focus-visible {
   box-shadow: none;
 }
 
-/* the route runs behind the figure, from the left edge up past the shoulder */
-[data-portraits] .member__plate::before {
-  z-index: 1;
-  mix-blend-mode: normal;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 700' preserveAspectRatio='none'%3E%3Cpath d='M0 612 C 70 600, 110 588, 160 560 S 250 520, 300 522 S 400 470, 470 438 S 560 400, 600 392' fill='none' stroke='%23ff612c' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='470' cy='438' r='7' fill='%23ff612c'/%3E%3Ccircle cx='470' cy='438' r='13' fill='%23ff612c' fill-opacity='0.22'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
-}
-
+[data-portraits] .member__plate::before,
 [data-portraits] .member__plate::after {
   display: none;
+}
+
+/* the trail sits on the land, outside the masked window */
+[data-portraits] .member__photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: var(--sky-trail) center / 100% 100% no-repeat;
 }
 
 [data-portraits] .member__portrait {
