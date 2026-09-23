@@ -1168,9 +1168,56 @@ function setupPortraitProposal() {
 function setupCopyReview() {
   if (new URLSearchParams(window.location.search).get("copy") !== "draft") return;
   document.documentElement.dataset.copyReview = "on";
+  const run = () => markCopyReview(window.MOST_COPY_REVIEW || {});
+  if (window.MOST_COPY_REVIEW) return run();
+  const tag = document.createElement("script");
+  tag.src = "copy-review.js";
+  tag.onload = run;
+  document.head.appendChild(tag);
+}
+
+function normaliseCopy(text) {
+  return text
+    .replace(/\u00a0/g, " ")
+    .replace(/[\u2010-\u2015\u2212]/g, "-")
+    .replace(/[\u2018\u2019]/g, "'")
+    .replace(/[\u201c\u201d]/g, '"')
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
+/* Finds each listed text on the page - the deepest element whose text is
+   exactly it, or failing that begins with it - and outlines it by source. */
+function markCopyReview(data) {
+  const page = window.location.pathname.split("/").pop() || "index.html";
+  const entries = data[page] || [];
+  const nodes = Array.from(document.querySelectorAll("main *, footer *, header.top-nav *"))
+    .filter((el) => !el.closest("svg, script, style") && el.children.length < 12);
+  const texts = new Map(nodes.map((el) => [el, normaliseCopy(el.textContent || "")]));
   const counts = { ours: 0, wireframe: 0, "g1-edited": 0 };
-  document.querySelectorAll("[data-copy]").forEach((el) => {
-    if (el.dataset.copy in counts) counts[el.dataset.copy] += 1;
+  const squash = (t) => t.replace(/ /g, "");
+  const find = (want) => {
+    let hits = nodes.filter((el) => texts.get(el) === want);
+    if (!hits.length) hits = nodes.filter((el) => squash(texts.get(el)) === squash(want));
+    if (!hits.length && want.length >= 30) hits = nodes.filter((el) => texts.get(el).startsWith(want));
+    if (!hits.length && want.length >= 30) hits = nodes.filter((el) => texts.get(el).includes(want));
+    return hits.filter((el) => !hits.some((other) => other !== el && el.contains(other)));
+  };
+  entries.forEach((entry) => {
+    /* an entry like "Formation / Funding / Growth" lists separate elements */
+    const parts = entry.t.includes(" / ") ? entry.t.split(" / ") : [entry.t];
+    let found = 0;
+    parts.forEach((part) => {
+      const want = normaliseCopy(part);
+      if (!want) return;
+      find(want).forEach((el) => {
+        el.dataset.copy = entry.c;
+        el.title = [entry.s && `Źródło: ${entry.s}`, entry.a && `Pytanie: ${entry.a}`].filter(Boolean).join("\n");
+        found += 1;
+      });
+    });
+    if (found && entry.c in counts) counts[entry.c] += 1;
   });
   const legend = document.createElement("aside");
   legend.className = "copy-legend";
@@ -1180,7 +1227,7 @@ function setupCopyReview() {
     `<p><span class="copy-legend__swatch copy-legend__swatch--ours"></span>nasze, nowe (${counts.ours})</p>` +
     `<p><span class="copy-legend__swatch copy-legend__swatch--wireframe"></span>nasze, z wireframe'u (${counts.wireframe})</p>` +
     `<p><span class="copy-legend__swatch copy-legend__swatch--g1-edited"></span>tekst klienta skrócony przez nas (${counts["g1-edited"]})</p>` +
-    '<p class="copy-legend__note">Bez ramki: tekst klienta (dokument) lub z Figmy, 1:1.</p>';
+    '<p class="copy-legend__note">Bez ramki: tekst klienta (dokument) lub z Figmy, 1:1. Najedź na ramkę, żeby zobaczyć źródło.</p>';
   document.body.appendChild(legend);
 }
 
