@@ -8429,9 +8429,9 @@ a.contact-channels__value:focus-visible {
    steep toward the far edge - and the land below in the stage colour, so the window
    has no bottom edge and the ridge hides the stool. The orange trail runs
    on the land with one checkpoint. Three ridge profiles take turns down the
-   page and mirror on the reversed cards. A is the dusk sky of the Expertise
-   hero (navy into orange), B a warm terracotta one. our-team.html ships B
-   (data-portraits="b" on <html>); ?portraits=a shows A for comparison. */
+   page and mirror on the reversed cards. A is a dusk sky (navy into
+   orange), B a warm terracotta one. Both are kept for comparison
+   (?portraits=a, ?portraits=b); the page ships the toned portraits below. */
 [data-portraits] .member__halo,
 [data-portraits] .member__index {
   display: none;
@@ -8573,6 +8573,39 @@ a.contact-channels__value:focus-visible {
 }
 
 [data-portraits="pop"] .member:hover .member__portrait {
+  transform: none;
+}
+
+/* ============ TEAM PORTRAIT FRAME: the client's reference (shipped) ============
+   Each portrait is a colour-toned monochrome on a smooth backdrop of its own
+   hue - purple, blue, mauve, coral, orange, sand down the page - cropped head
+   and shoulders. Tone, backdrop and crop are baked into the photographs
+   (team-*-tone.webp, made locally from the originals), so the frame is just
+   the picture: a plain panel with the site's card corners, no glow, no sky. */
+[data-portraits="tone"] .member__photo::before,
+[data-portraits="tone"] .member__photo::after {
+  display: none;
+}
+
+[data-portraits="tone"] .member__plate,
+[data-portraits="tone"] .member--reverse .member__plate {
+  inset: 0;
+  overflow: hidden;
+  border-radius: 14px;
+  background: none;
+  -webkit-mask: none;
+  mask: none;
+}
+
+[data-portraits="tone"] .member__portrait {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: none;
+  object-fit: cover;
+}
+
+[data-portraits="tone"] .member:hover .member__portrait {
   transform: none;
 }
 

@@ -962,23 +962,28 @@ function setupMemberReadmore() {
    build. Members with a processed photo swap it in; the rest keep the
    silhouette inside the same frame. */
 function setupPortraitProposal() {
-  /* our-team.html ships frame B (data-portraits="b" on <html>) with the
-     photographs in the markup; ?portraits=a shows frame A and
-     ?portraits=pop the head-and-shoulders proposal, for comparison. */
+  /* our-team.html ships the client's reference style (data-portraits="tone"
+     on <html>): colour-toned head-and-shoulders portraits, the tone and the
+     backdrop baked into the photographs. For comparison, ?portraits=a and
+     ?portraits=b stand the cut-out photographs in the earlier sky windows and
+     ?portraits=pop shows the head-above-the-card proposal. */
   const root = document.documentElement;
-  const hashed = window.location.hash.match(/^#portraits-(a|b|pop)$/);
+  const hashed = window.location.hash.match(/^#portraits-(a|b|pop|tone)$/);
   const asked = new URLSearchParams(window.location.search).get("portraits") || (hashed && hashed[1]);
-  if (!root.dataset.portraits || !["a", "b", "pop"].includes(asked)) return;
+  if (!root.dataset.portraits || !["a", "b", "pop", "tone"].includes(asked) || asked === root.dataset.portraits) return;
   root.dataset.portraits = asked;
-  if (asked !== "pop") return;
-  /* the "pop" proposal uses its own graded head-and-shoulders files */
+  if (asked === "tone") return;
   document.querySelectorAll(".member__portrait").forEach((img) => {
-    const stem = img.getAttribute("src").replace(/\.webp$/, "");
-    img.srcset = `${stem}-r3-400.webp 400w, ${stem}-r3.webp 600w`;
-    img.sizes = "(min-width: 1440px) 552px, (min-width: 1024px) 38vw, (min-width: 980px) 380px, (min-width: 600px) 300px, 72vw";
-    img.width = 600;
-    img.height = 700;
-    img.src = `${stem}-r3.webp`;
+    const stem = img.getAttribute("src").replace(/-tone\.webp$/, "");
+    if (asked === "pop") {
+      img.srcset = `${stem}-r3-400.webp 400w, ${stem}-r3.webp 600w`;
+      img.width = 600;
+      img.height = 700;
+      img.src = `${stem}-r3.webp`;
+    } else {
+      img.srcset = `${stem}-640.webp 640w, ${stem}-1024.webp 1024w, ${stem}.webp 1200w`;
+      img.src = `${stem}.webp`;
+    }
   });
 }
 
