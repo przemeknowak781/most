@@ -8924,13 +8924,19 @@ a.contact-channels__value:focus-visible {
 
 /* ===== MOBILE & TABLET (<=1023px) — FOUNDATION ===== */
 /* Everything below 1024px that every page shares: the tokens, the top bar,
-   the menu dialog, the closing CTA band, the route shortcuts and the footer.
+   where the heroes start, the menu dialog, the closing CTA band, the route
+   shortcuts and the footer.
    1024px and up is the approved desktop and nothing here reaches it - every
    rule sits inside a max-width: 1023px query (or a narrower one). Page
    sections build on the tokens below rather than restating numbers.
 
    Tiers: compact <=1023 | tablet 768-1023 | phone <=767 | small phone <=374
-   | short landscape: compact and max-height 500px in landscape.
+   | short landscape (a phone on its side): 560-1023px wide, max-height
+   500px, in landscape. The 560px floor matters: a desktop browser zoomed
+   to 400% is 320x256 or 320x180, and the side-by-side layouts built for a
+   phone on its side (568px and up) squeezed its text into columns a word
+   wide (WCAG 1.4.10). A window under 560px is a phone whichever way it
+   stands, so the rules for phones held upright also take (max-width: 559px).
 
    Tokens (defined on :root inside the compact query):
      --m-gutter    side padding of every section: 20px phone, 32px tablet.
@@ -8940,12 +8946,27 @@ a.contact-channels__value:focus-visible {
      --m-nav-h     height of the fixed top bar: 64px (56px in short
                    landscape). --nav-height follows it plus the safe area, so
                    the heroes that already clear the bar keep clearing it.
+     --m-hero-sky  the pause between the bar and a hero's first line:
+                   clamp(40px, 8svh, 72px). --m-hero-top is the bar plus that
+                   pause; every hero starts its copy there, so the eyebrow
+                   and the headline hold their place from page to page. (A
+                   phone on its side keeps each hero's own tighter top,
+                   fitted to its one short screen.)
+     --m-pill-h    the pill buttons' height, 52px: the hero's, the closing
+                   band's and the menu's are one height, as they are on
+                   desktop (46px there).
      Type scale - sizes grow from 375px to 768px and then hold:
      --m-h1    34 -> 48px, line-height 1.08
-     --m-h2    28 -> 38px, line-height 1.12
-     --m-h3    20 -> 24px, line-height 1.25
+     --m-h2    28 -> 38px, line-height 1.12 (28px on a phone on its side)
+     --m-h3    20 -> 24px, line-height 1.25 (20px on a phone on its side)
      --m-lede  17 -> 18px, line-height 1.55
-     --m-body  16px, line-height 1.6 (and --m-measure: 68ch at most)
+     --m-body  16px, line-height 1.6
+     --m-measure 29em: the longest line of running text, about 68
+               characters of Outfit at any size. It is set in em, not ch:
+               Outfit's zero is wide, so 68ch ran to 90-95 characters a
+               line wherever text had the width (tablets, phones on their
+               side). A custom property is resolved where it is used, so
+               each paragraph measures from its own font size.
      --m-small 13px - meta, captions, legal
      --m-label 12px - uppercase labels and eyebrows, keep their tracking
    Nothing visible goes under 11px.
@@ -8974,8 +8995,11 @@ a.contact-channels__value:focus-visible {
     --m-body: 16px;
     --m-small: 13px;
     --m-label: 12px;
-    --m-measure: 68ch;
+    --m-measure: 29em;
     --nav-height: calc(var(--m-nav-h) + env(safe-area-inset-top, 0px));
+    --m-hero-sky: clamp(40px, 8svh, 72px);
+    --m-hero-top: calc(var(--nav-height) + var(--m-hero-sky));
+    --m-pill-h: 52px;
     --container-x: var(--m-gutter);
   }
 
@@ -9001,10 +9025,15 @@ a.contact-channels__value:focus-visible {
   }
 }
 
-/* a phone on its side has ~390px of height; the bar gives some of it back */
-@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+/* a phone on its side has ~390px of height; the bar gives some of it back.
+   The headings take the phone sizes: led by the width, the section titles
+   (35-38px) outgrew the heroes' headlines, which are capped at 30-36px to
+   fit the one short screen. */
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   :root {
     --m-nav-h: 56px;
+    --m-h2: 28px;
+    --m-h3: 20px;
   }
 }
 
@@ -9186,6 +9215,20 @@ a.contact-channels__value:focus-visible {
   .mobile-menu .wordmark__logo {
     width: 96px;
     height: 35px;
+  }
+}
+
+/* ---------- compact: heroes ----------
+   Each page draws its own hero; they share where the copy starts
+   (--m-hero-top, above) and the pill height (--m-pill-h). The three set on
+   a photo sky - About, Team and Contact - also share the eyebrow's colour.
+   Desktop gives them the site orange on navy; here the photo, its glow or
+   the wash comes up behind the label, so they take one lighter peach of
+   the same family rather than one tint each: 5.2:1 or more at every
+   compact width on all three. */
+@media (max-width: 1023px) {
+  .page-hero__eyebrow {
+    color: #ffbf94;
   }
 }
 
@@ -9383,7 +9426,7 @@ a.contact-channels__value:focus-visible {
     align-items: center;
     justify-content: center;
     gap: 12px;
-    min-height: 52px;
+    min-height: var(--m-pill-h);
     padding: 0 28px;
     border-radius: 999px;
     background: var(--light);
@@ -9534,7 +9577,7 @@ a.contact-channels__value:focus-visible {
 
 /* tablet and phones on their side: the pages and the routes side by side */
 @media (min-width: 768px) and (max-width: 1023px),
-  (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .mobile-menu__links {
     display: grid;
     grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
@@ -9592,7 +9635,7 @@ a.contact-channels__value:focus-visible {
   }
 }
 
-@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .mobile-menu__links {
     margin-top: 4px;
   }
@@ -9619,6 +9662,12 @@ a.contact-channels__value:focus-visible {
     padding-top: 16px;
   }
 
+  /* with the usual 24px under the foot the sheet ran 2px past the
+     smallest phone on its side (568x320) and scrolled */
+  .mobile-menu__panel {
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+
   .mobile-menu__ridge img {
     width: 100%;
     max-height: 46svh;
@@ -9629,7 +9678,8 @@ a.contact-channels__value:focus-visible {
 
 /* short phones (SE-class, 667px and less): tighter rows so the whole sheet,
    mail and LinkedIn included, still fits without scrolling */
-@media (max-width: 767px) and (max-height: 700px) and (orientation: portrait) {
+@media (max-width: 767px) and (max-height: 700px) and (orientation: portrait),
+  (max-width: 559px) and (orientation: landscape) {
   .mobile-menu__links {
     margin-top: 4px;
   }
@@ -9667,7 +9717,8 @@ a.contact-channels__value:focus-visible {
    are showing (about 320x460 or 375x550): the three routes share one row
    under their lead, which gives back two rows and lets Contact, the mail
    address and LinkedIn stay on the first screen. */
-@media (max-width: 767px) and (max-height: 600px) and (orientation: portrait) {
+@media (max-width: 767px) and (max-height: 600px) and (orientation: portrait),
+  (max-width: 559px) and (orientation: landscape) {
   .mobile-menu__links .mobile-menu__primary a {
     font-size: clamp(26px, 8vw, 30px);
   }
@@ -9759,7 +9810,7 @@ a.contact-channels__value:focus-visible {
     grid-row: auto;
     justify-self: center;
     justify-content: center;
-    min-height: 52px;
+    min-height: var(--m-pill-h);
     max-width: 100%;
     margin-top: 28px;
     padding: 0 28px;
@@ -9842,7 +9893,7 @@ a.contact-channels__value:focus-visible {
 
 /* on its side a phone sees the heading, the button and the climbers on one
    screen: a lower top, smaller climbers and the deepest hang */
-@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .aud-grow {
     --ridge-hang: 0.16;
     --climbers-w: 64px;
@@ -9864,9 +9915,13 @@ a.contact-channels__value:focus-visible {
     margin-bottom: 28px;
   }
 
+  /* the dashes are tied to their words in the markup, so on the narrowest
+     phones the label folds into two even lines instead of leaving the
+     closing dash alone under it */
   .routes-strip__eyebrow {
     margin-bottom: 14px;
     font-size: var(--m-label);
+    text-wrap: balance;
   }
 
   .routes-strip__title {
@@ -9934,7 +9989,7 @@ a.contact-channels__value:focus-visible {
    name beside its line and the link under the line. Stacked, the three
    cards took 800px - two screens of a phone on its side. */
 @media (min-width: 600px) and (max-width: 767px),
-  (max-width: 767px) and (max-height: 500px) and (orientation: landscape) {
+  (min-width: 560px) and (max-width: 767px) and (max-height: 500px) and (orientation: landscape) {
   .routes-strip__card {
     display: grid;
     /* 150px keeps "for companies" on one line */
@@ -10150,7 +10205,7 @@ a.contact-channels__value:focus-visible {
    address, which left "Poland" alone on a line. The two link lists give up
    the difference - their longest label, "Our Expertise", still fits. */
 @media (min-width: 600px) and (max-width: 1023px),
-  (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .site-footer__top {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(max-content, 1.35fr);
     gap: 28px clamp(24px, 4vw, 48px);
@@ -10168,7 +10223,8 @@ a.contact-channels__value:focus-visible {
    screens of a small phone. (Everything a phone on its side does not get:
    that is the three-column rule above.) */
 @media (max-width: 599px) and (orientation: portrait),
-  (max-width: 599px) and (min-height: 501px) {
+  (max-width: 599px) and (min-height: 501px),
+  (max-width: 559px) {
   .site-footer__top {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 20px;
@@ -10200,7 +10256,7 @@ a.contact-channels__value:focus-visible {
   }
 }
 
-@media (max-width: 767px) and (max-height: 500px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 767px) and (max-height: 500px) and (orientation: landscape) {
   .footer-ridge {
     --ridge-art: 100%;
   }
@@ -10349,7 +10405,7 @@ a.contact-channels__value:focus-visible {
    sized to the art, so it no longer reaches past the screen either. */
 @media (max-width: 1023px) {
   .page--home .hero {
-    --hero-pad-top: calc(var(--nav-height) + clamp(48px, 10svh - 16px, 120px));
+    --hero-pad-top: var(--m-hero-top);
     --hero-pad-bottom: clamp(32px, 8vw, 64px);
     --ridge-art-h: 42.5vw;
     --ridge-gap: clamp(16px, 6vw, 48px);
@@ -10564,7 +10620,7 @@ a.contact-channels__value:focus-visible {
 /* A phone on its side has one short screen for the copy: the headline is
    capped and the stack tightens, so "Choose your path" is on the first
    screen and the ridge arrives just under the fold. */
-@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .page--home .hero {
     --hero-pad-top: calc(var(--nav-height) + clamp(12px, 8svh - 12px, 20px));
   }
@@ -10830,7 +10886,7 @@ a.contact-channels__value:focus-visible {
 
   .audience-intro .preview[data-audience-card] .preview__copy {
     grid-area: copy;
-    max-width: 60ch;
+    max-width: var(--m-measure);
     margin: 20px 0 0;
     color: rgba(240, 235, 233, 0.84);
     font-size: var(--m-body);
@@ -11296,9 +11352,9 @@ a.contact-channels__value:focus-visible {
    are the foundation's; this only refines them for this page.
 
    Tiers as in the foundation: compact <=1023 | tablet 768-1023 |
-   phone <=767 | small phone <=374 | short landscape (<=500px tall). The
-   expertise rail and the route cards switch to two columns at 640px, so a
-   phone on its side reads like a small tablet. */
+   phone <=767 | small phone <=374 | short landscape (560px wide and up,
+   <=500px tall). The expertise rail and the route cards switch to two
+   columns at 640px, so a phone on its side reads like a small tablet. */
 
 /* ---------- hero: copy ---------- */
 @media (max-width: 1023px) {
@@ -11314,7 +11370,7 @@ a.contact-channels__value:focus-visible {
   }
 
   .page--home .primary-cta {
-    min-height: 48px;
+    min-height: var(--m-pill-h);
     margin-top: 30px;
     padding: 0 22px 0 26px;
   }
@@ -11443,7 +11499,7 @@ a.contact-channels__value:focus-visible {
    h1's 36px, a tighter head and a shorter first leader put the eyebrow,
    title, lede, the route's start ring and the top of card 01 on that one
    screen. */
-@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .page--home .audience-intro {
     padding-top: 32px;
   }
@@ -11621,10 +11677,6 @@ a.contact-channels__value:focus-visible {
   .page--home .expertise-cards__cta-wrap {
     text-align: left;
   }
-
-  .page--home .expertise-cards__cta {
-    width: 100%;
-  }
 }
 
 /* the label keeps one line at 320px */
@@ -11796,7 +11848,7 @@ a.contact-channels__value:focus-visible {
 @media (max-width: 1023px) {
   .page--expertise .hero {
     --exp-ridge-h: 60vw;
-    --exp-pad-top: calc(var(--nav-height) + clamp(28px, 8vw, 64px));
+    --exp-pad-top: var(--m-hero-top);
   }
 
   .page--expertise .hero-content .eyebrow {
@@ -11818,7 +11870,7 @@ a.contact-channels__value:focus-visible {
   }
 
   .page--expertise .primary-cta {
-    min-height: 48px;
+    min-height: var(--m-pill-h);
     margin-top: 28px;
     padding-inline: 26px 22px;
   }
@@ -11840,8 +11892,8 @@ a.contact-channels__value:focus-visible {
   }
 }
 
-/* ---------- hero: portrait ---------- */
-@media (max-width: 1023px) and (orientation: portrait) {
+/* ---------- hero: portrait, and any window under 560px ---------- */
+@media (max-width: 1023px) and (orientation: portrait), (max-width: 559px) {
   .page--expertise .hero {
     grid-template-rows: auto auto;
     min-height: 0;
@@ -11918,7 +11970,7 @@ a.contact-channels__value:focus-visible {
    the button keeps 16px over the crest). The band's parallax slack goes:
    nothing moves here, and 90px of hidden art under a short band pushed
    the trail off the hero. */
-@media (max-width: 1023px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 1023px) and (orientation: landscape) {
   .page--expertise .hero {
     --exp-band: clamp(150px, 34svh, 320px);
     --exp-slack: 0px;
@@ -11966,7 +12018,7 @@ a.contact-channels__value:focus-visible {
    The hero is then never taller than the screen. The title stays at 30px and the
    page's section titles come down to the phone h2 (28px, below), so the
    h1 leads again. */
-@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   /* on main: the trail overlay is the hero's sibling and follows the band */
   .page--expertise main {
     --exp-band-sl: clamp(60px, 160svh - 518px, 150px);
@@ -12014,7 +12066,7 @@ a.contact-channels__value:focus-visible {
    the copy and a band. The tagline takes a little more width to stay on
    two lines and the gaps close up, so the button is on the first screen and
    the band's crest meets its foot; the rest of the band is below it. */
-@media (max-width: 1023px) and (max-height: 340px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 340px) and (orientation: landscape) {
   .page--expertise .hero {
     padding-top: calc(var(--nav-height) + 10px);
   }
@@ -12318,7 +12370,7 @@ a.contact-channels__value:focus-visible {
   }
 }
 
-@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .page--expertise .exwork-terrain__labels {
     padding-bottom: 16px;
   }
@@ -12331,16 +12383,13 @@ a.contact-channels__value:focus-visible {
   }
 }
 
-/* Type on a phone on its side: the shared scale follows the width, so on a
-   667-915px wide screen the section titles (35-38px) outgrew the hero's
-   30px title. Here they take the phone h2 and the area titles the h3, so
-   the h1 leads again (EXP-4). Last in the file: it must beat the section
-   rules above. */
-@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
-  .page--expertise .ex-areas__title,
-  .page--expertise .exwork--terrain .exwork__title,
-  .page--expertise .routes-strip__title,
-  .page--expertise .aud-grow__title {
+/* Type on a phone on its side: the foundation brings the shared h2 and h3
+   down to the phone sizes there, so the hero's 30px title leads again
+   (EXP-4). The two sizes this page sets itself - the section title's 34px
+   floor and the area titles' 24-30px - come down with them. Last in the
+   file: it must beat the section rules above. */
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page--expertise .ex-areas__title {
     font-size: 28px;
   }
 
@@ -12359,7 +12408,7 @@ a.contact-channels__value:focus-visible {
    (or narrower) query; desktop is untouched.
 
    Tiers: compact <=1023 | tablet 768-1023 | phone <=767 | small phone <=374
-   | short landscape: compact and max-height 500px in landscape. */
+   | short landscape: 560-1023px wide, max-height 500px, in landscape. */
 
 /* ---------- shared: section boxes, labels, trails ---------- */
 @media (max-width: 1023px) {
@@ -12459,14 +12508,14 @@ a.contact-channels__value:focus-visible {
    where desktop's object-position puts it. The bottom padding keeps the
    tagline and button above the ridge's crest, which climbs to the full
    height of the art on the right.
-   The hero is content-sized: the sky over the copy is a set pause that
-   grows with the screen's height (about 60px at 568 high, 100px at 844,
-   120px at most), not whatever a min-height left over - on a tall phone
-   that was a third of the screen of empty haze. So the copy always starts
-   at the same point below the bar, and the sun can be placed from it. */
+   The hero is content-sized: the sky over the copy is the shared pause
+   under the bar (--m-hero-sky, 45px at 568 high, 68px at 844, 72px at
+   most), not whatever a min-height left over - on a tall phone that was a
+   third of the screen of empty haze. So the copy starts where every hero's
+   does, and the sun can be placed from it. */
 @media (max-width: 1023px) {
   .page--about .page-hero {
-    --ab-hero-sky: clamp(48px, 14svh - 20px, 120px);
+    --ab-hero-sky: var(--m-hero-sky);
     min-height: 0;
     /* the ridge (42.5vw tall at full width) is sunk by a third, into its
        solid foot, so what shows is 27.6vw of silhouette; the copy clears
@@ -12508,11 +12557,10 @@ a.contact-channels__value:focus-visible {
     max-width: 46rem;
   }
 
-  /* on a phone the label sits on the sun's glow: the lighter latte the
-     photo captions use keeps it above 4.5:1 there */
+  /* on a phone the label sits on the sun's glow; the shadow keeps its
+     edges clear of it (the colour is the heroes' shared peach) */
   .page--about .page-hero__eyebrow {
     margin-bottom: 16px;
-    color: #ffc9a3;
     font-size: var(--m-label);
     text-shadow: 0 1px 6px rgba(8, 11, 19, 0.5);
   }
@@ -12535,14 +12583,14 @@ a.contact-channels__value:focus-visible {
   }
 
   .page--about .page-hero__tagline {
-    max-width: 34em;
+    max-width: var(--m-measure);
     font-size: var(--m-lede);
     line-height: 1.55;
     text-shadow: 0 1px 10px rgba(8, 11, 19, 0.4);
   }
 
   .page--about .page-hero .primary-cta {
-    min-height: 48px;
+    min-height: var(--m-pill-h);
     margin-top: 28px;
     padding: 12px 22px 12px 26px;
   }
@@ -13204,7 +13252,7 @@ a.contact-channels__value:focus-visible {
 }
 
 @media (min-width: 768px) and (max-width: 1023px),
-  (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .page--about .manifesto__row {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: clamp(28px, 5vw, 48px);
@@ -13278,7 +13326,7 @@ a.contact-channels__value:focus-visible {
    it. The photo bands are a wide strip, and Mission and Commitment go
    back to text beside photograph (above), each photograph shorter than
    the screen. */
-@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .page--about .page-hero {
     min-height: 0;
     padding: calc(var(--nav-height) + 20px) var(--m-gutter) 28px;
@@ -13362,7 +13410,7 @@ a.contact-channels__value:focus-visible {
 /* The shortest phones on their side (568x320, 640x360, 740x360): the
    hero above still ran to 375px at 320px high, the button under the fold.
    Tighter padding and type keep the whole hero on one screen. */
-@media (max-width: 1023px) and (max-height: 360px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 360px) and (orientation: landscape) {
   .page--about .page-hero {
     padding-top: calc(var(--nav-height) + 12px);
     padding-bottom: 18px;
@@ -13451,7 +13499,7 @@ a.contact-channels__value:focus-visible {
 
    Two compositions:
    - phones held upright: one column in reading order - the hero copy
-     left-aligned low on the sky with the sun above it (up to 767px), each
+     left-aligned on the sky with the sun above it (up to 767px), each
      portrait offset to alternate sides with its big number in the space it
      leaves and the text under it (up to 599px), the trails between them
      turning towards the next portrait.
@@ -13460,20 +13508,22 @@ a.contact-channels__value:focus-visible {
      centred, and each portrait beside its text on alternate sides.
 
    Tiers: compact <=1023 | tablet 768-1023 | phone <=767 | small phone <=374
-   | short landscape: compact and max-height 500px in landscape. */
+   | short landscape: 560-1023px wide, max-height 500px, in landscape. */
 
 /* ---------- hero ----------
-   Content-sized with a floor; the copy stands low, on the sky, and the
-   ridge crosses the foot. The photo is drawn at its own proportions as tall
-   as the hero, so the <img> box is the picture that shows (the sizes
-   attribute names that width) and --team-hero-focus is the point of the
-   photo that stays in the middle. */
+   Content-sized; the copy starts on the sky where every hero's does
+   (--m-hero-top) and the ridge crosses the foot. Standing low in a hero
+   86svh tall it put 250px of empty sky over the headline, which sat 180px
+   lower than on any other page. The photo is drawn at its own proportions
+   as tall as the hero, so the <img> box is the picture that shows (the
+   sizes attribute names that width) and --team-hero-focus is the point of
+   the photo that stays in the middle. */
 @media (max-width: 1023px) {
   .page--team .page-hero {
     --team-hero-focus: 58%;
-    min-height: clamp(520px, 86svh, 720px);
-    padding: calc(var(--nav-height) + clamp(32px, 8vw, 64px)) var(--m-gutter) clamp(112px, 30vw, 168px);
-    align-items: end;
+    min-height: 0;
+    padding: var(--m-hero-top) var(--m-gutter) clamp(112px, 30vw, 168px);
+    align-items: start;
   }
 
   .page--team .page-hero__bg {
@@ -13500,12 +13550,8 @@ a.contact-channels__value:focus-visible {
     text-align: left;
   }
 
-  /* desktop's orange at 92% sits on navy; here the photo's sky behind the
-     label is a mid-tone rust or a lit ridge, so the label is a lighter
-     peach of the same family (5.2:1 or more at every width, AA) */
   .page--team .page-hero__eyebrow {
     margin-bottom: 16px;
-    color: #ffbf94;
     font-size: var(--m-label);
   }
 
@@ -13523,7 +13569,7 @@ a.contact-channels__value:focus-visible {
   }
 
   .page--team .page-hero .primary-cta {
-    min-height: 48px;
+    min-height: var(--m-pill-h);
     margin-top: 28px;
     padding: 12px 22px 12px 26px;
     white-space: nowrap;
@@ -13538,13 +13584,13 @@ a.contact-channels__value:focus-visible {
 /* Phones held upright: the copy stands left, so the sun and the warm light
    of the wash go to the right. The sun hangs from the copy itself (the
    content's ::before, the hero's own sun is hidden), just above and to the
-   right of the eyebrow: on a tall phone that is the empty sky, on a short
-   one (320x568, 375x667) where the copy fills the hero it rises to the bar
+   right of the eyebrow: with the copy near the top it rises to the bar
    instead of glowing behind the first line of the title. The wash keeps its
    dark gradient and moves its orange to the sun's corner, off the copy
    column. */
 @media (max-width: 767px) and (orientation: portrait),
-  (max-width: 767px) and (min-height: 501px) {
+  (max-width: 767px) and (min-height: 501px),
+  (max-width: 559px) {
   .page--team .page-hero__sun {
     display: none;
   }
@@ -13588,7 +13634,7 @@ a.contact-channels__value:focus-visible {
    composition: the copy right-aligned on the ridge, the sun low on the
    left, the photo centred as on desktop. */
 @media (min-width: 768px) and (max-width: 1023px),
-  (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .page--team .page-hero {
     --team-hero-focus: 50%;
   }
@@ -13624,7 +13670,7 @@ a.contact-channels__value:focus-visible {
 }
 
 /* a phone on its side: one screen at most, the sun above the ridge */
-@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .page--team .page-hero {
     min-height: 0;
     padding: calc(var(--nav-height) + 16px) var(--m-gutter) clamp(40px, 7vw, 64px);
@@ -13670,7 +13716,7 @@ a.contact-channels__value:focus-visible {
   }
 }
 
-@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .page--team .ridge-edge--light {
     --team-ridge-height: clamp(56px, 10vw, 96px);
   }
@@ -13709,7 +13755,7 @@ a.contact-channels__value:focus-visible {
 }
 
 @media (min-width: 768px) and (max-width: 1023px),
-  (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .page--team .team-editorial__head {
     margin-inline: auto;
     text-align: center;
@@ -13822,7 +13868,8 @@ a.contact-channels__value:focus-visible {
    it leaves, behind the frame. (A small phone on its side, 568x320, is
    under 600px too, but has the width for the zigzag below.) */
 @media (max-width: 599px) and (orientation: portrait),
-  (max-width: 599px) and (min-height: 501px) {
+  (max-width: 599px) and (min-height: 501px),
+  (max-width: 559px) {
   .page--team .member,
   .page--team .member--reverse {
     gap: 28px;
@@ -13855,7 +13902,7 @@ a.contact-channels__value:focus-visible {
    portrait stands level with the name rather than centred on the text, so
    it stays put when a bio opens under it. */
 @media (min-width: 600px) and (max-width: 1023px),
-  (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .page--team .member,
   .page--team .member--reverse {
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
@@ -13889,7 +13936,7 @@ a.contact-channels__value:focus-visible {
 }
 
 /* on its side a phone shows the whole portrait on one screen, under the bar */
-@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .page--team .member__photo {
     width: min(100%, (100svh - var(--nav-height) - 40px) * 6 / 7);
   }
@@ -13910,7 +13957,7 @@ a.contact-channels__value:focus-visible {
 }
 
 @media (min-width: 600px) and (max-width: 1023px),
-  (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .page--team .member__halo {
     inset: -4%;
   }
@@ -14014,15 +14061,12 @@ a.contact-channels__value:focus-visible {
   /* ---------- hero ---------- */
   .page--contact .page-hero {
     min-height: 0;
-    padding: calc(var(--nav-height) + 56px) var(--m-gutter) clamp(72px, 18vw, 128px);
+    padding: var(--m-hero-top) var(--m-gutter) clamp(72px, 18vw, 128px);
     align-items: start;
   }
 
-  /* the site's soft orange: the 92% one fell to 4.5:1 where the warm
-     wash sits behind it on tablets */
   .page--contact .page-hero__eyebrow {
     margin-bottom: 16px;
-    color: var(--orange-soft);
     font-size: var(--m-label);
   }
 
@@ -14033,9 +14077,9 @@ a.contact-channels__value:focus-visible {
   }
 
   /* the sun sits behind the heading's right-hand words, as it does on
-     desktop; left where it was (16%) it lit up the small orange eyebrow */
+     desktop; left where it was (16%) it lit up the small eyebrow */
   .page--contact .page-hero__sun {
-    top: calc(var(--nav-height) + 64px);
+    top: calc(var(--m-hero-top) + 8px);
     left: clamp(128px, 36vw, 340px);
     width: clamp(200px, 46vw, 320px);
     height: clamp(200px, 46vw, 320px);
@@ -14322,7 +14366,6 @@ a.contact-channels__value:focus-visible {
 /* ---------- tablet ---------- */
 @media (min-width: 768px) and (max-width: 1023px) {
   .page--contact .page-hero {
-    padding-top: calc(var(--nav-height) + 80px);
     padding-bottom: clamp(104px, 14vw, 136px);
   }
 }
@@ -14349,7 +14392,7 @@ a.contact-channels__value:focus-visible {
 /* ---------- tablets, and anything compact held sideways ----------
    There is width for the ways to reach the firm to share one row: the
    two channels, then the LinkedIn badge closing it. */
-@media (min-width: 768px) and (max-width: 1023px), (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+@media (min-width: 768px) and (max-width: 1023px), (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .page--contact .page-hero__content {
     max-width: none;
     display: flex;
@@ -14376,7 +14419,7 @@ a.contact-channels__value:focus-visible {
 }
 
 /* short: the hero keeps inside the screen */
-@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .page--contact .page-hero {
     padding-top: calc(var(--nav-height) + 36px);
     padding-bottom: 56px;
@@ -14393,7 +14436,7 @@ a.contact-channels__value:focus-visible {
    address folds after its postcode instead of the badge dropping to a
    row of its own under the mail link's hit area. The e-mail never
    breaks; the badge stays at the row's foot. */
-@media (max-width: 767px) and (max-height: 500px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 767px) and (max-height: 500px) and (orientation: landscape) {
   .page--contact .page-hero__content {
     column-gap: 20px;
   }
@@ -14412,7 +14455,7 @@ a.contact-channels__value:focus-visible {
 /* the narrow ones are also the short ones (320-375px tall), and any
    phone under 350px tall is short whatever its width: a heading sized to
    the height and tighter bands keep the hero inside the screen */
-@media (max-width: 666px) and (max-height: 500px) and (orientation: landscape), (max-width: 767px) and (max-height: 350px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 666px) and (max-height: 500px) and (orientation: landscape), (min-width: 560px) and (max-width: 767px) and (max-height: 350px) and (orientation: landscape) {
   .page--contact .page-hero {
     padding-top: calc(var(--nav-height) + clamp(20px, 7svh, 32px));
     padding-bottom: clamp(32px, 11svh, 48px);
@@ -14596,7 +14639,8 @@ a.contact-channels__value:focus-visible {
    see it.
 
    Tiers as in the foundation: compact <=1023 | tablet 768-1023 | phone
-   <=767 | small phone <=374 | short landscape (<=500px tall).
+   <=767 | small phone <=374 | short landscape (560px wide and up, <=500px
+   tall).
 
    ---------- the scene ----------
    On desktop the hero is a full screen and the artwork is pinned to a
@@ -14642,7 +14686,7 @@ a.contact-channels__value:focus-visible {
 @media (max-width: 1023px) {
   :is(.page--founders, .page--companies, .page--investors) {
     --aud-art-w: 100vw;
-    --aud-hero-pt: clamp(40px, 8svh, 72px);
+    --aud-hero-pt: var(--m-hero-sky);
     --aud-hero-pb: calc(0.2294 * var(--aud-art-w) + 88px);
     --aud-intro-gap: 40px;
     /* tablet: the spine in the middle of the gutter, as on desktop */
@@ -14663,7 +14707,7 @@ a.contact-channels__value:focus-visible {
   }
 }
 
-@media (max-width: 767px) and (orientation: portrait) {
+@media (max-width: 767px) and (orientation: portrait), (max-width: 559px) {
   :is(.page--founders, .page--companies, .page--investors) {
     --aud-art-w: 145vw;
     /* the wanderer stands under the button: 28px of sky between them */
@@ -14684,7 +14728,7 @@ a.contact-channels__value:focus-visible {
    to the screen's edge, under the button:
      --aud-hero-pb   the plain's height plus --aud-land-gap of air between
                      the button and the plain. */
-@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   :is(.page--founders, .page--companies, .page--investors) {
     --aud-hero-pt: 16px;
     --aud-cta-w: 190px;
@@ -14758,14 +14802,14 @@ a.contact-channels__value:focus-visible {
   }
 
   :is(.page--founders, .page--companies, .page--investors) .hero-tagline {
-    max-width: 34em;
+    max-width: var(--m-measure);
     margin-top: 18px;
     font-size: var(--m-lede);
     line-height: 1.55;
   }
 
   :is(.page--founders, .page--companies, .page--investors) .primary-cta {
-    min-height: 48px;
+    min-height: var(--m-pill-h);
     margin-top: 28px;
     padding: 0 22px 0 26px;
   }
@@ -14774,7 +14818,7 @@ a.contact-channels__value:focus-visible {
 /* Upright, a phone cannot hold the desktop's first headline line at the
    h1 size, so the break goes and the headline balances on its own (the
    markup keeps a space before each <br> so the words stay apart). */
-@media (max-width: 767px) and (orientation: portrait) {
+@media (max-width: 767px) and (orientation: portrait), (max-width: 559px) {
   :is(.page--founders, .page--companies, .page--investors) .hero-title br {
     display: none;
   }
@@ -14783,7 +14827,7 @@ a.contact-channels__value:focus-visible {
 /* A phone on its side has one short screen for the copy: the headline is
    capped (the h1 floor, 34px, on a 375px-tall screen) and the stack
    tightens, as on the home page, so copy, plain and scene share 100svh. */
-@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   :is(.page--founders, .page--companies, .page--investors) .hero {
     min-height: 100svh;
   }
@@ -14874,7 +14918,7 @@ a.contact-channels__value:focus-visible {
   }
 
   :is(.page--founders, .page--companies, .page--investors) .scene-intro__body {
-    max-width: 60ch;
+    max-width: var(--m-measure);
     margin-top: 16px;
     font-size: var(--m-body);
     line-height: 1.6;
@@ -14884,7 +14928,7 @@ a.contact-channels__value:focus-visible {
 /* On its side the hero ends --aud-valley-m under the valley floor, so the
    intro starts at the hero's foot and keeps the lead --aud-intro-gap below
    the valley floor with its own top padding. */
-@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   :is(.page--founders, .page--companies, .page--investors) .scene-intro {
     margin-top: 0;
     padding-top: calc(var(--aud-intro-gap) - var(--aud-valley-m));
@@ -14996,7 +15040,7 @@ a.contact-channels__value:focus-visible {
   }
 }
 
-@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   :is(.page--founders, .page--companies, .page--investors) .aud-bleed {
     max-height: 62svh;
   }
