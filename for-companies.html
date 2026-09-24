@@ -124,7 +124,10 @@
       <div class="hz-scene">
         <section class="hero" aria-labelledby="hero-title">
           <div class="hz-photo" aria-hidden="true">
-            <img src="arch-towers.webp" srcset="arch-towers-640.webp 640w, arch-towers-1024.webp 1024w, arch-towers.webp 1920w" sizes="(min-width: 1024px) 1920px, (orientation: portrait) 1000px, 100vw" width="1920" height="1371" alt="" decoding="async" />
+            <picture>
+              <source media="(max-width: 480px) and (max-aspect-ratio: 3/4)" srcset="arch-towers-crop.webp" width="992" height="1371" />
+              <img src="arch-towers.webp" srcset="arch-towers-640.webp 640w, arch-towers-1024.webp 1024w, arch-towers.webp 1920w" sizes="(min-width: 1024px) 1920px, (orientation: portrait) 1000px, 100vw" width="1920" height="1371" alt="" fetchpriority="high" decoding="async" />
+            </picture>
           </div>
           <div class="hero-noise" aria-hidden="true"></div>
           <div class="scene-ground" aria-hidden="true"></div>
@@ -233,7 +236,10 @@
       </section>
 
       <figure class="aud-bleed">
-        <img src="band-companies.webp" srcset="band-companies-640.webp 640w, band-companies-1024.webp 1024w, band-companies.webp 1920w" sizes="(min-width: 1024px) 1920px, (max-height: 500px) and (orientation: landscape) 100vw, (min-width: 640px) 120vw, 210vw" width="1920" height="688" alt="A concrete window grid, close up" loading="lazy" decoding="async" />
+        <picture>
+          <source media="(max-width: 639px) and (orientation: portrait)" srcset="band-companies-crop.webp" width="928" height="688" />
+          <img src="band-companies.webp" srcset="band-companies-640.webp 640w, band-companies-1024.webp 1024w, band-companies.webp 1920w" sizes="(min-width: 1024px) 1920px, (max-height: 500px) and (orientation: landscape) 100vw, (min-width: 640px) 120vw, 210vw" width="1920" height="688" alt="A concrete window grid, close up" loading="lazy" decoding="async" />
+        </picture>
       </figure>
 
       <section class="aud-work aud-work--companies" aria-labelledby="aud-work-title">
@@ -303,7 +309,7 @@
 
       <section class="aud-grow" aria-labelledby="aud-grow-title">
         <div class="aud-grow__bg" aria-hidden="true">
-          <img class="aud-grow__photo" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, 100vw" width="2496" height="1696" alt="" loading="lazy" decoding="async" />
+          <img class="aud-grow__photo" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background-1920.webp 1920w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, 100vw" width="2496" height="1696" alt="" loading="lazy" decoding="async" />
           <div class="aud-grow__wash"></div>
         </div>
         <div class="aud-grow__ridge" aria-hidden="true"><img src="gora-bez-tla-2000px.svg" width="2000" height="850" alt="" loading="lazy" decoding="async" /></div>
@@ -319,7 +325,7 @@
       </section>
     </main>
     <div class="footer-ridge" aria-hidden="true">
-      <img class="footer-ridge__bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, 100vw" width="2496" height="1696" alt="" loading="lazy" decoding="async" />
+      <img class="footer-ridge__bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background-1920.webp 1920w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, 100vw" width="2496" height="1696" alt="" loading="lazy" decoding="async" />
       <img class="footer-ridge__overlay" src="footer.svg" width="1440" height="437" alt="" loading="lazy" decoding="async" />
     </div>
 

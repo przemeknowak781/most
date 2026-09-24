@@ -8926,7 +8926,8 @@ a.contact-channels__value:focus-visible {
 /* Everything below 1024px that every page shares: the tokens, the top bar,
    the menu dialog, the closing CTA band, the route shortcuts and the footer.
    1024px and up is the approved desktop and nothing here reaches it - every
-   rule sits inside a max-width: 1023px query (or a narrower one). Page
+   rule sits inside a max-width: 1023px query (or a narrower one), except
+   the main clip below, which a mouse never sees. Page
    sections build on the tokens below rather than restating numbers.
 
    Tiers: compact <=1023 | tablet 768-1023 | phone <=767 | small phone <=374
@@ -8983,16 +8984,19 @@ a.contact-channels__value:focus-visible {
   html {
     scroll-padding-top: calc(var(--nav-height) + 16px);
   }
+}
 
-  /* Decoration that bleeds past the sides (the home trail overlay sized to
-     its ridge, glows, marquees) must never widen the page: on a phone a
-     wider document widens the layout viewport, and the fixed bar and the
-     menu grow with it and slide their right-hand controls off screen.
-     clip, not hidden: it makes no scroll container, so nothing sticky or
-     scroll-linked inside changes. */
-  main {
-    overflow-x: clip;
-  }
+/* Decoration that bleeds past the sides (the home trail overlay sized to
+   its ridge, glows, marquees) must never widen the page: on a phone or a
+   tablet a wider document widens the layout viewport, and the fixed bar and
+   the menu grow with it and slide their right-hand controls off screen.
+   The one rule here that is not compact-only: an iPad on its side is 1024px
+   or wider and gets the desktop, whose hero art bleeds too (the Contact pill
+   was cut off at the edge). With a mouse it changes nothing - html already
+   clips at the same edge. clip, not hidden: it makes no scroll container,
+   so nothing sticky or scroll-linked inside changes. */
+main {
+  overflow-x: clip;
 }
 
 @media (max-width: 767px) {
@@ -10208,7 +10212,14 @@ a.contact-channels__value:focus-visible {
 
 /* ---------- compact: shared photography ----------
    The heroes, the CTA band and the footer ridge draw background.webp; the
-   <img>s pick a width with srcset/sizes. Nothing in CSS paints it. */
+   <img>s pick a width with srcset/sizes. Nothing in CSS paints it.
+   A phone held upright (480px wide at most, 3:4 or taller) sees only a
+   slice of each hero photo, so each hero's <picture> gives it that slice
+   as its own file (background-crop-home and so on), cut so that it lands
+   exactly where the full photo's slice was - see each page's hero rules.
+   A crop holds what shows on every such screen, with a margin; a hero
+   whose framing changes on phones may need its crop re-cut (past the
+   margin the crop scales up slightly - it never leaves a gap). */
 
 /* ---------- compact: touch ----------
    A tap leaves :hover stuck on touch screens, so the lift-on-hover moves
@@ -10230,6 +10241,108 @@ a.contact-channels__value:focus-visible {
 @media (max-width: 1023px) and (prefers-reduced-motion: reduce) {
   .mobile-menu {
     transition: none;
+  }
+}
+
+/* ---------- touch screens 1024px and up: hit areas ----------
+   An iPad on its side (and a 12.9" one upright) is 1024px or wider, so it
+   gets the desktop, whose links are sized for a mouse: header links 16px
+   tall, footer rows 20px, Read more 17px. On a touch screen each small
+   control gets an invisible hit area - a ::before or ::after inset,
+   whichever the control does not already draw with - so nothing moves and
+   nothing visible changes, and a desktop without a touch screen never
+   matches. Stacked rows only share the gap between them (the footer
+   columns, 10px apart, make 30px rows), so a finger on a link's own text
+   always gets that link. */
+@media (min-width: 1024px) and (any-pointer: coarse) {
+  .top-nav .nav-cta,
+  .site-footer__col li,
+  .site-footer__legal li,
+  .site-footer__social,
+  .aud-grow__alt,
+  .page--home .whoweare__link,
+  .page--about .photo-break__line,
+  .page--about .clients__pause,
+  .page--team .member__readmore,
+  .page--contact .contact-social,
+  .page--audience .aud-expertise__more {
+    position: relative;
+  }
+
+  /* the header links draw the current-page dot with ::after */
+  .top-nav__menu a::before,
+  .top-nav .nav-cta::before,
+  .page--about .ascent__paths a::before,
+  .site-footer__col a::after,
+  .site-footer__legal a::after,
+  .aud-grow__alt::after,
+  .page--home .whoweare__link::after,
+  .page--home .preview__toggle::after,
+  .page--about .photo-break__line::after,
+  .page--about .clients__pause::after,
+  .page--expertise .ex-areas__nav [role="tab"]::after,
+  .page--team .member__readmore::after,
+  .page--contact .contact-social::after,
+  .page--audience .aud-expertise__more::after {
+    content: "";
+    position: absolute;
+  }
+
+  /* 16px links in the 84px bar, 22px apart */
+  .top-nav__menu a::before {
+    inset: -14px -11px;
+  }
+
+  /* an inset counts from inside the border: the 1px-bordered pill,
+     icons and button take a pixel more */
+  .top-nav .nav-cta::before {
+    inset: -2px 0;
+  }
+
+  /* each footer row is its whole column wide, up to the next row */
+  .site-footer__col a::after {
+    inset: -5px 0;
+  }
+
+  .site-footer__col a.site-footer__social::after {
+    inset: -5px;
+  }
+
+  .page--home .preview__toggle::after {
+    inset: -4px;
+  }
+
+  .site-footer__legal a::after {
+    inset: -14px -12px;
+  }
+
+  .aud-grow__alt::after,
+  .page--about .photo-break__line::after,
+  .page--home .preview.is-expanded .preview__toggle::after {
+    inset: -11px 0;
+  }
+
+  .page--home .whoweare__link::after,
+  .page--about .ascent__paths a::before {
+    inset: -12px -12px;
+  }
+
+  .page--about .clients__pause::after {
+    inset: -9px 0;
+  }
+
+  /* the area tabs are 20px rows 46px apart */
+  .page--expertise .ex-areas__nav [role="tab"]::after {
+    inset: -12px 0;
+  }
+
+  .page--team .member__readmore::after,
+  .page--audience .aud-expertise__more::after {
+    inset: -14px -8px;
+  }
+
+  .page--contact .contact-social::after {
+    inset: -7px;
   }
 }
 
@@ -10415,6 +10528,15 @@ a.contact-channels__value:focus-visible {
      right of them, which put its right edge past the screen */
   .page--home .hero-climbers-sun {
     max-width: 50vw;
+  }
+
+  /* The script places the climbers and their glow on the ridge. Until it
+     has (.is-placed), they would paint at their default spot - the ridge's
+     top left corner, 160px wide - and the move counted as a layout shift on
+     every load. Hidden until placed, they simply appear where they stand. */
+  .page--home .hero-climbers:not(.is-placed),
+  .page--home .hero-climbers-sun:not(.is-placed) {
+    visibility: hidden;
   }
 
   .page--home .hero-stats {
@@ -11281,7 +11403,9 @@ a.contact-channels__value:focus-visible {
    MOBILE & TABLET (<=1023px) — PAGES
    Page-by-page compositions on top of the foundation above. Every rule
    sits inside a max-width 1023px (or narrower) query and is scoped to its
-   page class, so desktop (1024px and up) is untouched.
+   page class, so desktop (1024px and up) is untouched - apart from the
+   home hero in a window that stands upright (portrait, 1024px and up),
+   which a landscape desktop never matches.
    ============================================================ */
 
 /* ---------- Home (index.html) ---------- */
@@ -11291,7 +11415,9 @@ a.contact-channels__value:focus-visible {
    stats, the truss band under it, Three routes' spacing and charts, Who we
    are, and the Our Expertise rail. Everything is scoped to .page--home and
    sits inside a max-width: 1023px query (or a narrower one), so neither
-   another page nor the desktop can see it. The shared pieces - bar, menu,
+   another page nor the desktop can see it - except the hero's fix for an
+   upright window 1024px and up, at the end, which only a portrait window
+   matches. The shared pieces - bar, menu,
    closing band, footer, the compact hero grid and the open route cards -
    are the foundation's; this only refines them for this page.
 
@@ -11788,6 +11914,34 @@ a.contact-channels__value:focus-visible {
   }
 }
 
+/* ---------- hero: an upright window 1024px and up ----------
+   A 12.9" iPad held upright (1024x1366), or a portrait monitor, gets the
+   desktop hero, which is built for a landscape screen: the hero is one
+   screen tall and the ridge hangs 11% of it below the foot, so the taller
+   the screen, the lower the ridge sits against the stats and the band.
+   The first checkpoints landed on 200+ and 300+, and the band's straight
+   top edge showed over the ridge's low left side as a hard cut through
+   the photo. Here the desktop's own correction (--hero-ridge-room, the
+   drop capped by what the width leaves) may lift the ridge as well, so
+   the checkpoints keep their 1440x900 clearance over the stats; and the
+   band's top edge follows the art instead of the screen, 0.26 of the
+   width under the art's top - just past the silhouette's deepest dip
+   (0.2395 of the art, which is 1.0816 x the width wide and 0.4597 x the
+   width tall). A landscape window never matches: the desktop is as it
+   was. */
+@media (min-width: 1024px) and (orientation: portrait) {
+  .page--home {
+    --hero-ridge-drop: min(var(--hero-ridge-room), clamp(52px, 8vh, 96px));
+  }
+
+  /* the art's top edge, measured from the hero's foot, is 11% of the
+     one-screen hero plus the drop, less the art's height (45.97vw); the
+     band starts 25.97vw under it */
+  .page--home .ridge-edge {
+    margin-top: calc(11svh + var(--hero-ridge-drop) - 20vw);
+  }
+}
+
 /* ---------- Expertise ---------- */
 
 /* ===== EXPERTISE (<=1023px) ===== */
@@ -11906,6 +12060,24 @@ a.contact-channels__value:focus-visible {
 
   .page--expertise .hero-tagline {
     max-width: 30em;
+  }
+}
+
+/* A phone held upright sees a narrow middle slice of the louvre photo (a
+   quarter of its width), so it loads just that slice: arch-band-louvre-
+   crop, the <source> in the markup, cut about the middle. The box is the
+   hero itself here and the slice covers it from the middle, which draws it
+   exactly where the full photo's slice was (mirrored as before); should
+   the hero ever show more than the slice holds, it only scales up a
+   little. */
+@media (max-width: 480px) and (max-aspect-ratio: 3/4) {
+  .page--expertise .hero-bg {
+    inset: 0;
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    aspect-ratio: auto;
+    translate: none;
   }
 }
 
@@ -12555,6 +12727,24 @@ a.contact-channels__value:focus-visible {
 @media (min-width: 600px) and (max-width: 1023px) {
   .page--about .page-hero__sun {
     --ab-sun: clamp(240px, 44vw, 360px);
+  }
+}
+
+/* A phone held upright sees the middle of the photo only (under two
+   thirds of its width), so it loads just that part: background-crop-about,
+   the <source> in the markup, cut so that its 56% point is the photo's.
+   The box is the hero itself here and the crop covers it from that 56%
+   point, which draws it exactly where the full photo's part was; should
+   the hero ever show more than the crop holds, it only scales up a little
+   (never a gap at the sides). */
+@media (max-width: 480px) and (max-aspect-ratio: 3/4) {
+  .page--about .page-hero__bg {
+    inset: 0;
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    aspect-ratio: auto;
+    translate: none;
   }
 }
 
@@ -13658,6 +13848,25 @@ a.contact-channels__value:focus-visible {
   .page--team .page-hero .primary-cta {
     min-height: 46px;
     margin-top: 20px;
+  }
+}
+
+/* A phone held upright sees the middle of the photo only (under two
+   thirds of its width, around the 58% focus), so it loads just that
+   part: background-crop-team, the <source> in the markup, cut so that its
+   58% point is the photo's. The box is the hero itself here and the crop
+   covers it from the focus, which draws it exactly where the full photo's
+   part was; should the hero ever show more than the crop holds, it only
+   scales up a little (never a gap at the sides). */
+@media (max-width: 480px) and (max-aspect-ratio: 3/4) {
+  .page--team .page-hero__bg {
+    inset: 0;
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    aspect-ratio: auto;
+    translate: none;
+    object-position: var(--team-hero-focus) 50%;
   }
 }
 
@@ -14780,6 +14989,23 @@ a.contact-channels__value:focus-visible {
   }
 }
 
+/* A phone held upright sees the middle half of the architecture photo, so
+   it loads just that part (arch-lattice-crop / arch-towers-crop, the
+   <source> in the markup, cut about the middle): the page's largest image
+   at a third fewer bytes. The box is the sky itself here and the crop
+   covers it from the middle, which draws it exactly where the full
+   photo's middle was; should the sky ever show more than the crop holds,
+   it only scales up a little (never a gap at the sides). */
+@media (max-width: 480px) and (max-aspect-ratio: 3/4) {
+  :is(.page--companies, .page--investors) .hz-photo img {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+  }
+}
+
 /* A phone on its side has one short screen for the copy: the headline is
    capped (the h1 floor, 34px, on a 375px-tall screen) and the stack
    tightens, as on the home page, so copy, plain and scene share 100svh. */
@@ -14878,6 +15104,16 @@ a.contact-channels__value:focus-visible {
     margin-top: 16px;
     font-size: var(--m-body);
     line-height: 1.6;
+  }
+
+  /* With the hero sized to its copy the intro stands in the first screen,
+     and on Founders its body is the largest thing painted there. Faded in
+     by script, it waited for the deferred script and then 0.7s more (LCP
+     0.8s after first paint); here it is simply there. */
+  :is(.page--founders, .page--companies, .page--investors) :is(.scene-intro__lead, .scene-intro__body).io-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 
@@ -14987,6 +15223,21 @@ a.contact-channels__value:focus-visible {
     max-width: none;
     height: max(100cqh, 100cqw / var(--band-ratio));
     transform: translate(-50%, -50%);
+  }
+}
+
+/* Upright, a phone shows only the middle 4:3 of the Companies and
+   Investors bands (48% of the photo's width), so it loads that crop (the
+   <source> in the markup). The box is the band itself here and the crop
+   covers it from the middle, exactly where the photo's middle was.
+   Founders' band shows most of its photo and keeps the one file. */
+@media (max-width: 639px) and (orientation: portrait) {
+  :is(.page--companies, .page--investors) .aud-bleed img {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
   }
 }
 

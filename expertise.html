@@ -128,7 +128,10 @@
            the ridge matches the cream of the section below so they merge -->
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-media" aria-hidden="true">
-          <img class="hero-bg" src="arch-band-louvre.webp" srcset="arch-band-louvre-1024.webp 1024w, arch-band-louvre-1280.webp 1280w, arch-band-louvre.webp 2200w" sizes="(max-width: 767px) and (orientation: portrait) 1850px, (max-width: 1023px) and (orientation: landscape) 255vh, 2200px" width="2200" height="863" alt="" fetchpriority="high" decoding="async" />
+          <picture>
+            <source media="(max-width: 480px) and (max-aspect-ratio: 3/4)" srcset="arch-band-louvre-crop.webp" width="680" height="863" />
+            <img class="hero-bg" src="arch-band-louvre.webp" srcset="arch-band-louvre-1024.webp 1024w, arch-band-louvre-1280.webp 1280w, arch-band-louvre.webp 2200w" sizes="(max-width: 767px) and (orientation: portrait) 1850px, (max-width: 1023px) and (orientation: landscape) 255vh, 2200px" width="2200" height="863" alt="" fetchpriority="high" decoding="async" />
+          </picture>
           <div class="hero-wash"></div>
           <div class="hero-vignette"></div>
           <div class="hero-noise"></div>
@@ -455,7 +458,7 @@
 
       <section class="aud-grow" aria-labelledby="aud-grow-title">
         <div class="aud-grow__bg" aria-hidden="true">
-          <img class="aud-grow__photo" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, 100vw" width="2496" height="1696" alt="" loading="lazy" decoding="async" />
+          <img class="aud-grow__photo" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background-1920.webp 1920w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, 100vw" width="2496" height="1696" alt="" loading="lazy" decoding="async" />
           <div class="aud-grow__wash"></div>
         </div>
         <div class="aud-grow__ridge" aria-hidden="true"><img src="gora-bez-tla-2000px.svg" width="2000" height="850" alt="" loading="lazy" decoding="async" /></div>
@@ -472,7 +475,7 @@
     </main>
 
     <div class="footer-ridge" aria-hidden="true">
-      <img class="footer-ridge__bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, 100vw" width="2496" height="1696" alt="" loading="lazy" decoding="async" />
+      <img class="footer-ridge__bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background-1920.webp 1920w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, 100vw" width="2496" height="1696" alt="" loading="lazy" decoding="async" />
       <img class="footer-ridge__overlay" src="footer.svg" width="1440" height="437" alt="" loading="lazy" decoding="async" />
     </div>
 
