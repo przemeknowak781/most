@@ -123,41 +123,31 @@
     </div>
 
     <main id="main" tabindex="-1">
-      <!-- PAGE HERO -->
-      <!-- EXPERTISE HERO: the audience-hero construction in the Figma navy-to-orange sky;
-           the ridge matches the cream of the section below so they merge -->
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-media" aria-hidden="true">
+      <!-- PAGE HERO: the mountain scene every inner page opens on (About,
+           Our Team, Contact), framed here on the sunlit peaks -->
+      <section class="page-hero" aria-labelledby="page-hero-title">
+        <div class="page-hero__media" aria-hidden="true">
           <picture>
-            <source media="(max-width: 480px) and (max-aspect-ratio: 3/4)" srcset="arch-band-louvre-crop.webp" width="680" height="863" />
-            <img class="hero-bg" src="arch-band-louvre.webp" srcset="arch-band-louvre-1024.webp 1024w, arch-band-louvre-1280.webp 1280w, arch-band-louvre.webp 2200w" sizes="(max-width: 767px) and (orientation: portrait) 1850px, (max-width: 1023px) and (orientation: landscape) 255vh, 2200px" width="2200" height="863" alt="" fetchpriority="high" decoding="async" />
+            <source media="(max-width: 480px) and (max-aspect-ratio: 3/4)" srcset="background-crop-about.webp" width="1696" height="1696" />
+            <img class="page-hero__bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background-1920.webp 1920w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, (orientation: landscape) 100vw, 1000px" width="2496" height="1696" alt="" fetchpriority="high" decoding="async" />
           </picture>
-          <div class="hero-wash"></div>
-          <div class="hero-vignette"></div>
-          <div class="hero-noise"></div>
+          <div class="page-hero__wash"></div>
+          <div class="page-hero__vignette"></div>
+          <div class="page-hero__noise"></div>
         </div>
-
-        <div class="hero-glow" aria-hidden="true">
-          <span class="hero-glow__sun"></span>
-          <span class="hero-glow__haze"></span>
+        <div class="page-hero__glow" aria-hidden="true">
+          <span class="page-hero__sun"></span>
+          <span class="page-hero__haze"></span>
         </div>
-
-        <div class="hero-ridges" aria-hidden="true">
-          <div class="hero-climbers-sun" aria-hidden="true"></div>
-
-          <img class="hero-ridges__img" src="gora-beige-2000px.svg" width="2000" height="850" alt="" decoding="async" />
-
-          <div class="hero-climbers" aria-hidden="true">
-            <img class="hero-climbers__img" src="climbers-pomarancz.svg" width="178" height="150" alt="" loading="lazy" decoding="async" />
-          </div>
+        <div class="page-hero__ridges" aria-hidden="true">
+          <img class="page-hero__ridge" src="gora-bez-tla-2000px.svg" width="2000" height="850" alt="" decoding="async" />
         </div>
-
-        <div class="hero-content">
-          <p class="eyebrow reveal">— our expertise —</p>
-          <h1 class="hero-title reveal" id="hero-title">
-            Legal solutions built to support growth, funding, and expansion<br>— across markets and&nbsp;stages.
+        <div class="page-hero__content">
+          <p class="page-hero__eyebrow reveal">— our expertise —</p>
+          <h1 class="page-hero__title reveal" id="page-hero-title">
+            Legal solutions built to support growth, funding, and expansion <br>— across markets and&nbsp;stages.
           </h1>
-          <p class="hero-tagline reveal">
+          <p class="page-hero__tagline reveal">
             Eight interconnected areas of support&nbsp;— grown with your business, adapted to your&nbsp;stage.
           </p>
           <a class="primary-cta reveal" href="#areas">
@@ -169,20 +159,9 @@
         </div>
       </section>
 
-      <svg class="hero-trail" viewBox="0 0 2000 850" preserveAspectRatio="none" aria-hidden="true">
-        <path class="hero-trail__path" d="" />
-        <g class="hero-trail__leaders"></g>
-      </svg>
-
-      <!-- invisible stub: the trail builder requires the homepage's
-           ridge-edge leaders group to exist before it draws anything -->
-      <svg class="ridge-edge__leaders" viewBox="0 0 2000 100" preserveAspectRatio="none" aria-hidden="true" style="display:none"></svg>
-
-      <div class="hero-trail-points" aria-hidden="true"></div>
-      <div class="hero-trail-labels" aria-hidden="true"></div>
-
       <!-- OUR AREAS OF EXPERTISE: Figma master-detail, 8 areas -->
-      <section class="ex-areas" id="areas" aria-labelledby="ex-areas-title">
+      <section class="ex-areas has-trail has-trail--a" id="areas" aria-labelledby="ex-areas-title">
+        <span class="has-trail__dot" aria-hidden="true"></span>
         <header class="ex-areas__head">
           <h2 class="ex-areas__title reveal" id="ex-areas-title">Our Areas<br>of&nbsp;Expertise</h2>
           <p class="ex-areas__lede reveal">We integrate legal considerations into business strategy, helping you operate with clarity, navigate complexity confidently, and unlock opportunities from day one through&nbsp;exit.</p>
@@ -358,8 +337,8 @@
         </div>
       </section>
 
-      <!-- HOW WE WORK: the Figma terrain - a hand-drawn ridge profile with
-           labels scattered along the line -->
+      <!-- HOW WE WORK: the Figma terrain - a hand-drawn ridge profile at dusk,
+           the trail along its crest and the steps scattered along the line -->
       <section class="exwork exwork--terrain" id="how-we-work" aria-labelledby="exwork-title">
         <header class="exwork__head">
           <h2 class="exwork__title" id="exwork-title">How We&nbsp;Work?</h2>
@@ -370,8 +349,8 @@
           <svg class="exwork-terrain__svg" viewBox="0 0 2000 1100" preserveAspectRatio="none" aria-hidden="true">
             <defs>
               <linearGradient id="terrain-rock" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0.3" stop-color="#1e2a47" />
-                <stop offset="0.72" stop-color="#172039" />
+                <stop offset="0.3" stop-color="#0f1119" />
+                <stop offset="0.72" stop-color="#0b0d16" />
                 <stop offset="1" stop-color="#080b13" />
               </linearGradient>
             </defs>

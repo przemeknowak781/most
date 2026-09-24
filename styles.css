@@ -5523,7 +5523,6 @@ a.contact-channels__value:focus-visible {
   }
 }
 
-.page--audience .aud-hero__btn svg,
 .page--audience .aud-grow__btn svg {
   color: var(--aud-accent);
 }
@@ -5700,17 +5699,20 @@ a.contact-channels__value:focus-visible {
 
 /* ---------- PAGE HERO (about): homepage-grade atmosphere ---------- */
 
-.page--about .page-hero {
+.page--about .page-hero,
+.page--expertise .page-hero {
   min-height: clamp(560px, 78vh, 820px);
   padding-bottom: clamp(120px, 16vh, 190px);
 }
 
-.page--about .page-hero__bg {
+.page--about .page-hero__bg,
+.page--expertise .page-hero__bg {
   object-position: 56% 72%;
   filter: saturate(0.94) contrast(1.06) brightness(0.74);
 }
 
-.page--about .page-hero__wash {
+.page--about .page-hero__wash,
+.page--expertise .page-hero__wash {
   background:
     radial-gradient(820px 520px at 18% 38%, rgba(255, 97, 44, 0.32), transparent 68%),
     radial-gradient(700px 460px at 62% 50%, rgba(255, 176, 119, 0.12), transparent 72%),
@@ -5747,12 +5749,44 @@ a.contact-channels__value:focus-visible {
   animation: hero-haze-drift 12s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-.page--about .page-hero__sun {
+.page--about .page-hero__sun,
+.page--expertise .page-hero__sun {
   top: 12%;
   left: 12%;
   width: clamp(240px, 30vw, 420px);
   height: clamp(240px, 30vw, 420px);
   animation: hero-sun-breathe 9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+/* ---------- PAGE HERO (expertise): the About scene, lit from the right ----------
+   The same construction as About at every width. On a desktop window the
+   photo is framed on its sunlit peaks and the sun rises over them, so the
+   copy keeps the deep, cool left and the page does not open on About's
+   picture. Phones keep About's framing: they see the middle of the photo. */
+@media (min-width: 1024px) {
+  .page--expertise .page-hero__bg {
+    object-position: 84% 66%;
+  }
+
+  .page--expertise .page-hero__wash {
+    background:
+      radial-gradient(760px 520px at 80% 44%, rgba(255, 97, 44, 0.28), transparent 68%),
+      radial-gradient(620px 420px at 44% 56%, rgba(255, 176, 119, 0.1), transparent 72%),
+      linear-gradient(90deg, rgba(4, 6, 12, 0.88) 0%, rgba(11, 14, 25, 0.62) 38%, rgba(18, 20, 31, 0.2) 72%, rgba(8, 10, 17, 0.28) 100%),
+      linear-gradient(180deg, rgba(8, 11, 19, 0.36) 0%, rgba(8, 11, 19, 0.55) 58%, rgba(8, 11, 19, 0.95) 100%);
+  }
+
+  .page--expertise .page-hero__sun {
+    top: 14%;
+    left: auto;
+    right: 12%;
+  }
+
+  /* the silhouette mirrored: its mass stands under the copy and its low end
+     under the sun, so the lit peaks show and the light clears the ridge */
+  .page--expertise .page-hero__ridge {
+    transform: scaleX(-1);
+  }
 }
 
 /* Key facts strip pinned to hero foot — mirrors homepage hero-stats */
@@ -5925,52 +5959,6 @@ a.contact-channels__value:focus-visible {
   background: #f2ab80;
 }
 
-/* Washed corporate sky: pale peach falling into near-white salmon.
-   The photo rides on top as pure greyscale multiplied into the
-   gradient, so every pixel stays inside the salmon family - no browns
-   from hue mixing. The mask keeps the top of the sky pure gradient. */
-.page--audience .hero-media {
-  background: linear-gradient(180deg, #f2ab80 0%, #f9c6a4 38%, #ffdfc9 68%, #fff0e6 100%);
-}
-
-.page--audience .hero-bg {
-  object-position: 50% 78%;
-  filter: grayscale(1) brightness(1.3) contrast(1.03);
-  mix-blend-mode: multiply;
-  opacity: 0.72;
-  -webkit-mask-image: linear-gradient(180deg, transparent 26%, rgba(0, 0, 0, 0.4) 44%, #000 62%);
-  mask-image: linear-gradient(180deg, transparent 26%, rgba(0, 0, 0, 0.4) 44%, #000 62%);
-}
-
-/* Soft white veils lift the nav and copy zones on the washed ground. */
-.page--audience .hero-wash {
-  background:
-    linear-gradient(180deg, rgba(255, 243, 236, 0.5), transparent 24%),
-    linear-gradient(90deg, rgba(255, 246, 240, 0.55), rgba(255, 246, 240, 0.2) 42%, transparent 66%);
-  -webkit-mask-image: none;
-  mask-image: none;
-}
-
-.page--audience .hero-vignette {
-  background: none;
-  -webkit-mask-image: none;
-  mask-image: none;
-}
-
-.page--audience .hero-glow__sun {
-  opacity: 0.2;
-}
-
-.page--audience .hero-glow__haze {
-  display: none;
-}
-
-/* Climbers parked for now (markup stays, easy to bring back). */
-.page--audience .hero-climbers,
-.page--audience .hero-climbers-sun {
-  display: none;
-}
-
 /* Soft drop glow behind the hero copy: lifts the black type off the
    facade texture without boxing it in. */
 .page--audience .hero-content::before {
@@ -5982,31 +5970,6 @@ a.contact-channels__value:focus-visible {
     radial-gradient(54% 52% at 36% 44%, rgba(255, 247, 241, 0.55), rgba(255, 240, 231, 0.28) 55%, transparent 76%);
   filter: blur(12px);
   pointer-events: none;
-}
-
-.page--audience .hero-ridges__img {
-  filter: drop-shadow(0 -22px 46px rgba(196, 124, 86, 0.35));
-}
-
-/* Palette-coherent trail: soft coral line and points on the washed scene.
-   Re-point the tokens rather than restate stroke and filter, so these
-   heroes differ from the rest of the site in hue only, never in recipe. */
-.page--audience .hero-trail__path {
-  --trail-line: rgba(186, 84, 44, 0.66);
-  --trail-glow: rgba(255, 214, 188, 0.6);
-}
-
-.page--audience .hero-trail__leader {
-  --trail-leader: rgba(186, 84, 44, 0.32);
-}
-
-/* the washed heroes mute the accent - the recipe is the same, only the hue
-   is re-pointed */
-.page--audience .hero-trail-point {
-  --marker-core: #c97a4e;
-  --marker-ring: rgba(201, 122, 78, 0.18);
-  --marker-halo: rgba(201, 122, 78, 0.4);
-  --marker-aura: rgba(255, 205, 173, 0.35);
 }
 
 /* Black hero type on the washed ground; dark nav to match. */
@@ -6055,16 +6018,6 @@ a.contact-channels__value:focus-visible {
   background: #b1a49c;
 }
 
-.page--companies .hero-media {
-  background: linear-gradient(180deg, #b1a49c 0%, #c6bab3 38%, #dcd3cd 68%, #f2eeea 100%);
-}
-
-.page--companies .hero-wash {
-  background:
-    linear-gradient(180deg, rgba(247, 243, 240, 0.5), transparent 24%),
-    linear-gradient(90deg, rgba(249, 246, 243, 0.55), rgba(249, 246, 243, 0.2) 42%, transparent 66%);
-}
-
 .page--companies .hero-content::before {
   background: radial-gradient(
     54% 52% at 36% 44%,
@@ -6072,10 +6025,6 @@ a.contact-channels__value:focus-visible {
     rgba(244, 238, 233, 0.28) 55%,
     transparent 76%
   );
-}
-
-.page--companies .hero-ridges__img {
-  filter: drop-shadow(0 -22px 46px rgba(138, 120, 106, 0.35));
 }
 
 .page--companies .hero-content .eyebrow {
@@ -6121,16 +6070,6 @@ a.contact-channels__value:focus-visible {
   background: #a3adbd;
 }
 
-.page--investors .hero-media {
-  background: linear-gradient(180deg, #a3adbd 0%, #bec6d2 38%, #d9dee6 68%, #eef1f5 100%);
-}
-
-.page--investors .hero-wash {
-  background:
-    linear-gradient(180deg, rgba(240, 246, 250, 0.5), transparent 24%),
-    linear-gradient(90deg, rgba(243, 247, 251, 0.55), rgba(243, 247, 251, 0.2) 42%, transparent 66%);
-}
-
 .page--investors .hero-content::before {
   background: radial-gradient(
     54% 52% at 36% 44%,
@@ -6138,10 +6077,6 @@ a.contact-channels__value:focus-visible {
     rgba(236, 242, 248, 0.28) 55%,
     transparent 76%
   );
-}
-
-.page--investors .hero-ridges__img {
-  filter: drop-shadow(0 -22px 46px rgba(108, 124, 146, 0.35));
 }
 
 .page--investors .hero-content .eyebrow {
@@ -6184,27 +6119,6 @@ a.contact-channels__value:focus-visible {
 
 /* The homepage sun glow is orange; under plus-lighter that reads as a
    dirty warm patch on the cool palettes - retint the added light per page. */
-.page--companies .hero-glow__sun {
-  background: radial-gradient(
-    ellipse at 48% 44%,
-    rgba(228, 206, 188, 0.92),
-    rgba(178, 152, 132, 0.7) 30%,
-    rgba(122, 102, 86, 0.38) 52%,
-    rgba(78, 64, 54, 0.16) 68%,
-    transparent 84%
-  );
-}
-
-.page--investors .hero-glow__sun {
-  background: radial-gradient(
-    ellipse at 48% 44%,
-    rgba(188, 200, 218, 0.92),
-    rgba(132, 146, 168, 0.7) 30%,
-    rgba(86, 98, 118, 0.38) 52%,
-    rgba(54, 62, 78, 0.16) 68%,
-    transparent 84%
-  );
-}
 
 
 .aud-grow__sub {
@@ -6228,12 +6142,18 @@ a.contact-channels__value:focus-visible {
   justify-self: end;
 }
 
-/* ============ EXPERTISE - OUR AREAS: Figma master-detail ============ */
+/* ============ EXPERTISE - OUR AREAS: Figma master-detail ============
+   Design 2.0's deep plane, as the home page's expertise section. It starts
+   on the colour the hero's ridge comes to at its foot (the navy silhouette
+   at 85% over the dark photo), so the two meet without a seam, and the
+   warmth of the hero's light still hangs over the right-hand column. */
 .ex-areas {
   position: relative;
   padding: clamp(88px, 11vh, 132px) max(var(--container-x), calc((100vw - 1360px) / 2));
-  background: #f0ebe9;
-  color: #1c1419;
+  background:
+    radial-gradient(900px 640px at 82% 420px, rgba(255, 97, 44, 0.07), transparent 70%),
+    linear-gradient(180deg, #13151e 0, #0a0d18 520px, #07090f 100%);
+  color: var(--light);
 }
 
 .ex-areas__head {
@@ -6248,14 +6168,14 @@ a.contact-channels__value:focus-visible {
 
 .ex-areas__title {
   margin: 0;
-  color: #1c1419;
+  color: var(--light);
   font: 500 clamp(34px, 4vw, 56px) / 1.08 "Urbanist", system-ui, sans-serif;
   letter-spacing: -0.005em;
 }
 
 .ex-areas__lede {
   margin: 0;
-  color: rgba(28, 20, 25, 0.72);
+  color: var(--light-80);
   font: 400 clamp(14.5px, 1.05vw, 16.5px) / 1.6 "Outfit", system-ui, sans-serif;
   text-wrap: pretty;
 }
@@ -6352,7 +6272,7 @@ a.contact-channels__value:focus-visible {
 
 .ex-areas__nav ul::before {
   bottom: 0;
-  background: rgba(28, 20, 25, 0.14);
+  background: rgba(240, 235, 233, 0.14);
 }
 
 .ex-areas__nav ul::after {
@@ -6369,14 +6289,14 @@ a.contact-channels__value:focus-visible {
   border: 0;
   background: none;
   text-align: left;
-  color: rgba(28, 20, 25, 0.66);
+  color: rgba(240, 235, 233, 0.62);
   font: 400 clamp(15px, 1.15vw, 17.5px) / 1.35 "Outfit", system-ui, sans-serif;
   cursor: pointer;
   transition: color 0.25s ease;
 }
 
 .ex-areas__nav button:hover {
-  color: #1c1419;
+  color: var(--light);
 }
 
 .ex-areas__nav button::before {
@@ -6394,10 +6314,10 @@ a.contact-channels__value:focus-visible {
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
+/* the chosen area reads in full light and weight; the lit dot on the rail
+   says the same without colour, so the page keeps its one orange accent */
 .ex-areas__nav button[aria-selected="true"] {
-  /* the site orange is 2.5:1 on the cream; this darker one is 4.9:1, and the
-     rail dot keeps the bright orange so the choice is not colour alone */
-  color: #b3401a;
+  color: var(--light);
   font-weight: 500;
 }
 
@@ -6424,7 +6344,7 @@ a.contact-channels__value:focus-visible {
 }
 
 .ex-areas__panel:focus-visible {
-  outline: 2px solid #1c1419;
+  outline: 2px solid var(--light);
   outline-offset: 8px;
   border-radius: 4px;
 }
@@ -6543,9 +6463,30 @@ a.contact-channels__value:focus-visible {
   transition-delay: 0s;
 }
 
+/* Card numerals, as on the home page's areas: zero-padded, muted, and in
+   the corner like trail kilometrage. Generated on the panel, not in its
+   heading, and silent to assistive tech: the heading says what the area is. */
+.ex-areas__panels {
+  counter-reset: ex-area;
+}
+
+.ex-areas__panel {
+  counter-increment: ex-area;
+}
+
+.ex-areas__panel::before {
+  content: counter(ex-area, decimal-leading-zero);
+  content: counter(ex-area, decimal-leading-zero) / "";
+  display: block;
+  margin: 0 0 12px;
+  color: rgba(255, 138, 92, 0.9);
+  font: 500 13px / 1 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.28em;
+}
+
 .ex-areas__panel h3 {
   margin: 0 0 14px;
-  color: #1c1419;
+  color: var(--light);
   font: 500 clamp(26px, 2.7vw, 38px) / 1.15 "Urbanist", system-ui, sans-serif;
   letter-spacing: -0.004em;
 }
@@ -6553,7 +6494,7 @@ a.contact-channels__value:focus-visible {
 .ex-areas__panel > p {
   margin: 0 0 clamp(28px, 4.4vh, 46px);
   max-width: 560px;
-  color: rgba(28, 20, 25, 0.75);
+  color: var(--light-80);
   font: 400 clamp(15px, 1.1vw, 17px) / 1.6 "Outfit", system-ui, sans-serif;
 }
 
@@ -6571,13 +6512,13 @@ a.contact-channels__value:focus-visible {
      edge: 15px from 1000px tall, about 7px just above 800px, where the
      short-window rules below take over. */
   padding: clamp(6px, 4.1vh - 26px, 15px) 0 clamp(6px, 4.1vh - 26px, 15px) 16px;
-  border-top: 1px solid rgba(28, 20, 25, 0.14);
-  color: rgba(28, 20, 25, 0.85);
+  border-top: 1px solid rgba(240, 235, 233, 0.12);
+  color: rgba(240, 235, 233, 0.84);
   font: 400 clamp(14.5px, 1.02vw, 16px) / 1.5 "Outfit", system-ui, sans-serif;
 }
 
 .ex-areas__list li:last-child {
-  border-bottom: 1px solid rgba(28, 20, 25, 0.14);
+  border-bottom: 1px solid rgba(240, 235, 233, 0.12);
 }
 
 @media (max-width: 980px) {
@@ -6709,11 +6650,15 @@ a.contact-channels__value:focus-visible {
   transform: translateY(-2px);
 }
 
-/* ============ HOW WE WORK - Figma terrain (light, hand-drawn ridge) ============ */
+/* ============ HOW WE WORK - Figma terrain: the route along a ridge at dusk ============
+   Design 2.0: the hand-drawn ridge stands against the sky as the hero's
+   silhouettes do - deep navy overhead, warming toward the horizon - the line
+   along its crest is the site's trail and the six steps are its checkpoints. */
 .exwork--terrain {
   padding: clamp(80px, 10vh, 120px) max(var(--container-x), calc((100vw - 1400px) / 2)) clamp(72px, 9vh, 110px);
-  background: #f0ebe9;
+  background: linear-gradient(180deg, #07090f 0%, #0c0f1b 35%, #1a1a28 62%, #221c26 100%);
   overflow: hidden;
+  isolation: isolate;
 }
 
 .exwork--terrain .exwork__head {
@@ -6724,14 +6669,14 @@ a.contact-channels__value:focus-visible {
 
 .exwork--terrain .exwork__title {
   margin: 0 0 10px;
-  color: #1c1f2b;
+  color: var(--light);
   font: 500 clamp(28px, 2.8vw, 42px) / 1.12 "Urbanist", system-ui, sans-serif;
   letter-spacing: -0.004em;
 }
 
 .exwork--terrain .exwork__lede {
   margin: 0;
-  color: rgba(28, 31, 43, 0.7);
+  color: var(--light-80);
   font: 400 clamp(15px, 1.15vw, 17.5px) / 1.55 "Outfit", system-ui, sans-serif;
 }
 
@@ -6794,21 +6739,15 @@ a.contact-channels__value:focus-visible {
   transform: translate(-50%, -100%);
 }
 
-/* above the ridge the copy sits on the cream, where the grey that works on
-   the navy below was 3.5:1 */
-.exwork-terrain__labels li.is-above p {
-  color: #5f6574;
-}
-
 .exwork-terrain__labels h3 {
   margin: 0 0 7px;
-  color: #1c1f2b;
+  color: var(--light);
   font: 600 clamp(15px, 1.3vw, 19px) / 1.3 "Urbanist", system-ui, sans-serif;
 }
 
 .exwork-terrain__labels p {
   margin: 0;
-  color: rgba(114, 120, 134, 0.95);
+  color: rgba(240, 235, 233, 0.68);
   font: 400 clamp(13px, 1.05vw, 15.5px) / 1.5 "Outfit", system-ui, sans-serif;
 }
 
@@ -6833,157 +6772,74 @@ a.contact-channels__value:focus-visible {
   }
 }
 
-/* terrain variant is light - kill the dark base overlays */
-.exwork--terrain::before,
-.exwork--terrain::after {
-  content: none;
+/* The light behind the ridge: the base overlay's warmth moves up to the
+   horizon on the right, where the ridge climbs highest, and a low glow
+   breathes along that stretch of the crest on the hero's rhythm - the
+   hero's light, seen again at the far end of the route. It is a band, not
+   a disc: centred on the crest (38% down the section at every desktop
+   width), half of it is under the rock and the steps' copy above stays on
+   dark sky. Both sit under the rock and the copy. */
+.exwork--terrain::before {
+  background: radial-gradient(min(1100px, 76vw) min(560px, 62vh) at 84% 44%, rgba(255, 97, 44, 0.14), transparent 72%);
+}
+
+.exwork--terrain .exwork__head,
+.exwork-terrain {
+  z-index: 1;
+}
+
+@media (min-width: 1024px) {
+  .exwork--terrain::after {
+    content: "";
+    position: absolute;
+    top: calc(38% - 150px);
+    right: -10%;
+    width: min(66vw, 980px);
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(255, 168, 110, 0.36), rgba(255, 97, 44, 0.14) 56%, transparent);
+    pointer-events: none;
+    animation: hero-sun-breathe 9s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  }
+}
+
+@media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
+  .exwork--terrain::after {
+    animation: none;
+    opacity: 0.56;
+  }
 }
 
 .exwork--terrain .exwork__lede {
   max-width: none;
 }
 
-/* --- Expertise palette: the Figma sky - slate navy on the left warming
-       through mauve into a strong orange on the right - with the cream ridge
-       of the areas section below as light land against it. The sepia
-       version read pale and flat next to the home page (client, 14.09). --- */
+/* --- Expertise: the audience components on this page (the route shortcuts
+       and the closing scene) take the brand orange as their accent --- */
 .page--expertise {
   --aud-accent: #ee6533;
   --aud-accent-rgb: 238, 101, 51;
   --aud-tint-rgb: 238, 101, 51;
 }
 
-/* The ridge used to scale with the viewport width while the hero's height
-   was capped, so it sat as a thin strip on a narrow window and climbed over
-   the copy on a wide one. It is a horizon band now: full width, its height a
-   fraction of the hero, stretched to fit (the artwork carries
-   preserveAspectRatio="none" for exactly this). The sky keeps the top of the
-   hero at every size and the copy never meets the ridge. */
-.page--expertise .hero {
-  --exp-band: clamp(300px, 42%, 470px);
-  /* slack so the parallax cannot lift the band off the hero's bottom edge */
-  --exp-slack: 90px;
-  /* the 920px cap existed to fight the void the old ridge left; the band
-     closes it, so the hero can fill a tall window again */
-  /* 86svh, not 92: the band sat above ~160px of empty cream on a laptop
-     screen (client, 14.09); the areas heading now shows in the first view */
-  min-height: clamp(640px, 86svh, 1100px);
-  overflow: hidden;
-  background: #2f3a55;
-}
-
-.page--expertise .hero-ridges {
-  left: 0;
-  right: 0;
-  top: auto;
-  bottom: calc(-1 * var(--exp-slack));
-  height: calc(var(--exp-band) + var(--exp-slack));
-}
-
-.page--expertise .hero-ridges__img {
-  width: 100%;
-  height: 100%;
-  margin-left: 0;
-}
-
-/* Figma sets this copy on a wider column than the shared 820px hero; holding
-   that keeps the headline off five lines on a wide window, which is what was
-   walking the CTA into the ridge. */
-.page--expertise .hero-content {
-  width: min(1000px, 76vw);
-}
-
-.page--expertise .hero-title {
-  max-width: min(940px, 66vw);
-}
-
-.page--expertise .hero-tagline {
-  max-width: min(700px, 47vw);
-}
-
-.page--expertise .hero-media {
-  background:
-    radial-gradient(58% 46% at 84% 74%, rgba(240, 178, 148, 0.6), transparent 72%),
-    linear-gradient(90deg, #2f3a55 0%, #39425a 20%, #675e6d 40%, #9c7a72 56%, #d37655 74%, #ee6533 100%);
-}
-
-/* Architecture as texture, not a building: the close-up of the louvre fins,
-   greyscale and multiplied into the sky so the fins read as dark strokes and
-   the sky between them leaves the gradient untouched. */
-.page--expertise .hero-bg {
-  object-position: 50% 40%;
-  filter: grayscale(1) contrast(1.15) brightness(1.08);
-  mix-blend-mode: multiply;
-  opacity: 0.44;
-  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.35), #000 46%);
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.35), #000 46%);
-}
-
-/* a navy veil on the copy side, as on the home hero */
-.page--expertise .hero-wash {
-  background:
-    linear-gradient(180deg, rgba(22, 26, 42, 0.42), transparent 30%),
-    linear-gradient(90deg, rgba(26, 31, 50, 0.6), rgba(26, 31, 50, 0.24) 44%, transparent 68%);
-}
-
-.page--expertise .hero-content::before {
-  background: radial-gradient(
-    54% 52% at 36% 44%,
-    rgba(20, 24, 38, 0.34),
-    rgba(20, 24, 38, 0.14) 55%,
-    transparent 76%
-  );
-}
-
-.page--expertise .hero-glow__sun {
-  left: auto;
-  right: -18%;
-  bottom: 12%;
-  width: min(80vw, 1300px);
-  /* the breathe keyframes own opacity, so the light is dimmed in the
-     gradient itself */
-  background: radial-gradient(
-    ellipse at 50% 50%,
-    rgba(255, 170, 120, 0.68),
-    rgba(238, 101, 51, 0.41) 34%,
-    rgba(160, 70, 40, 0.15) 60%,
-    transparent 80%
-  );
-}
-
-.page--expertise .hero-ridges__img {
-  filter: drop-shadow(0 -22px 46px rgba(14, 16, 28, 0.32));
-}
-
-.page--expertise .hero-content .eyebrow {
-  color: rgba(255, 196, 160, 0.86);
-}
-
-.page--expertise .hero-title {
-  color: var(--scene-cream, #f4ece7);
-  text-shadow: 0 2px 30px rgba(10, 12, 22, 0.28);
-}
-
-.page--expertise .hero-tagline {
-  color: rgba(244, 236, 231, 0.84);
-  text-shadow: none;
-}
-
+/* page--audience darkens the hero pill for the light audience heroes; this
+   hero is the dark scene, so the pill is the shared one again */
 .page--expertise .primary-cta {
-  color: #f4ece7;
-  background: rgba(22, 24, 34, 0.18);
-  border-color: rgba(244, 236, 231, 0.55);
-  box-shadow: 0 16px 44px -20px rgba(10, 12, 22, 0.55);
+  color: var(--light);
+  background: rgba(22, 24, 34, 0.22);
+  border-color: rgba(240, 235, 233, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(240, 235, 233, 0.06), 0 20px 70px rgba(0, 0, 0, 0.2);
 }
 
 .page--expertise .primary-cta:hover,
 .page--expertise .primary-cta:focus-visible {
   color: var(--navy);
-  background: #f4ece7;
-  border-color: #f4ece7;
+  background: var(--light);
+  border-color: var(--light);
 }
 
-/* light nav at rest over the dark sky, as on the home page */
+/* page--audience darkens the nav at rest for the light audience heroes; over
+   this page's dark scene it is the light nav, as on the home page */
 .page--expertise .top-nav .wordmark {
   color: var(--light);
 }
@@ -7007,8 +6863,8 @@ a.contact-channels__value:focus-visible {
 }
 
 .page--expertise .top-nav .top-nav__menu--right a {
-  /* the right group sits over the orange end of the sky, so it needs more
-     than the links on the navy end to reach 4.5:1 */
+  /* the right group sits over the lit end of the sky, so it keeps more
+     light than the links on the dark end */
   color: rgba(240, 235, 233, 0.9);
 }
 
@@ -7036,36 +6892,8 @@ a.contact-channels__value:focus-visible {
   border-color: var(--light);
 }
 
-/* The trail keeps the site's marker recipe unmuted. It runs over the cream
-   land, so the line takes the full brand orange rather than the pale line
-   the dark heroes use - the one hue change the background forces. */
-.page--expertise .hero-trail__path {
-  --trail-line: rgba(255, 97, 44, 0.9);
-  --trail-glow: rgba(255, 138, 92, 0.35);
-}
-
-.page--expertise .hero-trail-point {
-  --marker-core: #ff612c;
-  --marker-ring: rgba(255, 97, 44, 0.18);
-  --marker-halo: rgba(255, 138, 92, 0.55);
-  --marker-aura: rgba(255, 188, 140, 0.3);
-}
-
-/* the photo may peek a few px below the ridge - close the seam in cream */
-.page--expertise .hero-media::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 18px;
-  background: #f0ebe9;
-}
-
-/* The areas section used to be yanked up to 300px over the hero to close the
-   void the old ridge left; at z-index 20 that was painting over the CTA on a
-   tall window. The band closes the void on its own, and .ex-areas is the same
-   #f0ebe9 as the ridge, so the seam is invisible without the pull. */
+/* The areas paint over the hero's foot (the trail below straddles the seam),
+   and How We Work over the areas. */
 .page--expertise .ex-areas {
   position: relative;
   z-index: 20;
@@ -7080,9 +6908,16 @@ a.contact-channels__value:focus-visible {
   z-index: 21;
 }
 
-/* nothing anchors the dotted trail leaders here - drop them */
-.page--expertise .hero-trail__leader {
-  display: none;
+/* The site's trail crosses from the hero into the areas, as it runs between
+   About's sections: the jagged line sits astride the seam - on the ridge's
+   dark foot and clear of the heading - with its checkpoint over the right
+   column. */
+.page--expertise .ex-areas.has-trail::before {
+  top: calc(clamp(72px, 9vw, 120px) * -0.5);
+}
+
+.page--expertise .ex-areas .has-trail__dot {
+  top: calc(clamp(72px, 9vw, 120px) * (0.2333 - 0.5));
 }
 
 /* Figma one-line teaser icons inside the expertise cards */
@@ -7313,11 +7148,10 @@ a.contact-channels__value:focus-visible {
   margin-bottom: clamp(28px, 4vh, 48px);
 }
 
-/* The ridge is the horizon: cream sky above it, dark rock below, so the
-   labels under the line flip to light type. The rock is brand navy at the
-   ridge line - where the eye actually reads it - and deepens to the colour
-   of whatever section follows, so the seam at the bottom stays invisible
-   without repainting those sections. */
+/* The ridge is the horizon: dusk sky above it, dark rock below. The rock is
+   a shade under the sky at the ridge line - where the eye actually reads the
+   silhouette - and deepens to the colour of the section that follows, so
+   the seam at the bottom stays invisible without repainting it. */
 .exwork-terrain__fill {
   fill: url(#terrain-rock);
 }
@@ -8586,15 +8420,6 @@ a.contact-channels__value:focus-visible {
   .page--horizon .hz-massif {
     translate: 0 calc(min(var(--scroll-y, 0px), 1100px) * 0.12);
   }
-}
-
-/* On the Expertise band the trail borrows the home silhouette's anchors, and
-   where the ridge dips at its saddles the line lifted off the cream into the
-   now-dark sky. The trail and its markers sit a little lower here so the line
-   always runs on land. */
-.page--expertise .hero-trail,
-.page--expertise .hero-trail-points {
-  translate: 0 clamp(18px, 1.8vw, 34px);
 }
 
 /* ============ TEAM PORTRAIT FRAME: proposal A and B ============
@@ -10310,10 +10135,6 @@ main {
     background: radial-gradient(closest-side at 48% 44%, rgba(231, 164, 121, 0.92), rgba(181, 102, 70, 0.7) 50%, rgba(123, 70, 50, 0.38) 76%, rgba(76, 41, 32, 0.16) 90%, transparent);
   }
 
-  .page--expertise .hero-glow__sun {
-    background: radial-gradient(closest-side, rgba(237, 174, 138, 0.68), rgba(208, 108, 72, 0.41) 48%, rgba(141, 75, 53, 0.15) 80%, transparent);
-  }
-
   .hero-glow__haze {
     filter: none;
     background: radial-gradient(closest-side, rgba(48, 84, 122, 0.28), rgba(48, 84, 122, 0.2) 55%, transparent);
@@ -11096,7 +10917,7 @@ main {
     gap: 16px;
     min-height: 44px;
     padding: 6px 4px 6px 40px;
-    color: rgba(28, 20, 25, 0.78);
+    color: rgba(240, 235, 233, 0.78);
     font: 400 var(--m-body) / 1.35 "Outfit", system-ui, sans-serif;
     text-decoration: none;
     transition: color 0.25s ease;
@@ -11111,8 +10932,8 @@ main {
     width: var(--rail-dot);
     height: var(--rail-dot);
     border-radius: 50%;
-    background: #f0ebe9;
-    box-shadow: inset 0 0 0 2px rgba(28, 20, 25, 0.3);
+    background: #0c0f1a;
+    box-shadow: inset 0 0 0 2px rgba(240, 235, 233, 0.34);
     transform: translate(-50%, -50%);
   }
 
@@ -11140,11 +10961,11 @@ main {
   }
 
   .ex-areas__jump:active {
-    color: #b3401a;
+    color: var(--light);
   }
 
   .ex-areas__jump:focus-visible {
-    outline: 2px solid #1c1419;
+    outline: 2px solid var(--light);
     outline-offset: 2px;
     border-radius: 4px;
   }
@@ -11288,7 +11109,7 @@ main {
 
 @media (max-width: 1023px) and (hover: hover) {
   .ex-areas__jump:hover {
-    color: #1c1419;
+    color: var(--light);
   }
 }
 
@@ -11847,284 +11668,20 @@ main {
 
 /* ===== EXPERTISE (<=1023px) ===== */
 
-/* ---------- hero: shared ---------- */
-@media (max-width: 1023px) {
-  .page--expertise .hero {
-    --exp-ridge-h: 60vw;
-    --exp-pad-top: var(--m-hero-top);
-  }
-
-  .page--expertise .hero-content .eyebrow {
-    margin-bottom: 16px;
-    font-size: var(--m-label);
-  }
-
-  .page--expertise .hero-title {
-    font-size: var(--m-h1);
-    line-height: 1.08;
-    text-wrap: balance;
-  }
-
-  .page--expertise .hero-tagline {
-    margin-top: 18px;
-    font-size: var(--m-lede);
-    line-height: 1.55;
-    text-wrap: pretty;
-  }
-
-  .page--expertise .primary-cta {
-    min-height: var(--m-pill-h);
-    margin-top: 28px;
-    padding-inline: 26px 22px;
-  }
-
-  /* the louvre photo at its own proportions, as tall as the hero */
-  .page--expertise .hero-bg {
-    inset: 0 auto 0 50%;
-    width: auto;
-    max-width: none;
-    height: 100%;
-    aspect-ratio: 2200 / 863;
-    translate: -50% 0;
-    transform: scaleX(-1);
-    transform-origin: 50% 50%;
-  }
-
-  .page--expertise .hero-trail-points {
-    display: block;
-  }
-}
-
-/* ---------- hero: portrait, and any window under 560px ---------- */
-@media (max-width: 1023px) and (orientation: portrait), (max-width: 559px) {
-  .page--expertise .hero {
-    grid-template-rows: auto auto;
-    min-height: 0;
-    padding: var(--exp-pad-top) var(--m-gutter) 0;
-  }
-
-  .page--expertise .hero-content {
-    grid-row: 1;
-    width: 100%;
-  }
-
-  .page--expertise .hero-title,
-  .page--expertise .hero-tagline {
-    max-width: none;
-  }
-
-  .page--expertise .hero-ridges {
-    position: relative;
-    top: auto;
-    right: auto;
-    bottom: auto;
-    left: auto;
-    grid-row: 2;
-    height: var(--exp-ridge-h);
-    /* the art's lowest 22% is plain land under the trail (which is never
-       lower than 61.4% down it): the hero ends there, and the areas'
-       own cream carries on */
-    margin: clamp(0px, 10vw - 16px, 40px) calc(-1 * var(--m-gutter)) calc(var(--exp-ridge-h) * -0.22);
-    transform: none;
-  }
-
-  /* dusk runs down the screen here: navy behind the copy, and the low sun
-     warming the sky on the right, behind the peak */
-  .page--expertise .hero-media {
-    background:
-      radial-gradient(118vw 70vw at 98% calc(100% - var(--exp-ridge-h) * 0.7), rgba(240, 104, 54, 0.98), rgba(214, 112, 76, 0.8) 30%, rgba(156, 110, 105, 0.4) 58%, transparent 80%),
-      linear-gradient(180deg, #2f3a55 0%, #343e58 36%, #4a4a62 calc(100% - var(--exp-ridge-h) * 1.1), #7d6470 calc(100% - var(--exp-ridge-h) * 0.55), #b86c55 100%);
-  }
-
-  .page--expertise .hero-wash {
-    background: linear-gradient(180deg, rgba(22, 26, 42, 0.42), rgba(22, 26, 42, 0.26) calc(100% - var(--exp-ridge-h) - 64px), transparent calc(100% - var(--exp-ridge-h) * 0.5));
-  }
-
-  .page--expertise .hero-glow__sun {
-    top: auto;
-    right: -34%;
-    bottom: calc(var(--exp-ridge-h) * 0.3);
-    left: auto;
-    width: 118%;
-    height: calc(var(--exp-ridge-h) * 1.3);
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1023px) and (orientation: portrait) {
-  .page--expertise .hero {
-    --exp-ridge-h: 46vw;
-  }
-
-  .page--expertise .hero-title {
-    max-width: 14em;
-  }
-
-  .page--expertise .hero-tagline {
-    max-width: 30em;
-  }
-}
-
-/* A phone held upright sees a narrow middle slice of the louvre photo (a
-   quarter of its width), so it loads just that slice: arch-band-louvre-
-   crop, the <source> in the markup, cut about the middle. The box is the
-   hero itself here and the slice covers it from the middle, which draws it
-   exactly where the full photo's slice was (mirrored as before); should
-   the hero ever show more than the slice holds, it only scales up a
-   little. */
-@media (max-width: 480px) and (max-aspect-ratio: 3/4) {
-  .page--expertise .hero-bg {
-    inset: 0;
-    width: 100%;
-    min-width: 0;
-    height: 100%;
-    aspect-ratio: auto;
-    translate: none;
-  }
-}
-
-/* ---------- hero: landscape ----------
-   Held sideways the screen is wide and short, so the desktop composition
-   returns: the copy on the navy half of the sky, the orange on the right,
-   the ridge a band across the foot rising towards the right. The band is
-   sized from the screen's height and the hero never outgrows the screen:
-   the copy ends where the band's low left end begins (47% down the art;
-   the button keeps 16px over the crest). The band's parallax slack goes:
-   nothing moves here, and 90px of hidden art under a short band pushed
-   the trail off the hero. */
-@media (min-width: 560px) and (max-width: 1023px) and (orientation: landscape) {
-  .page--expertise .hero {
-    --exp-band: clamp(150px, 34svh, 320px);
-    --exp-slack: 0px;
-    min-height: 86svh;
-    padding: calc(var(--nav-height) + clamp(10px, 9svh - 24px, 84px)) var(--m-gutter) calc(var(--exp-band) * 0.58 + 16px);
-  }
-
-  .page--expertise .hero-title {
-    max-width: min(17em, 66vw);
-    font-size: clamp(30px, min(4.4vw, 7svh), 48px);
-  }
-
-  .page--expertise .hero-tagline {
-    max-width: min(30em, 58vw);
-  }
-
-  /* the copy runs to two thirds of the width here, further than on
-     desktop, so the sky warms a little later: the tagline stays on the
-     navy half (4.5:1 and up) and the orange keeps the right-hand third */
-  .page--expertise .hero-media {
-    background:
-      radial-gradient(52% 46% at 88% 74%, rgba(240, 178, 148, 0.55), transparent 72%),
-      linear-gradient(90deg, #2f3a55 0%, #39425a 26%, #564f65 48%, #82696f 62%, #c4704f 80%, #ee6533 100%);
-  }
-
-  .page--expertise .hero-glow__sun {
-    right: -32%;
-    width: 72vw;
-  }
-
-  /* a wide, short window made the photo (as tall as the hero, at its own
-     proportions) narrower than the screen: it crops instead */
-  .page--expertise .hero-bg {
-    min-width: 100%;
-    object-fit: cover;
-  }
-}
-
-/* A phone on its side: the whole hero on one screen. The copy is the same
-   height on every phone held sideways (a 3-line title, a 2-line tagline and
-   the button), so the screen's height decides the rest: the eyebrow gets a
-   little air under the bar, the button 16px over the crest (the crest under
-   it is 58% of the band up), and the band takes what is left: 60px on a
-   360px tall screen, 82px at 375, 106px at 390, 150px from about 417px.
-   The hero is then never taller than the screen. The title stays at 30px and the
-   page's section titles come down to the phone h2 (28px, below), so the
-   h1 leads again. */
-@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
-  /* on main: the trail overlay is the hero's sibling and follows the band */
-  .page--expertise main {
-    --exp-band-sl: clamp(60px, 160svh - 518px, 150px);
-  }
-
-  .page--expertise .hero {
-    --exp-band: var(--exp-band-sl);
-    padding-top: calc(var(--nav-height) + clamp(10px, 10svh - 18px, 22px));
-    padding-bottom: calc(var(--exp-band) * 0.58 + 16px);
-  }
-
-  .page--expertise .hero-content .eyebrow {
-    margin-bottom: 8px;
-  }
-
-  .page--expertise .hero-title {
-    max-width: min(22em, 74vw);
-    font-size: 30px;
-  }
-
-  /* the tagline stays on the navy half: past ~60% of the width the sky
-     warms and cream body text drops under 4.5:1 */
-  .page--expertise .hero-tagline {
-    max-width: min(36em, 58vw);
-    margin-top: 8px;
-    font-size: var(--m-body);
-    line-height: 1.5;
-  }
-
-  .page--expertise .primary-cta {
-    min-height: 44px;
-    margin-top: 14px;
-  }
-
-  /* the trail is drawn to the band; the fixed 18-34px that sets it lower
-     on the tall desktop band put the first marker on the fold of a 60px
-     one. A tenth of the band keeps the line on the land, clear of both. */
-  .page--expertise .hero-trail,
-  .page--expertise .hero-trail-points {
-    translate: 0 calc(var(--exp-band-sl) * 0.1 + 3px);
-  }
-}
-
-/* 320px tall (a small phone on its side): 264px under the bar cannot hold
-   the copy and a band. The tagline takes a little more width to stay on
-   two lines and the gaps close up, so the button is on the first screen and
-   the band's crest meets its foot; the rest of the band is below it. */
-@media (min-width: 560px) and (max-width: 1023px) and (max-height: 340px) and (orientation: landscape) {
-  .page--expertise .hero {
-    padding-top: calc(var(--nav-height) + 10px);
-  }
-
-  .page--expertise .hero-content .eyebrow {
-    margin-bottom: 6px;
-  }
-
-  .page--expertise .hero-tagline {
-    max-width: min(36em, 64vw);
-  }
-
-  .page--expertise .primary-cta {
-    margin-top: 12px;
-  }
-}
+/* The hero is About's scene - its compact rules above take both pages - so
+   this page's own rules start at the areas. */
 
 /* ---------- Our Areas ----------
    The foundation lays the eight areas out in order, each under its drawing.
-   Here: the section meets the hero's land without a second gap, and each
-   area carries its number (01-08) above its title, in the same tracked
-   label the home route cards use - eight long areas read as a sequence
-   you can place yourself in. The number is generated and silent to
-   assistive tech (the heading says what the area is). */
+   Here: the section meets the hero's ridge without a second gap, and each
+   area's number (01-08, from the base rules) sits across the full row above
+   its title, at the phone label size - eight long areas read as a sequence
+   you can place yourself in. */
 @media (max-width: 1023px) {
   .page--expertise .ex-areas {
     padding-top: clamp(24px, 7vw, 56px);
-    /* How We Work follows on the same cream: one section's space between */
+    /* How We Work follows on the same deep navy: one section's space between */
     padding-bottom: clamp(24px, 6vw, 48px);
-  }
-
-  .page--expertise .ex-areas__panels {
-    counter-reset: ex-area;
-  }
-
-  .page--expertise .ex-areas__panel {
-    counter-increment: ex-area;
   }
 
   /* balanced, so a long title never leaves one word on a line of its own,
@@ -12139,14 +11696,8 @@ main {
   }
 
   .page--expertise .ex-areas__panel::before {
-    content: counter(ex-area, decimal-leading-zero);
-    content: counter(ex-area, decimal-leading-zero) / "";
-    display: block;
     grid-column: 1 / -1;
-    margin: 0 0 12px;
-    color: #b3401a;
-    font: 500 var(--m-label) / 1 "Montserrat", system-ui, sans-serif;
-    letter-spacing: 0.28em;
+    font-size: var(--m-label);
   }
 }
 
@@ -12161,7 +11712,7 @@ main {
 /* ---------- How We Work ----------
    On desktop the six steps stand along a ridge, left to right, each hung
    from its node on the crest by a dotted leader. Here the ridge is the
-   horizon between the cream above and the navy rock below, cropped to its
+   horizon between the dusk sky above and the dark rock below, cropped to its
    climbing half, and the route leaves the crest on the site's open start
    ring and runs down the left edge of the rock: a dotted leader through a
    lit marker on each step, in order. The rock deepens to the navy of the
@@ -12242,7 +11793,7 @@ main {
        padding: that is the gap, this only rounds it off */
     padding: var(--lab-pt) var(--m-gutter) clamp(16px, 5vw, 40px);
     /* the rock's own colour at the crop line, deepening to the band below */
-    background: linear-gradient(180deg, #1a253f 0%, #172039 28%, #0e1322 72%, #080b13 100%);
+    background: linear-gradient(180deg, #0c0e17 0%, #0b0d16 28%, #090b14 72%, #080b13 100%);
   }
 
   /* the open ring every line on the site starts on, sitting on the crest */
@@ -12535,7 +12086,8 @@ main {
    third of the screen of empty haze. So the copy starts where every hero's
    does, and the sun can be placed from it. */
 @media (max-width: 1023px) {
-  .page--about .page-hero {
+  .page--about .page-hero,
+  .page--expertise .page-hero {
     --ab-hero-sky: var(--m-hero-sky);
     min-height: 0;
     /* the ridge (42.5vw tall at full width) is sunk by a third, into its
@@ -12544,11 +12096,13 @@ main {
     padding: calc(var(--nav-height) + var(--ab-hero-sky)) var(--m-gutter) max(48px, 27.6vw - 60px);
   }
 
-  .page--about .page-hero__ridges {
+  .page--about .page-hero__ridges,
+  .page--expertise .page-hero__ridges {
     bottom: -14.9vw;
   }
 
-  .page--about .page-hero__bg {
+  .page--about .page-hero__bg,
+  .page--expertise .page-hero__bg {
     inset: 0 auto 0 56%;
     width: auto;
     min-width: 100%;
@@ -12563,7 +12117,8 @@ main {
      on the heading, so the small eyebrow falls in the glow's softer outer
      half and keeps 4.5:1. A little quieter than desktop's, with no blur:
      the glow is already soft, and a blur on top is an offscreen pass. */
-  .page--about .page-hero__sun {
+  .page--about .page-hero__sun,
+  .page--expertise .page-hero__sun {
     --ab-sun: clamp(240px, 62vw, 400px);
     top: calc(var(--nav-height) + var(--ab-hero-sky) - var(--ab-sun) * 0.225);
     left: -12%;
@@ -12573,14 +12128,16 @@ main {
     background: radial-gradient(closest-side, rgba(255, 168, 110, 0.4), rgba(255, 97, 44, 0.16) 55%, transparent);
   }
 
-  .page--about .page-hero__content {
+  .page--about .page-hero__content,
+  .page--expertise .page-hero__content {
     width: 100%;
     max-width: 46rem;
   }
 
   /* on a phone the label sits on the sun's glow; the shadow keeps its
      edges clear of it (the colour is the heroes' shared peach) */
-  .page--about .page-hero__eyebrow {
+  .page--about .page-hero__eyebrow,
+  .page--expertise .page-hero__eyebrow {
     margin-bottom: 16px;
     font-size: var(--m-label);
     text-shadow: 0 1px 6px rgba(8, 11, 19, 0.5);
@@ -12590,7 +12147,8 @@ main {
      space ties it) 9.3em wide: on the narrowest phones the heading steps
      down just enough to hold it, instead of splitting "cross-" from
      "border" at the hyphen (34px needs 316px; a 320px phone has 280px). */
-  .page--about .page-hero__title {
+  .page--about .page-hero__title,
+  .page--expertise .page-hero__title {
     margin-bottom: 18px;
     font-size: min(var(--m-h1), (100vw - 2 * var(--m-gutter)) / 9.4);
     line-height: 1.08;
@@ -12599,18 +12157,21 @@ main {
 
   /* the desktop line break is for a 62px two-liner; here the heading
      balances itself */
-  .page--about .page-hero__title br {
+  .page--about .page-hero__title br,
+  .page--expertise .page-hero__title br {
     display: none;
   }
 
-  .page--about .page-hero__tagline {
+  .page--about .page-hero__tagline,
+  .page--expertise .page-hero__tagline {
     max-width: var(--m-measure);
     font-size: var(--m-lede);
     line-height: 1.55;
     text-shadow: 0 1px 10px rgba(8, 11, 19, 0.4);
   }
 
-  .page--about .page-hero .primary-cta {
+  .page--about .page-hero .primary-cta,
+  .page--expertise .page-hero .primary-cta {
     min-height: var(--m-pill-h);
     margin-top: 28px;
     padding: 12px 22px 12px 26px;
@@ -12622,7 +12183,8 @@ main {
    smaller sun, about desktop's share of the width, keeps the tagline at
    4.5:1 with the sun at full strength (as it is with reduced motion). */
 @media (min-width: 600px) and (max-width: 1023px) {
-  .page--about .page-hero__sun {
+  .page--about .page-hero__sun,
+  .page--expertise .page-hero__sun {
     --ab-sun: clamp(240px, 44vw, 360px);
   }
 }
@@ -12635,7 +12197,8 @@ main {
    the hero ever show more than the crop holds, it only scales up a little
    (never a gap at the sides). */
 @media (max-width: 480px) and (max-aspect-ratio: 3/4) {
-  .page--about .page-hero__bg {
+  .page--about .page-hero__bg,
+  .page--expertise .page-hero__bg {
     inset: 0;
     width: 100%;
     min-width: 0;
@@ -13366,31 +12929,37 @@ main {
    back to text beside photograph (above), each photograph shorter than
    the screen. */
 @media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
-  .page--about .page-hero {
+  .page--about .page-hero,
+  .page--expertise .page-hero {
     min-height: 0;
     padding: calc(var(--nav-height) + 20px) var(--m-gutter) 28px;
   }
 
-  .page--about .page-hero__content {
+  .page--about .page-hero__content,
+  .page--expertise .page-hero__content {
     max-width: min(72%, 40rem);
   }
 
-  .page--about .page-hero__eyebrow {
+  .page--about .page-hero__eyebrow,
+  .page--expertise .page-hero__eyebrow {
     margin-bottom: 12px;
   }
 
-  .page--about .page-hero__title {
+  .page--about .page-hero__title,
+  .page--expertise .page-hero__title {
     margin-bottom: 14px;
     font-size: clamp(28px, 4.5vw, 36px);
   }
 
-  .page--about .page-hero__tagline {
+  .page--about .page-hero__tagline,
+  .page--expertise .page-hero__tagline {
     font-size: 16px;
   }
 
   /* a small sun, high in the corner: at full size it filled the height
      of the hero behind the copy */
-  .page--about .page-hero__sun {
+  .page--about .page-hero__sun,
+  .page--expertise .page-hero__sun {
     top: -40%;
     left: -8%;
     width: 280px;
@@ -13399,21 +12968,24 @@ main {
 
   /* the copy runs across 72% of a wide, short hero, further into the lit
      peaks than desktop's; the wash's dark side reaches as far */
-  .page--about .page-hero__wash {
+  .page--about .page-hero__wash,
+  .page--expertise .page-hero__wash {
     background:
       radial-gradient(60% 70% at 18% 38%, rgba(255, 97, 44, 0.26), transparent 68%),
       linear-gradient(90deg, rgba(4, 6, 12, 0.86) 0%, rgba(11, 14, 25, 0.72) 50%, rgba(18, 20, 31, 0.5) 76%, rgba(8, 10, 17, 0.34) 100%),
       linear-gradient(180deg, rgba(8, 11, 19, 0.36) 0%, rgba(8, 11, 19, 0.55) 58%, rgba(8, 11, 19, 0.95) 100%);
   }
 
-  .page--about .page-hero .primary-cta {
+  .page--about .page-hero .primary-cta,
+  .page--expertise .page-hero .primary-cta {
     min-height: 46px;
     margin-top: 20px;
   }
 
   /* 39% of the art shows: the left half's crest stays under the hero's
      foot, the right-hand peaks climb beside the copy */
-  .page--about .page-hero__ridges {
+  .page--about .page-hero__ridges,
+  .page--expertise .page-hero__ridges {
     bottom: -25.9vw;
   }
 
@@ -13450,30 +13022,36 @@ main {
    hero above still ran to 375px at 320px high, the button under the fold.
    Tighter padding and type keep the whole hero on one screen. */
 @media (min-width: 560px) and (max-width: 1023px) and (max-height: 360px) and (orientation: landscape) {
-  .page--about .page-hero {
+  .page--about .page-hero,
+  .page--expertise .page-hero {
     padding-top: calc(var(--nav-height) + 12px);
     padding-bottom: 18px;
   }
 
-  .page--about .page-hero__content {
+  .page--about .page-hero__content,
+  .page--expertise .page-hero__content {
     max-width: min(78%, 40rem);
   }
 
-  .page--about .page-hero__eyebrow {
+  .page--about .page-hero__eyebrow,
+  .page--expertise .page-hero__eyebrow {
     margin-bottom: 10px;
   }
 
-  .page--about .page-hero__title {
+  .page--about .page-hero__title,
+  .page--expertise .page-hero__title {
     margin-bottom: 10px;
     font-size: clamp(26px, 4.2vw, 32px);
   }
 
-  .page--about .page-hero__tagline {
+  .page--about .page-hero__tagline,
+  .page--expertise .page-hero__tagline {
     font-size: 15px;
     line-height: 1.45;
   }
 
-  .page--about .page-hero .primary-cta {
+  .page--about .page-hero .primary-cta,
+  .page--expertise .page-hero .primary-cta {
     min-height: 44px;
     margin-top: 14px;
   }
@@ -13504,6 +13082,7 @@ main {
 /* ---------- focus: the site's orange ring on this page's own controls ---------- */
 @media (max-width: 1023px) {
   .page--about .page-hero .primary-cta:focus-visible,
+  .page--expertise .page-hero .primary-cta:focus-visible,
   .page--about a.photo-break__line:focus-visible,
   .page--about .ascent__paths a:focus-visible,
   .page--about .clients__pause:focus-visible {
