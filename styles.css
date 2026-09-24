@@ -8808,6 +8808,55 @@ a.contact-channels__value:focus-visible {
   filter: none;
 }
 
+/* ============ TEAM PORTRAIT FRAME: proposal "pop" (?portraits=pop) ============
+   A head-and-shoulders crop on a plain card that starts 30% down the frame,
+   so the head rises above the card onto the page. The photographs are
+   graded, not recoloured: shadows lean to navy, lights to warm gold, and the
+   grade is held back on skin (team-*-r3.webp, made locally from the
+   originals). The card colour takes turns down the page, peach and grey-blue. */
+[data-portraits="pop"] .member__photo::before,
+[data-portraits="pop"] .member__photo::after {
+  display: none;
+}
+
+[data-portraits="pop"] .member__plate {
+  inset: 0;
+  overflow: visible;
+  border-radius: 0;
+  background: none;
+  -webkit-mask: none;
+  mask: none;
+}
+
+[data-portraits="pop"] .member__plate::before {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: 30% 0 0;
+  border-radius: 14px;
+  background: #efd6c6;
+  z-index: 0;
+}
+
+[data-portraits="pop"] .member:nth-of-type(even) .member__plate::before {
+  background: #d3dbe7;
+}
+
+[data-portraits="pop"] .member__portrait {
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 100%;
+  transform: none;
+  object-fit: cover;
+  object-position: 50% 0;
+  border-radius: 0 0 14px 14px;
+  z-index: 1;
+}
+
+[data-portraits="pop"] .member:hover .member__portrait {
+  transform: none;
+}
+
 /* ============ COPY REVIEW (?copy=draft) ============
    Outlines the texts that are not the client's own words, coloured by where
    they come from, with a legend in the corner. Only for review links. */

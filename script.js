@@ -958,12 +958,23 @@ function setupMemberReadmore() {
    silhouette inside the same frame. */
 function setupPortraitProposal() {
   /* our-team.html ships frame B (data-portraits="b" on <html>) with the
-     photographs in the markup; ?portraits=a or #portraits-a still shows
-     frame A for comparison. */
+     photographs in the markup; ?portraits=a shows frame A and
+     ?portraits=pop the head-and-shoulders proposal, for comparison. */
   const root = document.documentElement;
-  const hashed = window.location.hash.match(/^#portraits-([ab])$/);
+  const hashed = window.location.hash.match(/^#portraits-(a|b|pop)$/);
   const asked = new URLSearchParams(window.location.search).get("portraits") || (hashed && hashed[1]);
-  if (root.dataset.portraits && (asked === "a" || asked === "b")) root.dataset.portraits = asked;
+  if (!root.dataset.portraits || !["a", "b", "pop"].includes(asked)) return;
+  root.dataset.portraits = asked;
+  if (asked !== "pop") return;
+  /* the "pop" proposal uses its own graded head-and-shoulders files */
+  document.querySelectorAll(".member__portrait").forEach((img) => {
+    const stem = img.getAttribute("src").replace(/\.webp$/, "");
+    img.srcset = `${stem}-r3-400.webp 400w, ${stem}-r3.webp 600w`;
+    img.sizes = "(min-width: 1440px) 552px, (min-width: 1024px) 38vw, (min-width: 980px) 380px, (min-width: 600px) 300px, 72vw";
+    img.width = 600;
+    img.height = 700;
+    img.src = `${stem}-r3.webp`;
+  });
 }
 
 /* Copy review for the client: ?copy=draft outlines every text that is not
