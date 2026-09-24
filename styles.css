@@ -8711,8 +8711,8 @@ a.contact-channels__value:focus-visible {
    has no bottom edge and the ridge hides the stool. The orange trail runs
    on the land with one checkpoint. Three ridge profiles take turns down the
    page and mirror on the reversed cards. A is the dusk sky of the Expertise
-   hero (navy into orange), B a warm terracotta one. Off by default (see
-   setupPortraitProposal); the plain page keeps the neutral silhouettes. */
+   hero (navy into orange), B a warm terracotta one. our-team.html ships B
+   (data-portraits="b" on <html>); ?portraits=a shows A for comparison. */
 [data-portraits] .member__halo,
 [data-portraits] .member__index {
   display: none;
