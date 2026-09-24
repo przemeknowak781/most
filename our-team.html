@@ -127,7 +127,10 @@
       <!-- PAGE HERO -->
       <section class="page-hero page-hero--team" aria-labelledby="page-hero-title">
         <div class="page-hero__media" aria-hidden="true">
-          <img class="page-hero__bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, (orientation: landscape) 100vw, 1060px" width="2496" height="1696" alt="" fetchpriority="high" decoding="async" />
+          <picture>
+            <source media="(max-width: 480px) and (max-aspect-ratio: 3/4)" srcset="background-crop-team.webp" width="1596" height="1696" />
+            <img class="page-hero__bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background-1920.webp 1920w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, (orientation: landscape) 100vw, 1060px" width="2496" height="1696" alt="" fetchpriority="high" decoding="async" />
+          </picture>
           <div class="page-hero__wash"></div>
         </div>
         <div class="page-hero__glow" aria-hidden="true"><span class="page-hero__sun"></span></div>
@@ -428,7 +431,8 @@
           </a>
         </div>
         <div class="footer-ridge" aria-hidden="true">
-          <img class="footer-ridge__bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, 100vw" width="2496" height="1696" alt="" loading="lazy" decoding="async" />
+          <!-- upright above 480px the hero shows the full photo: this asks for the same size, so it reuses that file -->
+          <img class="footer-ridge__bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background-1920.webp 1920w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, (min-width: 481px) and (orientation: portrait) 1060px, 100vw" width="2496" height="1696" alt="" loading="lazy" decoding="async" />
           <img class="footer-ridge__overlay" src="footer.svg" width="1440" height="437" alt="" loading="lazy" decoding="async" />
         </div>
       </section>

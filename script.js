@@ -328,15 +328,20 @@ function positionTrailOverlay() {
   for (const p of labelPositions) {
     p.el.style.left = `${p.left}px`;
   }
+  /* .is-placed: below 1024px the stylesheet keeps the climbers hidden until
+     their first box is written, so the move from their default spot is
+     never painted (it counted as a layout shift on every load) */
   if (climberWrite) {
     climberWrite.el.style.width = `${climberWrite.width}px`;
     climberWrite.el.style.left = `${climberWrite.left}px`;
     climberWrite.el.style.top = `${climberWrite.top}px`;
+    climberWrite.el.classList.add("is-placed");
   }
   if (sunWrite) {
     sunWrite.el.style.width = `${sunWrite.width}px`;
     sunWrite.el.style.left = `${sunWrite.left}px`;
     sunWrite.el.style.top = `${sunWrite.top}px`;
+    sunWrite.el.classList.add("is-placed");
   }
 }
 
@@ -1119,7 +1124,8 @@ function setupParallax() {
     const vh = window.innerHeight;
     for (let i = 0; i < images.length; i++) {
       const img = images[i];
-      const parent = img.parentElement;
+      // the band itself: a phone crop wraps some photos in a <picture>
+      const parent = img.closest(".photo-break, .aud-bleed") || img.parentElement;
       if (!parent) continue;
 
       const rect = parent.getBoundingClientRect();
@@ -1657,13 +1663,22 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     }, DRAW_MS);
   };
 
+  // the icons the band has not started yet
+  const undrawn = new Set(icons);
+  let drawIo = null;
+  const claim = (svg) => {
+    undrawn.delete(svg);
+    if (drawIo) drawIo.unobserve(svg);
+    teardown();
+  };
+
   if (icons.length) {
     if ("IntersectionObserver" in window) {
-      const drawIo = new IntersectionObserver(
+      drawIo = new IntersectionObserver(
         (entries) =>
           entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
-            drawIo.unobserve(entry.target);
+            claim(entry.target);
             startDraw(entry.target);
           }),
         { rootMargin: `-${BAND_TOP * 100}% 0px -${(1 - BAND_BOTTOM) * 100}% 0px` }
@@ -1671,14 +1686,36 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
       icons.forEach((svg) => drawIo.observe(svg));
     } else {
       icons.forEach((svg) => svg.classList.add("is-drawn"));
+      undrawn.clear();
     }
   }
+
+  /* A jump - the End key, an anchor, a fling, a restored scroll position -
+     can carry an icon from below the band to above it between two frames,
+     and the observer only sees where an icon is, never what it passed: it
+     stayed blank until the reader scrolled back through the band. The
+     scroll sweep settles those. One already above the screen is shown
+     drawn, as one read and passed; one left on screen above the band draws
+     now, since that is where the reader is looking. An icon in or below the
+     band is still the observer's; one that is not laid out (a parked
+     drawing) waits. */
+  const sweepIcons = () => {
+    const bandTop = window.innerHeight * BAND_TOP;
+    undrawn.forEach((svg) => {
+      const r = svg.getBoundingClientRect();
+      if ((!r.width && !r.height) || r.bottom >= bandTop) return;
+      claim(svg);
+      if (r.bottom <= 0) finish(svg);
+      else startDraw(svg);
+    });
+  };
 
   /* ---------- layout reveals ---------- */
   const reveal = (el) => {
     el.classList.add("is-in");
     pending.delete(el);
-    if (!pending.size) teardown();
+    if (io) io.unobserve(el);
+    teardown();
   };
 
   let io = null;
@@ -1695,26 +1732,30 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     requestAnimationFrame(() => {
       queued = false;
       sweep();
+      sweepIcons();
     });
   };
 
+  // the sweep stays until every reveal has run and every icon is claimed
   function teardown() {
+    if (pending.size || undrawn.size) return;
     io?.disconnect();
     window.removeEventListener("scroll", onScroll);
     window.removeEventListener("resize", onScroll);
   }
 
-  if (pending.size) {
-    if ("IntersectionObserver" in window) {
-      io = new IntersectionObserver(
-        (entries) => entries.forEach((e) => e.isIntersecting && reveal(e.target)),
-        { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
-      );
-      pending.forEach((el) => io.observe(el));
-    }
+  if (pending.size && "IntersectionObserver" in window) {
+    io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && reveal(e.target)),
+      { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+    );
+    pending.forEach((el) => io.observe(el));
+  }
+  if (pending.size || undrawn.size) {
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
     sweep();
+    sweepIcons();
   }
 })();
 

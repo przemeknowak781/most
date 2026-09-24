@@ -131,7 +131,10 @@
     <main id="main" tabindex="-1">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-media" aria-hidden="true">
-          <img class="hero-bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, (orientation: landscape) 100vw, (min-width: 768px) 2400px, (min-width: 381px) 1177px, 309vw" width="2496" height="1696" alt="" decoding="async" />
+          <picture>
+            <source media="(max-width: 480px) and (max-aspect-ratio: 3/4)" srcset="background-crop-home.webp" width="1066" height="1696" />
+            <img class="hero-bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background-1920.webp 1920w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, (orientation: landscape) 100vw, (min-width: 768px) 2400px, (min-width: 381px) 1177px, 309vw" width="2496" height="1696" alt="" fetchpriority="high" decoding="async" />
+          </picture>
           <div class="hero-wash"></div>
           <div class="hero-vignette"></div>
           <div class="hero-noise"></div>
@@ -552,7 +555,8 @@
           </a>
         </div>
         <div class="footer-ridge" aria-hidden="true">
-          <img class="footer-ridge__bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, 100vw" width="2496" height="1696" alt="" loading="lazy" decoding="async" />
+          <!-- upright above 480px the hero shows the full photo: this asks for the same size, so it reuses that file -->
+          <img class="footer-ridge__bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background-1920.webp 1920w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, (min-width: 768px) and (orientation: portrait) 2400px, (min-width: 481px) and (orientation: portrait) 1177px, 100vw" width="2496" height="1696" alt="" loading="lazy" decoding="async" />
           <img class="footer-ridge__overlay" src="footer.svg" width="1440" height="437" alt="" loading="lazy" decoding="async" />
         </div>
       </section>

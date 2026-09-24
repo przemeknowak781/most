@@ -126,7 +126,10 @@
       <!-- PAGE HERO: mini-hero with mountain + gradient -->
       <section class="page-hero" aria-labelledby="page-hero-title">
         <div class="page-hero__media" aria-hidden="true">
-          <img class="page-hero__bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, (orientation: landscape) 100vw, 1000px" width="2496" height="1696" alt="" fetchpriority="high" decoding="async" />
+          <picture>
+            <source media="(max-width: 480px) and (max-aspect-ratio: 3/4)" srcset="background-crop-about.webp" width="1696" height="1696" />
+            <img class="page-hero__bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background-1920.webp 1920w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, (orientation: landscape) 100vw, 1000px" width="2496" height="1696" alt="" fetchpriority="high" decoding="async" />
+          </picture>
           <div class="page-hero__wash"></div>
           <div class="page-hero__vignette"></div>
           <div class="page-hero__noise"></div>
@@ -158,7 +161,10 @@
 
       <!-- PHOTO BREAK 1: architecture / partnership -->
       <figure class="photo-break">
-        <img src="about-break-coffers.webp" srcset="about-break-coffers-640.webp 640w, about-break-coffers-1024.webp 1024w, about-break-coffers.webp 1920w" sizes="(min-width: 1024px) 1920px, (min-width: 768px) 100vw, (orientation: landscape) and (max-height: 500px) 100vw, 175vw" width="1920" height="823" alt="A coffered concrete ceiling, close up" loading="lazy" decoding="async" />
+        <picture>
+          <source media="(max-width: 599px) and (orientation: portrait)" srcset="about-break-coffers-crop.webp 1104w, about-break-coffers-crop-800.webp 800w" sizes="100vw" width="1104" height="823" />
+          <img src="about-break-coffers.webp" srcset="about-break-coffers-640.webp 640w, about-break-coffers-1024.webp 1024w, about-break-coffers.webp 1920w" sizes="(min-width: 1024px) 1920px, (min-width: 768px) 100vw, (orientation: landscape) and (max-height: 500px) 100vw, 175vw" width="1920" height="823" alt="A coffered concrete ceiling, close up" loading="lazy" decoding="async" />
+        </picture>
         <figcaption class="photo-break__caption" data-reveal>
           <span class="photo-break__index">— 01</span>
           <a class="photo-break__line" href="our-team.html">Long-term partners in law and&nbsp;business.<span class="sr-only"> Meet our team</span></a>
@@ -231,7 +237,10 @@
 
       <!-- PHOTO BREAK 2 -->
       <figure class="photo-break photo-break--right">
-        <img src="about-break-fins.webp" srcset="about-break-fins-640.webp 640w, about-break-fins-1024.webp 1024w, about-break-fins.webp 1920w" sizes="(min-width: 1024px) 1920px, (min-width: 768px) 100vw, (orientation: landscape) and (max-height: 500px) 100vw, 175vw" width="1920" height="823" alt="Concrete fins repeating along a facade" loading="lazy" decoding="async" />
+        <picture>
+          <source media="(max-width: 599px) and (orientation: portrait)" srcset="about-break-fins-crop.webp 1104w, about-break-fins-crop-800.webp 800w" sizes="100vw" width="1104" height="823" />
+          <img src="about-break-fins.webp" srcset="about-break-fins-640.webp 640w, about-break-fins-1024.webp 1024w, about-break-fins.webp 1920w" sizes="(min-width: 1024px) 1920px, (min-width: 768px) 100vw, (orientation: landscape) and (max-height: 500px) 100vw, 175vw" width="1920" height="823" alt="Concrete fins repeating along a facade" loading="lazy" decoding="async" />
+        </picture>
         <figcaption class="photo-break__caption" data-reveal>
           <span class="photo-break__index">— 02</span>
           <span class="photo-break__line">Practical insight, built on cross-border&nbsp;experience.</span>
@@ -347,7 +356,10 @@
 
       <!-- PHOTO BREAK 3 -->
       <figure class="photo-break">
-        <img src="about-break-slabs.webp" srcset="about-break-slabs-640.webp 640w, about-break-slabs-1024.webp 1024w, about-break-slabs.webp 1920w" sizes="(min-width: 1024px) 1920px, (min-width: 768px) 100vw, (orientation: landscape) and (max-height: 500px) 100vw, 175vw" width="1920" height="823" alt="Cantilevered floor slabs in low sun" loading="lazy" decoding="async" />
+        <picture>
+          <source media="(max-width: 599px) and (orientation: portrait)" srcset="about-break-slabs-crop.webp 1104w, about-break-slabs-crop-800.webp 800w" sizes="100vw" width="1104" height="823" />
+          <img src="about-break-slabs.webp" srcset="about-break-slabs-640.webp 640w, about-break-slabs-1024.webp 1024w, about-break-slabs.webp 1920w" sizes="(min-width: 1024px) 1920px, (min-width: 768px) 100vw, (orientation: landscape) and (max-height: 500px) 100vw, 175vw" width="1920" height="823" alt="Cantilevered floor slabs in low sun" loading="lazy" decoding="async" />
+        </picture>
         <figcaption class="photo-break__caption" data-reveal>
           <span class="photo-break__index">— 03</span>
           <span class="photo-break__line">Legal foundations that support&nbsp;strategy.</span>
@@ -466,7 +478,8 @@
           <a class="aud-grow__alt" href="expertise.html">Or see the full scope of what we&nbsp;do <span aria-hidden="true">&#8599;</span></a>
         </div>
         <div class="footer-ridge" aria-hidden="true">
-          <img class="footer-ridge__bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, (min-width: 768px) 100vw, 960px" width="2496" height="1696" alt="" loading="lazy" decoding="async" />
+          <!-- upright above 480px the hero shows the full photo: this asks for the same size, so it reuses that file -->
+          <img class="footer-ridge__bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background-1920.webp 1920w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, (min-width: 481px) and (orientation: portrait) 1000px, 100vw" width="2496" height="1696" alt="" loading="lazy" decoding="async" />
           <img class="footer-ridge__overlay" src="footer.svg" width="1440" height="437" alt="" loading="lazy" decoding="async" />
         </div>
       </section>
