@@ -1108,7 +1108,7 @@ function markCopyReview(data) {
 }
 
 function setupParallax() {
-  const images = Array.from(document.querySelectorAll(".photo-break img, .aud-bleed img"));
+  const images = Array.from(document.querySelectorAll(".photo-break img, .aud-bleed img, .aud-work__photo img"));
   if (!images.length) return;
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1129,8 +1129,9 @@ function setupParallax() {
     const vh = window.innerHeight;
     for (let i = 0; i < images.length; i++) {
       const img = images[i];
-      // the band itself: a phone crop wraps some photos in a <picture>
-      const parent = img.closest(".photo-break, .aud-bleed") || img.parentElement;
+      // the band itself (or How We Work's backdrop on the audience pages):
+      // a phone crop wraps some photos in a <picture>
+      const parent = img.closest(".photo-break, .aud-bleed, .aud-work__photo") || img.parentElement;
       if (!parent) continue;
 
       const rect = parent.getBoundingClientRect();

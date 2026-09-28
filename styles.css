@@ -3340,245 +3340,6 @@ main:focus {
   color: #1c1419;
 }
 
-/* AUD HELP â€” white grid */
-.aud-help {
-  padding: clamp(96px, 13vh, 144px) var(--container-x);
-  background: var(--light);
-  color: #1c1419;
-}
-
-.aud-help__head {
-  max-width: 880px;
-  margin: 0 auto clamp(48px, 7vh, 80px);
-}
-
-.aud-help__title {
-  margin: 0 0 16px;
-  color: #1c1419;
-  font: 500 clamp(28px, 3.4vw, 44px) / 1.08 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.005em;
-}
-
-.aud-help__lede {
-  margin: 0;
-  max-width: 620px;
-  color: rgba(28, 20, 25, 0.7);
-  font: 400 clamp(15px, 1.1vw, 17px) / 1.55 "Outfit", system-ui, sans-serif;
-}
-
-.aud-help__grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(24px, 2.8vw, 36px) clamp(28px, 3vw, 44px);
-  max-width: 1240px;
-  margin-inline: auto;
-}
-
-.aud-help__item {
-  position: relative;
-  display: grid;
-  grid-template-columns: 24px 1fr;
-  gap: 16px;
-  align-items: flex-start;
-}
-
-.aud-help__rule {
-  display: block;
-  width: 18px;
-  height: 2px;
-  margin-top: 12px;
-  background: #d17e5f;
-}
-
-.page--companies .aud-help__rule {
-  background: #9b8b95;
-}
-
-.page--investors .aud-help__rule {
-  background: #5b7ab0;
-}
-
-.aud-help__item p {
-  margin: 0;
-  color: rgba(28, 20, 25, 0.82);
-  font: 400 15px / 1.55 "Outfit", system-ui, sans-serif;
-}
-
-@media (max-width: 980px) {
-  .aud-help__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 640px) {
-  .aud-help__grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* AUD BLEED */
-.aud-bleed {
-  position: relative;
-  margin: 0;
-  width: 100%;
-  aspect-ratio: 21 / 8;
-  overflow: hidden;
-  background: var(--navy);
-}
-
-.aud-bleed img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  height: 120%;
-  object-fit: cover;
-  transform: translate(-50%, -50%);
-  will-change: transform;
-  /* Desaturate + darken â€” the colour overlay does the tinting */
-  filter: saturate(0.7) brightness(0.68);
-}
-
-/* Duotone colour overlay â€” mirrors each page's accent palette */
-.aud-bleed::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  /* The photos come pre-toned in each page's ramp, so the overlay only adds
-     depth: a light veil falling into the page ink at the foot. Founders. */
-  background: linear-gradient(180deg, rgba(20, 22, 31, 0.1) 0%, rgba(20, 22, 31, 0.08) 45%, rgba(20, 22, 31, 0.5) 100%);
-}
-
-.page--companies .aud-bleed::after {
-  /* Companies: the same depth in the taupe page's ink */
-  background: linear-gradient(180deg, rgba(28, 24, 27, 0.1) 0%, rgba(28, 24, 27, 0.08) 45%, rgba(28, 24, 27, 0.5) 100%);
-}
-
-.page--investors .aud-bleed::after {
-  /* Investors: the same depth in the slate page's ink */
-  background: linear-gradient(180deg, rgba(20, 25, 37, 0.1) 0%, rgba(20, 25, 37, 0.08) 45%, rgba(20, 25, 37, 0.5) 100%);
-}
-
-/* AUD WORK â€” orange peach 4-col with icons */
-.aud-work {
-  padding: clamp(80px, 11vh, 120px) var(--container-x);
-  background: linear-gradient(180deg, #f4a07b 0%, #e88a64 100%);
-  color: #1c1419;
-}
-
-.page--companies .aud-work {
-  background: linear-gradient(180deg, #b5a7ad 0%, #968591 100%);
-  color: var(--light);
-}
-
-.page--investors .aud-work {
-  background: linear-gradient(180deg, #6e88b6 0%, #506e9d 100%);
-  color: var(--light);
-}
-
-.aud-work__head {
-  max-width: 1240px;
-  margin: 0 auto clamp(40px, 6vh, 64px);
-}
-
-.aud-work__title {
-  margin: 0;
-  color: inherit;
-  font: 500 clamp(26px, 3vw, 38px) / 1.1 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.005em;
-}
-
-/* AUD EXPERTISE â€” white split with vertical trail */
-.aud-expertise {
-  /* Full-width background â€” no max-width here */
-  background: var(--light);
-  color: #1c1419;
-  padding: clamp(96px, 12vh, 140px) var(--container-x);
-}
-
-.aud-expertise__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
-  gap: clamp(40px, 6vw, 96px);
-  align-items: start;
-  max-width: 1240px;
-  margin-inline: auto;
-}
-
-.aud-expertise__title {
-  margin: 0 0 18px;
-  color: #1c1419;
-  font: 500 clamp(28px, 3.4vw, 44px) / 1.08 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.005em;
-}
-
-.aud-expertise__copy p {
-  margin: 0;
-  color: rgba(28, 20, 25, 0.72);
-  font: 400 clamp(15px, 1.1vw, 17px) / 1.6 "Outfit", system-ui, sans-serif;
-  max-width: 420px;
-}
-
-.aud-expertise__more {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 22px;
-  color: rgba(28, 20, 25, 0.66);
-  font: 500 12px / 1 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: color 200ms ease, gap 200ms ease;
-}
-
-.aud-expertise__more svg {
-  width: 18px;
-  height: 18px;
-}
-
-.aud-expertise__more:hover,
-.aud-expertise__more:focus-visible {
-  color: #1c1419;
-  gap: 14px;
-}
-
-.aud-expertise__list-wrap {
-  /* the rail's dots and segments are absolutely positioned against the rows,
-     but the padding that makes room for them is set per audience page */
-  position: relative;
-}
-
-.aud-expertise__list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-  counter-reset: aud-exp;
-}
-
-.aud-expertise__list li {
-  position: relative;
-  padding: 4px 0;
-  color: rgba(28, 20, 25, 0.84);
-  font: 400 clamp(15px, 1.1vw, 17px) / 1.55 "Outfit", system-ui, sans-serif;
-  min-height: 56px;
-  display: flex;
-  align-items: center;
-}
-
-@media (max-width: 880px) {
-  .aud-expertise__inner {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* AUD GROW â€” dark CTA */
 .aud-grow {
   position: relative;
@@ -3915,872 +3676,8 @@ a.contact-channels__value:focus-visible {
 
 /* ---------- AUDIENCE PAGES INDEX ALIGNMENT ---------- */
 
-.page--audience {
-  --aud-stage-top: #2a1e18;
-  --aud-stage-bottom: #161822;
-  --aud-tint-rgb: 209, 126, 95;
-  --aud-grid-line: rgba(var(--aud-tint-rgb), 0.08);
-  --aud-card-border: rgba(240, 235, 233, 0.1);
-  --aud-card-bg: linear-gradient(180deg, rgba(240, 235, 233, 0.055), rgba(240, 235, 233, 0.015));
-}
-
-.page--companies {
-  --aud-stage-top: #211d20;
-  --aud-stage-bottom: #161822;
-}
-
-.page--investors {
-  --aud-stage-top: #161d2a;
-  --aud-stage-bottom: #0b1018;
-}
-
-.page--audience .aud-help,
-.page--audience .aud-work,
-.page--audience .aud-expertise {
-  color: var(--light);
-  background:
-    radial-gradient(900px 600px at 12% 16%, rgba(var(--aud-tint-rgb), 0.2), transparent 70%),
-    linear-gradient(180deg, var(--aud-stage-top) 0%, var(--aud-stage-bottom) 100%);
-}
-
-.page--audience .aud-help,
-.page--audience .aud-expertise {
-  background-image:
-    linear-gradient(var(--aud-grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--aud-grid-line) 1px, transparent 1px),
-    radial-gradient(900px 600px at 12% 16%, rgba(var(--aud-tint-rgb), 0.2), transparent 70%),
-    linear-gradient(180deg, var(--aud-stage-top) 0%, var(--aud-stage-bottom) 100%);
-  background-size: 80px 80px, 80px 80px, auto, auto;
-}
-
-.page--audience .aud-help::before {
-  inset: 0;
-  width: auto;
-  height: auto;
-  border: 0;
-  border-radius: 0;
-  background:
-    linear-gradient(78deg, transparent 0 110px, rgba(var(--aud-tint-rgb), 0.05) 110px 111px);
-  opacity: 1;
-  mask-image: radial-gradient(ellipse 80% 65% at 48% 42%, #000 0%, transparent 88%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 65% at 48% 42%, #000 0%, transparent 88%);
-}
-
-.page--audience .aud-help__head,
-.page--audience .aud-work__head {
-  grid-template-columns: minmax(260px, 0.42fr) minmax(0, 0.58fr);
-  align-items: end;
-  border-bottom: 1px solid rgba(240, 235, 233, 0.1);
-}
-
-.page--audience .aud-help__title,
-.page--audience .aud-work__title,
-.page--audience .aud-expertise__title {
-  color: var(--light);
-  font-weight: 500;
-}
-
-.page--audience .aud-help__lede,
-.page--audience .aud-expertise__copy p {
-  color: rgba(240, 235, 233, 0.76);
-}
-
-.page--audience .aud-help__lede {
-  justify-self: start;
-}
-
-.page--audience .aud-help__grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(16px, 2vw, 28px);
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-}
-
-.page--audience .aud-help__item {
-  position: relative;
-  min-height: 248px;
-  padding: clamp(22px, 2.4vw, 32px);
-  border: 1px solid var(--aud-card-border);
-  border-radius: 16px;
-  background: var(--aud-card-bg);
-  color: var(--light);
-  overflow: hidden;
-}
-
-.page--audience .aud-help__item::before {
-  color: var(--aud-accent);
-  letter-spacing: 0.28em;
-}
-
-.page--audience .aud-help__item::after {
-  content: "";
-  position: absolute;
-  left: clamp(22px, 2.4vw, 32px);
-  right: clamp(22px, 2.4vw, 32px);
-  top: clamp(58px, 6.5vw, 78px);
-  height: 74px;
-  border-top: 1px dashed rgba(var(--aud-accent-rgb), 0.32);
-  border-bottom: 1px solid rgba(var(--aud-accent-rgb), 0.14);
-  opacity: 0.75;
-  pointer-events: none;
-}
-
-.page--audience .aud-help__item:hover {
-  background: linear-gradient(180deg, rgba(240, 235, 233, 0.085), rgba(240, 235, 233, 0.025));
-  border-color: rgba(var(--aud-accent-rgb), 0.55);
-}
-
-.page--audience .aud-help__item p {
-  position: relative;
-  z-index: 1;
-  max-width: 28ch;
-  color: rgba(240, 235, 233, 0.8);
-  font-size: 14.5px;
-}
-
-.page--audience .aud-work {
-  padding-block: clamp(88px, 12vh, 140px);
-  background:
-    radial-gradient(760px 480px at 72% 8%, rgba(var(--aud-tint-rgb), 0.18), transparent 72%),
-    linear-gradient(180deg, #161822 0%, var(--aud-stage-bottom) 100%);
-}
-
-.page--audience .aud-work::after {
-  background: linear-gradient(90deg, transparent, rgba(var(--aud-accent-rgb), 0.48), transparent);
-}
-
-.page--audience .aud-work__head::after {
-  content: "how we work";
-  color: var(--aud-accent);
-}
-
-.page--audience .aud-expertise::before {
-  background: linear-gradient(90deg, transparent, rgba(var(--aud-accent-rgb), 0.48), transparent);
-}
-
-.page--audience .aud-expertise__inner,
-.page--audience .aud-expertise:not(:has(.aud-expertise__inner)) {
-  grid-template-columns: minmax(280px, 0.36fr) minmax(0, 0.64fr);
-}
-
-.page--audience .aud-expertise__copy {
-  padding-left: clamp(20px, 2vw, 32px);
-  border-left: 1px solid rgba(var(--aud-accent-rgb), 0.42);
-}
-
-.page--audience .aud-expertise__list {
-  gap: 0;
-  border-top: 1px solid rgba(240, 235, 233, 0.1);
-  border-bottom: 1px solid rgba(240, 235, 233, 0.1);
-}
-
-.page--audience .aud-expertise__list li {
-  min-height: auto;
-  padding: clamp(22px, 3vh, 34px) 0 clamp(22px, 3vh, 34px) 58px;
-  border: 0;
-  border-bottom: 1px solid rgba(240, 235, 233, 0.08);
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  color: rgba(240, 235, 233, 0.8);
-}
-
-.page--audience .aud-expertise__list li:nth-last-child(-n + 2) {
-  border-bottom: 0;
-}
-
-.page--audience .aud-expertise__list li::before {
-  top: clamp(22px, 3vh, 34px);
-  left: 0;
-  width: 34px;
-  height: 34px;
-  border: 1px solid rgba(var(--aud-accent-rgb), 0.55);
-  background: var(--navy);
-  color: var(--aud-accent);
-  letter-spacing: 0.08em;
-}
-
-@media (max-width: 1180px) {
-  .page--audience .aud-help__grid,
-  .page--audience .aud-expertise__list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 920px) {
-  .page--audience .aud-help__head,
-  .page--audience .aud-work__head,
-  .page--audience .aud-expertise__inner,
-  .page--audience .aud-expertise:not(:has(.aud-expertise__inner)) {
-    grid-template-columns: 1fr;
-  }
-
-  .page--audience .aud-expertise__copy {
-    border-left: 0;
-    padding-left: 0;
-  }
-}
-
-@media (max-width: 700px) {
-  .page--audience .aud-help__grid,
-  .page--audience .aud-expertise__list {
-    grid-template-columns: 1fr;
-  }
-
-  .page--audience .aud-expertise__list li:nth-last-child(-n + 2) {
-    border-bottom: 1px solid rgba(240, 235, 233, 0.08);
-  }
-
-  .page--audience .aud-expertise__list li:last-child {
-    border-bottom: 0;
-  }
-}
-
-/* ---------- AUDIENCE PAGES LIGHT ROUTE ALIGNMENT ---------- */
-
-.page--audience .aud-help,
-.page--audience .aud-expertise {
-  color: #1c1419;
-  background:
-    linear-gradient(90deg, rgba(var(--aud-tint-rgb), 0.11) 0 1px, transparent 1px) 0 0 / 88px 88px,
-    linear-gradient(180deg, #f8f4f1 0%, var(--light) 100%);
-}
-
-.page--audience .aud-help::before {
-  inset: clamp(54px, 8vw, 110px) max(var(--container-x), 7vw) auto auto;
-  width: clamp(180px, 22vw, 330px);
-  height: auto;
-  aspect-ratio: 1;
-  border: 1px solid rgba(var(--aud-tint-rgb), 0.24);
-  border-radius: 50%;
-  background: transparent;
-  opacity: 0.8;
-  mask-image: none;
-  -webkit-mask-image: none;
-}
-
-.page--audience .aud-help__head {
-  border-bottom-color: rgba(28, 20, 25, 0.12);
-}
-
-.page--audience .aud-help__title,
-.page--audience .aud-expertise__title {
-  color: #1c1419;
-}
-
-.page--audience .aud-help__lede,
-.page--audience .aud-expertise__copy p {
-  color: rgba(28, 20, 25, 0.7);
-}
-
-.page--audience .aud-help__grid {
-  gap: 1px;
-  overflow: hidden;
-  border: 1px solid rgba(28, 20, 25, 0.12);
-  border-radius: 8px;
-  background: rgba(28, 20, 25, 0.12);
-}
-
-.page--audience .aud-help__item {
-  min-height: 0;
-  border: 0;
-  border-radius: 0;
-  background: rgba(248, 244, 241, 0.94);
-  color: #1c1419;
-  transition: border-color 0.35s ease;
-}
-
-/* Cards rest flat; the accent gradient only breathes in on hover. */
-.page--audience .aud-help__item::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(145deg, rgba(var(--aud-tint-rgb), 0.12), transparent 58%);
-  opacity: 0;
-  transition: opacity 0.35s ease;
-  pointer-events: none;
-}
-
-.page--audience .aud-help__item:hover::after {
-  opacity: 1;
-}
-
-.page--audience .aud-help__item:hover {
-  background: rgba(248, 244, 241, 0.94);
-  border-color: rgba(var(--aud-accent-rgb), 0.4);
-}
-
-.page--audience .aud-help__item p {
-  color: rgba(28, 20, 25, 0.86);
-  font-size: clamp(15px, 1.04vw, 17px);
-}
-
-.page--audience .aud-expertise::before {
-  background: linear-gradient(90deg, rgba(var(--aud-accent-rgb), 0.62), transparent);
-}
-
-.page--audience .aud-expertise__copy {
-  border-left-color: rgba(var(--aud-accent-rgb), 0.42);
-}
-
-.page--audience .aud-expertise__list {
-  gap: 14px;
-  border: 0;
-}
-
-/* Figma rows: plain text beside the trail, no card chrome, no numbers. */
-.page--audience .aud-expertise__list li {
-  min-height: 0;
-  padding: 14px 8px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  color: rgba(28, 20, 25, 0.84);
-}
-
-.page--audience .aud-expertise__list li:nth-last-child(-n + 2) {
-  border-bottom: 0;
-}
-
-.page--audience .aud-expertise__list li::before {
-  content: none;
-}
-
-@media (max-width: 920px) {
-  .page--audience .aud-expertise__copy {
-    border-left: 0;
-  }
-}
-
-@media (max-width: 700px) {
-  .page--audience .aud-help__grid,
-  .page--audience .aud-expertise__list {
-    grid-template-columns: 1fr;
-  }
-
-  .page--audience .aud-expertise__list li:last-child {
-    border-bottom: 1px solid rgba(28, 20, 25, 0.12);
-  }
-}
-
-/* Softer rounded grid treatment for audience pages */
-.page--audience .aud-help__grid {
-  gap: clamp(14px, 1.8vw, 22px);
-  overflow: visible;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-}
-
-.page--audience .aud-help__item {
-  border: 1px solid rgba(28, 20, 25, 0.12);
-  border-radius: 18px;
-  box-shadow: 0 20px 56px -44px rgba(28, 20, 25, 0.42);
-}
-
-.page--audience .aud-expertise__list {
-  gap: clamp(14px, 1.7vw, 20px);
-}
-
-.page--audience .aud-expertise__list li {
-  border-radius: 18px;
-}
-
-.page--audience .aud-expertise__list li::before {
-  border-radius: 10px;
-}
-
-/* Final audience layout polish: rounded grid + architectural photo overlays */
-.page--audience .aud-help,
-.page--audience .aud-work,
-.page--audience .aud-expertise {
-  padding-left: max(var(--container-x), calc((100vw - 1360px) / 2));
-  padding-right: max(var(--container-x), calc((100vw - 1360px) / 2));
-}
-.page--audience .aud-help__head,
-.page--audience .aud-work__head,
-.page--audience .aud-help__grid,
-.page--audience .aud-expertise__inner,
-.page--audience .aud-expertise:not(:has(.aud-expertise__inner)) {
-  max-width: 1360px;
-}
-
-.page--audience .aud-help__head {
-  grid-template-columns: minmax(360px, 0.82fr) minmax(320px, 0.48fr);
-  /* the lede's last line sat on the rule under it */
-  padding-bottom: clamp(24px, 3vh, 36px);
-}
-
-.page--audience .aud-help__grid {
-  display: grid;
-  /* three columns, as the Figma frames set this list; four left the ninth
-     Companies card alone on a third row */
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: stretch;
-  gap: clamp(16px, 1.6vw, 24px);
-}
-
-/* Cards hug their text (per Figma); row stretch keeps each row even. */
-.page--audience .aud-help__item {
-  min-height: 0;
-  padding: clamp(22px, 2.2vw, 30px);
-}
-
-/* Seven items leave one card alone in three columns. The first (forming the
-   company, structuring the deal) and the last (the exit) take two columns
-   each, so the rows read 2+1, 3, 1+2 and the list opens and closes on its
-   two ends. */
-.page--founders .aud-help__item:first-child,
-.page--investors .aud-help__item:first-child,
-.page--founders .aud-help__item:last-child,
-.page--investors .aud-help__item:last-child {
-  grid-column: span 2;
-}
-
-.page--audience .aud-help__item p {
-  max-width: 30ch;
-}
-
-.page--founders .aud-help__item:first-child p,
-.page--investors .aud-help__item:first-child p,
-.page--founders .aud-help__item:last-child p,
-.page--investors .aud-help__item:last-child p {
-  max-width: 42ch;
-}
-
-.page--audience .aud-bleed {
-  aspect-ratio: 21 / 7.2;
-  min-height: clamp(280px, 34vw, 520px);
-  background: var(--navy-deep);
-}
-
-.page--audience .aud-bleed img {
-  height: 128%;
-  /* every band photo is a sky-free close-up already baked into its page's
-     ramp (terracotta, taupe, slate), so it needs no further grading */
-  filter: none;
-}
-
-/* The Figma frames show the architecture photo clean, edge to edge - no
-   grid overlay, no inset frame. */
-.page--audience .aud-bleed::before {
-  content: none;
-}
-
-.page--audience .aud-bleed::after {
-  z-index: 1;
-}
-
-.page--audience .aud-work__head {
-  margin-bottom: clamp(34px, 4.8vh, 54px);
-}
-
-.page--audience .aud-expertise__inner,
-.page--audience .aud-expertise:not(:has(.aud-expertise__inner)) {
-  grid-template-columns: minmax(300px, 0.34fr) minmax(0, 0.66fr);
-  gap: clamp(44px, 6vw, 96px);
-}
-
-.page--audience .aud-expertise__list {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(14px, 1.5vw, 20px);
-}
-
-.page--audience .aud-expertise__list li {
-  min-height: clamp(136px, 11vw, 170px);
-}
-
-.page--companies .aud-expertise__list {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-@media (max-width: 1180px) {
-  .page--audience .aud-help__grid,
-  .page--audience .aud-expertise__list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .page--founders .aud-help__item:first-child,
-  .page--investors .aud-help__item:first-child {
-    grid-column: auto;
-  }
-
-  /* in two columns every page has an odd count (7, 9), so the last card
-     closes the list across the full row instead of sitting alone */
-  .page--audience .aud-help__item:last-child {
-    grid-column: 1 / -1;
-  }
-}
-
-@media (max-width: 920px) {
-  .page--audience .aud-help__head,
-  .page--audience .aud-work__head,
-  .page--audience .aud-expertise__inner,
-  .page--audience .aud-expertise:not(:has(.aud-expertise__inner)) {
-    grid-template-columns: 1fr;
-  }
-
-  .page--audience .aud-bleed {
-    aspect-ratio: 16 / 8;
-  }
-}
-
-@media (max-width: 700px) {
-  .page--audience .aud-help__grid,
-  .page--audience .aud-expertise__list {
-    grid-template-columns: 1fr;
-  }
-
-  .page--founders .aud-help__item:last-child,
-  .page--investors .aud-help__item:last-child {
-    grid-column: auto;
-  }
-}
-
-/* Companies work section uses a light mauve surface, so keep text dark. */
-.page--companies .aud-work {
-  color: #1c1419;
-  background:
-    radial-gradient(760px 480px at 72% 8%, rgba(143, 125, 138, 0.22), transparent 72%),
-    linear-gradient(180deg, #eee7e8 0%, #d7cdd2 100%);
-}
-.page--companies .aud-work__title {
-  color: #1c1419;
-}
-
-.page--companies .aud-work__head {
-  border-bottom-color: rgba(28, 20, 25, 0.12);
-}
-
-/* Stabilise How We Work as a light rounded grid across audience pages. */
-.page--audience .aud-work {
-  padding: clamp(86px, 11vh, 124px) max(var(--container-x), calc((100vw - 1360px) / 2));
-  color: #1c1419;
-  background:
-    linear-gradient(90deg, rgba(var(--aud-tint-rgb), 0.1) 0 1px, transparent 1px) 0 0 / 88px 88px,
-    linear-gradient(180deg, #f8f4f1 0%, var(--light) 100%);
-}
-
-.page--audience .aud-work::after {
-  display: none;
-}
-
-.page--audience .aud-work__head {
-  display: grid;
-  grid-template-columns: minmax(360px, 0.82fr) minmax(320px, 0.48fr);
-  align-items: end;
-  max-width: 1360px;
-  margin: 0 auto clamp(30px, 4.8vh, 54px);
-  padding-bottom: clamp(22px, 3vw, 34px);
-  border-bottom: 1px solid rgba(28, 20, 25, 0.12);
-}
-
-.page--audience .aud-work__head::after {
-  content: "how we work";
-  justify-self: end;
-  color: var(--aud-accent);
-  font: 500 11px / 1 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-.page--audience .aud-work__title {
-  color: #1c1419;
-}
-
-@media (max-width: 920px) {
-  .page--audience .aud-work__head {
-    grid-template-columns: 1fr;
-  }
-
-  .page--audience .aud-work__head::after {
-    justify-self: start;
-  }
-}
-
-/* Stabilise Our Expertise as a balanced two-column section. */
-.page--audience .aud-expertise {
-  position: relative;
-  padding: clamp(92px, 12vh, 140px) max(var(--container-x), calc((100vw - 1360px) / 2));
-  color: #1c1419;
-  background:
-    linear-gradient(90deg, rgba(var(--aud-tint-rgb), 0.08) 0 1px, transparent 1px) 0 0 / 88px 88px,
-    linear-gradient(180deg, var(--light) 0%, #faf6f3 100%);
-}
-
-.page--audience .aud-expertise::before {
-  content: "";
-  position: absolute;
-  top: clamp(54px, 7vh, 78px);
-  left: max(var(--container-x), calc((100vw - 1360px) / 2));
-  width: clamp(82px, 9vw, 132px);
-  height: 3px;
-  border-radius: 999px;
-  background: var(--aud-accent);
-}
-
-.page--audience .aud-expertise__inner,
-.page--audience .aud-expertise:not(:has(.aud-expertise__inner)) {
-  display: grid;
-  grid-template-columns: minmax(300px, 0.38fr) minmax(0, 0.62fr);
-  gap: clamp(44px, 6vw, 96px);
-  align-items: start;
-  max-width: 1360px;
-  margin-inline: auto;
-}
-
-.page--audience .aud-expertise:not(:has(.aud-expertise__inner)) > .aud-expertise__copy {
-  grid-column: 1;
-}
-
-.page--audience .aud-expertise:not(:has(.aud-expertise__inner)) > .aud-expertise__list-wrap {
-  grid-column: 2;
-}
-
-.page--audience .aud-expertise__copy {
-  position: sticky;
-  top: calc(var(--nav-height) + 36px);
-  max-width: 430px;
-  padding: clamp(22px, 2.4vw, 34px);
-  border: 1px solid rgba(28, 20, 25, 0.12);
-  border-left: 3px solid var(--aud-accent);
-  border-radius: 18px;
-  background: rgba(248, 244, 241, 0.72);
-  box-shadow: 0 22px 56px -48px rgba(28, 20, 25, 0.42);
-}
-
-.page--audience .aud-expertise__title {
-  margin-bottom: 16px;
-  color: #1c1419;
-}
-
-.page--audience .aud-expertise__copy p {
-  max-width: none;
-  color: rgba(28, 20, 25, 0.7);
-}
-
-.page--audience .aud-expertise__list-wrap {
-  min-width: 0;
-}
-
-.page--audience .aud-expertise__list {
-  display: grid;
-  grid-template-columns: 1fr;
-  /* the rail's segments span this gap, so the two read the same value */
-  gap: var(--exp-row-gap, clamp(6px, 0.8vw, 12px));
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
-
-.page--audience .aud-expertise__list li {
-  min-height: 0;
-  padding: 14px 8px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: rgba(28, 20, 25, 0.84);
-  box-shadow: none;
-}
-
-.page--audience .aud-expertise__list li::before {
-  content: none;
-}
-
-@media (max-width: 1120px) {
-  .page--audience .aud-expertise__inner,
-  .page--audience .aud-expertise:not(:has(.aud-expertise__inner)) {
-    grid-template-columns: 1fr;
-  }
-
-  .page--audience .aud-expertise:not(:has(.aud-expertise__inner)) > .aud-expertise__copy,
-  .page--audience .aud-expertise:not(:has(.aud-expertise__inner)) > .aud-expertise__list-wrap {
-    grid-column: 1;
-  }
-
-  .page--audience .aud-expertise__copy {
-    position: static;
-    max-width: 720px;
-  }
-
-  .page--companies .aud-expertise__list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 700px) {
-  .page--audience .aud-expertise__list,
-  .page--companies .aud-expertise__list {
-    grid-template-columns: 1fr;
-  }
-}
-
-
-
-.page--audience .aud-expertise__list li::before {
-  color: var(--aud-accent);
-}
-
-/* Two tokens, not one. --aud-accent is what the eye reads as the accent -
-   the dots, the rails, the rules, the numbers - and on every audience page
-   that is the brand orange, the way the Figma frames draw it (sampled off
-   the Companies frame: #f86028 on the expertise trail). --aud-tint is the
-   page's own ground: the mauve, the slate, the warm, carried by the grids,
-   the washes and the card chrome. Collapsing the two is why Companies and
-   Investors measured 0.0% saturated orange across a whole page. */
-.page--founders {
-  --aud-accent: var(--orange);
-  --aud-accent-rgb: 255, 97, 44;
-  --aud-tint-rgb: 209, 126, 95;
-}
-
-.page--companies {
-  --aud-accent: var(--orange);
-  --aud-accent-rgb: 255, 97, 44;
-  --aud-tint-rgb: 155, 139, 149;
-}
-
-.page--investors {
-  --aud-accent: var(--orange);
-  --aud-accent-rgb: 255, 97, 44;
-  --aud-tint-rgb: 91, 122, 176;
-}
-
-/* Hard reset for Our Expertise after route-trail legacy styles. */
-.page--audience .aud-expertise {
-  display: block;
-}
-
-.page--audience .aud-expertise__inner,
-.page--audience .aud-expertise:not(:has(.aud-expertise__inner)) {
-  display: grid;
-  grid-template-columns: minmax(280px, 420px) minmax(0, 860px);
-  justify-content: center;
-  gap: clamp(36px, 5vw, 84px);
-  width: 100%;
-  max-width: 1360px;
-  margin-inline: auto;
-}
-
-.page--audience .aud-expertise:not(:has(.aud-expertise__inner)) {
-  max-width: none;
-}
-
-.page--audience .aud-expertise:not(:has(.aud-expertise__inner)) > .aud-expertise__copy {
-  grid-column: 1;
-}
-
-.page--audience .aud-expertise:not(:has(.aud-expertise__inner)) > .aud-expertise__list-wrap {
-  grid-column: 2;
-}
-
-/* The expertise rail. This used to be a hand-drawn wavy SVG with circles
-   dropped at guessed coordinates - they never sat on the curve, and the
-   squiggle was the only line on the site that was not the straight hairline
-   the scene spines use. So it is CSS now, and geometric rather than drawn:
-   one dot per row, and one segment per row reaching down to the next row's
-   dot. Nothing is positioned by hand, so nothing can drift out of line.
-   --exp-dot-y is the only measurement: the row's top padding plus half a
-   line, i.e. the middle of the row's first line of text. */
-.page--audience .aud-expertise__list-wrap {
-  --exp-rail-gutter: clamp(38px, 3.4vw, 54px);
-  --exp-row-gap: clamp(6px, 0.8vw, 12px);
-  --exp-dot-y: calc(14px + 0.775em);
-  /* the rail lives in this padding - a grid column would be a second child
-     the list has to be placed against, and it went wrong exactly that way */
-  padding-left: var(--exp-rail-gutter);
-  min-width: 0;
-}
-
-.page--audience .aud-expertise__list li::before,
-.page--audience .aud-expertise__list li::after {
-  content: "";
-  position: absolute;
-  left: calc(var(--exp-rail-gutter) / -2);
-  pointer-events: none;
-}
-
-.page--audience .aud-expertise__list li::before {
-  top: var(--exp-dot-y);
-  width: var(--rail-dot);
-  height: var(--rail-dot);
-  border-radius: 50%;
-  background: var(--aud-accent);
-  transform: translate(-50%, -50%);
-}
-
-/* the segment from this row's dot to the next one - the row gap is part of
-   the span, which is why the two share a variable */
-.page--audience .aud-expertise__list li::after {
-  top: var(--exp-dot-y);
-  bottom: calc(-1 * (var(--exp-row-gap) + var(--exp-dot-y)));
-  width: var(--rail-width);
-  border-radius: var(--rail-width);
-  background: rgba(var(--aud-accent-rgb), 0.42);
-  transform: translateX(-50%);
-}
-
-.page--audience .aud-expertise__list li:last-child::after {
-  content: none;
-}
-
-/* the two ends of the path read as a start and a summit, like the trail
-   markers everywhere else */
-.page--audience .aud-expertise__list li:first-child::before,
-.page--audience .aud-expertise__list li:last-child::before {
-  width: var(--rail-dot-end);
-  height: var(--rail-dot-end);
-  box-shadow: 0 0 0 5px rgba(var(--aud-accent-rgb), 0.14);
-}
-
-.page--audience .aud-expertise__copy {
-  align-self: start;
-  width: 100%;
-  max-width: 420px;
-}
-
-.page--audience .aud-expertise__list {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
-  align-items: stretch;
-}
-
-.page--audience .aud-expertise__list li {
-  display: flex;
-  align-items: flex-start;
-  overflow-wrap: anywhere;
-  word-break: normal;
-  hyphens: none;
-}
-
-@media (max-width: 1120px) {
-  .page--audience .aud-expertise__inner,
-  .page--audience .aud-expertise:not(:has(.aud-expertise__inner)) {
-    grid-template-columns: 1fr;
-    max-width: 860px;
-  }
-
-  .page--audience .aud-expertise:not(:has(.aud-expertise__inner)) > .aud-expertise__copy,
-  .page--audience .aud-expertise:not(:has(.aud-expertise__inner)) > .aud-expertise__list-wrap {
-    grid-column: 1;
-  }
-
-  .page--audience .aud-expertise__copy {
-    max-width: 640px;
-  }
-}
-
-@media (max-width: 700px) {
-  .page--audience .aud-expertise__list,
-  .page--companies .aud-expertise__list {
-    grid-template-columns: 1fr;
-  }
-}
+/* What We Help, How We Work and Our Expertise are styled in one place:
+   "fb-audience", after the HORIZON SCENE block. */
 
 /* ============================================================
    ABOUT PAGE POLISH — hero parity with homepage, photo duotone,
@@ -6806,57 +5703,479 @@ a.contact-channels__value:focus-visible {
   }
 }
 
-/* ============ HOW WE WORK - AUDIENCE ROW (Figma 2795:1293) ============
-   The drawn icons are the home page's device, and Basia asked for them back
-   there only. On the audience pages the same four or five points return to
-   the Figma layout: one compact row of columns, each under the shared orange
-   marker. That is ~370px of page instead of ~1400px for four short lines.
+/* === fb-audience: the sections under the scene (For founders / companies / investors) ===
+   One system for the three pages, only the palette changes. Below the scene
+   (hero and intro, above) the page alternates cream and ground:
 
-   auto-fit collapses the tracks it does not need, so the four-point founders
-   row and the five-point company and investor rows both come out even. */
-.hww {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 178px), 1fr));
-  gap: clamp(30px, 4vh, 46px) clamp(24px, 2.4vw, 32px);
+     What We Help You Achieve   cream - the Figma list: a rule beside each
+                                point, three to a row, no card chrome
+     How We Work                the scene's ground (navy, taupe, slate) with
+                                the page's architecture as the section's
+                                backdrop - the wireframe's "photo in the
+                                section background" instead of a band of
+                                its own - and the points on one trail
+     Our Expertise              cream - the copy beside the rail
+
+   Every section shares one column (1360px: on the container edge, where the
+   hero's copy starts, up to about 1550px; centred beyond, as the home page's
+   sections are), one vertical rhythm (--aud-section-y) and the type roles of
+   the design system: H2 titles, a lead under the first, body text in the
+   lists, H4 and small in How We Work. Under 1024px the compact block
+   (AUDIENCE - MOBILE & TABLET) lays the same pieces out in one column.
+
+   Tokens. --aud-accent is what the eye reads as the accent - rules, trail,
+   dots - and on all three pages it is the brand orange, as the Figma frames
+   draw it (#f86028 on the Companies expertise trail). --aud-ground-rgb is
+   the scene's ground, the colour How We Work sits on. */
+:is(.page--founders, .page--companies, .page--investors) {
+  --aud-accent: var(--orange);
+  --aud-accent-rgb: 255, 97, 44;
+  --aud-ink: #1c1419;
+  --aud-ink-soft: rgba(28, 20, 25, 0.72);
+  --aud-section-y: clamp(96px, 12vh, 136px);
+  --aud-section-x: max(var(--container-x), calc((100vw - 1360px) / 2));
+  --aud-head-gap: clamp(44px, 6vh, 72px);
+  --aud-col-gap: clamp(32px, 3.4vw, 56px);
+  /* the rule beside a point and the text's distance from it; the expertise
+     rail stands on the same line */
+  --aud-rule-w: 2px;
+  --aud-rule-pad: clamp(20px, 1.8vw, 28px);
+}
+
+.page--founders {
+  --aud-ground-rgb: 22, 24, 34;
+}
+
+.page--companies {
+  --aud-ground-rgb: 95, 88, 83;
+}
+
+.page--investors {
+  --aud-ground-rgb: 49, 62, 89;
+}
+
+/* the intro under the scene speaks at H3, the scale's step under a section
+   title (it was 1.75vw, off the scale); its spine dot follows the line */
+:is(.page--founders, .page--companies, .page--investors) .scene-intro__lead {
+  max-width: 24em;
+  font-size: var(--fs-h3);
+  line-height: 1.26;
+}
+
+@media (min-width: 1024px) {
+  :is(.page--founders, .page--companies, .page--investors) .scene-spine--intro::before {
+    top: calc(var(--fs-h3) * 0.63);
+  }
+}
+
+/* ---------- shared: the three sections' frame and titles ---------- */
+:is(.page--founders, .page--companies, .page--investors) :is(.aud-help, .aud-work, .aud-expertise) {
+  position: relative;
+  display: block;
+  padding: var(--aud-section-y) var(--aud-section-x);
+}
+
+:is(.page--founders, .page--companies, .page--investors) :is(.aud-help, .aud-expertise) {
+  color: var(--aud-ink);
+  background: var(--light);
+}
+
+:is(.page--founders, .page--companies, .page--investors) :is(.aud-help, .aud-work, .aud-expertise)::before,
+:is(.page--founders, .page--companies, .page--investors) :is(.aud-work, .aud-work__head)::after {
+  content: none;
+}
+
+:is(.page--founders, .page--companies, .page--investors) :is(.aud-help__head, .aud-work__head) {
+  display: block;
   max-width: 1360px;
-  margin: 0 auto;
+  margin: 0 0 var(--aud-head-gap);
+  padding: 0;
+  border: 0;
+}
+
+:is(.page--founders, .page--companies, .page--investors) :is(.aud-help__title, .aud-work__title, .aud-expertise__title) {
+  max-width: var(--hero-measure);
+  margin: 0;
+  font: 500 var(--fs-h2) / var(--lh-h2) "Urbanist", system-ui, sans-serif;
+  letter-spacing: var(--ls-heading);
+  text-wrap: balance;
+}
+
+:is(.page--founders, .page--companies, .page--investors) :is(.aud-help__title, .aud-expertise__title) {
+  color: var(--aud-ink);
+}
+
+/* ---------- What We Help You Achieve ---------- */
+:is(.page--founders, .page--companies, .page--investors) .aud-help__lede {
+  max-width: var(--lead-measure);
+  margin: 20px 0 0;
+  color: var(--aud-ink-soft);
+  font: 400 var(--fs-lead) / var(--lh-lead) "Outfit", system-ui, sans-serif;
+}
+
+/* three to a row, as the Figma frames set the list: seven points close on
+   one, nine on a full row. The rows are even: each point stretches to its
+   row's height, so the rules beside them are the same length. */
+:is(.page--founders, .page--companies, .page--investors) .aud-help__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: clamp(16px, 2.4vh, 28px) var(--aud-col-gap);
+  max-width: 1360px;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  list-style: none;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+:is(.page--founders, .page--companies, .page--investors) .aud-help__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  grid-column: auto;
+  min-height: 0;
+  padding: clamp(18px, 2.4vh, 26px) 0 clamp(18px, 2.4vh, 26px) var(--aud-rule-pad);
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--aud-ink);
+}
+
+:is(.page--founders, .page--companies, .page--investors) .aud-help__rule {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--aud-rule-w);
+  height: auto;
+  margin: 0;
+  border-radius: var(--aud-rule-w);
+  background: rgba(var(--aud-accent-rgb), 0.5);
+  transition: background-color 240ms ease;
+}
+
+/* the one state a point has: its rule lights to the full orange and a
+   faint wash of the same colour runs off it - nothing moves or resizes.
+   The points are not controls, so a keyboard never lands on one; were a
+   link ever put in one, :focus-within gives it the same state. */
+:is(.page--founders, .page--companies, .page--investors) .aud-help__item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(90deg, rgba(var(--aud-accent-rgb), 0.08), rgba(var(--aud-accent-rgb), 0) 72%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 240ms ease;
+}
+
+:is(.page--founders, .page--companies, .page--investors) .aud-help__item p {
+  position: relative;
+  z-index: 1;
+  max-width: 34ch;
+  margin: 0;
+  color: rgba(28, 20, 25, 0.84);
+  font: 400 var(--fs-body) / var(--lh-body) "Outfit", system-ui, sans-serif;
+  transition: color 240ms ease;
+}
+
+:is(.page--founders, .page--companies, .page--investors) .aud-help__item:focus-within .aud-help__rule {
+  background: var(--aud-accent);
+}
+
+:is(.page--founders, .page--companies, .page--investors) .aud-help__item:focus-within::after {
+  opacity: 1;
+}
+
+:is(.page--founders, .page--companies, .page--investors) .aud-help__item:focus-within p {
+  color: var(--aud-ink);
+}
+
+@media (hover: hover) {
+  :is(.page--founders, .page--companies, .page--investors) .aud-help__item:hover .aud-help__rule {
+    background: var(--aud-accent);
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-help__item:hover::after {
+    opacity: 1;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .aud-help__item:hover p {
+    color: var(--aud-ink);
+  }
+}
+
+/* ---------- How We Work ---------- */
+:is(.page--founders, .page--companies, .page--investors) .aud-work {
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--scene-cream);
+  background: rgb(var(--aud-ground-rgb));
+}
+
+:is(.page--founders, .page--companies, .page--investors) .aud-work__title {
+  color: var(--scene-cream);
+}
+
+/* The page's architecture behind the section, read as pattern: the photo
+   covers the section and drifts with the scroll (setupParallax), and a veil
+   of the ground over it deepens towards the points, so the title stands on
+   the structure and the points on the ground. */
+:is(.page--founders, .page--companies, .page--investors) .aud-work__photo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  margin: 0;
+  pointer-events: none;
+}
+
+:is(.page--founders, .page--companies, .page--investors) .aud-work__photo img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  max-width: none;
+  height: 124%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  /* the Companies concrete and the Investors glass are lighter than the
+     Founders diagrid: a step down keeps every line of copy at 4.5:1 */
+  filter: brightness(0.8);
+}
+
+.page--founders .aud-work__photo img {
+  filter: none;
+}
+
+:is(.page--founders, .page--companies, .page--investors) .aud-work__photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(var(--aud-ground-rgb), 0.5) 0%, rgba(var(--aud-ground-rgb), 0) 62%),
+    linear-gradient(180deg, rgba(var(--aud-ground-rgb), 0.5) 0%, rgba(var(--aud-ground-rgb), 0.74) 42%, rgba(var(--aud-ground-rgb), 0.92) 78%, rgb(var(--aud-ground-rgb)) 100%);
+}
+
+/* The points on one trail: a marker for each at the top of its column,
+   level with the others and on the line, the line running from the first
+   marker through each one and fading out past the last. Every marker stands
+   on its column's left edge, where the title under it starts, so the rhythm
+   is the columns' own. Always one row: the four or five columns share the
+   width (grid-auto-flow: column). */
+:is(.page--founders, .page--companies, .page--investors) .hww {
+  --hww-dot: var(--marker-size);
+  --hww-gap: clamp(28px, 2.8vw, 44px);
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-template-columns: none;
+  gap: 0 var(--hww-gap);
+  max-width: 1360px;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.hww__item {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: clamp(10px, 1.2vh, 15px);
+:is(.page--founders, .page--companies, .page--investors) .hww__item {
+  position: relative;
+  display: block;
+  padding-top: calc(var(--hww-dot) + clamp(24px, 3.2vh, 32px));
 }
 
-.hww__dot {
-  flex: none;
-  width: var(--marker-size);
-  height: var(--marker-size);
-  margin-bottom: clamp(4px, 0.8vh, 10px);
+:is(.page--founders, .page--companies, .page--investors) .hww__dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: var(--hww-dot);
+  height: var(--hww-dot);
+  margin: 0;
   border-radius: 50%;
   background: var(--marker-core);
   box-shadow: var(--marker-shadow);
 }
 
-.hww__name {
-  /* Figma lets the copy start straight after the title, which leaves a
-     ragged baseline across the row when one title wraps and its neighbour
-     does not. Reserving two lines lands them together. */
-  min-height: 2.64em;
-  margin: 0;
-  color: #1c1419;
-  font: 500 clamp(15px, 1.15vw, 18px) / 1.32 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.003em;
-  text-wrap: balance;
+/* the stretch of trail from this marker to the next one (the column plus
+   the gap), and past the last marker a tail that fades out */
+:is(.page--founders, .page--companies, .page--investors) .hww__item::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--hww-dot) / 2 - 0.5px);
+  left: calc(var(--hww-dot) / 2);
+  width: calc(100% + var(--hww-gap));
+  height: 1px;
+  background: var(--trail-line);
+  box-shadow: 0 0 6px var(--trail-glow);
+  pointer-events: none;
 }
 
-.hww__copy {
+:is(.page--founders, .page--companies, .page--investors) .hww__item:last-child::after {
+  width: calc(100% - var(--hww-dot) / 2);
+  background: linear-gradient(90deg, var(--trail-line), rgba(255, 168, 110, 0));
+  box-shadow: none;
+}
+
+/* Two lines reserved for every name, so the notes start level across the
+   row when one name wraps and its neighbour does not. The names wrap
+   greedily: balanced, they broke at their own hyphens ("business- / ready",
+   "long- / term"); greedy, each compound fits the first line. Companies'
+   "product-minded" is held together by the word joiner below. */
+:is(.page--founders, .page--companies, .page--investors) .hww__name {
+  min-height: calc(2em * var(--lh-h4));
+  max-width: 18em;
+  margin: 0 0 10px;
+  color: var(--scene-cream);
+  font: 500 var(--fs-h4) / var(--lh-h4) "Urbanist", system-ui, sans-serif;
+  letter-spacing: var(--ls-heading);
+  text-wrap: wrap;
+}
+
+/* the markup opens a span right after the hyphen of "product-minded"; a
+   zero-width WORD JOINER at its start forbids a break on either side */
+.page--companies .hww__name .aud-join::before {
+  content: "\2060";
+  content: "\2060" / "";
+}
+
+:is(.page--founders, .page--companies, .page--investors) .hww__copy {
+  max-width: 30ch;
   margin: 0;
-  color: rgba(28, 20, 25, 0.7);
-  font: 400 clamp(13px, 0.92vw, 15px) / 1.55 "Outfit", system-ui, sans-serif;
+  color: rgba(244, 236, 231, 0.88);
+  font: 400 var(--fs-small) / var(--lh-small) "Outfit", system-ui, sans-serif;
+}
+
+/* ---------- Our Expertise ---------- */
+/* On the same three columns as What We Help: the copy takes the first, the
+   list the other two, and the rail stands where the second column's rules
+   stand above it. */
+:is(.page--founders, .page--companies, .page--investors) .aud-expertise__inner {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 0 var(--aud-col-gap);
+  max-width: 1360px;
+  margin: 0;
+}
+
+:is(.page--founders, .page--companies, .page--investors) .aud-expertise__copy {
+  position: static;
+  grid-column: 1;
+  align-self: start;
+  width: auto;
+  max-width: 34rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+:is(.page--founders, .page--companies, .page--investors) .aud-expertise__title {
+  margin-bottom: 20px;
+}
+
+:is(.page--founders, .page--companies, .page--investors) .aud-expertise__copy p {
+  max-width: none;
+  margin: 0;
+  color: var(--aud-ink-soft);
+  font: 400 var(--fs-body) / var(--lh-body) "Outfit", system-ui, sans-serif;
+}
+
+:is(.page--founders, .page--companies, .page--investors) .aud-expertise__more {
+  margin-top: 28px;
+}
+
+:is(.page--founders, .page--companies, .page--investors) .aud-expertise__list-wrap {
+  --exp-rail-gutter: var(--aud-rule-pad);
+  --exp-row-gap: clamp(4px, 0.6vw, 10px);
+  --exp-dot-y: calc(12px + 0.8em);
+  position: relative;
+  grid-column: 2 / -1;
+  min-width: 0;
+  padding-left: var(--exp-rail-gutter);
+}
+
+:is(.page--founders, .page--companies, .page--investors) .aud-expertise__list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--exp-row-gap);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 0;
+}
+
+:is(.page--founders, .page--companies, .page--investors) .aud-expertise__list li {
+  position: relative;
+  display: block;
+  min-height: 0;
+  max-width: 62ch;
+  padding: 12px 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: rgba(28, 20, 25, 0.84);
+  font: 400 var(--fs-body) / var(--lh-body) "Outfit", system-ui, sans-serif;
+  overflow-wrap: break-word;
+}
+
+/* the rail: a dot level with each row's first line and a segment down to
+   the next one, on the list's left edge (the line a rule stands on above) */
+:is(.page--founders, .page--companies, .page--investors) .aud-expertise__list li::before,
+:is(.page--founders, .page--companies, .page--investors) .aud-expertise__list li::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--aud-rule-w) / 2 - var(--exp-rail-gutter));
+  pointer-events: none;
+}
+
+:is(.page--founders, .page--companies, .page--investors) .aud-expertise__list li::before {
+  top: var(--exp-dot-y);
+  width: var(--rail-dot);
+  height: var(--rail-dot);
+  border: 0;
+  border-radius: 50%;
+  background: var(--aud-accent);
+  box-shadow: none;
+  transform: translate(-50%, -50%);
+}
+
+:is(.page--founders, .page--companies, .page--investors) .aud-expertise__list li::after {
+  top: var(--exp-dot-y);
+  bottom: calc(-1 * (var(--exp-row-gap) + var(--exp-dot-y)));
+  width: var(--aud-rule-w);
+  border-radius: var(--aud-rule-w);
+  background: rgba(var(--aud-accent-rgb), 0.42);
+  transform: translateX(-50%);
+}
+
+:is(.page--founders, .page--companies, .page--investors) .aud-expertise__list li:last-child::after {
+  content: none;
+}
+
+:is(.page--founders, .page--companies, .page--investors) .aud-expertise__list li:is(:first-child, :last-child)::before {
+  width: var(--rail-dot-end);
+  height: var(--rail-dot-end);
+  box-shadow: 0 0 0 5px rgba(var(--aud-accent-rgb), 0.14);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.page--founders, .page--companies, .page--investors) .aud-help__rule,
+  :is(.page--founders, .page--companies, .page--investors) .aud-help__item::after,
+  :is(.page--founders, .page--companies, .page--investors) .aud-help__item p {
+    transition: none;
+  }
 }
 
 /* ===================================================================
@@ -13070,7 +12389,7 @@ main {
 /* The three audience pages under 1024px: the scene heroes (the Founders
    ridge and wanderer, the Companies and Investors horizon with its
    architecture, massif and trail), the left scene spine, the intro on the
-   ground, What We Help You Achieve, the photo band, How We Work, Our
+   ground, What We Help You Achieve, How We Work on its architecture, Our
    Expertise and the closing band's details. One system for all three: the
    same ridge lands in the same place on every page, only the sky, the
    ground and the photographs change.
@@ -13121,8 +12440,8 @@ main {
                      the valley) by the rest, so the scene's ground and the
                      intro's are one surface.
 
-   The photographs (the horizon skies and the band) are sized to the box
-   they are drawn in, so srcset/sizes pick honestly; see the notes there. */
+   The horizon skies are sized to the box they are drawn in, so
+   srcset/sizes pick honestly; see the notes there. */
 
 /* ---------- tokens ---------- */
 @media (max-width: 1023px) {
@@ -13134,7 +12453,8 @@ main {
     /* tablet: the spine in the middle of the gutter, as on desktop */
     --aud-spine-x: calc(var(--m-gutter) / 2 - var(--rail-width) / 2);
     --aud-indent: 0px;
-    --aud-lead-fs: clamp(20px, 18px + 0.52vw, 23px);
+    /* the intro lead: H3, as on desktop */
+    --aud-lead-fs: var(--fs-h3);
   }
 }
 
@@ -13408,31 +12728,29 @@ main {
   }
 }
 
-/* ---------- What We Help You Achieve ---------- */
+/* ---------- the sections under the scene ----------
+   What We Help, How We Work and Our Expertise keep their desktop pieces
+   (fb-audience) in one column: the compact gutter and section rhythm, the
+   compact type from the same tokens. */
 @media (max-width: 1023px) {
-  :is(.page--founders, .page--companies, .page--investors) .aud-help {
+  :is(.page--founders, .page--companies, .page--investors) :is(.aud-help, .aud-work, .aud-expertise) {
     padding: var(--m-section) var(--m-gutter);
   }
 
-  :is(.page--founders, .page--companies, .page--investors) .aud-help__head {
-    display: block;
-    margin-bottom: 28px;
-    padding-bottom: 22px;
+  :is(.page--founders, .page--companies, .page--investors) :is(.aud-help__head, .aud-work__head) {
+    margin-bottom: 32px;
   }
+}
 
-  :is(.page--founders, .page--companies, .page--investors) .aud-help__title {
-    margin-bottom: 12px;
-    font-size: var(--m-h2);
-    line-height: 1.12;
-    text-wrap: balance;
-  }
-
+/* ---------- What We Help You Achieve ----------
+   The rules beside the points stay; one point to a row on a phone, two on a
+   tablet and on a phone on its side. */
+@media (max-width: 1023px) {
   /* balanced, the Companies lede breaks near its middle instead of at
      "cross- / border" */
   :is(.page--founders, .page--companies, .page--investors) .aud-help__lede {
     max-width: 46ch;
-    font-size: var(--m-lede);
-    line-height: 1.55;
+    margin-top: 14px;
     text-wrap: balance;
   }
 
@@ -13442,163 +12760,77 @@ main {
   }
 
   :is(.page--founders, .page--companies, .page--investors) .aud-help__item {
-    grid-column: auto;
-    grid-template-columns: 18px minmax(0, 1fr);
-    gap: 14px;
-    padding: 18px 20px;
-    border-radius: 14px;
+    padding: 12px 0 12px 20px;
   }
 
-  :is(.page--founders, .page--companies, .page--investors) .aud-help__rule {
-    margin-top: 12px;
-  }
-
-  :is(.page--founders, .page--companies, .page--investors) .aud-help__item p,
-  :is(.page--founders, .page--companies, .page--investors) .aud-help__item:is(:first-child, :last-child) p {
+  :is(.page--founders, .page--companies, .page--investors) .aud-help__item p {
     max-width: 40ch;
-    font-size: var(--m-body);
     line-height: 1.5;
   }
 }
 
-/* short items: two to a row on a tablet and on a phone on its side; an odd
-   count closes on one card across the row */
 @media (min-width: 640px) and (max-width: 1023px) {
   :is(.page--founders, .page--companies, .page--investors) .aud-help__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
-  }
-
-  :is(.page--founders, .page--companies, .page--investors) .aud-help__item:last-child:nth-child(odd) {
-    grid-column: 1 / -1;
+    gap: 14px 32px;
   }
 }
 
-/* ---------- photo band ----------
-   No parallax below 1024px, so the photo is no longer drawn 128% tall for
-   a drift that never comes: it covers the band exactly and is centred.
-   The element is given the size the photo is actually drawn at (container
-   units against the band, the photo's own proportions in --band-ratio), so
-   srcset/sizes can pick the file honestly: the sizes attribute states the
-   same widths - 120vw / 210vw on a phone, 100vw / 120vw from 640px. */
+/* ---------- How We Work ----------
+   The architecture stands behind the title, at the top of the section, and
+   fades into the ground above the points; nothing drifts below 1024px, so
+   the photo covers its box exactly. The trail runs down the left: each
+   marker level with its point's name, one line joining them. */
 @media (max-width: 1023px) {
-  :is(.page--founders, .page--companies, .page--investors) .aud-bleed {
-    --band-ratio: 2.7907;
-    container-type: size;
-    aspect-ratio: 4 / 3;
-    min-height: 0;
+  :is(.page--founders, .page--companies, .page--investors) .aud-work__photo {
+    bottom: auto;
+    height: clamp(300px, 70vw, 540px);
+    -webkit-mask-image: linear-gradient(180deg, #000 45%, transparent);
+    mask-image: linear-gradient(180deg, #000 45%, transparent);
   }
 
-  .page--founders .aud-bleed {
-    --band-ratio: 1.6;
-  }
-
-  :is(.page--founders, .page--companies, .page--investors) .aud-bleed img {
-    top: 50%;
-    left: 50%;
-    width: max(100cqw, 100cqh * var(--band-ratio));
-    max-width: none;
-    height: max(100cqh, 100cqw / var(--band-ratio));
-    transform: translate(-50%, -50%);
-  }
-}
-
-/* Upright, a phone shows only the middle 4:3 of the Companies and
-   Investors bands (48% of the photo's width), so it loads that crop (the
-   <source> in the markup). The box is the band itself here and the crop
-   covers it from the middle, exactly where the photo's middle was.
-   Founders' band shows most of its photo and keeps the one file. */
-@media (max-width: 639px) and (orientation: portrait) {
-  :is(.page--companies, .page--investors) .aud-bleed img {
+  :is(.page--founders, .page--companies, .page--investors) .aud-work__photo img {
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     transform: none;
-  }
-}
-
-@media (min-width: 640px) and (max-width: 1023px) {
-  :is(.page--founders, .page--companies, .page--investors) .aud-bleed {
-    aspect-ratio: 21 / 9;
-  }
-}
-
-@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
-  :is(.page--founders, .page--companies, .page--investors) .aud-bleed {
-    max-height: 62svh;
-  }
-}
-
-/* ---------- How We Work ---------- */
-@media (max-width: 1023px) {
-  :is(.page--founders, .page--companies, .page--investors) .aud-work {
-    padding: var(--m-section) var(--m-gutter);
+    will-change: auto;
   }
 
-  :is(.page--founders, .page--companies, .page--investors) .aud-work__head {
-    display: block;
-    margin-bottom: 32px;
-    padding-bottom: 22px;
+  :is(.page--founders, .page--companies, .page--investors) .aud-work__photo::after {
+    background: linear-gradient(180deg, rgba(var(--aud-ground-rgb), 0.5) 0%, rgba(var(--aud-ground-rgb), 0.74) 55%, rgba(var(--aud-ground-rgb), 0.94) 100%);
   }
 
-  /* The generated "how we work" tag sits apart from the title on desktop,
-     at the far end of the header row. Stacked in one column it would read
-     "HOW WE WORK / How We Work with ..." - the same words twice, and the
-     only lower section with an eyebrow - so the decorative duplicate goes. */
-  :is(.page--founders, .page--companies, .page--investors) .aud-work__head::after {
-    content: none;
-  }
-
-  :is(.page--founders, .page--companies, .page--investors) .aud-work__title {
-    font-size: var(--m-h2);
-    line-height: 1.12;
-    text-wrap: balance;
-  }
-
-  /* one route down the left: each point a lit marker level with its name,
-     joined to the next by the site's dotted leader */
   :is(.page--founders, .page--companies, .page--investors) .hww {
     --hww-gap: 28px;
+    /* the marker's offset from the top of its name's first line */
+    --hww-dot-y: calc((var(--fs-h4) * var(--lh-h4) - var(--hww-dot)) / 2);
+    grid-auto-flow: row;
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--hww-gap);
+    gap: var(--hww-gap) 0;
   }
 
   :is(.page--founders, .page--companies, .page--investors) .hww__item {
-    position: relative;
     display: grid;
-    grid-template-columns: var(--marker-size) minmax(0, 1fr);
+    grid-template-columns: var(--hww-dot) minmax(0, 1fr);
     column-gap: 18px;
-    row-gap: 6px;
     align-items: start;
-  }
-
-  :is(.page--founders, .page--companies, .page--investors) .hww__item:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    left: calc(var(--marker-size) / 2 - 0.5px);
-    top: calc(var(--hww-dot-y) + var(--marker-size) + 10px);
-    bottom: calc(10px - var(--hww-gap) - var(--hww-dot-y));
-    width: 1px;
-    background: repeating-linear-gradient(180deg, rgba(var(--aud-accent-rgb), 0.5) 0 2px, transparent 2px 6px);
-    pointer-events: none;
-  }
-
-  :is(.page--founders, .page--companies, .page--investors) .hww__item {
-    --hww-dot-y: calc((var(--m-h3) * 1.25 - var(--marker-size)) / 2);
+    padding-top: 0;
   }
 
   :is(.page--founders, .page--companies, .page--investors) .hww__dot {
+    position: relative;
     grid-column: 1;
     grid-row: 1;
-    margin: var(--hww-dot-y) 0 0;
+    margin-top: var(--hww-dot-y);
   }
 
   :is(.page--founders, .page--companies, .page--investors) .hww__name {
     grid-column: 2;
     min-height: 0;
-    font-size: var(--m-h3);
-    line-height: 1.25;
+    max-width: none;
+    margin-bottom: 6px;
   }
 
   :is(.page--founders, .page--companies, .page--investors) .hww__copy {
@@ -13608,143 +12840,97 @@ main {
     line-height: 1.55;
   }
 
-  /* A compound in a point's name breaks at a space, never at its own
-     hyphen ("product- / minded", "business- / ready"), which text-wrap:
-     balance prefers.
-     - Founders and Investors: of all their names only "Practical,
-       business-ready guidance" and "Reliable long-term partnership" ever
-       wrap, and plain greedy wrapping takes them to two lines at the space
-       at every width from 320px (the whole compound always fits the first
-       line), so these two pages simply do not balance their names.
-     - Companies: "Commercial and product-minded guidance" would break at
-       the hyphen greedy or balanced, so the markup opens a span right after
-       the hyphen, closed at the heading's end - where the desktop always
-       wraps the line anyway, so the desktop glyphs are untouched (a span
-       around the compound shifted them by a subpixel) - and the span starts
-       with a zero-width WORD JOINER, which forbids a break on either side
-       of it. Desktop sees a bare span. */
-  :is(.page--founders, .page--investors) .hww__name {
-    text-wrap: wrap;
+  /* the stretch down to the next marker, and a tail fading out below the
+     last one */
+  :is(.page--founders, .page--companies, .page--investors) .hww__item::after {
+    top: calc(var(--hww-dot-y) + var(--hww-dot) / 2);
+    bottom: calc(-1 * (var(--hww-gap) + var(--hww-dot-y) + var(--hww-dot) / 2));
+    left: calc(var(--hww-dot) / 2 - 0.5px);
+    width: 1px;
+    height: auto;
   }
 
-  .page--companies .hww__name .aud-join::before {
-    content: "\2060";
-    content: "\2060" / "";
+  :is(.page--founders, .page--companies, .page--investors) .hww__item:last-child::after {
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, var(--trail-line), rgba(255, 168, 110, 0));
   }
+
 }
 
-/* a tablet has the width for each point's name and note side by side */
+/* a tablet has the width for each point's name and note side by side: the
+   name takes a little more of the row than its note (at 0.8fr the names
+   broke on almost every point; at 1.1fr they sit on one line from 820px,
+   all but the longest, and on two balanced lines at 768px) */
 @media (min-width: 768px) and (max-width: 1023px) {
   :is(.page--founders, .page--companies, .page--investors) .hww {
     --hww-gap: 32px;
   }
 
-  /* the name takes a little more of the row than its note: at 0.8fr the
-     names broke on almost every point; at 1.1fr they sit on one line from
-     820px (all but the longest) and on two balanced lines at 768px */
   :is(.page--founders, .page--companies, .page--investors) .hww__item {
-    grid-template-columns: var(--marker-size) minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-columns: var(--hww-dot) minmax(0, 1.1fr) minmax(0, 1fr);
     column-gap: 20px;
+  }
+
+  :is(.page--founders, .page--companies, .page--investors) .hww__name {
+    margin-bottom: 0;
   }
 
   :is(.page--founders, .page--companies, .page--investors) .hww__copy {
     grid-column: 3;
     grid-row: 1;
-    padding-top: calc((var(--m-h3) * 1.25 - var(--m-body) * 1.55) / 2);
+    padding-top: calc((var(--fs-h4) * var(--lh-h4) - var(--m-body) * 1.55) / 2);
   }
 }
 
-/* ---------- Our Expertise ---------- */
+/* ---------- Our Expertise ----------
+   The copy, then the list and its rail, in one column of the card's old
+   measure (40rem, about 57ch of list text); the rail keeps the line the
+   rules above stand on. */
 @media (max-width: 1023px) {
-  :is(.page--founders, .page--companies, .page--investors) .aud-expertise {
-    padding: var(--m-section) var(--m-gutter);
-  }
-
-  :is(.page--founders, .page--companies, .page--investors) .aud-expertise::before {
-    top: calc(var(--m-section) - 26px);
-    left: var(--m-gutter);
-    width: 72px;
-  }
-
-  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__inner,
-  :is(.page--companies, .page--investors) .aud-expertise:not(:has(.aud-expertise__inner)) {
+  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__inner {
     grid-template-columns: minmax(0, 1fr);
     gap: 36px;
-    max-width: none;
+    max-width: 40rem;
   }
 
   :is(.page--founders, .page--companies, .page--investors) .aud-expertise__copy {
-    max-width: 40rem;
-    padding: 24px 22px 22px;
-    border-radius: 16px;
+    max-width: none;
   }
 
   :is(.page--founders, .page--companies, .page--investors) .aud-expertise__title {
-    margin-bottom: 12px;
-    font-size: var(--m-h2);
-    line-height: 1.12;
-    text-wrap: balance;
+    margin-bottom: 14px;
   }
 
-  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__copy p {
-    font-size: var(--m-body);
-    line-height: 1.6;
-  }
-
-  /* a 44px target; inline rather than flex, so where the label has to wrap
-     it balances over two lines and the arrow follows its last word instead
-     of standing at the card's far edge */
-  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__more {
-    display: inline-block;
-    min-height: 44px;
-    /* the side padding gives the focus ring room; the negative margin
-       keeps the words on the card's text edge */
-    margin: 8px -8px 0;
-    padding: 13px 8px;
-    line-height: 1.5;
-    letter-spacing: 0.12em;
-    text-wrap: balance;
-  }
-
-  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__more svg {
-    display: inline-block;
-    margin-left: 6px;
-    vertical-align: -4px;
-  }
-
-  /* the list keeps the card's measure and its right edge: one column
-     40rem wide (about 57ch of list text), not a card and a list of two
-     unrelated widths */
   :is(.page--founders, .page--companies, .page--investors) .aud-expertise__list-wrap {
-    --exp-rail-gutter: 36px;
+    --exp-rail-gutter: 24px;
     --exp-row-gap: 4px;
-    --exp-dot-y: calc(12px + 0.775em);
-    width: 100%;
-    max-width: 40rem;
+    grid-column: 1;
   }
 
   :is(.page--founders, .page--companies, .page--investors) .aud-expertise__list li {
-    padding: 12px 0;
-    font-size: var(--m-body);
     line-height: 1.55;
   }
 
-  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__list li:last-child {
-    border-bottom: 0;
+  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__list-wrap {
+    --exp-dot-y: calc(12px + 0.775em);
+  }
+
+  /* a 44px target; inline rather than flex, so where the label has to wrap
+     it balances over two lines and the arrow follows its last word */
+  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__more {
+    min-height: 44px;
+    /* the side padding gives the focus ring room; the negative margin
+       keeps the words on the text edge */
+    margin: 12px -8px 0;
+    padding: 13px 8px;
+    line-height: 1.5;
   }
 }
 
 /* ---------- touch ----------
-   The cards are not controls: a tap must not leave the hover wash on. */
+   (What We Help only lights a point on a real hover, see fb-audience.) */
 @media (max-width: 1023px) and (hover: none) {
-  :is(.page--founders, .page--companies, .page--investors) .aud-help__item:hover {
-    border-color: rgba(28, 20, 25, 0.12);
-  }
-
-  :is(.page--founders, .page--companies, .page--investors) .aud-help__item:hover::after {
-    opacity: 0;
-  }
-
   /* the button keeps its resting look after a tap (it scrolls the page
      away anyway); a keyboard still gets the filled focus state */
   .page--founders .primary-cta:hover:not(:focus-visible) {
@@ -13759,10 +12945,6 @@ main {
     background: transparent;
     border-color: rgba(var(--hz-ink), 0.45);
     transform: none;
-  }
-
-  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__more:hover:not(:focus-visible) {
-    color: rgba(28, 20, 25, 0.66);
   }
 }
 

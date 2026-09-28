@@ -217,6 +217,7 @@
         </section>
       </div>
 
+      <!-- WHAT WE HELP YOU ACHIEVE: the Figma list, a rule beside each point -->
       <section class="aud-help" id="what-we-help" aria-labelledby="aud-help-title">
         <header class="aud-help__head">
           <h2 class="aud-help__title" id="aud-help-title">What We Help You Achieve</h2>
@@ -235,19 +236,19 @@
         </ul>
       </section>
 
-      <figure class="aud-bleed">
-        <picture>
-          <source media="(max-width: 639px) and (orientation: portrait)" srcset="band-companies-crop.webp" width="928" height="688" />
-          <img src="band-companies.webp" srcset="band-companies-640.webp 640w, band-companies-1024.webp 1024w, band-companies.webp 1920w" sizes="(min-width: 1024px) 1920px, (max-height: 500px) and (orientation: landscape) 100vw, (min-width: 640px) 120vw, 210vw" width="1920" height="688" alt="A concrete window grid, close up" loading="lazy" decoding="async" />
-        </picture>
-      </figure>
-
+      <!-- HOW WE WORK: on the scene's ground, with the page's architecture as the
+           section's backdrop (the wireframe's "photo in the section background")
+           rather than a band of its own; the points sit on one trail. -->
       <section class="aud-work aud-work--companies" aria-labelledby="aud-work-title">
+        <div class="aud-work__photo" aria-hidden="true">
+          <picture>
+            <source media="(max-width: 639px) and (orientation: portrait)" srcset="band-companies-crop.webp" width="928" height="688" />
+            <img src="band-companies.webp" srcset="band-companies-640.webp 640w, band-companies-1024.webp 1024w, band-companies.webp 1920w" sizes="(min-width: 1024px) 1920px, (max-height: 500px) and (orientation: landscape) 100vw, (min-width: 640px) 120vw, 210vw" width="1920" height="688" alt="" loading="lazy" decoding="async" />
+          </picture>
+        </div>
         <header class="aud-work__head">
           <h2 class="aud-work__title" id="aud-work-title">How We Work with Companies</h2>
         </header>
-        <!-- The drawn icons are the home page's device. Here the same points
-             sit in one compact row, as on the Figma frame. -->
         <ul class="hww">
           <li class="hww__item io-reveal">
             <span class="hww__dot" aria-hidden="true"></span>
@@ -281,29 +282,32 @@
         </ul>
       </section>
 
+      <!-- OUR EXPERTISE: the copy beside the rail -->
       <section class="aud-expertise aud-expertise--companies" aria-labelledby="aud-expertise-title">
-        <div class="aud-expertise__copy">
-          <h2 class="aud-expertise__title" id="aud-expertise-title">Our Expertise</h2>
-          <p>
-            Our work is designed to support opportunity, strengthen decisions, and enable sustainable&nbsp;success.
-          </p>
-          <a class="aud-expertise__more link-arrow" href="expertise.html">
-            <span>see the full scope of our expertise</span>
-            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg>
-          </a>
-        </div>
-        <div class="aud-expertise__list-wrap">
-          <ol class="aud-expertise__list">
-            <li>Equity and debt financing&nbsp;— including pre-, Seed, Series A/B/C and beyond, convertible instruments, SAFEs, and venture&nbsp;debt</li>
-            <li>Commercial contracts&nbsp;— MSAs, licensing agreements, and strategic partnership&nbsp;arrangements</li>
-            <li>Employment documentation&nbsp;— contractor agreements, executive contracts, and ESOP design and&nbsp;implementation</li>
-            <li>Product, platform, data, and privacy&nbsp;documentation</li>
-            <li>Group structuring, reorganisations and adjusted set-ups for evolving business&nbsp;needs</li>
-            <li>Corporate housekeeping and&nbsp;governance</li>
-            <li>International expansion and subsidiary&nbsp;setup</li>
-            <li>IP protection, licensing, and technology&nbsp;agreements</li>
-            <li>M&amp;A, corporate transactions, and due&nbsp;diligence</li>
-          </ol>
+        <div class="aud-expertise__inner">
+          <div class="aud-expertise__copy">
+            <h2 class="aud-expertise__title" id="aud-expertise-title">Our Expertise</h2>
+            <p>
+              Our work is designed to support opportunity, strengthen decisions, and enable sustainable&nbsp;success.
+            </p>
+            <a class="aud-expertise__more link-arrow" href="expertise.html">
+              <span>see the full scope of our expertise</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg>
+            </a>
+          </div>
+          <div class="aud-expertise__list-wrap">
+            <ol class="aud-expertise__list">
+              <li>Equity and debt financing&nbsp;— including pre-, Seed, Series A/B/C and beyond, convertible instruments, SAFEs, and venture&nbsp;debt</li>
+              <li>Commercial contracts&nbsp;— MSAs, licensing agreements, and strategic partnership&nbsp;arrangements</li>
+              <li>Employment documentation&nbsp;— contractor agreements, executive contracts, and ESOP design and&nbsp;implementation</li>
+              <li>Product, platform, data, and privacy&nbsp;documentation</li>
+              <li>Group structuring, reorganisations and adjusted set-ups for evolving business&nbsp;needs</li>
+              <li>Corporate housekeeping and&nbsp;governance</li>
+              <li>International expansion and subsidiary&nbsp;setup</li>
+              <li>IP protection, licensing, and technology&nbsp;agreements</li>
+              <li>M&amp;A, corporate transactions, and due&nbsp;diligence</li>
+            </ol>
+          </div>
         </div>
       </section>
 
