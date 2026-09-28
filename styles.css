@@ -1116,911 +1116,9 @@ main:focus {
 
 /* ---------- 1a. ABOUT FOLD â€” pinned scrollytelling ---------- */
 
-/* ---------- 1b. ASCENT â€” four lifecycle stages, staircase ---------- */
-
-.ascent {
-  position: relative;
-  min-height: 100svh;
-  padding: clamp(72px, 10vh, 120px) var(--container-x) clamp(96px, 13vh, 160px);
-  background:
-    radial-gradient(900px 600px at 88% 92%, rgba(255, 97, 44, 0.16), transparent 70%),
-    radial-gradient(700px 500px at 8% 10%, rgba(48, 62, 89, 0.18), transparent 72%),
-    linear-gradient(180deg, #0c0e1a 0%, #050810 100%);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-/* Label left, statement right - but on the same first baseline. Bottom
-   alignment hung the label 198px below the top of a four-line headline,
-   in the middle of an otherwise empty quadrant. */
-.ascent__head {
-  position: relative;
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto clamp(56px, 8vh, 96px);
-  display: grid;
-  grid-template-columns: minmax(0, 0.36fr) minmax(0, 0.64fr);
-  gap: clamp(32px, 5vw, 80px);
-  align-items: baseline;
-}
-
-.ascent__eyebrow {
-  margin: 0;
-  color: rgba(240, 235, 233, 0.5);
-  font: 500 11px / 1.4 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  max-width: 300px;
-}
-
-/* As a flex item competing with two lines of tracked-out caps inside a
-   260px box, this rule resolved to 0px wide at every width and never drew
-   at all. Sitting on the baseline in front of the label, it does. */
-.ascent__eyebrow-rule {
-  display: inline-block;
-  width: 44px;
-  height: 1px;
-  margin-right: 12px;
-  vertical-align: middle;
-  background: linear-gradient(90deg, rgba(255, 168, 110, 0.55), transparent);
-}
-
-.ascent__title {
-  margin: 0;
-  color: var(--light);
-  font: 500 clamp(30px, 4.2vw, 56px) / 1.06 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.005em;
-  text-wrap: balance;
-}
-
-/* The ascent line is a route like every other route on the site: the same
-   warm hairline, the same glow, the same left-to-right draw-in. It sits in
-   flow below the stage cards rather than behind them, so it holds the same
-   distance from them however tall the section grows, and its four peaks
-   rise and fall exactly as the cards do. The stroke is non-scaling, so
-   stretching the viewBox to the section width moves the geometry without
-   ever thickening the line. */
-/* The heading names founders, companies and investors; this is where the
-   page stops naming them and starts pointing at them. */
-.ascent__paths {
-  position: relative;
-  z-index: 1;
-  margin: clamp(30px, 4vh, 48px) auto 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: center;
-  gap: 12px clamp(18px, 2.4vw, 34px);
-}
-
-.ascent__paths-label {
-  color: rgba(240, 235, 233, 0.5);
-  font: 500 11px / 1.4 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-}
-
-.ascent__paths a {
-  position: relative;
-  color: rgba(255, 168, 110, 0.92);
-  font: 400 clamp(15px, 1.15vw, 17px) / 1.4 "Outfit", system-ui, sans-serif;
-  text-decoration: none;
-}
-
-.ascent__paths a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -4px;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.35;
-  transition: opacity 220ms var(--ease-out);
-}
-
-.ascent__paths a:hover::after,
-.ascent__paths a:focus-visible::after {
-  opacity: 1;
-}
-
-.ascent__trail {
-  position: relative;
-  z-index: 1;
-  height: clamp(64px, 8vh, 100px);
-  margin: clamp(26px, 3.4vh, 44px) calc(var(--container-x) * -1) 0;
-  pointer-events: none;
-}
-
-.ascent__route {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  filter: drop-shadow(0 0 5px var(--trail-glow));
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 1.6s var(--ease-out) 320ms;
-}
-
-.ascent.is-visible .ascent__route {
-  clip-path: inset(0 0 0 0);
-}
-
-.ascent__route path {
-  stroke: var(--trail-line);
-  stroke-width: var(--trail-width);
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-/* Checkpoints ride the route the way they do on every other line. The peaks
-   sit at fixed fractions of the stretched viewBox, so a percentage of the
-   route's own box lands on them at any width. */
-.ascent__mark {
-  position: absolute;
-  margin: calc(var(--marker-size) / -2) 0 0 calc(var(--marker-size) / -2);
-  width: var(--marker-size);
-  height: var(--marker-size);
-  border-radius: 50%;
-  background: var(--marker-core);
-  box-shadow: var(--marker-shadow);
-  opacity: 0;
-  transition: opacity 500ms var(--ease-out);
-}
-
-.ascent.is-visible .ascent__mark {
-  opacity: 1;
-}
-
-/* left = x/1200, top = y/200 of the route's viewBox */
-.ascent__mark--01 { left: 12.5%; top: 75%; transition-delay: 700ms; }
-.ascent__mark--02 { left: 37.5%; top: 56%; transition-delay: 900ms; }
-.ascent__mark--03 { left: 62.5%; top: 31%; transition-delay: 1100ms; }
-.ascent__mark--04 { left: 87.5%; top: 49%; transition-delay: 1300ms; }
-
-@media (prefers-reduced-motion: reduce) {
-  .ascent__route {
-    clip-path: none;
-    transition: none;
-  }
-  .ascent__mark {
-    opacity: 1;
-    transition: none;
-  }
-}
-
-.ascent__stages {
-  position: relative;
-  z-index: 1;
-  list-style: none;
-  margin: 0 auto;
-  padding: 0;
-  max-width: 1280px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(14px, 1.6vw, 22px);
-  align-items: end;
-}
-
-.ascent__stage {
-  position: relative;
-  padding: clamp(22px, 2.6vh, 32px) clamp(20px, 2vw, 28px);
-  background: linear-gradient(180deg, rgba(20, 24, 38, 0.92), rgba(10, 13, 24, 0.92));
-  border: 1px solid rgba(240, 235, 233, 0.09);
-  border-radius: 16px;
-  box-shadow: 0 24px 60px rgba(4, 6, 12, 0.45);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.ascent__stage--01 { transform: translateY(0); }
-.ascent__stage--02 { transform: translateY(-32px); }
-.ascent__stage--03 { transform: translateY(-72px); }
-.ascent__stage--04 { transform: translateY(-44px); }
-
-.ascent__icon {
-  width: 52px;
-  height: 52px;
-  display: grid;
-  place-items: center;
-  border-radius: 999px;
-  background: rgba(255, 168, 110, 0.06);
-  border: 1px solid rgba(255, 168, 110, 0.22);
-  color: rgba(255, 168, 110, 0.8);
-  margin-bottom: 14px;
-}
-
-.ascent__icon svg {
-  width: 22px;
-  height: 22px;
-}
-
-.ascent__step {
-  margin: 0;
-  color: rgba(255, 168, 110, 0.65);
-  font: 500 10px / 1 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-}
-
-.ascent__name {
-  margin: 0;
-  color: var(--light);
-  font: 500 clamp(20px, 1.7vw, 26px) / 1.15 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.005em;
-}
-
-.ascent__copy {
-  margin: 6px 0 0;
-  color: rgba(240, 235, 233, 0.72);
-  font: 400 13.5px / 1.55 "Outfit", system-ui, sans-serif;
-  text-wrap: pretty;
-}
-
-@media (max-width: 1180px) {
-  .ascent__head {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-  .ascent__stages {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
-  }
-  .ascent__stage--01,
-  .ascent__stage--02,
-  .ascent__stage--03,
-  .ascent__stage--04 {
-    transform: none;
-  }
-  .ascent__trail { display: none; }
-  .ascent__paths { margin-bottom: clamp(8px, 2vh, 24px); }
-}
-
-@media (max-width: 720px) {
-  .ascent__stages {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ---------- 2. PERSPECTIVE â€” editorial pull-quote ---------- */
-
-.perspective {
-  position: relative;
-  min-height: 100svh;
-  padding: clamp(88px, 12vh, 140px) var(--container-x);
-  background:
-    radial-gradient(800px 500px at 50% 30%, rgba(48, 62, 89, 0.32), transparent 70%),
-    linear-gradient(180deg, #050810 0%, #070912 100%);
-  overflow: hidden;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-/* The marks bracket the line they are quoting. They used to sit at the
-   corners of a box spanning almost the whole section - the opening one
-   above and left of the eyebrow, the closing one 300px below the text,
-   next to nothing. Wrapping the heading makes them track it at any size.
-   The outward offset is a percentage of the frame, so the marks move
-   inward as the column narrows instead of clipping against overflow. */
-/* The marks are laid out beside the line they quote rather than positioned
-   at magic offsets: the opening one aligns to the top of the heading box,
-   the closing one to the bottom, so they follow it through any wrap,
-   type size or font substitution. A line-height of 1 keeps each glyph in
-   a predictable em box - at 0.5 the ink floated most of a line above where
-   the box said it was. */
-.perspective__frame {
-  position: relative;
-  z-index: 1;
-  max-width: 1000px;
-  margin: 0 auto clamp(36px, 5vh, 60px);
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  gap: clamp(2px, 1vw, 16px);
-}
-
-.perspective__quote {
-  flex: 0 0 auto;
-  color: rgba(255, 97, 44, 0.16);
-  font: 600 clamp(64px, 6.4vw, 112px) / 1 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.04em;
-  pointer-events: none;
-  user-select: none;
-}
-
-.perspective__quote--open {
-  align-self: flex-start;
-}
-
-.perspective__quote--close {
-  align-self: flex-end;
-}
-
-.perspective__step {
-  position: relative;
-  z-index: 1;
-  margin: 0 0 32px;
-  color: rgba(240, 235, 233, 0.5);
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-}
-
-.perspective__step span {
-  color: var(--orange);
-  font-family: "Urbanist", system-ui, sans-serif;
-  font-size: 14px;
-  letter-spacing: 0;
-  margin-right: 8px;
-}
-
-.perspective__title {
-  position: relative;
-  z-index: 1;
-  flex: 0 1 880px;
-  margin: 0;
-  color: var(--light);
-  font: italic 500 clamp(30px, 4.2vw, 56px) / 1.1 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.005em;
-  text-wrap: balance;
-}
-
-.perspective__pillars {
-  position: relative;
-  z-index: 1;
-  max-width: 880px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(28px, 4vw, 64px);
-  text-align: left;
-}
-
-.perspective__pillars p {
-  margin: 0;
-  padding-top: 24px;
-  border-top: 1px solid rgba(255, 168, 110, 0.3);
-  color: var(--light-80);
-  font: 400 clamp(15px, 1.15vw, 17px) / 1.65 "Outfit", system-ui, sans-serif;
-  text-wrap: pretty;
-}
-
-.perspective__pillars p::first-line {
-  color: var(--light);
-}
-
-/* The three points the copy triangulates - law, jurisdictions, capital.
-   Rendered at its natural size so the strokes are the site's true weights
-   rather than whatever a scale factor makes of them, with the vertices as
-   real markers rather than bare SVG circles. */
-.perspective__triangulation {
-  position: relative;
-  z-index: 1;
-  width: min(100%, 400px);
-  aspect-ratio: 2 / 1;
-  margin: clamp(32px, 4vh, 56px) auto 0;
-}
-
-.perspective__triangulation svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.perspective__triangulation .tri-edge {
-  stroke: var(--trail-line);
-  stroke-width: var(--trail-width);
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.perspective__triangulation .tri-base {
-  stroke: var(--trail-leader);
-  stroke-width: var(--trail-leader-width);
-  stroke-dasharray: var(--trail-leader-dash);
-  fill: none;
-}
-
-/* left = x/400, top = y/200 of the viewBox */
-.perspective__triangulation span {
-  position: absolute;
-  margin: calc(var(--marker-size) / -2) 0 0 calc(var(--marker-size) / -2);
-  width: var(--marker-size);
-  height: var(--marker-size);
-  border-radius: 50%;
-  background: var(--marker-core);
-  box-shadow: var(--marker-shadow);
-}
-
-.perspective__triangulation span:nth-of-type(1) { left: 20%; top: 80%; }
-.perspective__triangulation span:nth-of-type(2) { left: 80%; top: 80%; }
-.perspective__triangulation span:nth-of-type(3) { left: 50%; top: 20%; }
-
-/* The diagram triangulates the three things the paragraph above it names.
-   Unlabelled it was three dots and a triangle. */
-.perspective__triangulation b {
-  position: absolute;
-  color: rgba(240, 235, 233, 0.55);
-  font: 500 10px / 1.3 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.perspective__triangulation b:nth-of-type(1) {
-  left: 20%;
-  top: 80%;
-  transform: translate(-50%, 18px);
-}
-
-.perspective__triangulation b:nth-of-type(2) {
-  left: 80%;
-  top: 80%;
-  transform: translate(-50%, 18px);
-}
-
-.perspective__triangulation b:nth-of-type(3) {
-  left: 50%;
-  top: 20%;
-  transform: translate(-50%, calc(-100% - 16px));
-}
-
-@media (max-width: 720px) {
-  .perspective__triangulation b {
-    font-size: 9px;
-    letter-spacing: 0.14em;
-  }
-}
-
-@media (max-width: 720px) {
-  .perspective__pillars {
-    grid-template-columns: 1fr;
-  }
-  .perspective__quote {
-    font-size: clamp(120px, 28vw, 200px);
-  }
-}
-
-/* ---------- 3. TRACK RECORD â€” numbers AS the layout ---------- */
-
-.track-record {
-  position: relative;
-  min-height: 100svh;
-  padding: clamp(88px, 11vh, 130px) var(--container-x);
-  background:
-    radial-gradient(900px 600px at 84% 18%, rgba(255, 97, 44, 0.16), transparent 70%),
-    radial-gradient(700px 480px at 10% 86%, rgba(48, 62, 89, 0.2), transparent 72%),
-    linear-gradient(180deg, #070912 0%, #050810 50%, #0a0d18 100%);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-/* The lede used to auto-place into column one, row two - under the small
-   eyebrow, leaving a hole under the title it belongs to. Placed
-   explicitly, the head reads label-left, statement-and-lede-right. */
-.track-record__head {
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto clamp(40px, 6vh, 72px);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
-  grid-template-areas:
-    "step title"
-    ".    lede";
-  gap: 0 clamp(32px, 5vw, 80px);
-  align-items: baseline;
-}
-
-.track-record__step { grid-area: step; }
-.track-record__title { grid-area: title; }
-.track-record__lede { grid-area: lede; }
-
-.track-record__step {
-  margin: 0;
-  color: rgba(255, 168, 110, 0.78);
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-}
-
-.track-record__step span {
-  color: var(--orange);
-  font-family: "Urbanist", system-ui, sans-serif;
-  font-size: 14px;
-  letter-spacing: 0;
-  margin-right: 8px;
-}
-
-.track-record__title {
-  margin: 0;
-  color: var(--light);
-  font: 500 clamp(30px, 3.8vw, 52px) / 1.06 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.005em;
-  text-wrap: balance;
-}
-
-.track-record__lede {
-  margin: clamp(18px, 2.4vh, 28px) 0 0;
-  max-width: 46ch;
-  color: rgba(240, 235, 233, 0.74);
-  font: 400 clamp(16px, 1.2vw, 19px) / 1.55 "Outfit", system-ui, sans-serif;
-  text-wrap: pretty;
-}
-
-.track-record__numbers {
-  max-width: 1380px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.1fr 1.1fr 1fr;
-  gap: 0;
-  border-top: 1px solid rgba(255, 168, 110, 0.32);
-  border-bottom: 1px solid rgba(255, 168, 110, 0.32);
-}
-
-.big-stat {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: clamp(28px, 4vh, 48px) clamp(20px, 3vw, 36px);
-}
-
-.big-stat:not(:last-child) {
-  border-right: 1px solid rgba(255, 168, 110, 0.18);
-}
-
-.big-stat {
-  --big-stat-num-size: clamp(56px, 8.4vw, 132px);
-}
-
-.big-stat__num {
-  margin: 0;
-  color: var(--light);
-  font: 500 var(--big-stat-num-size) / 0.88 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.025em;
-}
-
-.big-stat__num--word {
-  /* The three jurisdictions read as one unit, as in the home hero and the
-     wireframe, so they hold one line even in the narrowest column (277px at
-     1280). The line keeps the height of 200+ and 300+ and sits at its foot,
-     so the three labels and copy lines below share one row. */
-  display: flex;
-  align-items: flex-end;
-  min-height: calc(var(--big-stat-num-size) * 0.88);
-  font-size: clamp(40px, 4.2vw, 68px);
-  line-height: 0.96;
-  white-space: nowrap;
-}
-
-.big-stat__num span {
-  display: inline-block;
-  color: rgba(255, 168, 110, 0.85);
-  font-size: 0.36em;
-  margin-left: 6px;
-  vertical-align: 0.6em;
-  letter-spacing: 0;
-  font-weight: 500;
-}
-
-.big-stat__label {
-  margin: 0;
-  color: var(--light);
-  font: 500 13px / 1.35 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-.big-stat__copy {
-  margin: 0;
-  color: var(--light-60);
-  font: 400 14px / 1.55 "Outfit", system-ui, sans-serif;
-  max-width: 280px;
-}
-
-.track-record__foot {
-  max-width: 760px;
-  margin: clamp(28px, 4vh, 56px) 0 0;
-  padding-left: clamp(20px, 3vw, 48px);
-  border-left: 2px solid rgba(255, 97, 44, 0.55);
-}
-
-.track-record__foot p {
-  margin: 0;
-  color: var(--light-80);
-  font: 400 clamp(16px, 1.2vw, 18px) / 1.65 "Outfit", system-ui, sans-serif;
-  text-wrap: pretty;
-}
-
-@media (max-width: 1024px) {
-  .track-record__head {
-    grid-template-columns: 1fr;
-    grid-template-areas: "step" "title" "lede";
-    gap: 0;
-    gap: 16px;
-    align-items: start;
-  }
-  .track-record__numbers {
-    grid-template-columns: 1fr;
-  }
-  .big-stat:not(:last-child) {
-    border-right: 0;
-    border-bottom: 1px solid rgba(255, 168, 110, 0.18);
-  }
-}
-
-/* ---------- 4. PHILOSOPHY â€” staggered overlapping cards ---------- */
-
-.philosophy {
-  position: relative;
-  /* Three short cards are about 420px of content. A full viewport is the
-     right box for that at laptop heights and too much box above them - at
-     1080 it left 335px of nothing above and 325px below, a 39% fill. The
-     cap holds the chapter feel where it works and stops the box growing
-     faster than what is in it. */
-  min-height: min(100svh, 830px);
-  padding: clamp(88px, 12vh, 140px) var(--container-x);
-  background:
-    radial-gradient(900px 600px at 50% 110%, rgba(255, 97, 44, 0.16), transparent 70%),
-    linear-gradient(180deg, #0a0d18 0%, #070912 100%);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.philosophy__head {
-  max-width: 1180px;
-  margin: 0 auto clamp(40px, 6vh, 72px);
-  text-align: center;
-}
-
-.philosophy__step {
-  margin: 0 0 24px;
-  color: rgba(255, 168, 110, 0.78);
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-}
-
-.philosophy__step span {
-  color: var(--orange);
-  font-family: "Urbanist", system-ui, sans-serif;
-  font-size: 14px;
-  letter-spacing: 0;
-  margin-right: 8px;
-}
-
-.philosophy__title {
-  margin: 0;
-  color: var(--light);
-  font: 500 clamp(30px, 4.2vw, 56px) / 1.06 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.005em;
-  text-wrap: balance;
-}
-
-.philosophy__stack {
-  position: relative;
-  max-width: 1320px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(16px, 2vw, 28px);
-  align-items: stretch;
-}
-
-.philosophy__stack::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 6%;
-  right: 6%;
-  height: calc(var(--trail-leader-width) * 1px);
-  background: linear-gradient(90deg, transparent, var(--trail-leader) 20%, var(--trail-leader) 80%, transparent);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.philosophy__card {
-  position: relative;
-  z-index: 1;
-  padding: clamp(24px, 3vh, 36px) clamp(24px, 2.6vw, 36px);
-  background: linear-gradient(160deg, rgba(240, 235, 233, 0.06), rgba(240, 235, 233, 0.02));
-  border: 1px solid rgba(240, 235, 233, 0.1);
-  border-radius: 14px;
-  backdrop-filter: blur(22px);
-  box-shadow: 0 24px 60px rgba(4, 6, 12, 0.32);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.philosophy__card--a {
-  transform: translateY(-16px);
-}
-
-.philosophy__card--b {
-  transform: translateY(8px);
-  background: linear-gradient(160deg, rgba(255, 97, 44, 0.16), rgba(255, 97, 44, 0.04));
-  border-color: rgba(255, 168, 110, 0.38);
-}
-
-.philosophy__card--c {
-  transform: translateY(-8px);
-}
-
-.philosophy__card-tag {
-  display: inline-block;
-  margin: 0;
-  color: rgba(255, 168, 110, 0.85);
-  font: italic 400 13px / 1.2 "Outfit", system-ui, sans-serif;
-}
-
-.philosophy__card p {
-  margin: 0;
-  color: var(--light);
-  font: 500 clamp(17px, 1.5vw, 22px) / 1.38 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.005em;
-}
-
-.philosophy__card--b p {
-  color: var(--light);
-}
-
-@media (max-width: 860px) {
-  .philosophy__stack {
-    grid-template-columns: 1fr;
-  }
-  .philosophy__stack::before {
-    display: none;
-  }
-  .philosophy__card--a,
-  .philosophy__card--b,
-  .philosophy__card--c {
-    transform: none;
-  }
-}
-
-/* ---------- 5. MANIFESTO - Our Mission and Our Commitment, two rows of text and picture ---------- */
-
-.manifesto {
-  position: relative;
-  /* Same reasoning as .philosophy, with a taller cap for its two rows. */
-  min-height: min(100svh, 890px);
-  padding: clamp(88px, 12vh, 140px) var(--container-x);
-  background:
-    radial-gradient(900px 600px at 92% 90%, rgba(255, 176, 119, 0.14), transparent 70%),
-    linear-gradient(180deg, #070912 0%, #0a0d18 100%);
-  overflow: hidden;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.manifesto__step {
-  margin: 0 0 28px;
-  color: rgba(255, 168, 110, 0.78);
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-}
-
-.manifesto__step span {
-  color: var(--orange);
-  font-family: "Urbanist", system-ui, sans-serif;
-  font-size: 14px;
-  letter-spacing: 0;
-  margin-right: 8px;
-}
-
-.manifesto__title {
-  margin: 0 auto clamp(40px, 6vh, 72px);
-  max-width: 1080px;
-  color: var(--light);
-  font: 500 clamp(32px, 4.4vw, 60px) / 1.04 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.005em;
-  text-wrap: balance;
-}
-
-/* The review approved the wireframe's pair as drawn (22.09): Mission as text
-   beside a photograph, then Commitment the other way round, each under its
-   own heading. The section keeps its background and trail; the rows replace
-   the centred split on About. */
-.manifesto__row {
-  width: 100%;
-  max-width: 1180px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(40px, 6vw, 96px);
-  align-items: center;
-  text-align: left;
-}
-
-.manifesto__row + .manifesto__row {
-  margin-top: clamp(72px, 12vh, 136px);
-}
-
-.manifesto__text {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.manifesto__text .manifesto__step {
-  margin: 0;
-}
-
-/* In a half-width column the centred statement size would run to five lines;
-   this matches the page's other section headings instead. */
-.manifesto__text .manifesto__title {
-  margin: 0 0 6px;
-  max-width: none;
-}
-
-.manifesto__copy,
-.manifesto__list {
-  margin: 0;
-  color: var(--light-80);
-  font: 400 clamp(15px, 1.2vw, 18px) / 1.6 "Outfit", system-ui, sans-serif;
-  text-wrap: pretty;
-}
-
-.manifesto__list {
-  display: grid;
-  gap: 6px;
-  padding: 0;
-  list-style: none;
-}
-
-/* G1 sets the four points as a dashed list. The dash is drawn, so each item
-   holds the client's words and nothing else. */
-.manifesto__list li {
-  position: relative;
-  padding-left: 30px;
-}
-
-.manifesto__list li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.8em;
-  width: 16px;
-  height: 1px;
-  background: rgba(255, 168, 110, 0.85);
-}
-
-.manifesto__media {
-  position: relative;
-  margin: 0;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  background: var(--navy);
-}
-
-.manifesto__media img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-@media (max-width: 860px) {
-  .manifesto__row {
-    grid-template-columns: 1fr;
-  }
-}
+/* ---------- 1b-5. ABOUT US SECTIONS ----------
+   Perspective, Track record, Approach, Mission and Commitment are styled
+   in one place, "fb-about" after ABOUT (<=1023px). */
 
 /* ---------- 6. EXPERTISE INTRO â€” constellation ---------- */
 
@@ -3631,86 +2729,6 @@ main:focus {
   color: var(--light-80);
   font: 400 clamp(15px, 1.1vw, 17px) / 1.55 "Outfit", system-ui, sans-serif;
   text-wrap: pretty;
-}
-
-/* ---------- PHOTO BREAK (architectural full-bleed) ---------- */
-
-.photo-break {
-  position: relative;
-  margin: 0;
-  width: 100%;
-  aspect-ratio: 21 / 9;
-  overflow: hidden;
-  background: var(--navy);
-}
-
-.photo-break img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  height: 120%;
-  object-fit: cover;
-  transform: translate(-50%, -50%);
-  will-change: transform;
-  filter: saturate(0.95) brightness(0.78);
-}
-
-.photo-break::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(8, 11, 19, 0.25) 0%, transparent 35%, rgba(8, 11, 19, 0.55) 100%);
-  pointer-events: none;
-}
-
-.photo-break__caption {
-  position: absolute;
-  z-index: 1;
-  left: clamp(24px, 4vw, 64px);
-  bottom: clamp(24px, 5vh, 48px);
-  max-width: 460px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.photo-break--right .photo-break__caption {
-  left: auto;
-  right: clamp(24px, 4vw, 64px);
-  text-align: right;
-  align-items: flex-end;
-}
-
-.photo-break__index {
-  /* lighter than the site orange: it sits on the photographs */
-  color: #ffc9a3;
-  text-shadow: 0 1px 6px rgba(8, 11, 19, 0.55);
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-}
-
-.photo-break__line {
-  color: var(--light);
-  font: 500 clamp(20px, 2vw, 28px) / 1.2 "Urbanist", system-ui, sans-serif;
-  text-wrap: balance;
-}
-
-/* A background-image underline would draw one 460px rule under a caption
-   that wraps to two ragged lines. Text decoration follows the text. */
-a.photo-break__line {
-  align-self: flex-start;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 6px;
-  text-decoration-color: transparent;
-  transition: text-decoration-color 260ms var(--ease-out);
-}
-
-a.photo-break__line:hover,
-a.photo-break__line:focus-visible {
-  text-decoration-color: rgba(255, 168, 110, 0.85);
 }
 
 /* ---------- EXPERTISE: HOW WE WORK TRAIL ---------- */
@@ -5867,45 +4885,6 @@ a.contact-channels__value:focus-visible {
    straight into the facts on any hero whose content was short. */
 .page-hero:has(.page-hero__meta) {
   padding-bottom: clamp(150px, 20vh, 220px);
-}
-
-/* ---------- PHOTO BREAK: warm duotone tied to the palette ---------- */
-
-/* The photographs are baked into the site ramp (navy through terracotta to
-   latte) and cropped clear of open sky, so they need no further grading -
-   the cool steel-blue originals read off-palette (client, 14.09). */
-.page--about .photo-break img {
-  filter: none;
-}
-
-.page--about .photo-break::after {
-  background:
-    radial-gradient(820px 460px at 16% 80%, rgba(255, 97, 44, 0.18), transparent 66%),
-    linear-gradient(90deg, rgba(8, 11, 19, 0.42) 0%, transparent 45%, rgba(8, 11, 19, 0.28) 100%),
-    linear-gradient(180deg, rgba(8, 11, 19, 0.3) 0%, transparent 35%, rgba(8, 11, 19, 0.62) 100%);
-}
-
-.page--about .photo-break--right::after {
-  background:
-    radial-gradient(820px 460px at 84% 80%, rgba(255, 97, 44, 0.18), transparent 66%),
-    linear-gradient(270deg, rgba(8, 11, 19, 0.42) 0%, transparent 45%, rgba(8, 11, 19, 0.28) 100%),
-    linear-gradient(180deg, rgba(8, 11, 19, 0.3) 0%, transparent 35%, rgba(8, 11, 19, 0.62) 100%);
-}
-
-.page--about .photo-break__index::after {
-  content: "";
-  display: inline-block;
-  width: 44px;
-  height: 1px;
-  margin-left: 12px;
-  vertical-align: middle;
-  background: linear-gradient(90deg, rgba(255, 168, 110, 0.9), transparent);
-}
-
-.page--about .photo-break--right .photo-break__index::after {
-  margin-left: 0;
-  margin-right: 12px;
-  background: linear-gradient(270deg, rgba(255, 168, 110, 0.9), transparent);
 }
 
 /* ---------- SCROLL REVEAL (shared with setupSectionReveal) ---------- */
@@ -12099,81 +11078,17 @@ main {
 /* ---------- About us ---------- */
 
 /* ===== ABOUT (<=1023px) ===== */
-/* The About page below 1024px: hero, the three architecture photo bands,
-   Perspective, Track record, Ascent, Philosophy, Mission & Commitment and
-   the client marks. The route shortcuts and the closing band are the
-   foundation's. Every rule is scoped to .page--about and sits in a compact
-   (or narrower) query; desktop is untouched.
+/* The About page below 1024px: the hero and the client marks. The
+   chapters between them (Perspective, Track record, Approach, Mission and
+   Commitment) are styled at every width in "fb-about" after this block; the
+   route shortcuts and the closing band are the foundation's. Every rule is
+   scoped to .page--about and sits in a compact (or narrower) query; desktop
+   is untouched.
 
    Tiers: compact <=1023 | tablet 768-1023 | phone <=767 | small phone <=374
    | short landscape: 560-1023px wide, max-height 500px, in landscape. */
 
-/* ---------- shared: section boxes, labels, trails ---------- */
-@media (max-width: 1023px) {
-  .page--about {
-    /* the trail at the top of a chapter is this tall (desktop clamp); the
-       chapter's first line clears it by --ab-trail-gap */
-    --ab-trail-h: clamp(72px, 9vw, 120px);
-    --ab-trail-gap: clamp(24px, 6vw, 44px);
-    /* the hairline between the figures (desktop's divider colour) */
-    --ab-rule-soft: rgba(255, 168, 110, 0.18);
-  }
-
-  /* chapters are content-sized: a 100svh box on a phone is a screen of
-     nothing around a short statement */
-  .page--about .perspective,
-  .page--about .track-record,
-  .page--about .ascent,
-  .page--about .philosophy,
-  .page--about .manifesto {
-    min-height: 0;
-    padding: var(--m-section) var(--m-gutter);
-  }
-
-  .page--about .perspective.has-trail,
-  .page--about .ascent.has-trail,
-  .page--about .manifesto.has-trail {
-    padding-top: calc(var(--ab-trail-h) + var(--ab-trail-gap));
-  }
-
-  /* the numbered chapter labels: 12px, their own tracking */
-  .page--about .perspective__step,
-  .page--about .track-record__step,
-  .page--about .philosophy__step,
-  .page--about .manifesto__step {
-    font-size: var(--m-label);
-    line-height: 1.3;
-  }
-
-  .page--about .perspective__step span,
-  .page--about .track-record__step span,
-  .page--about .philosophy__step span,
-  .page--about .manifesto__step span {
-    font-size: 15px;
-  }
-
-  /* chapter headings on the shared scale */
-  .page--about .track-record__title,
-  .page--about .ascent__title,
-  .page--about .philosophy__title,
-  .page--about .clients__title {
-    font-size: var(--m-h2);
-    line-height: 1.12;
-  }
-}
-
-/* Where a chapter runs straight into another of the same colour
-   (Perspective into Track record, Ascent into Philosophy) both kept a full
-   section's padding: a 190px hole on a tablet, twice the pause before a
-   photo band. The second chapter starts closer, so the join reads as a
-   turn of the page rather than a missing element. */
-@media (min-width: 600px) and (max-width: 1023px) {
-  .page--about .track-record,
-  .page--about .philosophy {
-    padding-top: calc(var(--m-section) * 0.5);
-  }
-}
-
+/* ---------- shared: trails ---------- */
 /* A phone draws half of each chapter trail across its width: the whole
    1200-unit line squeezed into 390px was a comb of spikes. The checkpoint
    follows its peak into the half that shows. */
@@ -12334,672 +11249,6 @@ main {
   }
 }
 
-/* ---------- photo bands ----------
-   Full-bleed as on desktop, but a 21:9 strip is 167px on a phone - a
-   letterbox, not a picture. Phones show 4:3, tablets a fixed band, a phone
-   on its side a wide band. The parallax is off here, so the photo fills
-   the band exactly (no 120% overscan). Captions sit on the gutter. */
-@media (max-width: 1023px) {
-  .page--about .photo-break {
-    aspect-ratio: 4 / 3;
-  }
-
-  .page--about .photo-break img {
-    height: 100%;
-  }
-
-  .page--about .photo-break__caption,
-  .page--about .photo-break--right .photo-break__caption {
-    left: var(--m-gutter);
-    right: var(--m-gutter);
-    bottom: clamp(20px, 5vw, 36px);
-    max-width: none;
-    gap: 8px;
-  }
-
-  .page--about .photo-break__index {
-    color: #ffd2b3;
-    font-size: var(--m-label);
-  }
-
-  /* a 4:3 band gives the caption a larger share of the picture: the scrim
-     under it runs deeper and the warm glow behind it is fainter, so the
-     caption holds 4.5:1 over the brightest concrete */
-  .page--about .photo-break::after {
-    background:
-      radial-gradient(90% 60% at 16% 86%, rgba(255, 97, 44, 0.08), transparent 70%),
-      linear-gradient(90deg, rgba(8, 11, 19, 0.5) 0%, rgba(8, 11, 19, 0.12) 62%, rgba(8, 11, 19, 0.2) 100%),
-      linear-gradient(180deg, rgba(8, 11, 19, 0.28) 0%, transparent 28%, rgba(8, 11, 19, 0.18) 42%, rgba(8, 11, 19, 0.82) 100%);
-  }
-
-  .page--about .photo-break--right::after {
-    background:
-      radial-gradient(90% 60% at 84% 86%, rgba(255, 97, 44, 0.08), transparent 70%),
-      linear-gradient(270deg, rgba(8, 11, 19, 0.5) 0%, rgba(8, 11, 19, 0.12) 62%, rgba(8, 11, 19, 0.2) 100%),
-      linear-gradient(180deg, rgba(8, 11, 19, 0.28) 0%, transparent 28%, rgba(8, 11, 19, 0.18) 42%, rgba(8, 11, 19, 0.82) 100%);
-  }
-
-  .page--about .photo-break__line {
-    max-width: 17em;
-    font-size: var(--m-h3);
-    line-height: 1.22;
-    text-shadow: 0 1px 10px rgba(8, 11, 19, 0.45);
-  }
-
-  .page--about .photo-break--right .photo-break__line {
-    align-self: flex-end;
-  }
-
-  /* the one caption that is a link: a 44px target without growing the
-     type. Its box is sized to the two balanced lines it breaks into (a
-     balanced block keeps its unbalanced width), so the focus ring and the
-     tap area end with the words rather than across the bare photo */
-  .page--about a.photo-break__line {
-    max-width: 9.5em;
-    padding-block: 8px;
-    margin-block: -8px;
-  }
-}
-
-/* a large phone or small tablet held upright: 4:3 would be 500px of photo */
-@media (min-width: 600px) and (max-width: 767px) {
-  .page--about .photo-break {
-    aspect-ratio: 3 / 2;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1023px) {
-  .page--about .photo-break {
-    aspect-ratio: auto;
-    height: clamp(340px, 42vw, 430px);
-  }
-}
-
-/* ---------- perspective ---------- */
-@media (max-width: 1023px) {
-  .page--about .perspective__step {
-    margin-bottom: 20px;
-    color: rgba(240, 235, 233, 0.6);
-  }
-
-  /* the marks bracket the quote from above-left and below-right: beside a
-     centred line on a phone they only squeezed it to three words a line */
-  .page--about .perspective__frame {
-    display: block;
-    max-width: 36rem;
-    margin: 0 auto 40px;
-    padding: 30px 0 26px;
-  }
-
-  .page--about .perspective__quote {
-    position: absolute;
-    font-size: clamp(72px, 18vw, 104px);
-    line-height: 1;
-    color: rgba(255, 97, 44, 0.24);
-  }
-
-  .page--about .perspective__quote--open {
-    top: -14px;
-    left: 0;
-  }
-
-  .page--about .perspective__quote--close {
-    right: 0;
-    bottom: -58px;
-  }
-
-  .page--about .perspective__title {
-    font-size: calc(var(--m-h2) + 2px);
-    line-height: 1.14;
-  }
-
-  .page--about .perspective__pillars {
-    max-width: 44rem;
-    gap: 28px;
-  }
-
-  .page--about .perspective__pillars p {
-    padding-top: 20px;
-    font-size: var(--m-body);
-    line-height: 1.6;
-  }
-
-  /* labels a readable 12px; the two lower ones wrap under their vertex */
-  .page--about .perspective__triangulation {
-    width: min(100%, 380px);
-    margin-top: 52px;
-  }
-
-  .page--about .perspective__triangulation b {
-    color: rgba(240, 235, 233, 0.62);
-    font-size: var(--m-label);
-    line-height: 1.35;
-    letter-spacing: 0.16em;
-  }
-
-  .page--about .perspective__triangulation b:nth-of-type(1),
-  .page--about .perspective__triangulation b:nth-of-type(2) {
-    width: 9em;
-    white-space: normal;
-    text-align: center;
-  }
-}
-
-@media (min-width: 600px) and (max-width: 1023px) {
-  /* the frame is as wide as the quote's two balanced lines (10.2em of the
-     title's size, plus a little), so the marks bracket the words instead
-     of floating 50-65px off them on a 36rem frame */
-  .page--about .perspective__frame {
-    max-width: calc((var(--m-h2) + 2px) * 11);
-  }
-
-  .page--about .perspective__pillars {
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-  }
-
-  .page--about .perspective__triangulation {
-    width: 400px;
-  }
-
-  .page--about .perspective__triangulation b:nth-of-type(1),
-  .page--about .perspective__triangulation b:nth-of-type(2) {
-    width: auto;
-    white-space: nowrap;
-  }
-}
-
-/* ---------- track record ----------
-   Numbers stay the layout: on a phone one figure a row between the warm
-   rules, on the gutter; on a tablet 200+ and 300+ side by side and the
-   three jurisdictions across the width under them. */
-@media (max-width: 1023px) {
-  /* the glows are sized to the section, so none is cut off at its edge
-     (a px-sized desktop glow ran past the top and bottom of a tall phone
-     section and drew a hard line there) */
-  .page--about .track-record {
-    background:
-      radial-gradient(80% 26% at 90% 30%, rgba(255, 97, 44, 0.15), transparent 100%),
-      radial-gradient(75% 18% at 6% 78%, rgba(48, 62, 89, 0.22), transparent 100%),
-      linear-gradient(180deg, #070912 0%, #050810 50%, #0a0d18 100%);
-  }
-
-  .page--about .track-record__head {
-    margin-bottom: 36px;
-    gap: 14px;
-  }
-
-  /* a flex item with auto side margins shrinks to its content: the rules
-     stopped 8px short of the gutter on each side */
-  .page--about .track-record__numbers,
-  .page--about .track-record__foot {
-    width: 100%;
-  }
-
-  .page--about .track-record__lede {
-    margin-top: 2px;
-    font-size: var(--m-lede);
-  }
-
-  .page--about .big-stat {
-    --big-stat-num-size: clamp(68px, 19vw, 104px);
-    gap: 10px;
-    padding: 28px 0 30px;
-  }
-
-  .page--about .big-stat__num span {
-    margin-left: 4px;
-  }
-
-  .page--about .big-stat__num--word {
-    min-height: 0;
-    font-size: clamp(40px, 11.5vw, 60px);
-    line-height: 1;
-  }
-
-  .page--about .big-stat__label {
-    font-size: var(--m-label);
-    letter-spacing: 0.16em;
-  }
-
-  .page--about .big-stat__copy {
-    max-width: 30em;
-    font-size: 15px;
-  }
-
-  /* about 70 characters a line beside its rule (68ch of Outfit ran to 95) */
-  .page--about .track-record__foot {
-    max-width: calc(min(var(--m-measure), 32rem) + 20px);
-    margin-top: 36px;
-    padding-left: 20px;
-  }
-
-  .page--about .track-record__foot p {
-    font-size: var(--m-body);
-    line-height: 1.6;
-  }
-}
-
-@media (min-width: 600px) and (max-width: 1023px) {
-  .page--about .track-record__numbers {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .page--about .big-stat {
-    --big-stat-num-size: clamp(88px, 11vw, 112px);
-    padding: 36px 32px 36px 0;
-  }
-
-  .page--about .big-stat:nth-child(1) {
-    border-right: 1px solid var(--ab-rule-soft);
-  }
-
-  .page--about .big-stat:nth-child(2) {
-    padding-left: 32px;
-    padding-right: 0;
-  }
-
-  .page--about .big-stat:nth-child(1),
-  .page--about .big-stat:nth-child(2) {
-    border-bottom: 1px solid var(--ab-rule-soft);
-  }
-
-  /* the jurisdictions across the width: the word, then what it means */
-  .page--about .big-stat--small {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-template-rows: auto auto;
-    column-gap: 40px;
-    row-gap: 8px;
-    align-items: end;
-    padding-right: 0;
-  }
-
-  .page--about .big-stat--small .big-stat__num {
-    grid-row: 1 / span 2;
-    font-size: clamp(52px, 6.6vw, 64px);
-  }
-
-  .page--about .big-stat--small .big-stat__label {
-    align-self: end;
-  }
-
-  .page--about .big-stat--small .big-stat__copy {
-    grid-column: 2;
-    align-self: start;
-  }
-}
-
-/* ---------- ascent ----------
-   Phones: the four stages are one route. Each stage's icon ring is a
-   checkpoint on a dotted leader that runs down the left, with the stage
-   beside it - no four boxed cards in a row after a page of boxes.
-   Tablets keep the two-by-two cards. */
-@media (max-width: 1023px) {
-  .page--about .ascent {
-    background:
-      radial-gradient(85% 26% at 92% 66%, rgba(255, 97, 44, 0.14), transparent 100%),
-      radial-gradient(75% 14% at 4% 18%, rgba(48, 62, 89, 0.2), transparent 100%),
-      linear-gradient(180deg, #0c0e1a 0%, #050810 100%);
-  }
-
-  .page--about .ascent__head {
-    margin-bottom: 40px;
-    gap: 16px;
-  }
-
-  .page--about .ascent__eyebrow {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    max-width: none;
-    color: rgba(240, 235, 233, 0.62);
-    font-size: var(--m-label);
-    letter-spacing: 0.24em;
-  }
-
-  .page--about .ascent__eyebrow-rule {
-    flex: 0 0 32px;
-    width: 32px;
-    margin: 0.66em 0 0;
-  }
-
-  .page--about .ascent__title {
-    text-wrap: pretty;
-  }
-
-  /* a flex item with auto side margins shrinks to its content: between
-     about 620 and 720px the list sat centred, 24-40px in from the gutter
-     the eyebrow and title hang on */
-  .page--about .ascent__stages {
-    width: 100%;
-  }
-
-  .page--about .ascent__step {
-    font-size: var(--m-label);
-    line-height: 1.2;
-    letter-spacing: 0.24em;
-    color: rgba(255, 168, 110, 0.78);
-  }
-
-  .page--about .ascent__copy {
-    font-size: 15px;
-    line-height: 1.55;
-  }
-
-  /* follow the ascent: the label, then three 44px links */
-  .page--about .ascent__paths {
-    justify-content: flex-start;
-    align-items: center;
-    gap: 8px 28px;
-    margin: 36px 0 0;
-  }
-
-  .page--about .ascent__paths-label {
-    flex: 1 0 100%;
-    text-wrap: balance;
-    color: rgba(240, 235, 233, 0.62);
-    font-size: var(--m-label);
-    letter-spacing: 0.24em;
-  }
-
-  .page--about .ascent__paths a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    font-size: 17px;
-  }
-
-  .page--about .ascent__paths a::after {
-    bottom: 8px;
-  }
-}
-
-@media (max-width: 767px) {
-  /* one route at every phone width: the legacy one-column rule stops at
-     720px, and desktop's bottom alignment (for its staircase) hung stage 04
-     below stage 03 in the two columns left between 721 and 767 */
-  .page--about .ascent__stages {
-    grid-template-columns: minmax(0, 1fr);
-    align-items: start;
-    gap: 0;
-  }
-
-  .page--about .ascent__stage {
-    display: grid;
-    grid-template-columns: 52px minmax(0, 1fr);
-    grid-template-rows: auto auto 1fr;
-    column-gap: 18px;
-    row-gap: 8px;
-    padding: 0 0 32px;
-    background: none;
-    border: 0;
-    border-radius: 0;
-    box-shadow: none;
-  }
-
-  .page--about .ascent__stage:last-child {
-    padding-bottom: 0;
-  }
-
-  /* the leader from this checkpoint to the next */
-  .page--about .ascent__stage:not(:last-child)::before {
-    content: "";
-    position: absolute;
-    top: 60px;
-    bottom: 8px;
-    left: 26px;
-    width: 1px;
-    margin-left: -0.5px;
-    background: repeating-linear-gradient(180deg, var(--trail-leader) 0 2px, transparent 2px 6px);
-    pointer-events: none;
-  }
-
-  .page--about .ascent__icon {
-    grid-row: 1 / span 3;
-    align-self: start;
-    margin: 0;
-    background: #0d101c;
-    box-shadow: 0 0 0 5px rgba(255, 168, 110, 0.04);
-  }
-
-  .page--about .ascent__step {
-    grid-column: 2;
-    margin-top: 8px;
-  }
-
-  .page--about .ascent__name {
-    grid-column: 2;
-    font-size: var(--m-h3);
-    line-height: 1.2;
-  }
-
-  .page--about .ascent__copy {
-    grid-column: 2;
-    margin: 2px 0 0;
-    max-width: 34em;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1023px) {
-  /* a level two-by-two: desktop's bottom alignment (for its staircase)
-     left a card with a shorter text hanging lower than its neighbour */
-  .page--about .ascent__stages {
-    gap: 16px;
-    align-items: stretch;
-  }
-
-  .page--about .ascent__stage {
-    padding: 26px 24px 28px;
-  }
-
-  .page--about .ascent__icon {
-    margin-bottom: 8px;
-  }
-
-  .page--about .ascent__name {
-    font-size: var(--m-h3);
-  }
-}
-
-/* ---------- philosophy ----------
-   The three sayings stay a stack of cards read in order. The dotted leader
-   that joins them across the middle on desktop runs down the left here,
-   through a marker on each card's top edge, level with the text. Tablets
-   put each saying's lead-in beside it. */
-@media (max-width: 1023px) {
-  .page--about .philosophy {
-    --ab-card-x: 22px;
-    background:
-      radial-gradient(560px 420px at 50% 104%, rgba(255, 97, 44, 0.14), transparent 70%),
-      /* starts on the Ascent's last colour: no seam where they meet */
-      linear-gradient(180deg, #050810 0%, #0a0d18 100%);
-  }
-
-  .page--about .philosophy__head {
-    margin-bottom: 36px;
-  }
-
-  .page--about .philosophy__step {
-    margin-bottom: 18px;
-  }
-
-  /* one column at every compact width (the three-up row reached down to
-     861px), without desktop's staggered offsets */
-  .page--about .philosophy__stack {
-    width: 100%;
-    max-width: 44rem;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 22px;
-  }
-
-  .page--about .philosophy__card--a,
-  .page--about .philosophy__card--b,
-  .page--about .philosophy__card--c {
-    transform: none;
-  }
-
-  .page--about .philosophy__stack::before {
-    display: block;
-    top: 0;
-    bottom: 0;
-    left: var(--ab-card-x);
-    right: auto;
-    width: 1px;
-    height: auto;
-    background: repeating-linear-gradient(180deg, var(--trail-leader) 0 2px, transparent 2px 6px);
-  }
-
-  /* opaque cards: a 22px backdrop blur over three card-sized areas is
-     real work on a phone, and the leader must not show through */
-  .page--about .philosophy__card {
-    padding: 26px var(--ab-card-x) 24px;
-    background: linear-gradient(160deg, #161a27, #0f121d);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    box-shadow: 0 18px 44px rgba(4, 6, 12, 0.3);
-    gap: 10px;
-  }
-
-  .page--about .philosophy__card--b {
-    background: linear-gradient(160deg, #2a1c1b, #15141c);
-  }
-
-  .page--about .philosophy__card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: var(--ab-card-x);
-    width: var(--marker-size);
-    height: var(--marker-size);
-    margin: calc(var(--marker-size) / -2) 0 0 calc(var(--marker-size) / -2);
-    border-radius: 50%;
-    background: var(--marker-core);
-    box-shadow: var(--marker-shadow);
-  }
-
-  .page--about .philosophy__card-tag {
-    font-size: 15px;
-  }
-
-  .page--about .philosophy__card p {
-    font-size: clamp(19px, 17px + 0.5vw, 22px);
-    line-height: 1.38;
-  }
-}
-
-@media (min-width: 600px) and (max-width: 1023px) {
-  .page--about .philosophy {
-    --ab-card-x: 32px;
-  }
-
-  .page--about .philosophy__card {
-    display: grid;
-    grid-template-columns: 9.5rem minmax(0, 1fr);
-    column-gap: 28px;
-    align-items: baseline;
-    padding: 30px var(--ab-card-x) 30px;
-  }
-}
-
-/* ---------- mission & commitment ----------
-   Phones: each row reads heading, copy, then its photograph, which runs
-   off the page on the side desktop puts it - right for the mission, left
-   for the commitment - so the pair still alternates. Tablets keep the
-   desktop's text-beside-photograph rows. */
-@media (max-width: 1023px) {
-  .page--about .manifesto {
-    background:
-      radial-gradient(85% 22% at 94% 72%, rgba(255, 176, 119, 0.12), transparent 100%),
-      linear-gradient(180deg, #070912 0%, #0a0d18 100%);
-  }
-
-  .page--about .manifesto__row {
-    gap: 36px;
-  }
-
-  .page--about .manifesto__row + .manifesto__row {
-    margin-top: clamp(64px, 16vw, 104px);
-  }
-
-  .page--about .manifesto__text {
-    gap: 16px;
-  }
-
-  .page--about .manifesto__text > * {
-    max-width: var(--m-measure);
-  }
-
-  /* 68ch of Outfit is about 95 characters a line where the text gets the
-     whole width (a phone held sideways, a small tablet upright); 32rem
-     holds about 70 */
-  .page--about .manifesto__copy,
-  .page--about .manifesto__list {
-    max-width: min(var(--m-measure), 32rem);
-  }
-
-  .page--about .manifesto__text .manifesto__title {
-    margin: 2px 0 4px;
-    font-size: var(--m-h2);
-    line-height: 1.12;
-  }
-
-  .page--about .manifesto__copy,
-  .page--about .manifesto__list {
-    font-size: var(--m-body);
-    line-height: 1.6;
-  }
-
-  .page--about .manifesto__list {
-    gap: 8px;
-  }
-
-  .page--about .manifesto__list li {
-    padding-left: 28px;
-  }
-}
-
-@media (max-width: 767px) {
-  .page--about .manifesto__media {
-    aspect-ratio: 4 / 3;
-    margin-right: calc(-1 * var(--m-gutter));
-  }
-
-  .page--about .manifesto__row--flip .manifesto__media {
-    order: 2;
-    margin-right: 0;
-    margin-left: calc(-1 * var(--m-gutter));
-  }
-}
-
-@media (min-width: 600px) and (max-width: 767px) {
-  .page--about .manifesto__media {
-    aspect-ratio: 16 / 10;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1023px),
-  (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
-  .page--about .manifesto__row {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(28px, 5vw, 48px);
-    align-items: center;
-  }
-
-  .page--about .manifesto__media {
-    aspect-ratio: 4 / 5;
-    margin-right: calc(-1 * var(--m-gutter));
-    margin-left: 0;
-  }
-
-  .page--about .manifesto__row--flip .manifesto__media {
-    order: 0;
-    margin-right: 0;
-    margin-left: calc(-1 * var(--m-gutter));
-  }
-}
-
 /* ---------- client marks ----------
    The row keeps moving (the review liked it) at a phone's scale, and its
    Pause button is a real 44px control. */
@@ -13051,9 +11300,7 @@ main {
 /* ---------- short landscape: a phone on its side ----------
    The hero is one screen at most: the copy on the left in two lines of
    heading, the ridge sunk so only its high right-hand peaks rise beside
-   it. The photo bands are a wide strip, and Mission and Commitment go
-   back to text beside photograph (above), each photograph shorter than
-   the screen. */
+   it. */
 @media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .page--about .page-hero,
   .page--expertise .page-hero {
@@ -13115,14 +11362,6 @@ main {
     bottom: -25.9vw;
   }
 
-  .page--about .photo-break {
-    aspect-ratio: auto;
-    height: min(72svh, 300px);
-  }
-
-  .page--about .manifesto__media {
-    aspect-ratio: 5 / 4;
-  }
 }
 
 /* ---------- small phones: the heading ladder ----------
@@ -13131,16 +11370,12 @@ main {
    proportion and never outrank it. From about 360px up these resolve to
    the shared scale. */
 @media (max-width: 374px) {
+  .page--about .perspective__title,
   .page--about .track-record__title,
-  .page--about .ascent__title,
   .page--about .philosophy__title,
   .page--about .clients__title,
-  .page--about .manifesto__text .manifesto__title {
+  .page--about .manifesto__title {
     font-size: min(var(--m-h2), (100vw - 2 * var(--m-gutter)) / 9.4 * 0.87);
-  }
-
-  .page--about .perspective__title {
-    font-size: min(var(--m-h2) + 2px, (100vw - 2 * var(--m-gutter)) / 9.4 * 0.9);
   }
 }
 
@@ -13209,25 +11444,824 @@ main {
 @media (max-width: 1023px) {
   .page--about .page-hero .primary-cta:focus-visible,
   .page--expertise .page-hero .primary-cta:focus-visible,
-  .page--about a.photo-break__line:focus-visible,
-  .page--about .ascent__paths a:focus-visible,
   .page--about .clients__pause:focus-visible {
     outline: 2px solid var(--orange);
     outline-offset: 3px;
   }
+}
 
-  .page--about a.photo-break__line:focus-visible,
-  .page--about .ascent__paths a:focus-visible {
-    border-radius: 4px;
+/* === fb-about: the About chapters in the wireframe's order ===
+   Perspective, Track record, Approach, then Mission and Commitment (text
+   beside a photograph, as approved on 22.09), at every width. One dark scene
+   from the hero down: each chapter starts on the colour the last one ends
+   on, the content hangs on the hero's edge (--container-x), and every
+   heading, lead and label takes its role from the type
+   tokens. Architecture is part of a chapter - a texture under the figures,
+   the two photographs the wireframe asks for - not a break between them. */
+
+.page--about {
+  /* the section rhythm, and the trail at the top of a chapter (the same
+     clamp as .has-trail::before) with the pause under it */
+  --ab-pad: clamp(88px, 11vh, 128px);
+  --ab-trail-h: clamp(72px, 9vw, 120px);
+  --ab-trail-gap: clamp(28px, 4.4vh, 48px);
+  /* the chapters run edge to edge of the container, like the hero, the
+     client marks and the route cards around them: one left edge at every
+     width (centring them on 1280px put them 224px in from the hero at 1920) */
+  --ab-inner: none;
+  --ab-gap: clamp(48px, 6vw, 112px);
+  --ab-rule: rgba(255, 168, 110, 0.3);
+  --ab-rule-soft: rgba(255, 168, 110, 0.18);
+}
+
+/* "— label —": the site's eyebrow */
+.ab-eyebrow {
+  margin: 0 0 18px;
+  color: var(--eyebrow-color);
+  font: 500 var(--fs-eyebrow) / var(--lh-eyebrow) "Montserrat", system-ui, sans-serif;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+}
+
+.page--about .perspective__title,
+.page--about .track-record__title,
+.page--about .philosophy__title,
+.page--about .manifesto__title {
+  margin: 0;
+  color: var(--light);
+  font: 500 var(--fs-h2) / var(--lh-h2) "Urbanist", system-ui, sans-serif;
+  letter-spacing: var(--ls-heading);
+  text-wrap: balance;
+}
+
+/* ---------- Our perspective: the statement and its two paragraphs, beside
+   the diagram of the three things they combine ---------- */
+.perspective {
+  position: relative;
+  padding: calc(var(--ab-trail-h) + var(--ab-trail-gap)) var(--container-x) var(--ab-pad);
+  background:
+    radial-gradient(560px 300px at 80% 56%, rgba(255, 97, 44, 0.08), transparent 70%),
+    linear-gradient(180deg, #15161f 0%, #10131c 100%);
+  overflow: hidden;
+}
+
+/* "Learn more" lands here: the page's scroll padding already clears the
+   bar, so the trail at the top of the chapter tucks under that pause and
+   the eyebrow arrives where every anchor's first line does */
+.page--about .perspective {
+  scroll-margin-top: calc(-1 * var(--ab-trail-h));
+}
+
+.perspective__inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--ab-inner);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--ab-gap);
+  align-items: center;
+}
+
+.page--about .perspective__title {
+  max-width: 15em;
+  margin-bottom: clamp(32px, 4.4vh, 44px);
+}
+
+.perspective__pillars {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 3vw, 48px);
+}
+
+.perspective__pillars p {
+  margin: 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--ab-rule);
+  color: var(--light-80);
+  font: 400 var(--fs-body) / var(--lh-body) "Outfit", system-ui, sans-serif;
+  text-wrap: pretty;
+}
+
+/* the diagram at its natural size, so its strokes are the site's true
+   weights; the vertices are the trail's checkpoints. The labels hang
+   outside the box, so it keeps room for them above and below. */
+.perspective__triangulation {
+  position: relative;
+  justify-self: center;
+  width: min(100%, 440px);
+  aspect-ratio: 2 / 1;
+  margin: 40px 0 48px;
+}
+
+.perspective__triangulation svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.perspective__triangulation .tri-edge {
+  stroke: var(--trail-line);
+  stroke-width: var(--trail-width);
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.perspective__triangulation .tri-base {
+  stroke: var(--trail-leader);
+  stroke-width: var(--trail-leader-width);
+  stroke-dasharray: var(--trail-leader-dash);
+  fill: none;
+}
+
+/* left = x/400, top = y/200 of the viewBox */
+.perspective__triangulation span {
+  position: absolute;
+  margin: calc(var(--marker-size) / -2) 0 0 calc(var(--marker-size) / -2);
+  width: var(--marker-size);
+  height: var(--marker-size);
+  border-radius: 50%;
+  background: var(--marker-core);
+  box-shadow: var(--marker-shadow);
+}
+
+.perspective__triangulation span:nth-of-type(1) { left: 20%; top: 80%; }
+.perspective__triangulation span:nth-of-type(2) { left: 80%; top: 80%; }
+.perspective__triangulation span:nth-of-type(3) { left: 50%; top: 20%; }
+
+.perspective__triangulation b {
+  position: absolute;
+  color: rgba(240, 235, 233, 0.72);
+  font: 500 11px / 1.35 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.perspective__triangulation b:nth-of-type(1) {
+  left: 20%;
+  top: 80%;
+  transform: translate(-50%, 20px);
+}
+
+.perspective__triangulation b:nth-of-type(2) {
+  left: 80%;
+  top: 80%;
+  transform: translate(-50%, 20px);
+}
+
+.perspective__triangulation b:nth-of-type(3) {
+  left: 50%;
+  top: 20%;
+  transform: translate(-50%, calc(-100% - 18px));
+}
+
+/* ---------- Our experience: the figures over a close-up of concrete fins
+   (architecture as rhythm, client 9.09), toned into the scene at both
+   edges so the chapter has no seam above or below ---------- */
+.track-record {
+  position: relative;
+  padding: var(--ab-pad) var(--container-x);
+  background: #10131c;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.track-record__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.track-record__bg img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 45%;
+}
+
+.track-record__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(55% 50% at 84% 50%, rgba(255, 97, 44, 0.11), transparent 70%),
+    linear-gradient(180deg, #10131c 0%, rgba(16, 19, 28, 0.86) 28%, rgba(16, 19, 28, 0.78) 56%, rgba(13, 16, 25, 0.9) 82%, #0d1019 100%);
+}
+
+.track-record__inner {
+  max-width: var(--ab-inner);
+  margin: 0 auto;
+}
+
+/* the heading on the left, the lead beside it on its last line - the
+   Expertise head's arrangement */
+.track-record__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px var(--ab-gap);
+  align-items: end;
+  margin: 0 0 clamp(40px, 5.6vh, 64px);
+}
+
+.track-record__lede {
+  margin: 0;
+  max-width: 32em;
+  color: var(--light-80);
+  font: 400 var(--fs-lead) / var(--lh-lead) "Outfit", system-ui, sans-serif;
+  text-wrap: pretty;
+}
+
+.track-record__numbers {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--ab-rule);
+  border-bottom: 1px solid var(--ab-rule);
+}
+
+.big-stat {
+  --big-stat-num-size: clamp(64px, 7.2vw, 112px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: clamp(28px, 4vh, 44px) clamp(20px, 2.6vw, 40px);
+}
+
+/* the first figure stands on the content edge like the heading above it */
+.big-stat:first-child {
+  padding-left: 0;
+}
+
+.big-stat:not(:last-child) {
+  border-right: 1px solid var(--ab-rule-soft);
+}
+
+.big-stat__num {
+  margin: 0;
+  color: var(--light);
+  font: 500 var(--big-stat-num-size) / 0.88 "Urbanist", system-ui, sans-serif;
+  letter-spacing: -0.025em;
+}
+
+/* The three jurisdictions read as one unit, as in the home hero and the
+   wireframe, on one line in the narrowest column. The line keeps the height
+   of 200+ and 300+ and sits at its foot, so the labels share one row. */
+.big-stat__num--word {
+  display: flex;
+  align-items: flex-end;
+  min-height: calc(var(--big-stat-num-size) * 0.88);
+  font-size: clamp(40px, 4.2vw, 64px);
+  line-height: 0.96;
+  white-space: nowrap;
+}
+
+.big-stat__num span {
+  display: inline-block;
+  margin-left: 6px;
+  color: rgba(255, 168, 110, 0.85);
+  font-size: 0.36em;
+  font-weight: 500;
+  letter-spacing: 0;
+  vertical-align: 0.6em;
+}
+
+.big-stat__label {
+  margin: 0;
+  color: var(--light);
+  font: 500 12px / 1.35 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.big-stat__copy {
+  margin: 0;
+  max-width: 280px;
+  color: var(--light-60);
+  font: 400 var(--fs-small) / var(--lh-small) "Outfit", system-ui, sans-serif;
+}
+
+.track-record__foot {
+  max-width: 760px;
+  margin: clamp(32px, 4.4vh, 48px) 0 0;
+  padding-left: 24px;
+  border-left: 1px solid rgba(255, 168, 110, 0.6);
+}
+
+.track-record__foot p {
+  margin: 0;
+  color: var(--light-80);
+  font: 400 var(--fs-body) / var(--lh-body) "Outfit", system-ui, sans-serif;
+  text-wrap: pretty;
+}
+
+/* ---------- Our approach: three sayings read in order. A leader runs
+   along their top edges through a checkpoint on each, level with the
+   text; phones turn it down the left. ---------- */
+.philosophy {
+  --ab-card-x: clamp(28px, 2.6vw, 40px);
+  position: relative;
+  padding: var(--ab-pad) var(--container-x);
+  background:
+    radial-gradient(900px 300px at 50% 56%, rgba(255, 97, 44, 0.08), transparent 70%),
+    linear-gradient(180deg, #0d1019 0%, #0b0e17 100%);
+  overflow: hidden;
+}
+
+.philosophy__head {
+  max-width: var(--ab-inner);
+  margin: 0 auto clamp(44px, 6vh, 72px);
+}
+
+.philosophy__stack {
+  position: relative;
+  max-width: var(--ab-inner);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 1.8vw, 28px);
+}
+
+.philosophy__stack::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: var(--ab-card-x);
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--trail-leader) 80%, transparent);
+  pointer-events: none;
+}
+
+.philosophy__card {
+  position: relative;
+  padding: calc(var(--ab-card-x) + 4px) var(--ab-card-x) var(--ab-card-x);
+  border: 1px solid rgba(240, 235, 233, 0.1);
+  border-radius: 2px;
+  background: linear-gradient(160deg, rgba(240, 235, 233, 0.05), rgba(240, 235, 233, 0.012) 70%);
+}
+
+.philosophy__card--b {
+  border-color: rgba(255, 168, 110, 0.32);
+  background: linear-gradient(160deg, rgba(255, 97, 44, 0.13), rgba(255, 97, 44, 0.02) 70%);
+}
+
+.philosophy__card::before {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  top: -1px;
+  left: var(--ab-card-x);
+  width: var(--marker-size);
+  height: var(--marker-size);
+  margin: calc(var(--marker-size) / -2) 0 0 calc(var(--marker-size) / -2);
+  border-radius: 50%;
+  background: var(--marker-core);
+  box-shadow: var(--marker-shadow);
+}
+
+.philosophy__card-tag {
+  display: block;
+  margin: 0 0 16px;
+  color: rgba(255, 168, 110, 0.9);
+  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.philosophy__card p {
+  margin: 0;
+  color: var(--light);
+  font: 500 var(--fs-h4) / 1.42 "Urbanist", system-ui, sans-serif;
+  letter-spacing: var(--ls-heading);
+  text-wrap: pretty;
+}
+
+/* ---------- Mission and Commitment: text beside a photograph, then a
+   photograph beside text. Each photograph is exactly as tall as the text
+   it stands beside (never less than 320px), so the pair reads as two rows
+   rather than two pictures with captions. ---------- */
+.manifesto {
+  position: relative;
+  padding: calc(var(--ab-trail-h) + var(--ab-trail-gap)) var(--container-x) var(--ab-pad);
+  background:
+    radial-gradient(760px 420px at 94% 34%, rgba(255, 176, 119, 0.08), transparent 70%),
+    linear-gradient(180deg, #0b0e17 0%, #0a0d16 100%);
+  overflow: hidden;
+}
+
+.manifesto__row {
+  max-width: var(--ab-inner);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--ab-gap);
+  align-items: stretch;
+}
+
+.manifesto__row--flip {
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+}
+
+.manifesto__row + .manifesto__row {
+  margin-top: clamp(72px, 10vh, 112px);
+}
+
+.manifesto__text {
+  align-self: center;
+}
+
+.page--about .manifesto__title {
+  max-width: 15em;
+  margin-bottom: 24px;
+}
+
+.manifesto__copy,
+.manifesto__list {
+  max-width: 36em;
+  margin: 0;
+  color: var(--light-80);
+  font: 400 var(--fs-body) / var(--lh-body) "Outfit", system-ui, sans-serif;
+  text-wrap: pretty;
+}
+
+.manifesto__copy + .manifesto__copy,
+.manifesto__copy + .manifesto__list {
+  margin-top: 14px;
+}
+
+.manifesto__list {
+  display: grid;
+  gap: 6px;
+  padding: 0;
+  list-style: none;
+}
+
+/* G1 sets the four points as a dashed list; the dash is drawn, so each
+   item holds the client's words and nothing else */
+.manifesto__list li {
+  position: relative;
+  padding-left: 30px;
+}
+
+.manifesto__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.8em;
+  width: 16px;
+  height: 1px;
+  background: rgba(255, 168, 110, 0.85);
+}
+
+.manifesto__media {
+  position: relative;
+  min-height: 320px;
+  margin: 0;
+  overflow: hidden;
+  background: var(--navy);
+}
+
+.manifesto__media img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* the marquee's Pause control takes the site's focus ring at every width */
+.page--about .clients__pause:focus-visible {
+  outline: 2px solid var(--focus-ring, var(--orange));
+  outline-offset: 3px;
+}
+
+/* a small desktop: the left column is too narrow for the two paragraphs
+   side by side (about 230px each at 1024), so they stack */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .perspective__pillars {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
   }
 }
 
-/* ---------- touch: the hover underline is always drawn ---------- */
-@media (max-width: 1023px) and (hover: none) {
-  .page--about a.photo-break__line {
-    text-decoration-color: rgba(255, 168, 110, 0.7);
+/* ---------- below 1024px ---------- */
+@media (max-width: 1023px) {
+  .page--about {
+    --ab-pad: var(--m-section);
+    --ab-trail-gap: clamp(24px, 6vw, 44px);
+    --ab-gap: clamp(28px, 5vw, 48px);
+  }
+
+  .perspective,
+  .track-record,
+  .philosophy,
+  .manifesto {
+    padding-left: var(--m-gutter);
+    padding-right: var(--m-gutter);
+  }
+
+  .page--about .perspective__title,
+  .page--about .track-record__title,
+  .page--about .philosophy__title,
+  .page--about .manifesto__title {
+    font-size: var(--m-h2);
+    line-height: 1.12;
+  }
+
+  .ab-eyebrow {
+    margin-bottom: 14px;
+  }
+
+  /* perspective: one column, the diagram under the paragraphs */
+  .perspective__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .page--about .perspective__title {
+    margin-bottom: 28px;
+  }
+
+  .perspective__pillars {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    max-width: 44rem;
+  }
+
+  .perspective__triangulation {
+    width: min(100%, 380px);
+    margin: 56px 0 44px;
+  }
+
+  /* labels a readable 12px; on a phone the two lower ones wrap under
+     their vertex */
+  .perspective__triangulation b {
+    font-size: var(--m-label);
+    letter-spacing: 0.16em;
+  }
+
+  .perspective__triangulation b:nth-of-type(1),
+  .perspective__triangulation b:nth-of-type(2) {
+    width: 9em;
+    white-space: normal;
+    text-align: center;
+  }
+
+  /* track record: the heading, then the lead under it; on a phone one
+     figure a row between the warm rules */
+  .track-record__head {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+
+  .track-record__lede {
+    max-width: var(--m-measure);
+  }
+
+  .track-record__numbers {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .big-stat {
+    --big-stat-num-size: clamp(68px, 19vw, 104px);
+    gap: 10px;
+    padding: 28px 0 30px;
+  }
+
+  .big-stat:not(:last-child) {
+    border-right: 0;
+    border-bottom: 1px solid var(--ab-rule-soft);
+  }
+
+  .big-stat__num span {
+    margin-left: 4px;
+  }
+
+  .big-stat__num--word {
+    min-height: 0;
+    font-size: clamp(40px, 11.5vw, 60px);
+    line-height: 1;
+  }
+
+  .big-stat__label {
+    letter-spacing: 0.16em;
+  }
+
+  .big-stat__copy {
+    max-width: 30em;
+  }
+
+  .track-record__foot {
+    max-width: calc(min(var(--m-measure), 32rem) + 21px);
+    margin-top: 36px;
+    padding-left: 20px;
+  }
+
+  /* approach: one column, the leader down the left through a checkpoint
+     on each card's top edge */
+  .philosophy {
+    --ab-card-x: 22px;
+  }
+
+  .philosophy__head {
+    margin-bottom: 36px;
+  }
+
+  .philosophy__stack {
+    max-width: 44rem;
+    margin: 0;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+
+  .philosophy__stack::before {
+    top: 0;
+    bottom: 0;
+    left: var(--ab-card-x);
+    right: auto;
+    width: 1px;
+    height: auto;
+    background: repeating-linear-gradient(180deg, var(--trail-leader) 0 2px, transparent 2px 6px);
+    z-index: 0;
+  }
+
+  /* opaque cards: the leader runs behind them, between */
+  .philosophy__card {
+    padding: 26px var(--ab-card-x) 24px;
+    background: linear-gradient(160deg, #161a27, #0f121d);
+  }
+
+  .philosophy__card--b {
+    background: linear-gradient(160deg, #2a1c1b, #15141c);
+  }
+
+  .philosophy__card-tag {
+    margin-bottom: 12px;
+  }
+
+  .philosophy__card p {
+    font-size: clamp(19px, 17px + 0.5vw, 22px);
+    line-height: 1.38;
+  }
+
+  /* mission and commitment: heading, copy, then the photograph, which runs
+     off the page on the side desktop puts it - right for the mission,
+     left for the commitment - so the pair still alternates */
+  .manifesto__row,
+  .manifesto__row--flip {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  .manifesto__row + .manifesto__row {
+    margin-top: clamp(64px, 14vw, 96px);
+  }
+
+  .page--about .manifesto__title {
+    margin-bottom: 20px;
+  }
+
+  .manifesto__copy,
+  .manifesto__list {
+    max-width: min(var(--m-measure), 32rem);
+  }
+
+  .manifesto__list {
+    gap: 8px;
+  }
+
+  .manifesto__list li {
+    padding-left: 28px;
+  }
+
+  .manifesto__media {
+    min-height: 0;
+    aspect-ratio: 3 / 2;
+    margin-right: calc(-1 * var(--m-gutter));
+  }
+
+  .manifesto__row--flip .manifesto__media {
+    order: 2;
+    margin-right: 0;
+    margin-left: calc(-1 * var(--m-gutter));
   }
 }
+
+/* from 600px: the two paragraphs side by side, the diagram's labels on
+   one line, the figures two and one */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .perspective__pillars {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px;
+  }
+
+  .perspective__triangulation {
+    width: 400px;
+  }
+
+  .perspective__triangulation b:nth-of-type(1),
+  .perspective__triangulation b:nth-of-type(2) {
+    width: auto;
+    white-space: nowrap;
+  }
+
+  .track-record__numbers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .big-stat {
+    --big-stat-num-size: clamp(88px, 11vw, 112px);
+    padding: 36px 32px 36px 0;
+  }
+
+  .big-stat:nth-child(1) {
+    border-right: 1px solid var(--ab-rule-soft);
+  }
+
+  .big-stat:nth-child(2) {
+    padding-left: 32px;
+    padding-right: 0;
+  }
+
+  .big-stat:nth-child(1),
+  .big-stat:nth-child(2) {
+    border-bottom: 1px solid var(--ab-rule-soft);
+  }
+
+  /* the jurisdictions across the width: the word, then what it means */
+  .big-stat--small {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: 40px;
+    row-gap: 8px;
+    align-items: end;
+    padding-right: 0;
+  }
+
+  .big-stat--small .big-stat__num {
+    grid-row: 1 / span 2;
+    font-size: clamp(52px, 6.6vw, 64px);
+  }
+
+  .big-stat--small .big-stat__copy {
+    grid-column: 2;
+    align-self: start;
+  }
+
+  .philosophy {
+    --ab-card-x: 32px;
+  }
+
+  /* each saying's lead-in beside it, on one line */
+  .philosophy__card {
+    display: grid;
+    grid-template-columns: 11.5rem minmax(0, 1fr);
+    column-gap: 28px;
+    align-items: baseline;
+    padding: 30px var(--ab-card-x);
+  }
+
+  .philosophy__card-tag {
+    margin: 0;
+  }
+}
+
+/* tablets upright, and phones on their side: Mission and Commitment go back
+   to text beside photograph, the photograph as tall as the text */
+@media (min-width: 768px) and (max-width: 1023px),
+  (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .manifesto__row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .manifesto__row--flip {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .manifesto__media {
+    aspect-ratio: auto;
+    min-height: 280px;
+    margin-right: calc(-1 * var(--m-gutter));
+    margin-left: 0;
+  }
+
+  .manifesto__row--flip .manifesto__media {
+    order: 0;
+    margin-right: 0;
+    margin-left: calc(-1 * var(--m-gutter));
+  }
+}
+
+/* === end fb-about === */
 
 /* ---------- Our team ---------- */
 
