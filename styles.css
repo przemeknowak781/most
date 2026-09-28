@@ -6978,7 +6978,7 @@ a.contact-channels__value:focus-visible {
 .ex-icon {
   display: block;
   width: auto;
-  height: clamp(88px, 10vw, 148px);
+  height: clamp(64px, 6vw, 92px);
   overflow: visible;
 }
 
@@ -7051,7 +7051,9 @@ a.contact-channels__value:focus-visible {
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: clamp(36px, 6vw, 96px);
-  min-height: clamp(200px, 26vh, 280px);
+  /* the drawings are Figma-sized now (64-92px tall), so a row is as tall as
+     its text needs plus air, not as tall as a 148px drawing */
+  min-height: clamp(176px, 22vh, 232px);
 }
 
 /* the step itself only carries the .is-in hook - its children animate */
@@ -8263,9 +8265,14 @@ a.contact-channels__value:focus-visible {
   /* Starts under the torn bottom edge of Three routes (one cut depth up), so
      the facade fills right up to that edge's rim instead of a flat line. */
   --whoweare-under: var(--audience-cut-depth);
+  /* The torn edge and its trail line hang into this section: on the left,
+     where the copy starts, the line runs about 1.5 cut depths below the
+     section's top. The copy starts one section rhythm under that line, not
+     one rhythm under the section's top - that left it 30px from the line. */
+  --whoweare-air: clamp(80px, 11vh, 128px);
   position: relative;
   margin-top: calc(-1 * var(--whoweare-under));
-  padding: calc(clamp(88px, 12vh, 150px) + var(--whoweare-under)) var(--container-x) clamp(88px, 12vh, 150px);
+  padding: calc(var(--whoweare-under) * 1.5 + var(--whoweare-air)) var(--container-x) clamp(88px, 12vh, 150px);
   background: var(--navy);
   color: var(--light);
   overflow: hidden;
@@ -11422,6 +11429,7 @@ main {
 /* ---------- Who we are ---------- */
 @media (max-width: 1023px) {
   .page--home .whoweare {
+    --whoweare-air: clamp(64px, 15vw, 96px);
     padding-bottom: var(--m-section);
   }
 
@@ -11612,7 +11620,8 @@ main {
    stacked it into one column that left the right half of a tablet empty. */
 @media (max-width: 1023px) {
   .page--home .ex-rail {
-    --art-h: 80px;
+    /* the Figma drawings are 64px tall */
+    --art-h: 64px;
     --art-gap: 16px;
   }
 
@@ -11720,7 +11729,7 @@ main {
   }
 
   .page--home .ex-rail .ex-icon {
-    height: clamp(84px, 11vw, 112px);
+    height: clamp(64px, 8vw, 84px);
   }
 
   .page--home .ex-rail__step:nth-of-type(even) .ex-rail__art {
