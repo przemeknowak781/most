@@ -283,26 +283,12 @@ a {
   }
 }
 
-/* 1024-1100px: every item of the bar is on it. The hairline after the
-   label goes, and a short upright rule before it takes over its job - it
-   opens the group, so "explore as" never reads as a fourth primary link.
-   The primary pages close up (18px) and the bar's ends give back what the
-   rule takes, so the break before the group stays about twice the gap
-   between two links. */
-@media (max-width: 1100px) {
-  .top-nav .top-nav__menu--left {
-    gap: 18px;
-    margin-left: 24px;
-  }
-
-  .top-nav__menu--right {
-    margin-right: 16px;
-  }
-
-  .top-nav .top-nav__lead {
-    letter-spacing: 0.12em;
-  }
-
+/* Under 1280px the bar is full: the space the group's auto margin had
+   runs out, so the break before "explore as" would be no wider than the
+   gap between two primary links and the label would read as a fourth of
+   them. There the hairline after the label goes, and a short upright rule
+   before it takes over its job - it opens the group. */
+@media (max-width: 1279px) {
   .top-nav .top-nav__lead::before {
     content: "";
     flex: none;
@@ -315,6 +301,46 @@ a {
 
   .top-nav .top-nav__lead::after {
     display: none;
+  }
+}
+
+/* 1181-1279px: the bar keeps the container's ends and its 14px links, but
+   the items close up (the primary pages 24px apart, the group's routes
+   18px) so the whole bar fits inside its padding - it used to run up to
+   53px into the right end - and the break before the rule stays about
+   twice the gap between two links. */
+@media (min-width: 1181px) and (max-width: 1279px) {
+  .top-nav .top-nav__menu--left {
+    gap: 24px;
+    margin-left: 28px;
+  }
+
+  .top-nav .top-nav__menu--right {
+    gap: 18px;
+    margin-right: 20px;
+  }
+
+  .top-nav .top-nav__lead {
+    gap: 8px;
+    letter-spacing: 0.14em;
+  }
+}
+
+/* 1024-1100px: every item of the bar is on it. The primary pages close up
+   (18px) and the bar's ends give back what the rule takes, so the break
+   before the group stays about twice the gap between two links. */
+@media (max-width: 1100px) {
+  .top-nav .top-nav__menu--left {
+    gap: 18px;
+    margin-left: 24px;
+  }
+
+  .top-nav__menu--right {
+    margin-right: 16px;
+  }
+
+  .top-nav .top-nav__lead {
+    letter-spacing: 0.12em;
   }
 }
 
