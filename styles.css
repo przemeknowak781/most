@@ -70,7 +70,7 @@
   --eyebrow-color: rgba(255, 168, 110, 0.92);
   --fs-label: 11px;                                /* small caps labels: stat labels, */
   --ls-label: 0.24em;                              /* roles, kickers, column titles */
-  --ls-stat: 0.18em;                               /* the figures' labels (Home hero, About) */
+  --ls-stat: 0.16em;                               /* the figures' labels (Home hero, About) */
   /* hero header blocks: where the eyebrow starts under the bar, how wide the
      headline and the tagline may run (Figma: 912 and 700 at 1440) */
   --hero-top: calc(var(--nav-height) + clamp(64px, 10vh, 120px));
