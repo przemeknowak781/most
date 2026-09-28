@@ -1167,429 +1167,202 @@ setupCopyReview();
 
 window.addEventListener("load", () => scheduleTrailOverlay(true));
 
-/* Expertise "Our Areas": the list walks itself as you scroll.
+/* Expertise "Our Areas": eight areas as tabs, one open at a time.
 
-   The two columns pin and the scroll that would have carried them past the
-   viewport advances the topic instead - so reading the section top to bottom
-   is reading all eight areas, in order, without clicking anything.
+   The markup is a list of in-page links and the eight areas in order, so
+   without script every area is there to read. This turns it into ARIA tabs:
+   the links become the tabs (roles, aria-selected, a roving tabindex) and
+   the areas their panels, and only the chosen one shows. A click or a key
+   only swaps the panel - nothing scrolls and nothing pins, so the page
+   scrolls on to the next section as any other would.
 
-   Scroll is the single source of truth for which topic is showing. A click or
-   an arrow key does not set the state directly; it scrolls to that topic's
-   band and the scroll handler picks it up. That keeps one writer, so the rail
-   fill, the dot and the panel can never disagree. The exception is the short
-   window while a smooth scroll is in flight: the target is held so the reader
-   does not watch eight panels flick past on the way there.
-
-   Without JS the markup is what it always was - topic one, the rest hidden.
-   The stacking that makes the sticky column a constant height is applied
-   here, on the way in, so that fallback stays intact.
-
-   Below 1024px none of this runs: see "compact" at the end. */
+   On desktop the tabs stand down the rail (vertical); under 1024px they run
+   across a strip above the panel (horizontal), as in the Figma frames. The
+   marker on the rail follows the open area. A link to #area-panel-N (or
+   #area-tab-N) opens that area. */
 (() => {
-  const track = document.querySelector(".ex-areas__track");
-  const stage = document.querySelector(".ex-areas__body");
-  const wrap = document.querySelector(".ex-areas__panels");
-  const tabs = Array.from(document.querySelectorAll('.ex-areas__nav [role="tab"]'));
-  const panels = Array.from(document.querySelectorAll(".ex-areas__panel"));
-  if (!track || !stage || !wrap || tabs.length !== panels.length || !tabs.length) return;
+  const section = document.querySelector(".ex-areas");
+  const nav = section ? section.querySelector(".ex-areas__nav") : null;
+  const list = nav ? nav.querySelector(".ex-areas__tabs") : null;
+  const tabs = list ? Array.from(list.querySelectorAll(".ex-areas__tab")) : [];
+  const panels = section ? Array.from(section.querySelectorAll(".ex-areas__panel")) : [];
+  if (!list || !tabs.length || tabs.length !== panels.length) return;
 
-  track.style.setProperty("--ex-count", String(tabs.length));
-  wrap.classList.add("is-stacked");
-  panels.forEach((p) => {
-    p.hidden = false;
+  const dot = nav.querySelector(".ex-areas__dot");
+  const art = section.querySelector(".ex-areas__art");
+  const line = art ? art.querySelector("path") : null;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let index = -1;
+
+  /* ---------- the widget ---------- */
+  const titleId = section.getAttribute("aria-labelledby");
+  list.setAttribute("role", "tablist");
+  if (titleId) list.setAttribute("aria-labelledby", titleId);
+  tabs.forEach((tab, i) => {
+    const panel = panels[i];
+    tab.parentElement.setAttribute("role", "presentation");
+    tab.setAttribute("role", "tab");
+    tab.setAttribute("aria-controls", panel.id);
+    panel.setAttribute("role", "tabpanel");
+    panel.setAttribute("aria-labelledby", tab.id);
+    panel.tabIndex = 0;
   });
 
-  let index = -1;
-  let held = -1;
-  let holdTimer = 0;
+  const orient = () => list.setAttribute("aria-orientation", compactQuery.matches ? "horizontal" : "vertical");
 
-  const armHold = () => {
-    clearTimeout(holdTimer);
-    holdTimer = setTimeout(() => {
-      held = -1;
-      read();
-    }, 400);
+  /* The marker sits on the rail beside the open tab: level with its middle
+     on the vertical rail, over its middle on the strip. Measured from
+     layout, so fonts, wrapping and resizes just change the answer. */
+  const place = (instant) => {
+    if (!dot || index < 0) return;
+    const box = nav.getBoundingClientRect();
+    const tab = tabs[index].getBoundingClientRect();
+    if (instant) dot.style.transition = "none";
+    if (compactQuery.matches) {
+      setCssVar(dot, "--dot-x", `${Math.round(tab.left - box.left + nav.scrollLeft + tab.width / 2)}px`);
+    } else {
+      setCssVar(dot, "--dot-y", `${Math.round(tab.top - box.top + nav.scrollTop + tab.height / 2)}px`);
+    }
+    if (instant) {
+      void dot.offsetWidth;
+      dot.style.transition = "";
+    }
   };
 
-  /* Each icon is one unbroken stroke, so the length of that stroke is the
-     length of thread. Measured once - getTotalLength is not free and the
-     paths never change. */
-  const art = stage.querySelector(".ex-art");
-  const threads = art ? Array.from(art.querySelectorAll(".ex-art__thread")) : [];
-  threads.forEach((svg) =>
-    svg.querySelectorAll("path").forEach((path) => {
-      let len = 1200;
-      try {
-        len = Math.ceil(path.getTotalLength());
-      } catch {}
-      svg.style.setProperty("--len", len);
-    })
-  );
+  /* On the strip the open tab is kept in view without moving the page:
+     only the strip scrolls. */
+  const bringIntoStrip = (tab) => {
+    if (!compactQuery.matches) return;
+    const box = nav.getBoundingClientRect();
+    const r = tab.getBoundingClientRect();
+    const pad = 24;
+    let dx = 0;
+    if (r.left < box.left + pad) dx = r.left - box.left - pad;
+    else if (r.right > box.right - pad) dx = r.right - box.right + pad;
+    if (dx) nav.scrollBy({ left: dx, behavior: reduceMotion.matches ? "auto" : "smooth" });
+  };
 
-  let frame = 0;
+  /* The Figma drawing is one unbroken line: it draws itself when the section
+     comes into view, and again whenever the area changes. */
+  let seen = false;
+  const draw = () => {
+    if (!art || !line) return;
+    art.classList.remove("is-drawn");
+    if (reduceMotion.matches) return;
+    void art.getBoundingClientRect();
+    art.classList.add("is-drawn");
+  };
 
-  const apply = (i) => {
+  const select = (i, { instant = false } = {}) => {
     if (i === index) return;
-    /* Which way the reader is going decides which side the outgoing thread
-       winds back to, so the two always pass each other rather than stacking. */
-    const from = index;
     index = i;
-    /* a panel that goes inert while it has focus would drop focus to <body>,
-       so it is handed on to the panel taking its place */
-    const hadFocus = from >= 0 && panels[from].contains(document.activeElement);
-    tabs.forEach((t, n) => {
-      t.setAttribute("aria-selected", String(n === i));
-      t.tabIndex = n === i ? 0 : -1;
+    tabs.forEach((tab, n) => {
+      const on = n === i;
+      tab.setAttribute("aria-selected", String(on));
+      tab.tabIndex = on ? 0 : -1;
+      panels[n].hidden = !on;
     });
-    threads.forEach((t, n) => {
-      t.classList.toggle("is-leaving", n === from);
-      t.classList.toggle("is-current", n === i);
-    });
-    panels.forEach((p, n) => {
-      p.classList.toggle("is-current", n === i);
-      p.setAttribute("aria-hidden", String(n !== i));
-      if (n === i) p.removeAttribute("inert");
-      else p.setAttribute("inert", "");
-    });
-    if (hadFocus) panels[i].focus({ preventScroll: true });
-  };
-
-  /* Where the column is pinned, and for how long. Both come out of layout, so
-     a font swap or a resize just changes the answer.
-
-     The pin offset is read off the column's own `top`, which is a real
-     property and so comes back resolved - reading --ex-pin-top would hand
-     back the unresolved calc() token. Once JS is carrying the column its
-     `top` is zero, so the last good value is kept; a resize drops the class
-     and the reading refreshes. */
-  let pinTop = 0;
-  const geometry = () => {
-    const travel = track.offsetHeight - stage.offsetHeight;
-    if (travel <= 1) return null;
-    if (pinState === "") pinTop = parseFloat(getComputedStyle(stage).top) || 0;
-    const trackTop = track.getBoundingClientRect().top + window.scrollY;
-    return { travel, pinTop, start: trackTop - pinTop };
-  };
-
-  /* Which mechanism holds the column.
-
-     Decided up front rather than by watching what happens, because watching
-     costs a few frames and those frames are visible: the column slips before
-     it catches. What breaks sticky is knowable without scrolling - a scroll
-     container anywhere between here and the viewport - so the chain is read
-     once instead. html and body are the exception: their overflow propagates
-     to the viewport, which is the scrollport sticky wants anyway, and `clip`
-     never makes a scroll container at all.
-
-     The reading is still checked once scrolling starts, because being wrong
-     here is worse than being slow: a section that does not pin is a tall
-     empty gap. Two bad frames in a row, so that one measurement taken mid
-     scroll cannot flip it. */
-  /* Sticky does the pinning. It is the right mechanism - the compositor holds
-     the column and script does nothing at all - and the section is built
-     around it.
-
-     What sticky cannot do is fail loudly: when something disables it the
-     section becomes a tall empty gap. So the column is watched, and if it is
-     not actually holding, `fixed` takes over. The test is proportional - a
-     column that is not holding has drifted by exactly the distance scrolled -
-     so it needs no threshold guessing and fires within a couple of frames.
-     Two readings, so a single measurement taken mid-scroll cannot flip it. */
-  let carry = "sticky";
-  let strikes = 0;
-  let pinState = "";
-
-  /* Only ever called on a state change, so the fixed box is set up twice per
-     section rather than every frame. The height has to be read while the
-     column is still in flow, which is why it is taken here and not later. */
-  const setPin = (next, g) => {
-    if (next === pinState) return;
-    if (pinState === "") {
-      /* Fractional, not offsetHeight: the padding that gives the column's
-         space back has to match its height exactly, or the page grows or
-         shrinks by a pixel at the moment it is pinned. */
-      const box = stage.getBoundingClientRect();
-      track.style.setProperty("--ex-stage-h", box.height + "px");
-      track.style.setProperty("--ex-stage-w", box.width + "px");
-      track.style.setProperty("--ex-stage-x", box.left + "px");
-    }
-    pinState = next;
-    track.style.setProperty("--ex-parked-top", g.travel + "px");
-    track.classList.toggle("is-pinning", next !== "");
-    stage.classList.toggle("is-pinned", next === "pinned");
-    stage.classList.toggle("is-parked", next === "parked");
-  };
-
-  const hold = (g, scrolled) => {
-    if (carry === "sticky") {
-      if (scrolled > 12 && scrolled < g.travel - 12) {
-        if (Math.abs(stage.getBoundingClientRect().top - g.pinTop) < Math.max(4, scrolled * 0.5)) {
-          strikes = 0;
-        } else {
-          if (++strikes >= 2) carry = "js";
-          /* Carry the check forward a frame at a time. Arriving mid track in
-             one jump - an anchor link, a restored scroll position - fires a
-             single scroll event, and one event can neither finish a test that
-             wants two readings nor apply the pin the decision calls for. */
-          schedule();
-        }
-      }
-      return;
-    }
-    setPin(scrolled <= 0 ? "" : scrolled >= g.travel ? "parked" : "pinned", g);
-  };
-
-  const read = () => {
-    syncMode();
-    if (compactMode) return;
-    const g = geometry();
-    if (!g) {
-      track.style.setProperty("--ex-progress", "0");
-      if (carry === "js") setPin("", { travel: 0 });
-      if (index < 0) apply(0);
-      return;
-    }
-    const scrolled = window.scrollY - g.start;
-    hold(g, scrolled);
-    const progress = Math.min(1, Math.max(0, scrolled / g.travel));
-    track.style.setProperty("--ex-progress", progress.toFixed(4));
-    const at = Math.min(tabs.length - 1, Math.floor(progress * tabs.length));
-    if (held >= 0) {
-      if (at !== held) {
-        /* Still travelling. Push the deadline out on every frame of the
-           scroll, so the hold ends when scrolling stops rather than after a
-           fixed time - a long glide on a tall window used to outlast a fixed
-           timeout and drop the reader on whatever topic it had reached. */
-        armHold();
-        return;
-      }
-      held = -1;
-      clearTimeout(holdTimer);
-    }
-    apply(at);
-  };
-
-  /* Centre of topic i's band, in page coordinates. */
-  const go = (i) => {
-    const g = geometry();
-    if (!g) {
-      apply(i);
-      return;
-    }
-    held = i;
-    apply(i);
-    armHold();
-    window.scrollTo({
-      top: g.start + ((i + 0.5) / tabs.length) * g.travel,
-      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-    });
+    place(instant);
+    if (seen && !instant) draw();
   };
 
   tabs.forEach((tab, i) => {
-    tab.addEventListener("click", () => go(i));
-    tab.addEventListener("keydown", (e) => {
-      if (e.key === "Home" || e.key === "End") {
-        e.preventDefault();
-        const n = e.key === "Home" ? 0 : tabs.length - 1;
-        tabs[n].focus();
-        go(n);
-        return;
-      }
-      const step = e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : e.key === "ArrowUp" || e.key === "ArrowLeft" ? -1 : 0;
-      if (!step) return;
+    tab.addEventListener("click", (e) => {
+      /* a modified click still opens the link as a link would */
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       e.preventDefault();
-      const next = (i + step + tabs.length) % tabs.length;
-      tabs[next].focus();
-      go(next);
+      select(i);
+      bringIntoStrip(tab);
     });
-  });
-
-  const schedule = () => {
-    if (frame) return;
-    frame = requestAnimationFrame(() => {
-      frame = 0;
-      read();
-    });
-  };
-
-  addEventListener("scroll", () => {
-    if (!compactMode) schedule();
-  }, { passive: true });
-  /* A new layout can change the answer, so the test is run again from
-     scratch - including putting the column back in flow so its pin offset
-     and height can be measured afresh. */
-  /* A new layout can change the answer, so the column goes back in flow and
-     sticky gets another chance before the test runs again. */
-  addEventListener("resize", () => {
-    setPin("", { travel: 0 });
-    carry = "sticky";
-    strikes = 0;
-    schedule();
-  });
-  /* The column is as tall as its tallest topic, so once it parks on the
-     last, shorter one the difference shows as a blank before How We Work.
-     The next section is pulled up over that blank - never by more than one
-     topic's worth of scroll, so it cannot reach a taller panel that is
-     still pinned above it. Measured from layout, so fonts and resizes just
-     change the answer; without a track (short windows, reduced motion) it
-     is zero. */
-  const section = track.closest(".ex-areas");
-  const nav = stage.querySelector(".ex-areas__nav");
-  const lastPanel = panels[panels.length - 1];
-  const slack = () => {
-    if (!section) return;
-    if (compactMode) {
-      setCssVar(section, "--ex-park-slack", "0px");
-      return;
-    }
-    const g = geometry();
-    let px = 0;
-    if (g) {
-      const end = lastPanel.lastElementChild;
-      const floor = Math.max(
-        end ? end.getBoundingClientRect().bottom : 0,
-        nav ? nav.getBoundingClientRect().bottom : 0
-      );
-      px = Math.min(stage.getBoundingClientRect().bottom - floor, g.travel / tabs.length - 24);
-    }
-    section.style.setProperty("--ex-park-slack", Math.max(0, Math.round(px)) + "px");
-  };
-
-  if (typeof ResizeObserver === "function") {
-    new ResizeObserver(() => {
-      schedule();
-      slack();
-    }).observe(stage);
-  }
-  if (document.fonts) document.fonts.ready.then(slack);
-
-  /* ---------- compact ----------
-     Below 1024px there is no pinned column and the scroll chooses nothing.
-     The eight areas are read one after another, each under its own drawing
-     (the stylesheet lays them out), and the tab list becomes what a reader
-     on a phone needs from it: links down to the areas. The widget's ARIA
-     leaves with the widget - the links sit in a plain navigation list, the
-     panels are plain blocks under their own headings, and none of them is
-     inert, hidden or a tab stop. Growing past 1023px puts the tabs, their
-     roles and the stacking back, and the scroll picks the topic again, as a
-     fresh load at that position would.
-
-     The tab buttons keep their listeners while they are out of the page, so
-     putting them back is all the restoring they need. */
-  const tabItems = tabs.map((tab) => tab.parentElement);
-  const tabList = tabItems[0] ? tabItems[0].parentElement : null;
-  const tabListAttrs = tabList
-    ? ["role", "aria-orientation", "aria-labelledby"].map((name) => [name, tabList.getAttribute(name)])
-    : [];
-  const jumps = tabs.map((tab, i) => {
-    const link = document.createElement("a");
-    const label = document.createElement("span");
-    link.className = "ex-areas__jump";
-    link.href = `#${panels[i].id}`;
-    label.className = "ex-areas__jump-label";
-    tab.childNodes.forEach((node) => label.appendChild(node.cloneNode(true)));
-    link.appendChild(label);
-    return link;
-  });
-  const titleId = tabList ? tabList.getAttribute("aria-labelledby") : null;
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  let compactMode = null;
-  let drawIo = null;
-
-  /* A drawing below the fold waits undrawn and unwinds as it arrives, the
-     same single stroke the desktop threads draw; one already on screen is
-     simply there. Without this (no observer, less motion) all are drawn. */
-  const drawOnArrival = () => {
-    if (!threads.length || !("IntersectionObserver" in window) || reduceMotion.matches) return;
-    const fold = window.innerHeight * 0.85;
-    const io = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.remove("is-pending");
-          io.unobserve(entry.target);
-        }),
-      { rootMargin: "0px 0px -15% 0px" }
-    );
-    threads.forEach((thread) => {
-      if (thread.getBoundingClientRect().top < fold) return;
-      thread.classList.add("is-pending");
-      io.observe(thread);
-    });
-    drawIo = io;
-  };
-
-  function syncMode() {
-    const compact = compactQuery.matches;
-    if (compact === compactMode) return;
-    compactMode = compact;
-    const focused = document.activeElement;
-
-    if (compact) {
-      clearTimeout(holdTimer);
-      held = -1;
-      index = -1;
-      setPin("", { travel: 0 });
-      carry = "sticky";
-      strikes = 0;
-      track.style.setProperty("--ex-progress", "0");
-      setCssVar(section, "--ex-park-slack", "0px");
-      wrap.classList.remove("is-stacked");
-      tabListAttrs.forEach(([name]) => tabList.removeAttribute(name));
-      if (nav) {
-        nav.classList.add("is-jump-list");
-        nav.setAttribute("role", "navigation");
-        if (titleId) nav.setAttribute("aria-labelledby", titleId);
+    tab.addEventListener("keydown", (e) => {
+      let next;
+      switch (e.key) {
+        case "ArrowDown":
+        case "ArrowRight":
+          next = (i + 1) % tabs.length;
+          break;
+        case "ArrowUp":
+        case "ArrowLeft":
+          next = (i - 1 + tabs.length) % tabs.length;
+          break;
+        case "Home":
+          next = 0;
+          break;
+        case "End":
+          next = tabs.length - 1;
+          break;
+        case " ":
+          /* a link does not answer Space; a tab does */
+          e.preventDefault();
+          select(i);
+          return;
+        default:
+          return;
       }
-      tabs.forEach((tab, i) => {
-        tabItems[i].removeAttribute("role");
-        tab.replaceWith(jumps[i]);
-        if (focused === tab) jumps[i].focus({ preventScroll: true });
-      });
-      panels.forEach((panel) => {
-        panel.hidden = false;
-        panel.classList.remove("is-current");
-        ["role", "aria-labelledby", "aria-hidden", "tabindex", "inert"].forEach((name) => panel.removeAttribute(name));
-      });
-      threads.forEach((thread) => thread.classList.remove("is-current", "is-leaving"));
-      drawOnArrival();
-      return;
-    }
+      e.preventDefault();
+      select(next);
+      tabs[next].focus({ preventScroll: true });
+      bringIntoStrip(tabs[next]);
+    });
+  });
 
-    if (drawIo) drawIo.disconnect();
-    drawIo = null;
-    threads.forEach((thread) => thread.classList.remove("is-pending"));
-    if (nav) {
-      nav.classList.remove("is-jump-list");
-      nav.removeAttribute("role");
-      nav.removeAttribute("aria-labelledby");
+  /* ---------- deep links ---------- */
+  const fromHash = () => {
+    let id = "";
+    try {
+      id = decodeURIComponent(location.hash.slice(1));
+    } catch {}
+    if (!id) return -1;
+    return panels.findIndex((panel, n) => panel.id === id || tabs[n].id === id);
+  };
+
+  const start = fromHash();
+  orient();
+  select(start >= 0 ? start : 0, { instant: true });
+  section.classList.add("is-tabs");
+  place(true);
+  if (start >= 0) bringIntoStrip(tabs[start]);
+
+  window.addEventListener("hashchange", () => {
+    const n = fromHash();
+    if (n >= 0) {
+      select(n);
+      bringIntoStrip(tabs[n]);
     }
-    tabListAttrs.forEach(([name, value]) => {
-      if (value !== null) tabList.setAttribute(name, value);
-    });
-    jumps.forEach((link, i) => {
-      tabItems[i].setAttribute("role", "presentation");
-      if (link.isConnected) link.replaceWith(tabs[i]);
-      if (focused === link) tabs[i].focus({ preventScroll: true });
-    });
-    panels.forEach((panel, i) => {
-      panel.setAttribute("role", "tabpanel");
-      panel.setAttribute("aria-labelledby", tabs[i].id);
-      panel.setAttribute("tabindex", "0");
-    });
-    wrap.classList.add("is-stacked");
-    /* apply() runs from here on the next read, with nothing to wind back */
-    index = -1;
+  });
+
+  /* ---------- the drawing ---------- */
+  if (line) {
+    try {
+      setCssVar(art, "--len", String(Math.ceil(line.getTotalLength())));
+    } catch {}
+  }
+  const arrive = () => {
+    seen = true;
+    draw();
+  };
+  if (art && "IntersectionObserver" in window && !reduceMotion.matches) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        io.disconnect();
+        arrive();
+      },
+      { threshold: 0.6 }
+    );
+    io.observe(art);
+  } else {
+    arrive();
   }
 
-  syncMode();
+  /* ---------- layout changes ---------- */
   onCompactChange(() => {
-    syncMode();
-    schedule();
-    slack();
+    orient();
+    place(true);
+    bringIntoStrip(tabs[index]);
   });
-  read();
-  slack();
+  if (typeof ResizeObserver === "function") new ResizeObserver(() => place(true)).observe(list);
+  if (document.fonts) document.fonts.ready.then(() => place(true));
 })();
 
 /* Scroll-in reveals, plus one-at-a-time icon drawing.
