@@ -4898,11 +4898,12 @@ a.contact-channels__value:focus-visible {
 /* === end fb-expertise === */
 
 
-/* Figma one-line teaser icons inside the expertise cards */
+/* Figma one-line teaser icons inside the expertise cards, at the Figma
+   height: the six drawings are 65px tall in the 1440 frame (home-icon-1..6) */
 .ex-icon {
   display: block;
   width: auto;
-  height: clamp(64px, 6vw, 92px);
+  height: clamp(52px, 4.5vw, 72px);
   overflow: visible;
 }
 
@@ -4975,9 +4976,9 @@ a.contact-channels__value:focus-visible {
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: clamp(36px, 6vw, 96px);
-  /* the drawings are Figma-sized now (64-92px tall), so a row is as tall as
-     its text needs plus air, not as tall as a 148px drawing */
-  min-height: clamp(176px, 22vh, 232px);
+  /* the drawings are Figma-sized now (52-72px, 65 at 1440), so a row is
+     as tall as its text needs plus air, not as tall as a drawing */
+  min-height: clamp(148px, 17vh, 196px);
 }
 
 /* the step itself only carries the .is-in hook - its children animate */
@@ -9463,6 +9464,14 @@ main {
     padding-bottom: var(--m-section);
   }
 
+  /* a phone on its side: the air under the trail follows the screen's
+     height, or the first screen after the torn edge is ridge and navy */
+  @media (max-height: 500px) and (orientation: landscape) {
+    .page--home .whoweare {
+      --whoweare-air: 32px;
+    }
+  }
+
   .page--home .whoweare__head {
     max-width: 40rem;
     margin-bottom: 44px;
@@ -9643,8 +9652,9 @@ main {
    stacked it into one column that left the right half of a tablet empty. */
 @media (max-width: 1023px) {
   .page--home .ex-rail {
-    /* the Figma drawings are 64px tall */
-    --art-h: 64px;
+    /* the Figma drawings are 65px tall at 1440; a phone takes them at
+       the same share of its width's type as the desktop does */
+    --art-h: 52px;
     --art-gap: 16px;
   }
 
@@ -9752,7 +9762,7 @@ main {
   }
 
   .page--home .ex-rail .ex-icon {
-    height: clamp(64px, 8vw, 84px);
+    height: clamp(52px, 6.4vw, 64px);
   }
 
   .page--home .ex-rail__step:nth-of-type(even) .ex-rail__art {
