@@ -1669,6 +1669,7 @@ main:focus {
 }
 
 .audience-intro__grid {
+  --audience-head-gutter: var(--scene-gutter, clamp(14px, 2.6vw, 42px));
   --title-track: clamp(330px, 29vw, 430px);
   --closed-track: minmax(clamp(92px, 7vw, 132px), 0.34fr);
   --open-track: minmax(clamp(430px, 38vw, 650px), 1.55fr);
@@ -1681,6 +1682,8 @@ main:focus {
   height: calc(100svh - var(--nav-height));
   min-height: 0;
   max-width: 1480px;
+  /* on the container edge like every section under a hero, not centred */
+  margin: 0;
   transform: none;
   padding: clamp(18px, 3vh, 36px) 0 clamp(44px, 7vh, 78px);
   grid-template-columns: var(--title-track) var(--founders-track) var(--companies-track) var(--investors-track);
@@ -1725,9 +1728,13 @@ main:focus {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: min(100%, var(--title-track));
+  /* The copy starts on the container edge, where the hero's does; the line
+     and its ring stand out in the gutter, as far out as the audience
+     scenes' spines stand (--scene-gutter) */
+  width: calc(min(100%, var(--title-track)) + var(--audience-head-gutter));
   min-width: 0;
-  padding: clamp(18px, 5vh, 70px) clamp(14px, 1.8vw, 28px) clamp(26px, 4vh, 54px) clamp(28px, 3.4vw, 58px);
+  margin-left: calc(-1 * var(--audience-head-gutter));
+  padding: clamp(18px, 5vh, 70px) clamp(14px, 1.8vw, 28px) clamp(26px, 4vh, 54px) var(--audience-head-gutter);
   contain: layout;
   overflow-anchor: none;
 }
@@ -2085,7 +2092,7 @@ main:focus {
     grid-template-rows: auto;
   }
   .audience-intro__head {
-    width: 100%;
+    width: calc(100% + var(--audience-head-gutter));
     contain: none;
   }
   .audience-intro__head::before {
@@ -2252,8 +2259,9 @@ main:focus {
 .site-footer__inner {
   position: relative;
   z-index: 1;
-  max-width: 1280px;
-  margin: 0 auto;
+  /* the bar's width: the logo stands under the bar's logo at every width */
+  max-width: none;
+  margin: 0;
 }
 
 .site-footer__top {
@@ -4153,7 +4161,9 @@ a.contact-channels__value:focus-visible {
    silhouettes do - deep navy overhead, warming toward the horizon - the line
    along its crest is the site's trail and the six steps are its checkpoints. */
 .exwork--terrain {
-  padding: clamp(80px, 10vh, 120px) max(var(--container-x), calc((100vw - 1400px) / 2)) clamp(72px, 9vh, 110px);
+  /* the head on the container edge like the areas above and the routes
+     below it; the landscape under it is centred and bleeds on its own */
+  padding: clamp(80px, 10vh, 120px) var(--container-x) clamp(72px, 9vh, 110px);
   background: linear-gradient(180deg, #07090f 0%, #0c0f1b 35%, #1a1a28 62%, #221c26 100%);
   overflow: hidden;
   isolation: isolate;
@@ -5716,9 +5726,10 @@ a.contact-channels__value:focus-visible {
                                 its own - and the points on one trail
      Our Expertise              cream - the copy beside the rail
 
-   Every section shares one column (1360px: on the container edge, where the
-   hero's copy starts, up to about 1550px; centred beyond, as the home page's
-   sections are), one vertical rhythm (--aud-section-y) and the type roles of
+   Every section shares one column - the container, from the edge where the
+   hero's copy starts to the one the bar's button ends on, at every width
+   (the site's one grid: nothing below a hero is centred in a box of its
+   own) - one vertical rhythm (--aud-section-y) and the type roles of
    the design system: H2 titles, a lead under the first, body text in the
    lists, H4 and small in How We Work. Under 1024px the compact block
    (AUDIENCE - MOBILE & TABLET) lays the same pieces out in one column.
@@ -5733,7 +5744,7 @@ a.contact-channels__value:focus-visible {
   --aud-ink: #1c1419;
   --aud-ink-soft: rgba(28, 20, 25, 0.72);
   --aud-section-y: clamp(96px, 12vh, 136px);
-  --aud-section-x: max(var(--container-x), calc((100vw - 1360px) / 2));
+  --aud-section-x: var(--container-x);
   --aud-head-gap: clamp(44px, 6vh, 72px);
   --aud-col-gap: clamp(32px, 3.4vw, 56px);
   /* the rule beside a point and the text's distance from it; the expertise
@@ -5787,7 +5798,7 @@ a.contact-channels__value:focus-visible {
 
 :is(.page--founders, .page--companies, .page--investors) :is(.aud-help__head, .aud-work__head) {
   display: block;
-  max-width: 1360px;
+  max-width: none;
   margin: 0 0 var(--aud-head-gap);
   padding: 0;
   border: 0;
@@ -5821,7 +5832,7 @@ a.contact-channels__value:focus-visible {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: stretch;
   gap: clamp(16px, 2.4vh, 28px) var(--aud-col-gap);
-  max-width: 1360px;
+  max-width: none;
   margin: 0;
   padding: 0;
   overflow: visible;
@@ -5979,7 +5990,7 @@ a.contact-channels__value:focus-visible {
   grid-auto-columns: minmax(0, 1fr);
   grid-template-columns: none;
   gap: 0 var(--hww-gap);
-  max-width: 1360px;
+  max-width: none;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -6062,7 +6073,7 @@ a.contact-channels__value:focus-visible {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: start;
   gap: 0 var(--aud-col-gap);
-  max-width: 1360px;
+  max-width: none;
   margin: 0;
 }
 
@@ -6586,8 +6597,10 @@ a.contact-channels__value:focus-visible {
 .whoweare__inner {
   position: relative;
   z-index: 1;
+  /* on the container edge, where the hero and every section start; the
+     measure is capped, the edge is not moved */
   max-width: 1160px;
-  margin: 0 auto;
+  margin: 0;
 }
 
 .whoweare__head {
@@ -8909,6 +8922,7 @@ main {
 
   .audience-intro__head {
     width: 100%;
+    margin-left: 0;
     padding: 0;
   }
 
@@ -13513,10 +13527,23 @@ main {
 }
 
 @media (min-width: 1024px) {
-  /* the button keeps its own width and the link lines up under it */
+  /* The band is on the page's grid, not centred in a 1080px box of its
+     own: the question starts on the container edge with every section
+     title above it, and the button ends on the edge the bar's "Contact us"
+     ends on - on every page, whatever else shares its column (the quiet
+     second route, right-aligned under it) */
+  .aud-grow__inner {
+    max-width: none;
+    margin: 0;
+  }
+
   .aud-grow__btn,
   .aud-grow__alt {
-    justify-self: start;
+    justify-self: end;
+  }
+
+  .aud-grow__alt.link-arrow {
+    text-align: right;
   }
 }
 
