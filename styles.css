@@ -2913,10 +2913,12 @@ main:focus {
     #070912;
 }
 
+/* the intro opens on the container edge, under the hero's copy, as every
+   section head below a hero does (Figma "Team" 2795:446 sets it there) */
 .team-editorial__head {
   max-width: 880px;
-  margin: 0 auto clamp(60px, 9vh, 120px);
-  text-align: center;
+  margin: 0 0 clamp(60px, 9vh, 120px);
+  text-align: left;
 }
 
 .team-editorial__eyebrow {
@@ -2933,7 +2935,7 @@ main:focus {
 */
 .team-editorial__lead {
   max-width: 760px;
-  margin: 0 auto;
+  margin: 0;
   color: var(--light-80);
   font: 400 clamp(18px, 1.5vw, 22px) / 1.6 "Outfit", system-ui, sans-serif;
   text-wrap: pretty;
@@ -2941,12 +2943,17 @@ main:focus {
 
 /* ── Member list container ──────────────────────────── */
 
+/* The members hang on the container edge like the hero and the closing
+   band (centred on 1280px they started 215px in at 1710 and 320px at
+   1920). The column stops growing at 1440px so a portrait stays under a
+   screen's height; wider screens keep the extra room on the right, as the
+   hero does. At 1440 and below it is the container, as before. */
 .team-editorial__list {
   display: flex;
   flex-direction: column;
   gap: 0;
-  max-width: 1280px;
-  margin: 0 auto;
+  max-width: 1440px;
+  margin: 0;
 }
 
 /* ── Between-member connecting trail ─────────────────── */
@@ -11560,10 +11567,9 @@ main {
 }
 
 /* ---------- intro ----------
-   Seven lines on a phone read better from a straight left edge; with a
-   tablet's width (or a phone's on its side) the paragraph is four lines and
-   centres, as on desktop. The warm glow at the top of the section starts
-   below the ridge cut, so the cut's flat navy does not end on a line. */
+   On the left edge at every width, as on desktop. The warm glow at the top
+   of the section starts below the ridge cut, so the cut's flat navy does
+   not end on a line. */
 @media (max-width: 1023px) {
   .page--team .team-editorial {
     padding: var(--m-section) var(--m-gutter);
@@ -11588,18 +11594,6 @@ main {
     margin: 0;
     font-size: var(--m-lede);
     line-height: 1.6;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1023px),
-  (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
-  .page--team .team-editorial__head {
-    margin-inline: auto;
-    text-align: center;
-  }
-
-  .page--team .team-editorial__lead {
-    margin-inline: auto;
   }
 }
 
