@@ -73,6 +73,18 @@
   --hero-top: calc(var(--nav-height) + clamp(64px, 10vh, 120px));
   --hero-measure: 912px;
   --lead-measure: 700px;
+
+  /* ---------- BUTTONS AND LINKS (see DESIGN SYSTEM - buttons and links) ---------- */
+  --btn-h: 46px;                                   /* 52px under 1024 (--m-pill-h) */
+  --btn-pad-x: 26px;
+  --btn-gap: 12px;
+  --btn-radius: 999px;
+  --btn-font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
+  --btn-ls: 0.18em;
+  --btn-icon: 18px;
+  --btn-lift: -2px;
+  --link-icon: 16px;
+  --focus-ring: var(--orange);
 }
 
 * {
@@ -4600,11 +4612,7 @@ a.photo-break__line:focus-visible {
   height: 14px;
 }
 
-.aud-grow__btn:hover {
-  background: var(--orange);
-  color: #fff;
-  transform: translateY(-2px);
-}
+
 
 @media (max-width: 760px) {
   .aud-grow__inner {
@@ -4855,11 +4863,7 @@ a.contact-channels__value:focus-visible {
   transition: background 220ms ease, transform 220ms ease, box-shadow 220ms ease;
 }
 
-.contact-form__submit:not(:disabled):hover {
-  background: #1c2436;
-  transform: translateY(-2px);
-  box-shadow: 0 18px 36px -18px rgba(8, 11, 19, 0.7);
-}
+
 
 .contact-form__submit:disabled {
   background: rgba(28, 20, 25, 0.32);
@@ -5597,13 +5601,7 @@ a.contact-channels__value:focus-visible {
   }
 }
 
-.page--audience .aud-grow__btn svg {
-  color: var(--aud-accent);
-}
 
-.page--audience .aud-grow__btn:hover svg {
-  color: #fff;
-}
 
 .page--audience .aud-expertise__list li::before {
   color: var(--aud-accent);
@@ -6889,11 +6887,13 @@ a.contact-channels__value:focus-visible {
 
 /* page--audience darkens the hero pill for the light audience heroes; this
    hero is the dark scene, so the pill is the shared one again */
+/* page--audience gives the hero button the light skies' glass; this hero
+   is dark, so it is the plain outline pill of every dark hero */
 .page--expertise .primary-cta {
   color: var(--light);
-  background: rgba(22, 24, 34, 0.22);
+  background: transparent;
   border-color: rgba(240, 235, 233, 0.55);
-  box-shadow: inset 0 0 0 1px rgba(240, 235, 233, 0.06), 0 20px 70px rgba(0, 0, 0, 0.2);
+  box-shadow: none;
 }
 
 .page--expertise .primary-cta:hover,
@@ -8034,10 +8034,14 @@ a.contact-channels__value:focus-visible {
   stroke-linejoin: round;
 }
 
-.routes-strip__card:hover .routes-strip__link,
-.routes-strip__link:focus-visible {
-  color: rgb(var(--aud-tint-rgb));
-  gap: 16px;
+/* the whole card is the link's hover target: it answers as the link does
+   (underline, arrow forward), in the link's own light, not the route tint */
+.routes-strip__card:hover .routes-strip__link {
+  text-decoration-color: currentColor;
+}
+
+.routes-strip__card:hover .routes-strip__link svg {
+  translate: var(--link-nudge, 2px -2px);
 }
 
 @media (max-width: 900px) {
@@ -8878,6 +8882,7 @@ a.contact-channels__value:focus-visible {
     --lh-h2: 1.12;
     --lh-h3: 1.25;
     --hero-top: var(--m-hero-top);
+    --btn-h: var(--m-pill-h);
   }
 
   /* an anchor lands just under the bar, not a screen further down */
@@ -11472,16 +11477,9 @@ main {
 
   /* a 48px target that still looks like the desktop's underlined label:
      the rule is drawn just under the words, not at the foot of the box */
+  /* a 48px target; the label and its hover are the shared link-arrow's */
   .page--home .whoweare__link {
     min-height: 48px;
-    padding: 0;
-    border-bottom: 0;
-    background: linear-gradient(rgba(240, 235, 233, 0.28), rgba(240, 235, 233, 0.28)) left calc(50% + 15px) / 100% 1px no-repeat;
-  }
-
-  .page--home .whoweare__link:hover,
-  .page--home .whoweare__link:focus-visible {
-    background-image: linear-gradient(rgba(255, 176, 119, 0.6), rgba(255, 176, 119, 0.6));
   }
 
   .page--home .whoweare__link:focus-visible {
@@ -13562,7 +13560,6 @@ main {
     min-height: 44px;
     margin: 0 0 8px -10px;
     padding: 0 10px;
-    font-size: 15px;
   }
 
   .page--team .member__readmore:focus-visible {
@@ -13806,8 +13803,9 @@ main {
   }
 
   .page--team .member__readmore:hover {
-    color: #ffa86e;
-    gap: 8px;
+    color: var(--light);
+    gap: 10px;
+    text-decoration-color: transparent;
   }
 }
 
@@ -15388,4 +15386,273 @@ main {
 .hero-content .eyebrow::after {
   content: "\00a0\2014";
   content: "\00a0\2014" / "";
+}
+
+/* ============================================================
+   DESIGN SYSTEM - buttons and links (all widths)
+   Two pills and one link, one voice: Montserrat 500 12px caps at 0.18em
+   (--btn-font, --btn-ls), fully round, 46px tall on desktop and 52px under
+   1024px (--btn-h), the icon 18px (links 16px) in currentColor, a 2px
+   lift on hover and a 2px ring on keyboard focus (--focus-ring: orange on
+   the dark scenes, the scene's ink on the light ones).
+     .btn            outline pill - a 1px line, clear inside; hover and
+                     focus fill it with the scene's light (--btn-ink) and
+                     turn the label navy (--btn-on-ink). Nav "Contact us",
+                     the hero buttons, section calls to action.
+     .btn--solid     filled pill - the page's closing action: the "Contact
+                     us" band, the menu's Contact, the form's Submit. Light
+                     on the dark scenes, ink on the cream form (--btn-fill,
+                     --btn-on-fill, --btn-fill-hover); hover brightens it.
+     .link-arrow     caps text link with a 16px arrow: ↗ to go somewhere,
+                     → that turns for a disclosure ("Read more"). Hover and
+                     focus underline it and move the arrow on (--link-nudge).
+                     On a cream surface set --link-ink to the ink.
+   A page colours these for its scene; it does not resize or re-letter them.
+   (.aud-grow__btn--mail is the one pill in lower case: it is an address.)
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--btn-gap);
+  min-height: var(--btn-h);
+  padding: 0 var(--btn-pad-x);
+  color: var(--btn-ink, var(--light));
+  background-color: transparent;
+  border: 1px solid var(--btn-line, rgba(240, 235, 233, 0.55));
+  border-radius: var(--btn-radius);
+  box-shadow: none;
+  font: var(--btn-font);
+  letter-spacing: var(--btn-ls);
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color 240ms ease,
+    background-color 240ms ease,
+    border-color 240ms ease,
+    box-shadow 240ms ease,
+    translate 240ms var(--ease-out);
+}
+
+.btn svg {
+  flex: none;
+  width: var(--btn-icon);
+  height: var(--btn-icon);
+}
+
+.btn svg path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* the lift is `translate`, not `transform`: the heroes' reveal animation
+   holds `transform` and swallowed the lift on every hero button */
+.btn:hover,
+.btn:focus-visible {
+  color: var(--btn-on-ink, var(--navy));
+  background-color: var(--btn-ink, var(--light));
+  border-color: var(--btn-ink, var(--light));
+  transform: none;
+  translate: 0 var(--btn-lift);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.btn--solid {
+  color: var(--btn-on-fill, var(--navy));
+  background-color: var(--btn-fill, var(--light));
+  border-color: var(--btn-fill, var(--light));
+  box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.6);
+}
+
+.btn--solid:hover,
+.btn--solid:focus-visible {
+  color: var(--btn-on-fill, var(--navy));
+  background-color: var(--btn-fill-hover, #fff);
+  border-color: var(--btn-fill-hover, #fff);
+  box-shadow: 0 22px 44px -16px rgba(0, 0, 0, 0.7);
+}
+
+.btn:disabled,
+.btn:disabled:hover {
+  translate: none;
+}
+
+/* an e-mail address stays in lower case */
+.aud-grow__btn--mail {
+  text-transform: none;
+  letter-spacing: 0.04em;
+}
+
+/* a laptop under 1180px: the bar's pill gives back 4px a side, as it did */
+@media (min-width: 1024px) and (max-width: 1180px) {
+  .top-nav .nav-cta {
+    padding-inline: 22px;
+  }
+}
+
+/* the cream form: the solid pill in ink, the ring in the form's rust */
+.contact-band {
+  --btn-fill: var(--navy-deep);
+  --btn-on-fill: var(--light);
+  --btn-fill-hover: var(--navy);
+  --focus-ring: #a8380b;
+}
+
+.contact-form__submit.btn {
+  width: 100%;
+}
+
+.contact-form__submit.btn--solid {
+  box-shadow: none;
+}
+
+.contact-form__submit.btn--solid:not(:disabled):hover {
+  box-shadow: 0 18px 36px -18px rgba(8, 11, 19, 0.7);
+}
+
+.contact-form__submit.btn:disabled {
+  color: var(--light);
+  background-color: rgba(28, 20, 25, 0.32);
+  border-color: transparent;
+  box-shadow: none;
+  cursor: default;
+}
+
+/* the light audience skies: the ring takes the hero's ink */
+.page--founders .hero .btn,
+.page--founders .top-nav:not(.is-scrolled) .btn {
+  --focus-ring: var(--fnd-ink);
+}
+
+.page--horizon .hero .btn,
+.page--horizon .top-nav:not(.is-scrolled) .btn {
+  --focus-ring: rgb(var(--hz-ink));
+}
+
+/* Three routes (Home): the card's call to action is the solid pill in the
+   route's own colour - same type and size as every pill */
+.preview.is-expanded .preview__cta,
+.audience-intro .preview[data-audience-card] .preview__cta {
+  min-height: var(--btn-h);
+  padding-block: 0;
+  font: var(--btn-font);
+  letter-spacing: var(--btn-ls);
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  color: var(--link-ink, var(--light));
+  background: none;
+  border: 0;
+  font: var(--btn-font);
+  letter-spacing: var(--btn-ls);
+  text-transform: uppercase;
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+  cursor: pointer;
+  transition: color 240ms ease, text-decoration-color 240ms ease;
+}
+
+.link-arrow svg {
+  flex: none;
+  width: var(--link-icon);
+  height: var(--link-icon);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: translate 240ms var(--ease-out), transform 240ms ease;
+}
+
+.link-arrow:hover,
+.link-arrow:focus-visible {
+  gap: 10px;
+  color: var(--link-ink, var(--light));
+  text-decoration-color: currentColor;
+}
+
+.link-arrow:hover svg,
+.link-arrow:focus-visible svg {
+  translate: var(--link-nudge, 2px -2px);
+}
+
+.link-arrow:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* a disclosure: its arrow points on, then down once open */
+.member__readmore {
+  --link-nudge: 2px 0;
+}
+
+/* cream surfaces */
+.aud-expertise__more {
+  --link-ink: #1c1419;
+  --focus-ring: #b3401a;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn:hover,
+  .btn:focus-visible,
+  .link-arrow:hover svg,
+  .link-arrow:focus-visible svg {
+    translate: none;
+  }
+}
+
+/* The two long labels ("See the full scope of our expertise" in a 348px
+   column, "Or see the full scope of what we do" on a phone) can wrap. Set
+   inline, the arrow follows the last word instead of standing off at the
+   edge of the box, and the lines are balanced. */
+.aud-expertise__more.link-arrow,
+.aud-grow__alt.link-arrow {
+  display: inline-block;
+  text-wrap: balance;
+}
+
+.aud-expertise__more.link-arrow svg,
+.aud-grow__alt.link-arrow svg {
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: -3px;
+}
+
+/* the closing band's second way out is quieter than its button */
+.aud-grow__alt {
+  --link-ink: rgba(240, 235, 233, 0.78);
+}
+
+@media (min-width: 1024px) {
+  /* the button keeps its own width and the link lines up under it */
+  .aud-grow__btn,
+  .aud-grow__alt {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 1023px) {
+  /* a 44px target without centring on a flex line: the words keep the
+     line height they wrap with */
+  .aud-grow__alt.link-arrow {
+    min-height: 0;
+    padding: 13px 4px;
+    line-height: 1.5;
+  }
 }
