@@ -1179,6 +1179,11 @@ main:focus {
 .audience-intro {
   --audience-cut-offset: clamp(-180px, -10vw, -118px);
   --audience-bottom-lift: clamp(54px, 6vh, 86px);
+  /* the bottom edge: a ridge climbing to the right - the torn edge's rise
+     with the How We Work ridge's small steps along it. The fill cuts the
+     section, the line draws the same path over the cut. */
+  --audience-edge-bottom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath d='M0 0 L1200 0 L1200 34.2 1196 33.5 1192 34.1 1188 36.1 1184 38.4 1180 37.3 1176 40.5 1172 42.5 1168 43.1 1164 42.9 1160 42.7 1156 43.3 1152 42.5 1148 43.8 1144 43.2 1140 42.5 1136 42.6 1132 44 1128 46.4 1124 48.2 1120 49.3 1116 49 1112 49.7 1108 49.6 1104 49 1100 48.5 1096 48.9 1092 51.3 1088 53.4 1084 55.4 1080 57.2 1076 58.5 1072 58.7 1068 60.9 1064 62.8 1060 63.8 1056 63.7 1052 62.9 1048 61.8 1044 61.8 1040 62.7 1036 62.8 1032 63.1 1028 64.2 1024 65.1 1020 66.1 1016 67.3 1012 68.8 1008 69.6 1004 69.6 1000 70.9 996 72.1 992 72.8 988 73.5 984 73.9 980 74.4 976 75 972 74.1 968 73.4 964 72.8 960 73.1 956 73.7 952 73.8 948 73.5 944 74.2 940 75 936 75.2 932 77.3 928 79.4 924 82.7 920 83.6 916 84.6 912 85.5 908 86.5 904 87.4 900 87.9 896 88.2 892 89.6 888 93.2 884 94.8 880 97 876 98.9 872 101.5 868 104.6 864 107.1 860 109.4 856 109.8 852 110.1 848 109.3 844 109.3 840 108.7 836 106.7 832 106.3 828 106 824 104.8 820 102.4 816 101.7 812 96.3 808 94.4 804 93.3 800 93.6 796 93.9 792 94.1 788 95.6 784 98.8 780 101.4 776 104.3 772 107.1 768 104.9 764 105.3 760 108 756 106.3 752 104.7 748 103.9 744 104.1 740 104.1 736 105.7 732 107.2 728 106.7 724 108.3 720 108.9 716 109 712 110.2 708 110.1 704 110.6 700 108.8 696 107.1 692 106 688 105.6 684 104.3 680 105.1 676 105.3 672 103.8 668 102.7 664 104.1 660 107 656 109.1 652 111 648 114.1 644 116.4 640 118.7 636 121 632 124 628 128.2 624 129.6 620 131.1 616 132.8 612 134.9 608 135.7 604 134.7 600 134.4 596 134 592 135.4 588 138.5 584 140.9 580 141.7 576 142.6 572 143.4 568 145.2 564 146.2 560 146.4 556 146.9 552 146.5 548 147.1 544 145.9 540 146.8 536 146.7 532 139.7 528 138.5 524 138.4 520 138.9 516 141.6 512 143 508 142.3 504 141.8 500 140.6 496 141.4 492 142.1 488 141.7 484 140.1 480 138.6 476 137.5 472 136.4 468 134.8 464 132.6 460 132.5 456 133 452 134 448 135.1 444 136.3 440 136.4 436 134.6 432 134.7 428 134.6 424 133.7 420 134.4 416 134.2 412 135.1 408 134.7 404 135.9 400 134.4 396 136.1 392 137.5 388 138.5 384 139 380 138.9 376 137.1 372 136.7 368 135.8 364 135.5 360 136.2 356 134.7 352 132.7 348 126.2 344 125.5 340 125.1 336 125 332 126.3 328 125.1 324 123.7 320 122.6 316 123.2 312 124.1 308 125.6 304 128.1 300 130.1 296 130.1 292 129 288 129.5 284 129.4 280 129.6 276 130.1 272 131.7 268 132.8 264 131.2 260 129.4 256 129.9 252 133.9 248 136.9 244 138.2 240 141.7 236 144.1 232 143.5 228 141.9 224 142.6 220 143.9 216 146.7 212 150.9 208 153.8 204 154.3 200 154.8 196 152.8 192 151.2 188 148 184 145.2 180 144.2 176 145.8 172 145.7 168 145.9 164 145 160 142.9 156 141.4 152 143.6 148 140.5 144 141.3 140 141.2 136 139.5 132 137.6 128 137 124 135.8 120 133.1 116 132.5 112 133.8 108 133.6 104 133.2 100 130.6 96 128.8 92 128.8 88 129.4 84 130 80 130.6 76 129.7 72 129.3 68 129.8 64 129.3 60 127.4 56 127 52 126.5 48 127 44 128.1 40 129.1 36 129.9 32 130.2 28 131.2 24 135.4 20 136.5 16 138.1 12 141.7 8 141.8 4 142.8 0 144.1 Z' fill='%23fff'/%3E%3C/svg%3E");
+  --audience-edge-bottom-line: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath d='M0 144.1 4 142.8 8 141.8 12 141.7 16 138.1 20 136.5 24 135.4 28 131.2 32 130.2 36 129.9 40 129.1 44 128.1 48 127 52 126.5 56 127 60 127.4 64 129.3 68 129.8 72 129.3 76 129.7 80 130.6 84 130 88 129.4 92 128.8 96 128.8 100 130.6 104 133.2 108 133.6 112 133.8 116 132.5 120 133.1 124 135.8 128 137 132 137.6 136 139.5 140 141.2 144 141.3 148 140.5 152 143.6 156 141.4 160 142.9 164 145 168 145.9 172 145.7 176 145.8 180 144.2 184 145.2 188 148 192 151.2 196 152.8 200 154.8 204 154.3 208 153.8 212 150.9 216 146.7 220 143.9 224 142.6 228 141.9 232 143.5 236 144.1 240 141.7 244 138.2 248 136.9 252 133.9 256 129.9 260 129.4 264 131.2 268 132.8 272 131.7 276 130.1 280 129.6 284 129.4 288 129.5 292 129 296 130.1 300 130.1 304 128.1 308 125.6 312 124.1 316 123.2 320 122.6 324 123.7 328 125.1 332 126.3 336 125 340 125.1 344 125.5 348 126.2 352 132.7 356 134.7 360 136.2 364 135.5 368 135.8 372 136.7 376 137.1 380 138.9 384 139 388 138.5 392 137.5 396 136.1 400 134.4 404 135.9 408 134.7 412 135.1 416 134.2 420 134.4 424 133.7 428 134.6 432 134.7 436 134.6 440 136.4 444 136.3 448 135.1 452 134 456 133 460 132.5 464 132.6 468 134.8 472 136.4 476 137.5 480 138.6 484 140.1 488 141.7 492 142.1 496 141.4 500 140.6 504 141.8 508 142.3 512 143 516 141.6 520 138.9 524 138.4 528 138.5 532 139.7 536 146.7 540 146.8 544 145.9 548 147.1 552 146.5 556 146.9 560 146.4 564 146.2 568 145.2 572 143.4 576 142.6 580 141.7 584 140.9 588 138.5 592 135.4 596 134 600 134.4 604 134.7 608 135.7 612 134.9 616 132.8 620 131.1 624 129.6 628 128.2 632 124 636 121 640 118.7 644 116.4 648 114.1 652 111 656 109.1 660 107 664 104.1 668 102.7 672 103.8 676 105.3 680 105.1 684 104.3 688 105.6 692 106 696 107.1 700 108.8 704 110.6 708 110.1 712 110.2 716 109 720 108.9 724 108.3 728 106.7 732 107.2 736 105.7 740 104.1 744 104.1 748 103.9 752 104.7 756 106.3 760 108 764 105.3 768 104.9 772 107.1 776 104.3 780 101.4 784 98.8 788 95.6 792 94.1 796 93.9 800 93.6 804 93.3 808 94.4 812 96.3 816 101.7 820 102.4 824 104.8 828 106 832 106.3 836 106.7 840 108.7 844 109.3 848 109.3 852 110.1 856 109.8 860 109.4 864 107.1 868 104.6 872 101.5 876 98.9 880 97 884 94.8 888 93.2 892 89.6 896 88.2 900 87.9 904 87.4 908 86.5 912 85.5 916 84.6 920 83.6 924 82.7 928 79.4 932 77.3 936 75.2 940 75 944 74.2 948 73.5 952 73.8 956 73.7 960 73.1 964 72.8 968 73.4 972 74.1 976 75 980 74.4 984 73.9 988 73.5 992 72.8 996 72.1 1000 70.9 1004 69.6 1008 69.6 1012 68.8 1016 67.3 1020 66.1 1024 65.1 1028 64.2 1032 63.1 1036 62.8 1040 62.7 1044 61.8 1048 61.8 1052 62.9 1056 63.7 1060 63.8 1064 62.8 1068 60.9 1072 58.7 1076 58.5 1080 57.2 1084 55.4 1088 53.4 1092 51.3 1096 48.9 1100 48.5 1104 49 1108 49.6 1112 49.7 1116 49 1120 49.3 1124 48.2 1128 46.4 1132 44 1136 42.6 1140 42.5 1144 43.2 1148 43.8 1152 42.5 1156 43.3 1160 42.7 1164 42.9 1168 43.1 1172 42.5 1176 40.5 1180 37.3 1184 38.4 1188 36.1 1192 34.1 1196 33.5 1200 34.2' stroke='%23FFA86E' stroke-opacity='.95' stroke-width='1.1' fill='none' stroke-linecap='round' stroke-linejoin='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
   position: relative;
   z-index: 7;
   min-height: 100svh;
@@ -1214,18 +1219,18 @@ main:focus {
   -webkit-mask:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath d='M0 94 C36.8 94.7 149 97.7 221 98 C293 98.3 370.7 100.3 432 96 C493.3 91.7 536.7 79.5 589 72 C641.3 64.5 691.3 58.3 746 51 C800.7 43.7 865 32.5 917 28 C969 23.5 1016.8 27.7 1058 24 C1099.2 20.3 1140.3 9.8 1164 6 C1187.7 2.2 1194 1.8 1200 1 L1200 160 L0 160 Z' fill='%23fff'/%3E%3C/svg%3E") top / 100% var(--audience-cut-depth) no-repeat,
     linear-gradient(#fff, #fff) 0 calc(var(--audience-cut-depth) - 1px) / 100% calc(100% - var(--audience-cut-depth) * 2 + 2px) no-repeat,
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath d='M0 0 L1200 0 L1186 51 L1164 46 L1130 67 L1096 59 L1058 76 L1004 73 L971 84 L917 80 L858 98 L817 94 L746 103 L701 121 L652 116 L589 124 L552 141 L506 138 L432 148 L398 153 L318 149 L221 150 L137 146 L52 147 L0 146 Z' fill='%23fff'/%3E%3C/svg%3E") bottom / 100% var(--audience-cut-depth) no-repeat;
+    var(--audience-edge-bottom) bottom / 100% var(--audience-cut-depth) no-repeat;
   mask:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath d='M0 94 C36.8 94.7 149 97.7 221 98 C293 98.3 370.7 100.3 432 96 C493.3 91.7 536.7 79.5 589 72 C641.3 64.5 691.3 58.3 746 51 C800.7 43.7 865 32.5 917 28 C969 23.5 1016.8 27.7 1058 24 C1099.2 20.3 1140.3 9.8 1164 6 C1187.7 2.2 1194 1.8 1200 1 L1200 160 L0 160 Z' fill='%23fff'/%3E%3C/svg%3E") top / 100% var(--audience-cut-depth) no-repeat,
     linear-gradient(#fff, #fff) 0 calc(var(--audience-cut-depth) - 1px) / 100% calc(100% - var(--audience-cut-depth) * 2 + 2px) no-repeat,
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath d='M0 0 L1200 0 L1186 51 L1164 46 L1130 67 L1096 59 L1058 76 L1004 73 L971 84 L917 80 L858 98 L817 94 L746 103 L701 121 L652 116 L589 124 L552 141 L506 138 L432 148 L398 153 L318 149 L221 150 L137 146 L52 147 L0 146 Z' fill='%23fff'/%3E%3C/svg%3E") bottom / 100% var(--audience-cut-depth) no-repeat;
+    var(--audience-edge-bottom) bottom / 100% var(--audience-cut-depth) no-repeat;
 }
 
 .audience-intro::after {
   z-index: 1;
   /* the top edge is a route, not a tear: the same smooth warm line and glow
      as the hero trail, because the connector dots ride on it. The bottom
-     edge carries no dots and stays a torn ridge. */
+     edge carries no dots and is a ridge, drawn like How We Work's. */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath d='M0 94 C36.8 94.7 149 97.7 221 98 C293 98.3 370.7 100.3 432 96 C493.3 91.7 536.7 79.5 589 72 C641.3 64.5 691.3 58.3 746 51 C800.7 43.7 865 32.5 917 28 C969 23.5 1016.8 27.7 1058 24 C1099.2 20.3 1140.3 9.8 1164 6 C1187.7 2.2 1194 1.8 1200 1' stroke='%23FFA86E' stroke-opacity='.95' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   filter: drop-shadow(0 0 5px var(--trail-glow));
 }
@@ -1238,8 +1243,18 @@ main:focus {
   pointer-events: none;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath d='M0 146 L52 147 L137 146 L221 150 L318 149 L398 153 L432 148 L506 138 L552 141 L589 124 L652 116 L701 121 L746 103 L817 94 L858 98 L917 80 L971 84 L1004 73 L1058 76 L1096 59 L1130 67 L1164 46 L1186 51 L1200 0' stroke='%23FFA86E' stroke-opacity='.78' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  opacity: 0.72;
+  background-image: var(--audience-edge-bottom-line);
+  filter: drop-shadow(0 0 5px var(--trail-glow));
+}
+
+/* A phone squeezes the whole 1200-unit edge into 390px, which would crowd
+   the ridge's steps into a fuzz: it takes the same rise with the steps of a
+   narrower stretch of the ridge, as broad on screen as How We Work's. */
+@media (max-width: 767px) {
+  .audience-intro {
+    --audience-edge-bottom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath d='M0 0 L1200 0 L1200 24.8 1196 26.9 1192 28.9 1188 31.2 1184 33.7 1180 38.2 1176 40.2 1172 42 1168 44.8 1164 47.5 1160 49.6 1156 51.8 1152 53.9 1148 56 1144 58.4 1140 60 1136 62.9 1132 65 1128 66.8 1124 68.7 1120 70.3 1116 71.2 1112 72.1 1108 72.9 1104 73.7 1100 74 1096 74.3 1092 74.9 1088 75.4 1084 75.9 1080 76 1076 75.7 1072 75.3 1068 74.9 1064 75.9 1060 76.2 1056 76.5 1052 76.5 1048 76.3 1044 75.1 1040 75.1 1036 75.7 1032 75.2 1028 72.9 1024 71.4 1020 70.1 1016 70.4 1012 70.4 1008 70 1004 70.6 1000 70.8 996 71.1 992 71.6 988 72 984 72.2 980 72.9 976 74 972 75.4 968 77.1 964 78.4 960 79.8 956 81.6 952 82.7 948 84.8 944 85.5 940 84.4 936 84 932 84.1 928 84.8 924 86.1 920 87.4 916 87.4 912 86.4 908 86 904 85.4 900 85.3 896 85.2 892 84.8 888 85.7 884 86.1 880 86.1 876 86.9 872 87.9 868 88.5 864 89.6 860 90.1 856 89.6 852 90.5 848 91.4 844 92.1 840 92.4 836 92.8 832 93.1 828 93.8 824 94.6 820 95.4 816 95 812 95.5 808 96 804 95.2 800 95.1 796 95.1 792 94.2 788 94 784 93.8 780 93.9 776 94.1 772 93.7 768 93.7 764 94.5 760 94.9 756 95.1 752 95.7 748 95.9 744 95.1 740 95 736 94.8 732 95.7 728 96.6 724 98.5 720 99.8 716 100.9 712 102.1 708 103.3 704 104.4 700 105.5 696 107.7 692 109 688 110.3 684 111.6 680 112.9 676 114.2 672 115.5 668 116.9 664 118.7 660 120.6 656 122.8 652 123.7 648 124.6 644 125.6 640 126.5 636 127.5 632 128.6 628 129.9 624 131.1 620 132.1 616 132.6 612 132.5 608 132.5 604 132.6 600 133 596 132.8 592 133.3 588 134 584 135.2 580 136.8 576 138.3 572 139.5 568 140.7 564 141.5 560 141.8 556 142.4 552 142.8 548 143.3 544 143.8 540 144.5 536 145.5 532 146.1 528 146.6 524 147 520 146.9 516 147.3 512 147.6 508 147.2 504 147.5 500 147.8 496 148.2 492 147.8 488 147.3 484 148 480 148.3 476 148.4 472 148.3 468 143.7 464 142.7 460 142.7 456 141.9 452 141.8 448 142 444 142.3 440 142.7 436 143.8 432 145.1 428 146.4 424 146.4 420 146.1 416 145.9 412 145.7 408 145.5 404 145 400 144.3 396 144.5 392 144.8 388 145.1 384 145.2 380 145.3 376 144.7 372 143.7 368 143.1 364 142.4 360 141.6 356 141.1 352 140.5 348 140 344 139.4 340 138.6 336 137.8 332 136.5 328 135.7 324 135.5 320 135.3 316 135.4 312 135.5 308 135.7 304 136.1 300 136.2 296 136.7 292 137.2 288 137.5 284 137.7 280 137.3 276 135.4 272 135.5 268 134.5 264 135.4 260 135.3 256 135.1 252 135 248 134.1 244 134.1 240 134.5 236 134.8 232 134.2 228 133.9 224 134.7 220 135.2 216 134.3 212 135 208 135.2 204 134.5 200 133.8 196 134.7 192 135.1 188 135.5 184 136.2 180 136.2 176 137.1 172 137.3 168 137.4 164 137.3 160 137.2 156 136 152 135.7 148 135.2 144 135.4 140 135.1 136 134.6 132 134 128 134.3 124 135.4 120 134.9 116 134.4 112 133.8 108 133.1 104 132.1 100 129.5 96 126.7 92 126.4 88 126.1 84 125.8 80 125.8 76 125.8 72 125.8 68 126.1 64 126.9 60 126.9 56 125.9 52 124.9 48 124.8 44 124.4 40 123.9 36 124.1 32 124.4 28 124.8 24 125.2 20 125.7 16 126.5 12 128.1 8 128.6 4 130.1 0 130.3 Z' fill='%23fff'/%3E%3C/svg%3E");
+    --audience-edge-bottom-line: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath d='M0 130.3 4 130.1 8 128.6 12 128.1 16 126.5 20 125.7 24 125.2 28 124.8 32 124.4 36 124.1 40 123.9 44 124.4 48 124.8 52 124.9 56 125.9 60 126.9 64 126.9 68 126.1 72 125.8 76 125.8 80 125.8 84 125.8 88 126.1 92 126.4 96 126.7 100 129.5 104 132.1 108 133.1 112 133.8 116 134.4 120 134.9 124 135.4 128 134.3 132 134 136 134.6 140 135.1 144 135.4 148 135.2 152 135.7 156 136 160 137.2 164 137.3 168 137.4 172 137.3 176 137.1 180 136.2 184 136.2 188 135.5 192 135.1 196 134.7 200 133.8 204 134.5 208 135.2 212 135 216 134.3 220 135.2 224 134.7 228 133.9 232 134.2 236 134.8 240 134.5 244 134.1 248 134.1 252 135 256 135.1 260 135.3 264 135.4 268 134.5 272 135.5 276 135.4 280 137.3 284 137.7 288 137.5 292 137.2 296 136.7 300 136.2 304 136.1 308 135.7 312 135.5 316 135.4 320 135.3 324 135.5 328 135.7 332 136.5 336 137.8 340 138.6 344 139.4 348 140 352 140.5 356 141.1 360 141.6 364 142.4 368 143.1 372 143.7 376 144.7 380 145.3 384 145.2 388 145.1 392 144.8 396 144.5 400 144.3 404 145 408 145.5 412 145.7 416 145.9 420 146.1 424 146.4 428 146.4 432 145.1 436 143.8 440 142.7 444 142.3 448 142 452 141.8 456 141.9 460 142.7 464 142.7 468 143.7 472 148.3 476 148.4 480 148.3 484 148 488 147.3 492 147.8 496 148.2 500 147.8 504 147.5 508 147.2 512 147.6 516 147.3 520 146.9 524 147 528 146.6 532 146.1 536 145.5 540 144.5 544 143.8 548 143.3 552 142.8 556 142.4 560 141.8 564 141.5 568 140.7 572 139.5 576 138.3 580 136.8 584 135.2 588 134 592 133.3 596 132.8 600 133 604 132.6 608 132.5 612 132.5 616 132.6 620 132.1 624 131.1 628 129.9 632 128.6 636 127.5 640 126.5 644 125.6 648 124.6 652 123.7 656 122.8 660 120.6 664 118.7 668 116.9 672 115.5 676 114.2 680 112.9 684 111.6 688 110.3 692 109 696 107.7 700 105.5 704 104.4 708 103.3 712 102.1 716 100.9 720 99.8 724 98.5 728 96.6 732 95.7 736 94.8 740 95 744 95.1 748 95.9 752 95.7 756 95.1 760 94.9 764 94.5 768 93.7 772 93.7 776 94.1 780 93.9 784 93.8 788 94 792 94.2 796 95.1 800 95.1 804 95.2 808 96 812 95.5 816 95 820 95.4 824 94.6 828 93.8 832 93.1 836 92.8 840 92.4 844 92.1 848 91.4 852 90.5 856 89.6 860 90.1 864 89.6 868 88.5 872 87.9 876 86.9 880 86.1 884 86.1 888 85.7 892 84.8 896 85.2 900 85.3 904 85.4 908 86 912 86.4 916 87.4 920 87.4 924 86.1 928 84.8 932 84.1 936 84 940 84.4 944 85.5 948 84.8 952 82.7 956 81.6 960 79.8 964 78.4 968 77.1 972 75.4 976 74 980 72.9 984 72.2 988 72 992 71.6 996 71.1 1000 70.8 1004 70.6 1008 70 1012 70.4 1016 70.4 1020 70.1 1024 71.4 1028 72.9 1032 75.2 1036 75.7 1040 75.1 1044 75.1 1048 76.3 1052 76.5 1056 76.5 1060 76.2 1064 75.9 1068 74.9 1072 75.3 1076 75.7 1080 76 1084 75.9 1088 75.4 1092 74.9 1096 74.3 1100 74 1104 73.7 1108 72.9 1112 72.1 1116 71.2 1120 70.3 1124 68.7 1128 66.8 1132 65 1136 62.9 1140 60 1144 58.4 1148 56 1152 53.9 1156 51.8 1160 49.6 1164 47.5 1168 44.8 1172 42 1176 40.2 1180 38.2 1184 33.7 1188 31.2 1192 28.9 1196 26.9 1200 24.8' stroke='%23FFA86E' stroke-opacity='.95' stroke-width='1.1' fill='none' stroke-linecap='round' stroke-linejoin='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+  }
 }
 
 .audience-intro__grid {
@@ -2985,8 +3000,8 @@ main:focus {
 /* ── Between-member connecting trail ─────────────────── */
 
 /*
-  A jagged warm line + pulsing waypoint dot connects each member feature,
-  mirroring the site's ascent / stock-chart trail motif.
+  The site's ridge line (profile A of the section trails) + pulsing waypoint
+  dot connects each member feature.
 */
 .member-trail {
   position: relative;
@@ -3000,12 +3015,11 @@ main:focus {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0 78 L46 74 L92 84 L150 60 L196 68 L250 44 L300 56 L356 32 L410 50 L470 38 L540 64 L598 52 L660 70 L712 46 L772 58 L838 34 L902 52 L968 28 L1032 48 L1092 36 L1146 58 L1200 50' stroke='%23FFA86E' stroke-opacity='.92' stroke-width='1.1' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image: var(--trail-ridge-a);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
   filter: drop-shadow(0 0 5px var(--trail-glow));
-  opacity: 0.82;
   clip-path: inset(0 100% 0 0);
   transition: clip-path 1.4s var(--ease-out);
 }
@@ -3014,12 +3028,12 @@ main:focus {
   clip-path: inset(0 0 0 0);
 }
 
-/* Waypoint dot — peak of the jagged path near x=968/1200 */
+/* Waypoint dot — on the summit of the ridge path, (968, 21.3) of 1200 x 120 */
 .member-trail__dot {
   position: absolute;
   z-index: 2;
-  left: 80.67%;
-  top: 23.3%;
+  left: 80.667%;
+  top: 17.75%;
   margin: calc(var(--marker-size) / -2) 0 0 calc(var(--marker-size) / -2);
   width: var(--marker-size);
   height: var(--marker-size);
@@ -3894,12 +3908,23 @@ a.contact-channels__value:focus-visible {
   }
 }
 
-/* ---------- SECTION TRAIL (stock-chart divider, homepage parity) ----------
-   Reuses the homepage trail's visual language — uneven jagged "stock chart"
-   line in warm orange, soft glow, a pulsing checkpoint dot, and a
-   left-to-right draw-in as the section scrolls into view. Placed at the top
-   of dark sections that follow a photo break, so the line emerges from the
-   image into the content like the hero trail emerges from the ridge. */
+/* ---------- SECTION TRAIL (ridge divider) ----------
+   The How We Work line at divider height: the same real ridge profile,
+   sampled as densely, with its long climb levelled out so it runs across
+   the band - gentle slopes and the small irregular steps of rock, never a
+   straight run or a sharp zigzag.
+   It takes the same warm line, 1.1px at every width and the same glow,
+   a pulsing checkpoint dot on a summit, and a left-to-right draw-in as the
+   section scrolls into view. Placed at the top of dark sections that follow
+   a photo break, so the line emerges from the image into the content like
+   the hero trail emerges from the ridge. Two profiles, so the chapters of
+   one page do not repeat each other: A climbs to its summit four-fifths
+   across (Our Team's trails too), B, the ridge mirrored, comes down from
+   its summit near the left edge. */
+:root {
+  --trail-ridge-a: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0 68.5 4 68.9 8 68.6 12 65.3 16 66.8 20 67.2 24 65.8 28 64.3 32 62.1 36 61 40 59.1 44 57.8 48 57.3 52 55.2 56 53.3 60 52.1 64 52.1 68 53.6 72 53.9 76 55.3 80 54.2 84 53.3 88 53.3 92 52 96 50.5 100 49.1 104 48.3 108 49.8 112 51.3 116 52.6 120 53.9 124 54.8 128 55.1 132 54.9 136 56.4 140 57.7 144 58.3 148 57.9 152 56.7 156 55 160 53.2 164 53.5 168 53.7 172 53.3 176 53.1 180 53.7 184 54.2 188 54.6 192 55.4 196 56.2 200 57.3 204 57.2 208 56.9 212 57.9 216 58.7 220 59 224 59.3 228 59.3 232 59.3 236 59.7 240 59.1 244 57.9 248 56.8 252 55.8 256 55.8 260 56 264 56 268 54.4 272 55.6 276 55.2 280 56.1 284 56 288 58 292 59.7 296 62.9 300 63.5 304 64.1 308 64.7 312 65.3 316 65.9 320 66.5 324 66.4 328 66.4 332 67.6 336 71.1 340 71.8 344 74.2 348 75.7 352 77.3 356 79.2 360 82.7 364 84.7 368 86.1 372 85.9 376 85.8 380 84.3 384 83.9 388 83.3 392 81 396 78.3 400 78.4 404 77.4 408 75.2 412 72.6 416 71.2 420 66.5 424 61.7 428 60.5 432 60 436 59.3 440 59.2 444 58.8 448 60.1 452 63 456 65 460 67.5 464 70 468 67.3 472 66.3 476 67.8 480 68.5 484 65.2 488 62.9 492 61.9 496 61.8 500 61.2 504 61.9 508 62.6 512 62.9 516 62.3 520 63.2 524 62.7 528 62.4 532 63 536 62 540 61.8 544 59.3 548 57 552 55.2 556 53.7 560 52.2 564 51.3 568 50.9 572 50.7 576 48.3 580 46.2 584 47 588 49.2 592 50.6 596 52 600 53.1 604 56 608 57.7 612 59.3 616 60.9 620 63.4 624 67.2 628 68 632 68.8 636 69.6 640 70.8 644 72 648 71.3 652 69.7 656 68.7 660 67.5 664 67.8 668 70.2 672 72.2 676 73.4 680 73.4 684 73.5 688 73.8 692 75.2 696 75.6 700 75.3 704 75.7 708 74.2 712 74.3 716 73.5 720 72.9 724 72.7 728 71.2 732 63.8 736 62 740 61.4 744 61.4 748 63.1 752 65.6 756 64.3 760 63.3 764 62.3 768 60.8 772 61.3 776 61.5 780 61 784 58.6 788 56.8 792 55.1 796 53.6 800 51.8 804 49.5 808 47.2 812 46.6 816 46.8 820 47.3 824 47.4 828 48.7 832 48.9 836 45.7 840 44.1 844 45.4 848 44.6 852 42.7 856 43.3 860 42.9 864 42.8 868 43.2 872 43.3 876 42.2 880 41.7 884 42.7 888 43.6 892 44.5 896 44.6 900 44.1 904 42.2 908 40.8 912 40 916 38.4 920 40 924 38.4 928 36.8 932 34.2 936 26.8 940 25.8 944 25.1 948 24.9 952 25.3 956 25.9 960 23.2 964 22.6 968 21.3 972 22.1 976 23.1 980 24.2 984 27.2 988 29.7 992 29.9 996 29.7 1000 28.2 1004 29.5 1008 29.5 1012 30 1016 30.7 1020 32.3 1024 34.2 1028 33.2 1032 31.3 1036 32 1040 33.5 1044 36.9 1048 40.4 1052 41.7 1056 45.4 1060 48.1 1064 48.2 1068 46.4 1072 45.8 1076 48.2 1080 49.9 1084 53.2 1088 57.5 1092 60.1 1096 60.7 1100 61.3 1104 59.7 1108 57.7 1112 54.6 1116 53.3 1120 49.7 1124 50.1 1128 51.7 1132 51.1 1136 51.4 1140 50.4 1144 48.2 1148 45.5 1152 47.6 1156 44.7 1160 45.4 1164 46.2 1168 45.4 1172 43.5 1176 41.6 1180 40.8 1184 40.2 1188 36.6 1192 36 1196 35.8 1200 37.2' stroke='%23FFA86E' stroke-opacity='.95' stroke-width='1.1' fill='none' stroke-linecap='round' stroke-linejoin='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+  --trail-ridge-b: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0 46.2 4 47.8 8 51.2 12 52.3 16 54.8 20 55.3 24 54.9 28 54.5 32 52.2 36 48.4 40 45.5 44 43.3 48 42.2 52 41 56 42.1 60 43.9 64 43.2 68 41 72 38.4 76 36.4 80 33.9 84 31.7 88 27.5 92 28 96 27.8 100 29.6 104 30.5 108 29.2 112 27.4 116 26.7 120 26.1 124 26 128 26 132 25 136 26.3 140 26.4 144 26.3 148 24.2 152 22.6 156 20.3 160 19.3 164 18.6 168 18.1 172 19.4 176 20 180 22.4 184 22.7 188 21.8 192 22.2 196 22.5 200 23.5 204 26 208 31.9 212 34.3 216 35.9 220 37.5 224 36.1 228 37.2 232 38.6 236 38.9 240 40.3 244 42.2 248 42.7 252 42.7 256 41.7 260 41.2 264 40.6 268 39.1 272 40.9 276 41.2 280 41.5 284 41 288 40.7 292 41.6 296 41.1 300 42.6 304 42.9 308 43.5 312 41.9 316 44.2 320 47 324 46.9 328 46.3 332 45.6 336 45.1 340 44.9 344 45.1 348 45.6 352 48 356 50 360 51.7 364 53.1 368 54.5 372 56.3 376 57.8 380 60.2 384 60.2 388 59.9 392 59.6 396 60.8 400 61.8 404 62.8 408 63.9 412 63.6 416 61.5 420 60.4 424 60.6 428 61.1 432 63 436 66.6 440 72.2 444 72.5 448 71.9 452 73.6 456 73.9 460 73.9 464 75.3 468 74.9 472 75.5 476 75.3 480 74.4 484 73.6 488 73.5 492 73.3 496 73.5 500 72.4 504 70.8 508 68.8 512 67.8 516 68 520 69.5 524 70.6 528 72.3 532 72.6 536 71.5 540 70.4 544 69.8 548 69.1 552 68.5 556 65.9 560 63.6 564 61.7 568 60.3 572 58.9 576 57.5 580 55.6 584 53.8 588 52.7 592 51.5 596 50.3 600 48.3 604 47.7 608 49.7 612 52.3 616 52.4 620 53.3 624 52.8 628 55.1 632 55.9 636 57.5 640 59.5 644 61.4 648 63.9 652 64.1 656 65.5 660 65 664 64.7 668 65.2 672 65.7 676 64.8 680 65.3 684 65.5 688 64.9 692 63.9 696 64.5 700 64.1 704 65.7 708 66.3 712 68.3 716 71.5 720 71 724 69.3 728 70.1 732 72.3 736 72.9 740 70.6 744 68.1 748 66.3 752 63.8 756 62.5 760 62.7 764 63 768 63.2 772 63.8 776 65.1 780 65.6 784 70.6 788 75.1 792 76.7 796 77.8 800 80.8 804 82.2 808 83 812 82.7 816 85.8 820 87.8 824 88.4 828 88.8 832 90.1 836 90.5 840 90.7 844 90.6 848 88.9 852 87.3 856 84.1 860 82.5 864 80.9 868 79.6 872 78.7 876 76.2 880 76.2 884 72.5 888 71.7 892 71.8 896 71.9 900 71.5 904 71 908 70.5 912 70.1 916 69.6 920 69.1 924 68.5 928 65.5 932 64 936 62.3 940 61.9 944 61.7 948 61.4 952 61.7 956 61.1 960 62.3 964 62.3 968 62.2 972 62.1 976 63 980 64 984 65.1 988 66.3 992 66.3 996 66.1 1000 66.1 1004 66.2 1008 66 1012 65.8 1016 65.3 1020 64.6 1024 64 1028 64.5 1032 64.4 1036 63.5 1040 62.8 1044 62.1 1048 61.8 1052 61.5 1056 61 1060 60.7 1064 61.1 1068 61.6 1072 61.3 1076 61.1 1080 62.6 1084 64.2 1088 65.5 1092 66.3 1096 66.5 1100 65.6 1104 64.4 1108 63.1 1112 63.4 1116 63.3 1120 62.7 1124 61.6 1128 60.5 1132 59.4 1136 58 1140 57.1 1144 57.9 1148 59.2 1152 60.6 1156 61.9 1160 62.2 1164 62.7 1168 63.9 1172 64.5 1176 63.1 1180 62.7 1184 61.4 1188 61.4 1192 62.2 1196 63.9 1200 65.9' stroke='%23FFA86E' stroke-opacity='.95' stroke-width='1.1' fill='none' stroke-linecap='round' stroke-linejoin='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+}
 
 .has-trail {
   position: relative;
@@ -3918,7 +3943,6 @@ a.contact-channels__value:focus-visible {
   background-position: center top;
   background-size: 100% 100%;
   filter: drop-shadow(0 0 5px var(--trail-glow));
-  opacity: 0.82;
   /* draw-in: reveal the line left → right */
   clip-path: inset(0 100% 0 0);
   transition: clip-path 1.5s var(--ease-out) var(--reveal-delay, 0ms);
@@ -3929,11 +3953,11 @@ a.contact-channels__value:focus-visible {
 }
 
 .has-trail--a::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0 78 L46 74 L92 84 L150 60 L196 68 L250 44 L300 56 L356 32 L410 50 L470 38 L540 64 L598 52 L660 70 L712 46 L772 58 L838 34 L902 52 L968 28 L1032 48 L1092 36 L1146 58 L1200 50' stroke='%23FFA86E' stroke-opacity='.92' stroke-width='1.1' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image: var(--trail-ridge-a);
 }
 
 .has-trail--b::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0 44 L54 40 L110 52 L168 36 L220 54 L286 42 L342 60 L408 48 L470 66 L532 52 L598 70 L660 56 L726 74 L792 60 L856 78 L922 64 L988 82 L1052 68 L1112 86 L1170 72 L1200 80' stroke='%23FFA86E' stroke-opacity='.92' stroke-width='1.1' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image: var(--trail-ridge-b);
 }
 
 /* Pulsing checkpoint dot riding on the line — mirrors .hero-trail-point */
@@ -3955,17 +3979,18 @@ a.contact-channels__value:focus-visible {
   opacity: 1;
 }
 
-/* Dot positions map 1:1 to the stretched SVG (left = x/1200, top = y/120) */
+/* Dot positions map 1:1 to the stretched SVG (left = x/1200, top = y/120):
+   each sits on a vertex of its path, the summit of the profile */
 .has-trail--a .has-trail__dot {
-  /* peak at (968, 28) */
-  left: 80.67%;
-  top: calc(0.2333 * clamp(72px, 9vw, 120px));
+  /* summit at (968, 21.3) */
+  left: 80.667%;
+  top: calc(0.1775 * clamp(72px, 9vw, 120px));
 }
 
 .has-trail--b .has-trail__dot {
-  /* peak at (168, 36) */
+  /* summit at (168, 18.1) */
   left: 14%;
-  top: calc(0.3 * clamp(72px, 9vw, 120px));
+  top: calc(0.15083 * clamp(72px, 9vw, 120px));
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -4494,7 +4519,7 @@ a.contact-channels__value:focus-visible {
 }
 
 /* The site's trail crosses from the hero into the areas, as it runs between
-   About's sections: the jagged line sits astride the seam - on the ridge's
+   About's sections: the ridge line sits astride the seam - on the ridge's
    dark foot and clear of the heading - with its checkpoint over the right
    column. */
 .page--expertise .ex-areas.has-trail::before {
@@ -4502,7 +4527,7 @@ a.contact-channels__value:focus-visible {
 }
 
 .page--expertise .ex-areas .has-trail__dot {
-  top: calc(clamp(72px, 9vw, 120px) * (0.2333 - 0.5));
+  top: calc(clamp(72px, 9vw, 120px) * (0.1775 - 0.5));
 }
 
 /* === fb-expertise: Our Areas, the Figma master-detail as click-through tabs ===
@@ -4935,9 +4960,9 @@ a.contact-channels__value:focus-visible {
 }
 
 /* A phone draws half of the seam's trail across its width, as About draws
-   its chapter trails: the whole 1200-unit line squeezed into 390px was a
-   comb of spikes over the heading. The checkpoint follows its peak
-   (968, 28) into the half that shows: (968 - 600) / 600. */
+   its chapter trails: the whole 1200-unit ridge squeezed into 390px would
+   crowd its steps into a fuzz. The checkpoint follows its summit
+   (968, 21.3) into the half that shows: (968 - 600) / 600. */
 @media (max-width: 767px) {
   .page--expertise .ex-areas.has-trail--a::before {
     background-size: 200% 100%;
@@ -4945,7 +4970,7 @@ a.contact-channels__value:focus-visible {
   }
 
   .page--expertise .ex-areas .has-trail__dot {
-    left: 61.33%;
+    left: 61.333%;
   }
 }
 
@@ -10227,17 +10252,17 @@ main {
 
 /* ---------- shared: trails ---------- */
 /* A phone draws half of each chapter trail across its width: the whole
-   1200-unit line squeezed into 390px was a comb of spikes. The checkpoint
-   follows its peak into the half that shows. */
+   1200-unit ridge squeezed into 390px would crowd its steps into a fuzz.
+   The checkpoint follows its summit into the half that shows. */
 @media (max-width: 767px) {
   .page--about .has-trail--a::before {
     background-size: 200% 100%;
     background-position: 100% 0;
   }
 
-  /* peak (968, 28): (968 - 600) / 600 */
+  /* summit (968, 21.3): (968 - 600) / 600 */
   .page--about .has-trail--a .has-trail__dot {
-    left: 61.33%;
+    left: 61.333%;
   }
 
   .page--about .has-trail--b::before {
@@ -10245,7 +10270,7 @@ main {
     background-position: 0 0;
   }
 
-  /* peak (168, 36): 168 / 600 */
+  /* summit (168, 18.1): 168 / 600 */
   .page--about .has-trail--b .has-trail__dot {
     left: 28%;
   }
@@ -11915,19 +11940,20 @@ main {
 }
 
 /* A phone draws half of the trail across its width: the whole 1200-unit
-   line squeezed into 350px is a comb of spikes. The checkpoint follows its
-   peak into the half that shows. The portraits alternate sides here, so
-   the trail does too: the one that leads to a portrait on the left is
-   mirrored, and each checkpoint stands on the side of the next portrait. */
+   ridge squeezed into 350px would crowd its steps into a fuzz. The
+   checkpoint follows its summit into the half that shows. The portraits
+   alternate sides here, so the trail does too: the one that leads to a
+   portrait on the left is mirrored, and each checkpoint stands on the side
+   of the next portrait. */
 @media (max-width: 767px) {
   .page--team .member-trail::before {
     background-size: 200% 100%;
     background-position: 100% 0;
   }
 
-  /* peak (968, 28): (968 - 600) / 600 */
+  /* summit (968, 21.3): (968 - 600) / 600 */
   .page--team .member-trail__dot {
-    left: 61.33%;
+    left: 61.333%;
   }
 
   .page--team .member--reverse + .member-trail::before {
@@ -11935,7 +11961,7 @@ main {
   }
 
   .page--team .member--reverse + .member-trail .member-trail__dot {
-    left: 38.67%;
+    left: 38.667%;
   }
 }
 
