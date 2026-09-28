@@ -10550,7 +10550,10 @@ main {
    outside the box, so it keeps room for them above and below. */
 .perspective__triangulation {
   position: relative;
-  justify-self: center;
+  /* from the second column's line, as the other chapters' right-hand
+     columns start; its labels hang outside the box, so it stands a
+     label's overhang in */
+  justify-self: start;
   width: min(100%, 440px);
   aspect-ratio: 2 / 1;
   margin: 40px 0 48px;
@@ -10641,7 +10644,15 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 45%;
+  /* Only the fins: the photograph has a bolted ledge across it 57% down,
+     which read as a seam or a misaligned background edge (under the
+     captions at 1440, through EU·US·UK on a tablet), and its own bottom
+     edge showed as a band under the footnote. Hung from its top, the
+     picture always has that ledge at least 57% down the chapter, and it
+     fades out before it. */
+  object-position: 50% 0;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 34%, transparent 54%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 34%, transparent 54%);
 }
 
 .track-record__bg::after {
@@ -10659,10 +10670,12 @@ main {
 }
 
 /* the heading on the left, the lead beside it on its last line - the
-   Expertise head's arrangement */
+   Expertise head's arrangement. On About's one split, 7 to 5: the lead
+   starts where Perspective's diagram column and Mission's photograph
+   start, so the chapters share one second column line (x861 at 1440). */
 .track-record__head {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   gap: 24px var(--ab-gap);
   align-items: end;
   margin: 0 0 clamp(40px, 5.6vh, 64px);
