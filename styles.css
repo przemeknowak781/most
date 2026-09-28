@@ -15368,6 +15368,18 @@ main {
   }
 }
 
+/* one eyebrow tracking at every width (the compact layer already sets
+   their 12px size) */
+.page-hero__eyebrow,
+.audience-intro__eyebrow,
+.whoweare__eyebrow,
+.expertise-cards__eyebrow,
+.clients__eyebrow,
+.routes-strip__eyebrow,
+.team-editorial__eyebrow {
+  letter-spacing: var(--ls-eyebrow);
+}
+
 /* Home's headline was the one hero line at 80% light; every headline is
    full light (the audience heroes set their ink) */
 .page--home .hero-title {
