@@ -4767,8 +4767,12 @@ a.contact-channels__value:focus-visible {
    panel follows under the drawing. A closed area takes no room here, so a
    short one does not leave a gap before How We Work. */
 @media (max-width: 1023px) {
+  /* the heading stands as far under the seam's trail as About's first
+     chapter stands under its trail at these widths (About's compact
+     --ab-trail-gap); only the half of the trail that hangs below the seam
+     is added, as on desktop */
   .page--expertise .ex-areas {
-    padding: clamp(24px, 7vw, 56px) var(--container-x) clamp(48px, 12vw, 88px);
+    padding: calc(clamp(72px, 9vw, 120px) / 2 + clamp(24px, 6vw, 44px)) var(--container-x) clamp(48px, 12vw, 88px);
   }
 
   .ex-areas__head {
@@ -4866,10 +4870,16 @@ a.contact-channels__value:focus-visible {
   }
 
   /* a phone on its side has no room for all three: the area's own title
-     and text come first */
+     and text come first. "Learn more" lands as About's does there: the
+     trail tucks under the bar and the heading arrives where About's eyebrow
+     does, so the tab strip still shows in the first screen. */
   @media (max-height: 500px) {
     .ex-areas__panel {
       scroll-margin-top: 0;
+    }
+
+    .page--expertise .ex-areas {
+      scroll-margin-top: calc(clamp(72px, 9vw, 120px) / -2);
     }
   }
 
@@ -4888,6 +4898,21 @@ a.contact-channels__value:focus-visible {
 
   .ex-areas:not(.is-tabs) .ex-areas__panel + .ex-areas__panel {
     margin-top: clamp(48px, 12vw, 72px);
+  }
+}
+
+/* A phone draws half of the seam's trail across its width, as About draws
+   its chapter trails: the whole 1200-unit line squeezed into 390px was a
+   comb of spikes over the heading. The checkpoint follows its peak
+   (968, 28) into the half that shows: (968 - 600) / 600. */
+@media (max-width: 767px) {
+  .page--expertise .ex-areas.has-trail--a::before {
+    background-size: 200% 100%;
+    background-position: 100% 0;
+  }
+
+  .page--expertise .ex-areas .has-trail__dot {
+    left: 61.33%;
   }
 }
 
