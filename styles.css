@@ -39,6 +39,40 @@
      one by exactly this much, so both read it from here */
   --audience-cut-depth: clamp(130px, 11vw, 190px);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---------- TYPE SCALE (one for the whole site) ----------
+     Desktop values here; under 1024px each token takes its --m-* twin (see
+     MOBILE & TABLET - FOUNDATION), so a rule that uses the token is right at
+     every width. The sizes meet at 1024px, so nothing jumps at the switch.
+     The roles are applied in DESIGN SYSTEM at the end of this file.
+     Figma text styles: Display 56/1.1 (H1), Title 1 48 (H2), Title 2 32,
+     Paragraph L 18/1.4 (lead), Paragraph M 16/1.5 (body) - all at 1440. */
+  --fs-h1: clamp(48px, 28.3px + 1.923vw, 64px);   /* 48 @1024, 56 @1440, 64 @1872+ - every hero, Home included */
+  --lh-h1: 1.08;
+  --fs-h2: clamp(38px, 13.38px + 2.404vw, 54px);  /* 38 @1024, 48 @1440, 54 @1690+ - section titles */
+  --lh-h2: 1.12;
+  --fs-h3: clamp(24px, 9.23px + 1.442vw, 32px);   /* 24 @1024, 30 @1440, 32 @1580+ - titles inside a section */
+  --lh-h3: 1.2;
+  --fs-h4: clamp(18px, 13.08px + 0.481vw, 22px);  /* 18 @1024, 20 @1440, 22 @1856+ - card titles */
+  --lh-h4: 1.25;
+  --fs-display: clamp(56px, 20.5px + 3.846vw, 80px); /* 60 @1024, 76 @1440 - the one slogan, "Three routes. One partner." */
+  --lh-display: 0.96;
+  --ls-heading: -0.005em;
+  --fs-lead: clamp(18px, 15.55px + 0.17vw, 19px); /* 18 up to 1440, 19 @2000 - hero taglines and section ledes */
+  --lh-lead: 1.55;
+  --fs-body: clamp(16px, 13px + 0.2084vw, 17px);  /* 16 up to 1440, 17 @1920 - running text */
+  --lh-body: 1.6;
+  --fs-small: 14px;                                /* card copy, captions */
+  --lh-small: 1.55;
+  --fs-eyebrow: 12px;                              /* "— label —", Montserrat 500 caps */
+  --ls-eyebrow: 0.24em;
+  --lh-eyebrow: 1.2;
+  --eyebrow-color: rgba(255, 168, 110, 0.92);
+  /* hero header blocks: where the eyebrow starts under the bar, how wide the
+     headline and the tagline may run (Figma: 912 and 700 at 1440) */
+  --hero-top: calc(var(--nav-height) + clamp(64px, 10vh, 120px));
+  --hero-measure: 912px;
+  --lead-measure: 700px;
 }
 
 * {
@@ -890,10 +924,10 @@ body.menu-open {
 }
 
 .hero-content .eyebrow {
-  color: rgba(255, 188, 140, 0.72);
-  font-weight: 400;
+  color: var(--eyebrow-color);
   font-size: clamp(11px, 0.85vw, 13px);
-  letter-spacing: 0.22em;
+  letter-spacing: 0.24em;
+  text-wrap: balance;
 }
 
 .hero-title {
@@ -1921,8 +1955,6 @@ main:focus {
 .manifesto__text .manifesto__title {
   margin: 0 0 6px;
   max-width: none;
-  font-size: clamp(30px, 3.4vw, 48px);
-  line-height: 1.06;
 }
 
 .manifesto__copy,
@@ -3721,27 +3753,13 @@ a.photo-break__line:focus-visible {
   color: var(--light);
 }
 
+/* The header block is the shared one (left, same size and start as every
+   other hero - see DESIGN SYSTEM); only the hero's height is the page's. */
 .team-page .page-hero {
   min-height: clamp(340px, 42vh, 430px);
-  padding-top: clamp(92px, 11vh, 120px);
   padding-bottom: clamp(96px, 12vh, 150px);
   background: var(--navy-deep);
   color: var(--light);
-}
-
-.team-page .page-hero__content {
-  justify-self: end;
-  max-width: min(760px, 52vw);
-  text-align: right;
-}
-
-.team-page .page-hero__title {
-  font-size: clamp(28px, 3.4vw, 46px);
-}
-
-.team-page .page-hero__tagline {
-  font-size: clamp(13px, 0.95vw, 16px);
-  margin-left: auto;
 }
 
 /*
@@ -5271,6 +5289,8 @@ a.contact-channels__value:focus-visible {
 
 .page--audience .aud-help__head {
   grid-template-columns: minmax(360px, 0.82fr) minmax(320px, 0.48fr);
+  /* the lede's last line sat on the rule under it */
+  padding-bottom: clamp(24px, 3vh, 36px);
 }
 
 .page--audience .aud-help__grid {
@@ -6640,14 +6660,8 @@ a.contact-channels__value:focus-visible {
   }
 }
 
-/* Expertise hero: the Figma headline runs three lines wide, not five */
-.page--expertise .page-hero__content {
-  max-width: 1040px;
-}
-
-.page--expertise .page-hero__title {
-  font-size: clamp(30px, 4.2vw, 54px);
-}
+/* Expertise hero: the Figma headline runs three lines on the shared
+   912px measure (DESIGN SYSTEM), not five */
 
 /* ============ scroll-in reveals (IntersectionObserver adds .is-in) ============ */
 .io-reveal {
@@ -6724,14 +6738,11 @@ a.contact-channels__value:focus-visible {
 .exwork--terrain .exwork__title {
   margin: 0 0 10px;
   color: var(--light);
-  font: 500 clamp(28px, 2.8vw, 42px) / 1.12 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.004em;
 }
 
 .exwork--terrain .exwork__lede {
   margin: 0;
   color: var(--light-80);
-  font: 400 clamp(15px, 1.15vw, 17.5px) / 1.55 "Outfit", system-ui, sans-serif;
 }
 
 .exwork-terrain {
@@ -7527,7 +7538,6 @@ a.contact-channels__value:focus-visible {
 
 .page--founders .hero-content .eyebrow {
   color: rgba(26, 18, 16, 0.88);
-  letter-spacing: 0.24em;
 }
 
 .page--founders .hero-title {
@@ -7773,25 +7783,17 @@ a.contact-channels__value:focus-visible {
 
 .page--horizon .hero-content .eyebrow {
   color: rgba(var(--hz-ink), 0.88);
-  letter-spacing: 0.24em;
 }
 
 /* Figma sets the copy column on 912px, the headline on 912 and the tagline
-   on 700, and both fall on two lines there. The shared hero caps its content
-   at 820px, which breaks these longer headlines over four lines and walks
-   the CTA into the torn edge - so this restores the Figma measures. */
-.page--horizon .hero-content {
-  width: min(1000px, 76vw);
-}
-
+   on 700: those are now every hero's measures (--hero-measure,
+   --lead-measure in DESIGN SYSTEM). */
 .page--horizon .hero-title {
-  max-width: min(960px, 66vw);
   color: rgb(var(--hz-ink));
   text-shadow: none;
 }
 
 .page--horizon .hero-tagline {
-  max-width: min(700px, 47vw);
   color: rgb(var(--hz-ink));
   text-shadow: none;
 }
@@ -8864,6 +8866,18 @@ a.contact-channels__value:focus-visible {
     --m-hero-top: calc(var(--nav-height) + var(--m-hero-sky));
     --m-pill-h: 52px;
     --container-x: var(--m-gutter);
+    /* the site type scale takes the compact values */
+    --fs-h1: var(--m-h1);
+    --fs-h2: var(--m-h2);
+    --fs-h3: var(--m-h3);
+    --fs-h4: clamp(17px, 15.1px + 0.51vw, 19px);
+    --fs-lead: var(--m-lede);
+    --fs-body: var(--m-body);
+    --fs-small: 14px;
+    --fs-eyebrow: var(--m-label);
+    --lh-h2: 1.12;
+    --lh-h3: 1.25;
+    --hero-top: var(--m-hero-top);
   }
 
   /* an anchor lands just under the bar, not a screen further down */
@@ -15168,4 +15182,210 @@ main {
   .aud-grow {
     padding-top: 40px;
   }
+}
+
+/* ============================================================
+   DESIGN SYSTEM - type roles (1024px and up)
+   One scale for every page; the tokens live on :root at the top of this
+   file (--fs-*, --lh-*, --ls-*, --eyebrow-color, --hero-top, --hero-measure,
+   --lead-measure). Under 1024px the compact layer already sets these roles
+   from the same tokens (--m-* twins), so this block only speaks to desktop
+   and nothing here reaches a phone or a tablet.
+   Roles:
+     H1        every hero headline, Home included     --fs-h1 / --lh-h1
+     display   the one slogan (Three routes)           --fs-display
+     H2        section titles                          --fs-h2 / --lh-h2
+     H3        titles inside a section (area names)    --fs-h3 / --lh-h3
+     H4        card titles                             --fs-h4 / --lh-h4
+     eyebrow   "— label —", Montserrat 500 caps        --fs-eyebrow, --ls-eyebrow
+     lead      hero taglines and section ledes         --fs-lead / --lh-lead
+     body      running text                            --fs-body / --lh-body
+     small     card copy, lists in cards, captions     --fs-small / --lh-small
+   A page may colour a role (ink on the light scenes) but not resize it.
+   New sections take a role rather than a size.
+   ============================================================ */
+@media (min-width: 1024px) {
+  /* ---------- hero header block ----------
+     Left, on the container edge, starting --hero-top under the bar, the
+     headline on 912px and the tagline on 700px (the Figma measures). */
+  .page-hero {
+    align-items: start;
+    padding-top: var(--hero-top);
+  }
+
+  /* The copy starts at the top now, not at the foot: these two heroes keep
+     the air they had under the button instead of growing a dark band. */
+  .page--about .page-hero,
+  .page--expertise .page-hero {
+    min-height: clamp(560px, 70vh, 760px);
+  }
+
+  /* Our Team's ridge rises across the foot of the hero: the button keeps
+     clear of its crest */
+  .team-page .page-hero {
+    padding-bottom: clamp(150px, 20vh, 220px);
+  }
+
+  .hero-content,
+  .page-hero__content {
+    width: min(var(--hero-measure), 100%);
+    max-width: none;
+    justify-self: start;
+    text-align: left;
+  }
+
+  .hero-title,
+  .page-hero__title {
+    max-width: var(--hero-measure);
+    margin: 0 0 24px;
+    font: 500 var(--fs-h1) / var(--lh-h1) "Urbanist", system-ui, sans-serif;
+    letter-spacing: var(--ls-heading);
+  }
+
+  .hero-tagline,
+  .page-hero__tagline {
+    max-width: var(--lead-measure);
+    margin: 0;
+    font: 400 var(--fs-lead) / var(--lh-lead) "Outfit", system-ui, sans-serif;
+  }
+
+  /* ---------- eyebrow: "— label —" ---------- */
+  .eyebrow,
+  .hero-content .eyebrow,
+  .page-hero__eyebrow,
+  .audience-intro__eyebrow,
+  .whoweare__eyebrow,
+  .expertise-cards__eyebrow,
+  .clients__eyebrow,
+  .routes-strip__eyebrow,
+  .team-editorial__eyebrow,
+  .ascent__eyebrow {
+    margin-bottom: 18px;
+    font: 500 var(--fs-eyebrow) / var(--lh-eyebrow) "Montserrat", system-ui, sans-serif;
+    letter-spacing: var(--ls-eyebrow);
+    text-transform: uppercase;
+  }
+
+  .hero-content .eyebrow,
+  .page-hero__eyebrow,
+  .audience-intro__eyebrow,
+  .whoweare__eyebrow,
+  .expertise-cards__eyebrow,
+  .clients__eyebrow,
+  .routes-strip__eyebrow,
+  .team-editorial__eyebrow {
+    color: var(--eyebrow-color);
+  }
+
+  /* the audience heroes keep their ink (set per page) */
+  .page--founders .hero-content .eyebrow {
+    color: rgba(26, 18, 16, 0.88);
+  }
+
+  .page--horizon .hero-content .eyebrow {
+    color: rgba(var(--hz-ink), 0.88);
+  }
+
+  /* ---------- display: the one slogan ---------- */
+  .audience-intro__title {
+    font-size: var(--fs-display);
+    line-height: var(--lh-display);
+  }
+
+  /* ---------- H2: section titles ---------- */
+  .whoweare__title,
+  .expertise-cards__title,
+  .aud-grow__title,
+  .perspective__title,
+  .track-record__title,
+  .ascent__title,
+  .philosophy__title,
+  .manifesto__title,
+  .clients__title,
+  .routes-strip__title,
+  .ex-areas__title,
+  .exwork__title,
+  .contact-band__title,
+  .aud-help__title,
+  .aud-work__title,
+  .aud-expertise__title {
+    font-size: var(--fs-h2);
+    font-weight: 500;
+    line-height: var(--lh-h2);
+    letter-spacing: var(--ls-heading);
+  }
+
+  /* ---------- H3: titles inside a section ---------- */
+  .ex-rail__name,
+  .ex-areas__panel > h3,
+  .routes-strip__name {
+    font-size: var(--fs-h3);
+    line-height: var(--lh-h3);
+    letter-spacing: var(--ls-heading);
+  }
+
+  /* ---------- lead ---------- */
+  .audience-intro__lede,
+  .whoweare__lede,
+  .expertise-cards__lede,
+  .track-record__lede,
+  .clients__lede,
+  .ex-areas__lede,
+  .exwork__lede,
+  .team-editorial__lead,
+  .aud-help__lede,
+  .aud-grow__sub {
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lead);
+  }
+
+  /* ---------- body ---------- */
+  .ex-rail__copy,
+  .whoweare__col dd,
+  .perspective__pillars > p,
+  .track-record__foot > p,
+  .manifesto__copy,
+  .manifesto__list > li,
+  .ex-areas__panel > p,
+  .member__bio,
+  .scene-intro__body,
+  .aud-help__item > p,
+  .aud-expertise__copy > p,
+  .aud-expertise__list > li {
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+  }
+
+  /* ---------- small: copy inside cards ---------- */
+  .preview__copy,
+  .preview__list > li,
+  .ascent__copy,
+  .routes-strip__copy,
+  .big-stat__copy,
+  .member__expertise > li,
+  .ex-areas__list > li,
+  .hww__copy {
+    font-size: var(--fs-small);
+    line-height: var(--lh-small);
+  }
+}
+
+/* Home's headline was the one hero line at 80% light; every headline is
+   full light (the audience heroes set their ink) */
+.page--home .hero-title {
+  color: var(--light);
+}
+
+/* Every eyebrow reads "— label —". Most carry the dashes in their text;
+   the Home and audience heroes' eyebrows do not (the copy review matches
+   that text as written), so theirs are drawn here, at every width, and kept
+   out of the accessible name. */
+.hero-content .eyebrow::before {
+  content: "\2014\00a0";
+  content: "\2014\00a0" / "";
+}
+
+.hero-content .eyebrow::after {
+  content: "\00a0\2014";
+  content: "\00a0\2014" / "";
 }
