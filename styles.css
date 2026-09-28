@@ -278,15 +278,34 @@ a {
   }
 }
 
-/* 1024-1100px: every item of the bar is on it, so the hairline goes and the
-   label and the primary pages give back the room it took */
+/* 1024-1100px: every item of the bar is on it. The hairline after the
+   label goes, and a short upright rule before it takes over its job - it
+   opens the group, so "explore as" never reads as a fourth primary link.
+   The primary pages close up (18px) and the bar's ends give back what the
+   rule takes, so the break before the group stays about twice the gap
+   between two links. */
 @media (max-width: 1100px) {
-  .top-nav__menu--left {
-    margin-left: clamp(24px, 3vw, 40px);
+  .top-nav .top-nav__menu--left {
+    gap: 18px;
+    margin-left: 24px;
+  }
+
+  .top-nav__menu--right {
+    margin-right: 16px;
   }
 
   .top-nav .top-nav__lead {
     letter-spacing: 0.12em;
+  }
+
+  .top-nav .top-nav__lead::before {
+    content: "";
+    flex: none;
+    width: 1px;
+    height: 14px;
+    margin-right: 6px;
+    background: currentColor;
+    opacity: 0.5;
   }
 
   .top-nav .top-nav__lead::after {
