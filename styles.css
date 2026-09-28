@@ -1513,15 +1513,22 @@ main:focus {
   border-right: 0;
   border-bottom: 0;
   color: var(--light-60);
-  font: 500 11px / 1 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.22em;
+  /* the button voice (12px / 0.18em), as every control on the site */
+  font: var(--btn-font);
+  letter-spacing: var(--btn-ls);
   text-transform: uppercase;
   cursor: pointer;
-  transition: color 240ms ease;
+  transition: color 240ms ease, border-color 240ms ease;
 }
 
 .preview__toggle:hover {
   color: var(--light);
+}
+
+.preview__toggle:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
+  border-radius: 2px;
 }
 
 .preview__toggle-icon {
@@ -2089,9 +2096,17 @@ main:focus {
   height: 38px;
   justify-content: center;
   padding: 0;
+  border-top: 1px solid var(--accent);
   border-top: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
   color: var(--accent);
   transform: translateX(-50%);
+}
+
+/* the folded card's "+" answers a pointer too: it lights up, its rule
+   takes the route's full colour */
+.preview:not(.is-expanded) .preview__toggle:hover {
+  color: var(--light);
+  border-top-color: var(--accent);
 }
 
 .preview:not(.is-expanded) .preview__toggle-label {
@@ -5902,23 +5917,13 @@ a.contact-channels__value:focus-visible {
   margin: 0;
   border-radius: var(--aud-rule-w);
   background: rgba(var(--aud-accent-rgb), 0.5);
-  transition: background-color 240ms ease;
 }
 
-/* the one state a point has: its rule lights to the full orange and a
-   faint wash of the same colour runs off it - nothing moves or resizes.
-   The points are not controls, so a keyboard never lands on one; were a
-   link ever put in one, :focus-within gives it the same state. */
+/* The points are statements, not controls: no link inside, nothing to
+   press, so they have no hover state (the Figma list has none either) -
+   any answer to the pointer promised a click that did nothing. */
 :is(.page--founders, .page--companies, .page--investors) .aud-help__item::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 0;
-  border-radius: 0;
-  background: linear-gradient(90deg, rgba(var(--aud-accent-rgb), 0.08), rgba(var(--aud-accent-rgb), 0) 72%);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 240ms ease;
+  content: none;
 }
 
 :is(.page--founders, .page--companies, .page--investors) .aud-help__item p {
@@ -5928,33 +5933,6 @@ a.contact-channels__value:focus-visible {
   margin: 0;
   color: rgba(28, 20, 25, 0.84);
   font: 400 var(--fs-body) / var(--lh-body) "Outfit", system-ui, sans-serif;
-  transition: color 240ms ease;
-}
-
-:is(.page--founders, .page--companies, .page--investors) .aud-help__item:focus-within .aud-help__rule {
-  background: var(--aud-accent);
-}
-
-:is(.page--founders, .page--companies, .page--investors) .aud-help__item:focus-within::after {
-  opacity: 1;
-}
-
-:is(.page--founders, .page--companies, .page--investors) .aud-help__item:focus-within p {
-  color: var(--aud-ink);
-}
-
-@media (hover: hover) {
-  :is(.page--founders, .page--companies, .page--investors) .aud-help__item:hover .aud-help__rule {
-    background: var(--aud-accent);
-  }
-
-  :is(.page--founders, .page--companies, .page--investors) .aud-help__item:hover::after {
-    opacity: 1;
-  }
-
-  :is(.page--founders, .page--companies, .page--investors) .aud-help__item:hover p {
-    color: var(--aud-ink);
-  }
 }
 
 /* ---------- How We Work ---------- */
@@ -6216,14 +6194,6 @@ a.contact-channels__value:focus-visible {
   box-shadow: 0 0 0 5px rgba(var(--aud-accent-rgb), 0.14);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  :is(.page--founders, .page--companies, .page--investors) .aud-help__rule,
-  :is(.page--founders, .page--companies, .page--investors) .aud-help__item::after,
-  :is(.page--founders, .page--companies, .page--investors) .aud-help__item p {
-    transition: none;
-  }
-}
-
 /* ===================================================================
    ROUTE SHORTCUTS
    The client's review asks for the same three-route shortcut on Our
@@ -6335,6 +6305,8 @@ a.contact-channels__value:focus-visible {
 
 .routes-strip__link {
   display: inline-flex;
+  /* as wide as its words, not the card: the focus ring hugs the link */
+  align-self: flex-start;
   align-items: center;
   gap: 10px;
   margin-top: auto;
@@ -13355,6 +13327,15 @@ main {
   flex: none;
   width: var(--btn-icon);
   height: var(--btn-icon);
+  /* stays where it was while the label comes down (below) */
+  margin-top: -2px;
+}
+
+/* Montserrat's capitals ride high in their line (the line keeps room for
+   descenders the caps never use): 2px on top brings the label down 1px,
+   onto the pill's optical centre and level with its arrow */
+.btn {
+  padding-top: 2px;
 }
 
 .btn svg path {
@@ -13453,6 +13434,24 @@ main {
   --focus-ring: rgb(var(--hz-ink));
 }
 
+/* ...and both outline pills on those skies answer the same way: filled
+   with the hero's ink, the label in the sky's colour - the inverse of the
+   dark scenes' cream fill. The bar's "Contact us" filled cream while
+   "Learn more" under it filled ink. */
+.page--founders .top-nav:not(.is-scrolled) .nav-cta:hover,
+.page--founders .top-nav:not(.is-scrolled) .nav-cta:focus-visible {
+  color: var(--fnd-sky);
+  background-color: var(--fnd-ink);
+  border-color: var(--fnd-ink);
+}
+
+.page--horizon .top-nav:not(.is-scrolled) .nav-cta:hover,
+.page--horizon .top-nav:not(.is-scrolled) .nav-cta:focus-visible {
+  color: var(--hz-sky);
+  background-color: rgb(var(--hz-ink));
+  border-color: rgb(var(--hz-ink));
+}
+
 /* Three routes (Home): the card's call to action is the solid pill in the
    route's own colour - same type and size as every pill */
 .preview.is-expanded .preview__cta,
@@ -13510,6 +13509,21 @@ main {
   outline: 2px solid var(--focus-ring);
   outline-offset: 4px;
   border-radius: 2px;
+}
+
+/* the footer's links and its LinkedIn badge take the same ring on a
+   laptop as on a phone (compact layer), not the browser's thin default */
+@media (min-width: 1024px) {
+  .site-footer a:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
+  .site-footer a.site-footer__social:focus-visible {
+    outline-offset: 3px;
+    border-radius: 50%;
+  }
 }
 
 /* a disclosure: its arrow points on, then down once open */
