@@ -76,6 +76,8 @@
   --hero-top: calc(var(--nav-height) + clamp(64px, 10vh, 120px));
   --hero-measure: 912px;
   --lead-measure: 700px;
+  /* the vertical padding of a section band (108px at 900px tall) */
+  --section-y: clamp(96px, 12vh, 136px);
 
   /* ---------- BUTTONS AND LINKS (see DESIGN SYSTEM - buttons and links) ---------- */
   --btn-h: 46px;                                   /* 52px under 1024 (--m-pill-h) */
@@ -3591,7 +3593,8 @@ a.contact-channels__value:focus-visible {
 
 .contact-band {
   position: relative;
-  padding: clamp(64px, 8vh, 96px) var(--container-x) clamp(72px, 9vh, 110px);
+  /* the band rhythm every cream band keeps (it was 72 / 81px at 1440x900) */
+  padding: var(--section-y) var(--container-x);
   background: #f0ebe9;
   color: #1c1419;
 }
@@ -5794,7 +5797,7 @@ a.contact-channels__value:focus-visible {
   --aud-accent-rgb: 255, 97, 44;
   --aud-ink: #1c1419;
   --aud-ink-soft: rgba(28, 20, 25, 0.72);
-  --aud-section-y: clamp(96px, 12vh, 136px);
+  --aud-section-y: var(--section-y);
   --aud-section-x: var(--container-x);
   --aud-head-gap: clamp(44px, 6vh, 72px);
   --aud-col-gap: clamp(32px, 3.4vw, 56px);
