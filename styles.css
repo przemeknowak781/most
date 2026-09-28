@@ -68,6 +68,9 @@
   --ls-eyebrow: 0.24em;
   --lh-eyebrow: 1.2;
   --eyebrow-color: rgba(255, 168, 110, 0.92);
+  --fs-label: 11px;                                /* small caps labels: stat labels, */
+  --ls-label: 0.24em;                              /* roles, kickers, column titles */
+  --ls-stat: 0.18em;                               /* the figures' labels (Home hero, About) */
   /* hero header blocks: where the eyebrow starts under the bar, how wide the
      headline and the tagline may run (Figma: 912 and 700 at 1440) */
   --hero-top: calc(var(--nav-height) + clamp(64px, 10vh, 120px));
@@ -1037,9 +1040,11 @@ body.menu-open {
 }
 
 .hero-stat span {
-  color: var(--light-60);
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.16em;
+  color: var(--light-80);
+  /* the stat label: the label size at a closer tracking, so a label runs
+     on one line under its figure (About's figures take the same) */
+  font: 500 var(--fs-label) / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: var(--ls-stat);
   text-transform: uppercase;
 }
 
@@ -1051,7 +1056,7 @@ body.menu-open {
   max-width: 200px;
   margin: 0 auto;
   color: var(--light-60);
-  font: 400 clamp(13px, 1.05vw, 15px) / 1.5 "Outfit", system-ui, sans-serif;
+  font: 400 var(--fs-small) / var(--lh-small) "Outfit", system-ui, sans-serif;
   letter-spacing: 0;
   text-align: center;
   opacity: calc((var(--hero-progress, 0) - 0.5) * 5);
@@ -1234,7 +1239,7 @@ main:focus {
 
 .audience-intro__eyebrow {
   margin: 0 0 22px;
-  color: rgba(255, 168, 110, 0.65);
+  color: var(--eyebrow-color);
   font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
   letter-spacing: 0.36em;
   text-transform: uppercase;
@@ -1380,8 +1385,8 @@ main:focus {
 
 .preview__num {
   color: var(--accent);
-  font: 500 11px / 1 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.28em;
+  font: 500 var(--fs-label) / 1 "Montserrat", system-ui, sans-serif;
+  letter-spacing: var(--ls-label);
 }
 
 .preview__route {
@@ -1402,7 +1407,9 @@ main:focus {
 .preview__hint {
   margin: 0;
   color: var(--light-60);
-  font: italic 400 13.5px / 1.4 "Outfit", system-ui, sans-serif;
+  /* upright: Outfit has no italic, and a slanted copy of the roman was the
+     browser's guess, not a face */
+  font: 400 var(--fs-small) / 1.4 "Outfit", system-ui, sans-serif;
 }
 
 .preview__body {
@@ -1807,6 +1814,7 @@ main:focus {
 
 .audience-intro__title-one {
   color: var(--orange-soft);
+  /* Urbanist's own italic (index.html loads ital 500), not a slanted roman */
   font-style: italic;
   text-shadow: 0 0 22px rgba(255, 168, 110, 0.26);
 }
@@ -2304,8 +2312,8 @@ main:focus {
 .site-footer__col-title {
   margin: 0 0 18px;
   color: rgba(255, 168, 110, 0.72);
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.22em;
+  font: 500 var(--fs-label) / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
 }
 
@@ -2736,7 +2744,7 @@ main:focus {
 
 .expertise-cards__eyebrow {
   margin: 0 0 22px;
-  color: rgba(255, 168, 110, 0.84);
+  color: var(--eyebrow-color);
   font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
   letter-spacing: 0.24em;
   text-transform: uppercase;
@@ -2896,7 +2904,7 @@ main:focus {
 
 .team-editorial__eyebrow {
   margin: 0 0 22px;
-  color: rgba(255, 168, 110, 0.86);
+  color: var(--eyebrow-color);
   font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
   letter-spacing: 0.26em;
   text-transform: uppercase;
@@ -3207,16 +3215,18 @@ main:focus {
 .member__role {
   margin: 0 0 12px;
   color: rgba(255, 168, 110, 0.72);
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.24em;
+  font: 500 var(--fs-label) / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
 }
 
 .member__name {
   margin: 0 0 24px;
   color: var(--light);
-  font: 500 clamp(30px, 3.6vw, 52px) / 1.04 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.02em;
+  /* a name is the title of its section: H2 of the scale, under the page's
+     H1 (it was 52-60px, larger than the headline) */
+  font: 500 var(--fs-h2) / var(--lh-h2) "Urbanist", system-ui, sans-serif;
+  letter-spacing: var(--ls-heading);
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -3229,11 +3239,6 @@ main:focus {
   height: 2px;
   background: linear-gradient(90deg, #FF612C, #FFA86E);
   border-radius: 1px;
-}
-
-/* Barbara (01) -- larger name */
-.member--01 .member__name {
-  font-size: clamp(34px, 4.2vw, 60px);
 }
 
 .member__bio {
@@ -3315,8 +3320,8 @@ main:focus {
 .member__expertise-label {
   margin: 0 0 14px;
   color: var(--light-60);
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.24em;
+  font: 500 var(--fs-label) / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
 }
 
@@ -3517,14 +3522,15 @@ main:focus {
 .contact-channels__label {
   display: block;
   color: var(--light);
-  font: 500 clamp(16px, 1.35vw, 20px) / 1.35 "Urbanist", system-ui, sans-serif;
+  font: 500 var(--fs-h4) / var(--lh-h4) "Urbanist", system-ui, sans-serif;
+  letter-spacing: var(--ls-heading);
 }
 
 .contact-channels__value {
   display: block;
   margin-top: 3px;
   color: rgba(240, 235, 233, 0.76);
-  font: 400 clamp(14px, 1.05vw, 16px) / 1.5 "Outfit", system-ui, sans-serif;
+  font: 400 var(--fs-body) / 1.5 "Outfit", system-ui, sans-serif;
 }
 
 a.contact-channels__value {
@@ -5030,9 +5036,9 @@ a.contact-channels__value:focus-visible {
 
 .ex-rail__num {
   margin: 0 0 12px;
-  color: rgba(255, 138, 92, 0.9);
-  font: 500 13px / 1 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.28em;
+  color: var(--eyebrow-color);
+  font: 500 var(--fs-label) / 1 "Montserrat", system-ui, sans-serif;
+  letter-spacing: var(--ls-label);
 }
 
 .ex-rail__name {
@@ -6253,7 +6259,7 @@ a.contact-channels__value:focus-visible {
 
 .routes-strip__eyebrow {
   margin: 0 0 18px;
-  color: rgba(255, 168, 110, 0.84);
+  color: var(--eyebrow-color);
   font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
   letter-spacing: 0.26em;
   text-transform: uppercase;
@@ -6306,8 +6312,8 @@ a.contact-channels__value:focus-visible {
 .routes-strip__kicker {
   margin: 0 0 14px;
   color: rgba(var(--aud-tint-rgb), 0.9);
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.24em;
+  font: 500 var(--fs-label) / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
 }
 
@@ -6387,7 +6393,7 @@ a.contact-channels__value:focus-visible {
 
 .clients__eyebrow {
   margin: 0 0 16px;
-  color: rgba(255, 168, 110, 0.84);
+  color: var(--eyebrow-color);
   font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
   letter-spacing: 0.26em;
   text-transform: uppercase;
@@ -6639,7 +6645,7 @@ a.contact-channels__value:focus-visible {
 
 .whoweare__eyebrow {
   margin: 0 0 18px;
-  color: rgba(255, 168, 110, 0.84);
+  color: var(--eyebrow-color);
   font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
   letter-spacing: 0.26em;
   text-transform: uppercase;
@@ -6704,8 +6710,8 @@ a.contact-channels__value:focus-visible {
 .whoweare__col dt {
   margin: 0 0 14px;
   color: rgba(255, 168, 110, 0.84);
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.24em;
+  font: 500 var(--fs-label) / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
 }
 
@@ -7422,15 +7428,15 @@ main {
 
 /* ---------- compact: heroes ----------
    Each page draws its own hero; they share where the copy starts
-   (--m-hero-top, above) and the pill height (--m-pill-h). The three set on
-   a photo sky - About, Team and Contact - also share the eyebrow's colour.
-   Desktop gives them the site orange on navy; here the photo, its glow or
-   the wash comes up behind the label, so they take one lighter peach of
-   the same family rather than one tint each: 5.2:1 or more at every
-   compact width on all three. */
+   (--m-hero-top, above) and the pill height (--m-pill-h). The heroes set
+   on a photo sky - About, Expertise, Team and Contact - need a lighter
+   eyebrow than desktop's orange: the photo, its glow or the wash comes up
+   behind the label (5.2:1 or more at every compact width). Every eyebrow
+   takes that one peach here, heroes and sections alike, so a phone never
+   shows two tints of the label on one page. */
 @media (max-width: 1023px) {
-  .page-hero__eyebrow {
-    color: #ffbf94;
+  :root {
+    --eyebrow-color: #ffbf94;
   }
 }
 
@@ -7985,6 +7991,7 @@ main {
   .aud-grow__title {
     font-size: var(--m-h2);
     line-height: 1.12;
+    letter-spacing: var(--ls-heading);
     text-wrap: balance;
   }
 
@@ -7994,8 +8001,8 @@ main {
     margin: 14px 0 0;
     max-width: 36ch;
     color: rgba(240, 235, 233, 0.88);
-    font-size: var(--m-body);
-    line-height: 1.55;
+    font-size: var(--m-lede);
+    line-height: var(--lh-lead);
   }
 
   .aud-grow__btn,
@@ -9503,8 +9510,8 @@ main {
   .page--home .whoweare__lede {
     max-width: var(--m-measure);
     margin-bottom: 18px;
-    font-size: var(--m-body);
-    line-height: 1.62;
+    font-size: var(--m-lede);
+    line-height: var(--lh-lead);
   }
 
   /* a 48px target that still looks like the desktop's underlined label:
@@ -10274,13 +10281,19 @@ main {
     font-size: var(--m-label);
   }
 
+  /* the carousel's title and lede take the H2 and lead every other
+     chapter's head takes here (they kept the desktop clamp: 26px, 16px) */
   .page--about .clients__title {
     margin-bottom: 12px;
+    font-size: var(--m-h2);
+    line-height: var(--lh-h2);
+    letter-spacing: var(--ls-heading);
   }
 
   .page--about .clients__lede {
     max-width: var(--m-measure);
-    font-size: var(--m-body);
+    font-size: var(--m-lede);
+    line-height: var(--lh-lead);
   }
 
   .page--about .clients__track {
@@ -10737,9 +10750,9 @@ main {
 
 .big-stat__label {
   margin: 0;
-  color: var(--light);
-  font: 500 12px / 1.35 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.18em;
+  color: var(--light-80);
+  font: 500 var(--fs-label) / 1.35 "Montserrat", system-ui, sans-serif;
+  letter-spacing: var(--ls-stat);
   text-transform: uppercase;
 }
 
@@ -10834,8 +10847,8 @@ main {
   display: block;
   margin: 0 0 16px;
   color: rgba(255, 168, 110, 0.9);
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.24em;
+  font: 500 var(--fs-label) / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
 }
 
@@ -11056,9 +11069,6 @@ main {
     line-height: 1;
   }
 
-  .big-stat__label {
-    letter-spacing: 0.16em;
-  }
 
   .big-stat__copy {
     max-width: 30em;
@@ -11580,12 +11590,8 @@ main {
   .page--team .member__name {
     margin-bottom: 20px;
     font-size: var(--m-h2);
-    line-height: 1.08;
+    line-height: var(--lh-h2);
     gap: 14px;
-  }
-
-  .page--team .member--01 .member__name {
-    font-size: calc(var(--m-h2) * 1.12);
   }
 
   .page--team .member__bio {
@@ -11906,8 +11912,8 @@ main {
   }
 
   .page--contact .contact-channels__label {
-    font-size: 18px;
-    line-height: 1.3;
+    font-size: var(--fs-h4);
+    line-height: var(--lh-h4);
   }
 
   .page--contact .contact-channels__value {
@@ -13168,26 +13174,6 @@ main {
     text-transform: uppercase;
   }
 
-  .hero-content .eyebrow,
-  .page-hero__eyebrow,
-  .audience-intro__eyebrow,
-  .whoweare__eyebrow,
-  .expertise-cards__eyebrow,
-  .clients__eyebrow,
-  .routes-strip__eyebrow,
-  .team-editorial__eyebrow {
-    color: var(--eyebrow-color);
-  }
-
-  /* the audience heroes keep their ink (set per page) */
-  .page--founders .hero-content .eyebrow {
-    color: rgba(26, 18, 16, 0.88);
-  }
-
-  .page--horizon .hero-content .eyebrow {
-    color: rgba(var(--hz-ink), 0.88);
-  }
-
   /* ---------- display: the one slogan ---------- */
   .audience-intro__title {
     font-size: var(--fs-display);
@@ -13272,8 +13258,10 @@ main {
   }
 }
 
-/* one eyebrow tracking at every width (the compact layer already sets
-   their 12px size) */
+/* one eyebrow tracking and one colour at every width (the compact layer
+   already sets their 12px size; under 1024px --eyebrow-color is the one
+   lighter peach the photo heroes need, see "compact: heroes"). The
+   audience heroes keep their ink: their per-page rules are more specific. */
 .page-hero__eyebrow,
 .audience-intro__eyebrow,
 .whoweare__eyebrow,
@@ -13282,6 +13270,17 @@ main {
 .routes-strip__eyebrow,
 .team-editorial__eyebrow {
   letter-spacing: var(--ls-eyebrow);
+}
+
+.hero-content .eyebrow,
+.page-hero__eyebrow,
+.audience-intro__eyebrow,
+.whoweare__eyebrow,
+.expertise-cards__eyebrow,
+.clients__eyebrow,
+.routes-strip__eyebrow,
+.team-editorial__eyebrow {
+  color: var(--eyebrow-color);
 }
 
 /* Home's headline was the one hero line at 80% light; every headline is
