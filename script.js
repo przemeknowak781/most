@@ -66,24 +66,86 @@ const TRAIL = {
   },
 };
 
-function buildTrailPath(trail) {
+/* ============ THE RIDGE TEXTURE ============
+   Every line that runs across the site has the rock of the How We Work
+   ridge: the gora ridge less its 30-unit smoothing, plus a third of its
+   hills, in ridge units, one value every 2 units (styles.css draws the same
+   rock into its fixed ridge lines). A smooth route drawn by script takes the
+   rock at the size How We Work shows it (0.72px per ridge unit, its size at
+   1440), whatever the route's own scale on screen, so the steps look alike
+   on a phone and on a wide screen - and passes exactly through the points
+   where its markers stand. */
+const RIDGE_TEXTURE = "14.7,13,11.2,9.4,8,6.9,6,6,6.2,6.4,6.6,7.6,8.2,7.9,7.6,6.9,4.3,2.3,2.6,3.2,6,7.2,7.6,7.7,6.7,6.1,6.2,6.3,5.8,4.7,3.6,2.6,1.7,1.3,1,1,0.9,0,-1.3,-2.3,-3,-2.5,-2.1,-1.7,-2.3,-3.2,-4,-5.1,-6.1,-6.9,-7.7,-8.5,-9,-9.1,-9.2,-9.3,-8.5,-7.3,-6.1,-5.1,-4.3,-4.1,-3.9,-2.6,-1.1,-0.9,-0.9,-1.8,-2.7,-3.3,-3.7,-4.1,-4,-3.9,-3.9,-4.6,-5.3,-6.1,-7,-7.9,-8.8,-9.8,-10.8,-11.4,-12.1,-12.6,-13.1,-12.4,-11.4,-10.5,-9.7,-8.8,-8.2,-7.6,-6.9,-6.3,-5.7,-5.1,-4.5,-3.9,-3.6,-3.4,-3.2,-2.9,-3.2,-3.9,-4.6,-4.1,-3.3,-2.5,-1.7,-1,-0.3,0.5,1.2,1.6,1.3,1.1,0.9,0.4,-0.3,-1,-1.8,-2.8,-3.9,-4.9,-5.9,-6.9,-8,-8,-7.7,-7.4,-7.1,-6.8,-6.9,-7.1,-7.4,-7.7,-7.9,-8.2,-8.1,-7.7,-7.4,-7.2,-6.9,-6.7,-6.5,-6.3,-6.2,-6.1,-5.7,-5.4,-5,-4.6,-4.3,-3.8,-3.3,-2.8,-2.2,-2,-2.4,-2.9,-3.4,-3.9,-3.7,-3.2,-2.7,-2.3,-1.8,-1.3,-1,-0.8,-0.7,-0.6,-0.4,-0.3,-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.1,0.2,0.5,0.8,1.2,0.7,0.1,-0.6,-1.3,-2,-2.6,-3.1,-3.6,-4.2,-4.7,-5.3,-5.5,-5.3,-5,-4.8,-4.5,-4.4,-4.4,-4.4,-4.4,-5.2,-6.3,-7.4,-6.4,-5.3,-5.4,-5.9,-6.5,-6.5,-6,-5.5,-5.4,-6.1,-6.8,-6.2,-5.3,-4.2,-3.3,-2.3,-1.4,-1.1,-0.8,3.7,3.8,3.8,3.9,3.9,3.9,4,4,4,4,4,4,3.9,3.9,3.9,3.8,3.8,3.8,3.8,3.6,3.1,2.6,2.2,1.7,1.1,0.7,1,1.2,1.5,7,6.8,6.4,5.8,5.2,6.1,8.7,8.8,8.9,9.1,9.5,10,10.4,11,11.5,12.7,13.6,13.5,14.4,18,18.8,19.7,20.4,21.4,22.4,23.2,23.3,23,22.7,22.5,22.3,22.2,22.2,21.5,20.5,19.8,19.7,19.7,19.6,19.5,19.5,19.4,18.5,17.5,16.5,15.5,12.7,12.9,14.1,14.7,14.8,14.9,15,14.8,14.2,13.7,12.7,10.1,9.1,9.9,10.7,10.7,9.3,3.6,3.1,2.5,-3.4,-4.6,-4.8,-4.1,-4.4,-5.7,-6.4,-5.8,-5.5,-5.8,-6.1,-5.9,-5.8,-5.7,-5.7,-6,-6.3,-6.4,-5.6,-4.8,-4,-2.3,-0.6,1.1,2.2,3.3,4.4,6.2,8,8.6,9.5,12.6,12.8,12.6,9.3,7.5,6.6,6.1,5.4,5.1,7.9,8.2,9.6,10.2,9.6,8.9,5.8,3.5,4,3.3,-0.5,0,-0.2,-1.8,-3.3,-2.8,-1.8,-1.3,-1.9,-2.5,-2.7,-1.7,-0.8,-0.2,0,0.8,1.9,3,1.7,-0.1,0.1,1,1.8,2.6,3,3,2.8,2.8,2.6,2.5,2.7,3.4,4,4.7,5.4,5.1,3.7,4,4.2,4.5,3.8,2,1,0.8,0.6,-1.9,-2.7,-3.4,-4.1,-4.8,-5.4,-5.6,-5.6,-5.8,-7.2,-8.7,-8.5,-7.8,-7.2,-7.1,-7.6,-7.8,-7.6,-7.4,-7.6,-9.4,-11.4,-13.1,-13.1,-15.3,-14.8,-14.4,-14,-13.6,-11,-10.3,-9.6,-9,-8.5,-7.9,-7.4,-6.9,-6.4,-6.3,-6.2,-3.3,-2.8,-2.2,-1.8,-1.3,-0.8,-0.4,0.1,0.6,1.1,1.5,1.9,2.4,3.7,4.8,5.5,7.4,10.5,10.5,10.5,10.5,10.6,10.7,10.8,10.9,11,11.2,11.5,12,12.6,13.2,13.8,14.1,14.4,13.8,12.3,11.1,9.9,8.8,7.9,7.2,6.6,5.2,3.9,3.9,3.8,3.7,4.2,5.5,6.9,8.3,9.5,10.5,11.4,12.4,13.4,13.4,13,12.7,13,13.3,13,13,13.1,13.2,13.3,14.1,15,15.9,16.4,16.5,16.7,17,16.9,16.4,15.9,16.7,17.6,16.6,15.5,15.4,15.7,16.1,16.4,16.8,16.9,15.8,14.9,14.5,15.7,16.8,16.7,16.7,17.1,17.6,15,5.3,2.6,2.5,2.7,2.3,0.5,0.1,0.3,0.4,0.6,0.9,1.4,2.1,3.8,5.6,7.4,9.3,11.1,10.6,10,9.6,9.1,8.9,8.5,8.1,7.8,7.5,6.4,5.2,5.7,6.3,7,7.5,8.1,8.6,9.1,9.5,10,9.3,7.4,6.8,6.2,5.6,4.7,4.1,3.2,2.9,2.3,1.8,1.5,0.9,0.3,-0.2,-1.1,-2,-2.9,-4.2,-6.3,-7.2,-7.1,-7.1,-7.1,-7.2,-6.8,-6.4,-6,-5.5,-4.9,-4.2,-3.7,-3.5,-3.2,-1.3,-0.8,-0.2,0.4,0.9,0.9,0.4,-0.2,-4.4,-4.6,-3.7,-6.8,-5.5,-4.1,-3.9,-4.4,-4.8,-4.8,-4.9,-5.5,-7.9,-7.4,-6.6,-6.2,-5.7,-5.4,-6.6,-7.9,-7.7,-6.5,-5.3,-4.2,-5.4,-7,-6.1,-5,-4.8,-5.6,-6.7,-7.8,-8.9,-7.3,-6,-5.4,-5,-4.5,-2.9,-2.9,-2.9,-1.7,-0.7,-0.4,0,0.1,0,0,0,-1,-2.8,-2.6,-4.7,-4.3,-3.9,-3.5,-3.6,-4,-4.5,-5,-5.5,-5.5,-3.3,-0.8,-1,-1.5,-2,-2.4,-2.9,-3.2,-4,-5.2,-6.1,-10.8,-12.6,-17.9,-17.8,-17.9,-18,-17.9,-18.1,-17.7,-17.3,-17.1,-16.7,-16.5,-16,-14.7,-13.4,-12.1,-12.5,-13.9,-15.3,-16.9,-17.2,-17.3,-17.6,-18.4,-19.2,-19.6,-19.1,-18.7,-18.2,-17.8,-17.3,-16.6,-16,-15.5,-14.9,-12.2,-10.4,-9.8,-9.2,-5.9,-5.8,-5.7,-5.9,-6.1,-6.3,-6.5,-7.1,-8.3,-9.5,-10.5,-8.9,-8.8,-8.9,-9.2,-9.4,-9.6,-9.8,-9.8,-9.6,-9.4,-9.2,-9,-8.8,-8.5,-6.9,-5.4,-4.1,-4.4,-5.3,-6.2,-7.4,-9.1,-10.6,-12.2,-13.8,-12.4,-12.1,-13.4,-14.3,-10.9,-8.1,-7.1,-6.2,-5.3,-3.2,-1.5,-1.6,-1.6,-0.9,2,4.5,4.2,4,3.7,7.4,7.9,7.6,5.8,4.1,2.4,0.7,-0.4,-1.5,-2.2,-0.9,0.4,0.8,0.6,1.1,2.5,3.9,5.3,7.3,9.2,11.8,14.2,15.8,17.4,18.2,18.3,18.5,18.7,18.9,19.2,19.5,19.8,18.2,16.6,15.1,14,13.3,12.8,11.1,8,6.9,6.6,6.2,3.5,1.2,0.5,-0.3,0.7,2,3.3,4.6,5.9,6.4,6.1,5.9,6,6.8,7.3,7,6.7,6.5,6.2,5.2,3.3,2.9,2.6,-0.7,0.9,2.5,4.2,5.9,6,-0.2,0.6,1.4,2.2,2.9,3.7,4.5,5.3,4.8,4.2,3.5,2.6,1.8,1,0.1,-0.7,0.7,1.1,-0.9,-1,-1,-1,-2.7,-4.7,-6.5,-6.7,-6.6,-6.5,-7,-7.1,-5.8,-4.2,-2.8,-2.4,-2.8,-2.9,-2.6,-2.4,-2.7,-3.2,-3.8,-4.3,-8.9,-10.9,-10.8,-10.6,-10.6,-10.4,-10.3,-10,-9.5,-8.9,-8.4,-7.8,-7.3,-6.8,-6.3,-5.8,-5.3,-5.1,-5.8,-6.4,-7.1,-7.7,-7.9,-7.5,-7.1,-6.7,-6.3,-6,-5.6,-6.1,-7.7,-9.2,-10.8,-11.2,-11.5,-11.8,-12.2,-12.6,-13,-13.4,-13.8,-14.2,-13.7,-13.2,-12.8,-12.3,-11.9,-11.5,-11.2,-10.9,-10.6,-10.3,-10.1,-10.2,-10.5,-10.8,-11,-11.3,-11.7,-11.9,-9.7,-7.7,-5.6,-3.4,-2,-2.4,-2.8,-3.1,-3.5,-2.5,-0.2,2,4.5,5.4,5.1,4.8,4.6,4.4,4.8,5.4,6.1,6.9,7.6,8.5".split(",").map(Number);
+const RIDGE_PX = 0.72;
+
+function ridgeTexture(u) {
+  /* mirrored past the ends, so a line of any length finds rock */
+  const last = RIDGE_TEXTURE.length - 1;
+  const span = last * 2;
+  let v = ((u % (2 * span)) + 2 * span) % (2 * span);
+  if (v > span) v = 2 * span - v;
+  const x = v / 2;
+  const i = Math.min(Math.floor(x), last - 1);
+  return RIDGE_TEXTURE[i] + (RIDGE_TEXTURE[i + 1] - RIDGE_TEXTURE[i]) * (x - i);
+}
+
+/* segments: cubic pieces [x0, y0, c1x, c1y, c2x, c2y, x1, y1] in the route's
+   own units; sx, sy: screen px per unit. The rock fades to nothing within
+   18px of each fixed x, so the line meets its markers exactly. */
+function grainRoute(segments, sx, sy, fixedXs, offset = 0, amp = 0.8) {
+  const k = RIDGE_PX / sy;
+  const pts = [];
+  segments.forEach(([x0, y0, c1x, c1y, c2x, c2y, x1, y1], si) => {
+    const steps = Math.max(2, Math.ceil((Math.abs(x1 - x0) * sx) / 3));
+    for (let n = si ? 1 : 0; n <= steps; n++) {
+      const t = n / steps;
+      const u = 1 - t;
+      const x = u * u * u * x0 + 3 * u * u * t * c1x + 3 * u * t * t * c2x + t * t * t * x1;
+      let y = u * u * u * y0 + 3 * u * u * t * c1y + 3 * u * t * t * c2y + t * t * t * y1;
+      let w = 1;
+      for (const fx of fixedXs) {
+        const q = (Math.abs(x - fx) * sx) / 18;
+        if (q < 1) w = Math.min(w, q * q * (3 - 2 * q));
+      }
+      y += amp * k * ridgeTexture(offset + (x * sx) / RIDGE_PX) * w;
+      pts.push([x, y]);
+    }
+  });
+  return pts;
+}
+
+function routeD(pts) {
+  return `M${pts.map(([x, y]) => `${x.toFixed(1)} ${y.toFixed(1)}`).join(" ")}`;
+}
+
+function trailSegments(trail) {
   const anchors = [
     trail.start,
     ...trail.curve,
     trail.end,
   ].map((point) => getTrailPoint(point));
-  let d = `M${anchors[0].x} ${anchors[0].y}`;
+  const segments = [];
   for (let i = 0; i < anchors.length - 1; i++) {
     const a = anchors[i];
     const b = anchors[i + 1];
-    const dx = b.x - a.x;
-    const t = dx / 3;
-    const cp1x = a.x + t;
-    const cp1y = a.y + a.slope * t;
-    const cp2x = b.x - t;
-    const cp2y = b.y - b.slope * t;
-    d += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${b.x} ${b.y}`;
+    const t = (b.x - a.x) / 3;
+    segments.push([a.x, a.y, a.x + t, a.y + a.slope * t, b.x - t, b.y - b.slope * t, b.x, b.y]);
   }
+  return segments;
+}
+
+/* Without a scale this is the smooth route; with one (the trail's size on
+   screen, known once it sits on the ridge image) it carries the rock. */
+function buildTrailPath(trail, sx = 0, sy = sx) {
+  const segments = trailSegments(trail);
+  if (sx > 0) {
+    const fixed = trail.curve.filter((p) => p.checkpoint).map((p) => p.x);
+    return routeD(grainRoute(segments, sx, sy, fixed, 400));
+  }
+  let d = `M${segments[0][0]} ${segments[0][1]}`;
+  segments.forEach(([, , c1x, c1y, c2x, c2y, x1, y1]) => {
+    d += ` C ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${x1} ${y1}`;
+  });
   return d;
 }
 
@@ -223,6 +285,8 @@ function shownOrNull(el) {
   return parkedCache.get(el) ? null : el;
 }
 
+let trailRockScale = 0;
+
 function positionTrailOverlay() {
   syncTrailContainersToRidge();
 
@@ -230,6 +294,17 @@ function positionTrailOverlay() {
   const pointsHost = document.querySelector(".hero-trail-points");
   const labelsHost = document.querySelector(".hero-trail-labels");
   if (!trailSvg || !pointsHost || !labelsHost) return;
+
+  /* the rock is drawn at its size on screen, so a new size redraws it */
+  const trailBox = trailSvg.getBoundingClientRect();
+  if (trailBox.width && trailBox.height) {
+    const sx = trailBox.width / TRAIL.viewBox.width;
+    if (!trailRockScale || Math.abs(sx / trailRockScale - 1) > 0.06) {
+      trailRockScale = sx;
+      const d = buildTrailPath(TRAIL, sx, trailBox.height / TRAIL.viewBox.height);
+      document.querySelectorAll(".hero-trail__path").forEach((pathEl) => pathEl.setAttribute("d", d));
+    }
+  }
 
   const ctm = trailSvg.getScreenCTM();
   if (!ctm) return;
@@ -820,6 +895,53 @@ function setupAudienceTriptych() {
   });
 }
 
+/* The Companies and Investors hero trail: the same rock, at its size on
+   screen, through the four checkpoints. The markup keeps the smooth route
+   (its M and C commands), which is also what shows without script. */
+function setupHorizonTrail() {
+  const jobs = Array.from(document.querySelectorAll(".hz-trail__path")).map((path) => {
+    const svg = path.ownerSVGElement;
+    const vb = svg && svg.viewBox && svg.viewBox.baseVal;
+    const nums = (path.getAttribute("d").match(/-?\d*\.?\d+(?:e-?\d+)?/g) || []).map(Number);
+    if (!vb || !vb.width || nums.length < 8) return null;
+    const segments = [];
+    let x = nums[0];
+    let y = nums[1];
+    for (let i = 2; i + 5 < nums.length; i += 6) {
+      segments.push([x, y, nums[i], nums[i + 1], nums[i + 2], nums[i + 3], nums[i + 4], nums[i + 5]]);
+      x = nums[i + 4];
+      y = nums[i + 5];
+    }
+    const fixed = Array.from(svg.parentElement.querySelectorAll(".hz-trail__point"))
+      .map((point) => (parseFloat(point.style.getPropertyValue("--x")) / 100) * vb.width)
+      .filter(Number.isFinite);
+    return { path, svg, vb, segments, fixed, sx: 0 };
+  }).filter(Boolean);
+  if (!jobs.length) return;
+
+  const draw = () => {
+    jobs.forEach((job) => {
+      const box = job.svg.getBoundingClientRect();
+      if (!box.width || !box.height) return;
+      const sx = box.width / job.vb.width;
+      if (job.sx && Math.abs(sx / job.sx - 1) < 0.06) return;
+      job.sx = sx;
+      job.path.setAttribute("d", routeD(grainRoute(job.segments, sx, box.height / job.vb.height, job.fixed, 900)));
+      /* the draw-in dashes by the drawn length, which the rock lengthens */
+      try {
+        const m = job.path.getScreenCTM();
+        job.path.style.setProperty("--len", String(Math.ceil(job.path.getTotalLength() * (m ? Math.hypot(m.a, m.b) : 1))));
+      } catch {}
+    });
+  };
+  draw();
+  let timer = 0;
+  window.addEventListener("resize", () => {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(draw, 120);
+  }, { passive: true });
+}
+
 function setupAudienceConnectors() {
   const section = document.querySelector(".audience-intro");
   if (!section) return;
@@ -833,24 +955,36 @@ function setupAudienceConnectors() {
     [0, 94], [221, 98], [432, 96], [589, 72], [746, 51],
     [917, 28], [1058, 24], [1164, 6], [1200, 1],
   ];
-  const trailSamples = [];
+  const trailSegments = [];
   for (let i = 0; i < trailPoints.length - 1; i++) {
     const a = trailPoints[i - 1] || trailPoints[i];
     const b = trailPoints[i];
     const c = trailPoints[i + 1];
     const e = trailPoints[i + 2] || c;
-    const c1 = [b[0] + (c[0] - a[0]) / 6, b[1] + (c[1] - a[1]) / 6];
-    const c2 = [c[0] - (e[0] - b[0]) / 6, c[1] - (e[1] - b[1]) / 6];
-    for (let step = 0; step < 24; step++) {
-      const t = step / 24;
-      const u = 1 - t;
-      trailSamples.push([
-        u * u * u * b[0] + 3 * u * u * t * c1[0] + 3 * u * t * t * c2[0] + t * t * t * c[0],
-        u * u * u * b[1] + 3 * u * u * t * c1[1] + 3 * u * t * t * c2[1] + t * t * t * c[1],
-      ]);
-    }
+    trailSegments.push([
+      b[0], b[1],
+      b[0] + (c[0] - a[0]) / 6, b[1] + (c[1] - a[1]) / 6,
+      c[0] - (e[0] - b[0]) / 6, c[1] - (e[1] - b[1]) / 6,
+      c[0], c[1],
+    ]);
   }
-  trailSamples.push(trailPoints[trailPoints.length - 1]);
+  /* smooth until the section's size is known; then the route carries the
+     ridge's rock (drawn into the section's edge through two custom
+     properties: the cut and the line), and the dots ride the same points */
+  let trailSamples = grainRoute(trailSegments, 1, 1, [], 0, 0);
+  let trailRockKey = "";
+  const drawRouteRock = (width, depth) => {
+    const sx = width / 1200;
+    const sy = depth / 160;
+    const key = `${Math.round(sx * 50)}:${Math.round(sy * 50)}`;
+    if (!width || !depth || key === trailRockKey) return;
+    trailRockKey = key;
+    trailSamples = grainRoute(trailSegments, sx, sy, [], 1300);
+    const d = routeD(trailSamples);
+    const svg = (body) => `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'>${body}</svg>`)}")`;
+    section.style.setProperty("--audience-edge-top", svg(`<path d='${d} L1200 160 L0 160 Z' fill='#fff'/>`));
+    section.style.setProperty("--audience-edge-top-line", svg(`<path d='${d}' stroke='#FFA86E' stroke-opacity='.95' stroke-width='1.1' fill='none' stroke-linecap='round' stroke-linejoin='round' vector-effect='non-scaling-stroke'/>`));
+  };
 
   function cssClamp(min, preferred, max) {
     return Math.min(Math.max(preferred, min), max);
@@ -891,11 +1025,12 @@ function setupAudienceConnectors() {
   /* below 1024px the connectors are short leaders between stacked cards,
      drawn by the stylesheet alone; there is no edge for them to reach */
   function update() {
-    if (compactQuery.matches) return;
     const sectionRect = section.getBoundingClientRect();
     if (!sectionRect.width) return;
 
     const { cutOffset, cutDepth } = getPseudoMetrics();
+    drawRouteRock(sectionRect.width, cutDepth);
+    if (compactQuery.matches) return;
 
     // Phase 1: read all connector rects
     const reads = connectors.map((connector) => connector.getBoundingClientRect());
@@ -1159,6 +1294,7 @@ setupSectionReveal();
 setupMobileMenu();
 setupPlaceholderLinks();
 setupHeroTrail();
+setupHorizonTrail();
 setupAudienceTriptych();
 setupAudienceConnectors();
 setupMemberReadmore();
@@ -1191,6 +1327,16 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
 
   const dot = nav.querySelector(".ex-areas__dot");
   const art = section.querySelector(".ex-areas__art");
+  /* Under 1024px the strip's line is a ridge (styles.css --ex-strip-ridge:
+     a 1076 x 30 profile stretched over the tab list, in a 30px band). These
+     are its heights in px, one every 2 units, so the marker can stand on it
+     over any tab. */
+  const STRIP_RIDGE = "12.1,12.4,12.8,13.2,13.3,13.4,13.5,13.6,13.7,13.7,13.7,13.7,13.7,14,14.2,14.4,14.1,13.6,13.1,12.6,12.2,11.8,11.4,11,10.9,11.1,11.3,11.4,11.5,11.5,11.2,10.4,10,10.9,10.9,10.5,10.3,10.8,11,10.6,10.4,11.1,11.8,12.5,13.2,13.5,15.4,16,16,16.1,16.1,16.2,16.2,16.2,16.2,16.2,16.2,16.2,16.2,16.2,16,15.7,15.3,15,14.6,14.8,15,18,17.8,17.5,17.1,18.6,19.1,19.1,19.5,19.8,20.2,20.6,21.5,21.7,22.5,24.3,25,25.6,26.3,27,26.9,26.7,26.6,26.5,26.4,25.9,25.2,25.1,25.1,25,24.9,24.5,23.8,23.1,21.5,21.6,22.3,22.4,22.4,22.4,21.9,21.5,19.7,19.4,19.9,19.8,18.7,15.9,13.7,11.9,11.7,12.2,11.2,10.8,11.2,11,10.9,11,11,10.9,10.7,10.8,11.4,12.1,13.3,14.6,15.4,16.2,17.5,18.6,19,20.8,20.9,19,17.8,17.4,16.9,17.7,18.5,19.6,19.2,18.6,16.2,16.2,14.8,14,13.9,12.3,12.5,13.3,13.1,12.7,12.8,13.5,13.9,14.2,15,15.4,14.2,14.1,14.7,15.3,15.6,15.5,15.4,15.3,15.4,15.8,16.3,16.8,16.3,16,16.2,16.2,14.9,14.4,14.2,12.7,12.2,11.6,11.1,10.8,10.7,10.3,9.2,9.3,9.8,9.9,9.6,9.6,9.8,9.1,7.6,6.7,5.5,5.8,6.2,6.4,8,8.5,9,9.4,9.8,10.2,10.4,10.6,12.2,12.6,13,13.4,13.8,14.1,14.5,14.9,15.2,16,16.8,17.6,19.7,19.8,19.8,19.9,19.9,20,20.2,20.3,20.8,21.2,21.7,21.9,21.8,20.8,19.9,19.1,18.4,18,17.1,16.5,16.4,16.4,17.1,18.1,19.1,19.9,20.7,21.4,21.6,21.3,21.4,21.6,21.4,21.5,21.6,21.9,22.6,23.2,23.3,23.5,23.6,23.3,23.2,23.8,23.3,22.7,22.9,23.1,23.4,23.4,22.6,22.2,23.1,23.4,23.4,23.7,22.6,16.8,15.8,15.8,15.1,14.4,14.5,14.7,14.8,15.2,16.1,17.5,18.8,20.1,19.8,19.4,19.1,18.8,18.6,18.3,17.9,17,17.4,17.8,18.3,18.7,19,19.3,19.3,18,17.5,17.1,16.5,15.9,15.5,15.1,14.8,14.4,13.9,13.3,12.7,11.9,10.3,10.1,10.1,10,10.2,10.5,10.7,11.2,11.7,11.9,12.2,13.3,13.7,14.1,14.4,14,12.7,11.3,10.9,10.6,11.6,11.6,11.2,11.1,11.1,9.6,10,10.4,10.7,10.6,9.6,9.8,10.6,11.4,10.4,10.4,11.2,10.9,10.1,9.3,9.6,10.6,10.9,11.3,12.2,12.1,12.9,13.4,13.7,13.7,13.7,13.7,12.2,12.3,11.2,11.5,11.8,11.6,11.3,10.9,10.6,11.8,13.1,12.8,12.5,12.1,11.8,11.2,10.4,7.7,5.6,3.9,3.9,3.9,3.8,4,4.3,4.5,4.7,5.5,6.4,6.9,5.9,4.8,4.2,4.1,3.7,3,3,3.3,3.7,4,4.5,4.9,5.4,7.1,8,8.5,10.3,10.4,10.3,10.1,10,9.5,8.6,7.9,8.8,8.7,8.6,8.4,8.3,8.4,8.5,8.7,8.8,9,10.2,11.2,11.2,10.6,9.8,8.6,7.5,6.3,7.5,6.7,6.5,9.1,10,10.6,11.9,13,13,13.4,15.6,16.2,16.1,17,18.2,17.8,16.5,15.3,14.2,13.4,13.1,14.1,14.6,14.5,15.4,16.4,17.6,19.1,21.1,22.5,23.6,24,24.2,24.3,24.5,24.7,24.5,23.3,22.2,21.5,21.1,19.5,18,17.8,16.8,15,14.4,14.4,15.4,16.3,17.3,17.6,17.4,17.4,18,17.9,17.7,17.5,16.9,15.8,15.5,13.9,15.1,16.3,17.5,14.9,14.4,15,15.6,16.1,16.7,16.6,16.1,15.4,14.8,14.1,13.6,14.6,13.4,13.4,13.3,12.5,11.1,10.2,10.3,10.2,10,10.9,12,12.5,12.2,12.3,12.4".split(",").map(Number);
+  const ridgeAt = (f) => {
+    const x = clamp(f, 0, 1) * (STRIP_RIDGE.length - 1);
+    const i = Math.min(Math.floor(x), STRIP_RIDGE.length - 2);
+    return STRIP_RIDGE[i] + (STRIP_RIDGE[i + 1] - STRIP_RIDGE[i]) * (x - i);
+  };
   const line = art ? art.querySelector("path") : null;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let index = -1;
@@ -1220,7 +1366,11 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     const tab = tabs[index].getBoundingClientRect();
     if (instant) dot.style.transition = "none";
     if (compactQuery.matches) {
-      setCssVar(dot, "--dot-x", `${Math.round(tab.left - box.left + nav.scrollLeft + tab.width / 2)}px`);
+      const strip = list.getBoundingClientRect();
+      const mid = tab.left + tab.width / 2;
+      setCssVar(dot, "--dot-x", `${Math.round(mid - box.left + nav.scrollLeft)}px`);
+      /* the ridge's height over the tab's middle */
+      setCssVar(dot, "--dot-ride", `${ridgeAt(strip.width ? (mid - strip.left) / strip.width : 0).toFixed(1)}px`);
     } else {
       setCssVar(dot, "--dot-y", `${Math.round(tab.top - box.top + nav.scrollTop + tab.height / 2)}px`);
     }
