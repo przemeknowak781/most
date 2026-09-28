@@ -6801,7 +6801,7 @@ a.contact-channels__value:focus-visible {
 /* the intro under the scene speaks at H3, the scale's step under a section
    title (it was 1.75vw, off the scale); its spine dot follows the line */
 :is(.page--founders, .page--companies, .page--investors) .scene-intro__lead {
-  max-width: 36ch;
+  max-width: 24em;
   font-size: var(--fs-h3);
   line-height: 1.26;
 }
