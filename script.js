@@ -895,53 +895,6 @@ function setupAudienceTriptych() {
   });
 }
 
-/* The Companies and Investors hero trail: the same rock, at its size on
-   screen, through the four checkpoints. The markup keeps the smooth route
-   (its M and C commands), which is also what shows without script. */
-function setupHorizonTrail() {
-  const jobs = Array.from(document.querySelectorAll(".hz-trail__path")).map((path) => {
-    const svg = path.ownerSVGElement;
-    const vb = svg && svg.viewBox && svg.viewBox.baseVal;
-    const nums = (path.getAttribute("d").match(/-?\d*\.?\d+(?:e-?\d+)?/g) || []).map(Number);
-    if (!vb || !vb.width || nums.length < 8) return null;
-    const segments = [];
-    let x = nums[0];
-    let y = nums[1];
-    for (let i = 2; i + 5 < nums.length; i += 6) {
-      segments.push([x, y, nums[i], nums[i + 1], nums[i + 2], nums[i + 3], nums[i + 4], nums[i + 5]]);
-      x = nums[i + 4];
-      y = nums[i + 5];
-    }
-    const fixed = Array.from(svg.parentElement.querySelectorAll(".hz-trail__point"))
-      .map((point) => (parseFloat(point.style.getPropertyValue("--x")) / 100) * vb.width)
-      .filter(Number.isFinite);
-    return { path, svg, vb, segments, fixed, sx: 0 };
-  }).filter(Boolean);
-  if (!jobs.length) return;
-
-  const draw = () => {
-    jobs.forEach((job) => {
-      const box = job.svg.getBoundingClientRect();
-      if (!box.width || !box.height) return;
-      const sx = box.width / job.vb.width;
-      if (job.sx && Math.abs(sx / job.sx - 1) < 0.06) return;
-      job.sx = sx;
-      job.path.setAttribute("d", routeD(grainRoute(job.segments, sx, box.height / job.vb.height, job.fixed, 900)));
-      /* the draw-in dashes by the drawn length, which the rock lengthens */
-      try {
-        const m = job.path.getScreenCTM();
-        job.path.style.setProperty("--len", String(Math.ceil(job.path.getTotalLength() * (m ? Math.hypot(m.a, m.b) : 1))));
-      } catch {}
-    });
-  };
-  draw();
-  let timer = 0;
-  window.addEventListener("resize", () => {
-    window.clearTimeout(timer);
-    timer = window.setTimeout(draw, 120);
-  }, { passive: true });
-}
-
 function setupAudienceConnectors() {
   const section = document.querySelector(".audience-intro");
   if (!section) return;
@@ -1294,7 +1247,6 @@ setupSectionReveal();
 setupMobileMenu();
 setupPlaceholderLinks();
 setupHeroTrail();
-setupHorizonTrail();
 setupAudienceTriptych();
 setupAudienceConnectors();
 setupMemberReadmore();
