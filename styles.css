@@ -29,10 +29,9 @@
      under the cap, so they do not move. */
   --hero-ridge-room: calc(18.75vw - 12.5vh - 84px);
   --hero-ridge-drop: clamp(0px, var(--hero-ridge-room), clamp(28px, 5vh, 48px));
-  /* The band under the hero keeps the full drop: the cap above is for the
-     hero trail and its first checkpoint, and when the band rose with it the
-     truss crest climbed into the stat copy on 4:3 and 5:4 windows. Its top
-     edge is still tucked well under the hero silhouette. */
+  /* how far the band under the hero reaches back up under the ridge: its
+     top stays below the ridge's lowest dip and above the ridge's own foot
+     while the ridge rises with the scroll (see .ridge-edge) */
   --ridge-edge-drop: clamp(28px, 5vh, 48px);
   --nav-height: 84px;
   /* depth of the Three routes torn edges; Who we are tucks under the bottom
@@ -555,7 +554,7 @@ body.menu-open {
   background: var(--navy-deep);
 }
 
-/* Mirrored (like the ridge-edge photo) so the sunlit peaks from the
+/* Mirrored so the sunlit peaks from the
    photo's far side land on the open left half of the hero instead of
    hiding behind the foreground silhouette, and lifted so they ride
    higher above the ridge line. */
@@ -695,9 +694,7 @@ body.menu-open {
   left: -2%;
   right: -2%;
   /* The ridge sat high enough to crowd the third line of the headline. It
-     drops by --hero-ridge-drop - and .ridge-edge below it drops by the same
-     amount, because that band tucks under this silhouette and its own top
-     edge shows the moment the silhouette stops covering it. */
+     drops by --hero-ridge-drop. */
   bottom: calc(-11% - var(--hero-ridge-drop));
   z-index: 6;
   isolation: isolate;
@@ -901,14 +898,34 @@ body.menu-open {
   filter: drop-shadow(0 -28px 58px rgba(8, 11, 19, 0.42));
 }
 
+/* The band under the Home hero. It opened a window of steel trusses in
+   the land until the client asked for it to go (29.09); it is now the land
+   itself, the hero's navy, down to Three routes.
+
+   Its top is tucked up under the hero's ridge (--edge-tuck): on desktop
+   the ridge rises with the scroll, and its foot would otherwise lift off
+   the hero's foot and show a strip of the photo under it (on an upright
+   iPad Pro, up to 100px). The tuck stays below the ridge's lowest dip, so
+   the band's straight top never shows over it.
+
+   Three routes' top edge, the route line, reaches up into the band by the
+   cut's offset (--audience-cut-offset, 118-180px), so under the hero's
+   foot the band is that tall plus the clearance the route keeps: the
+   line's right end, its highest point, sits that far below the foot. On
+   desktop the stats' notes hang under the foot once the page scrolls (up
+   to 88px), so the clearance is 96px for them and 40-72px of air under
+   the last one. */
 .ridge-edge {
+  --edge-tuck: calc(clamp(120px, 20vh, 260px) - var(--ridge-edge-drop) + 2px);
+  --edge-clearance: calc(96px + clamp(40px, 5vh, 72px));
   position: relative;
   z-index: 6;
-  margin-top: calc(clamp(-260px, -20vh, -120px) + var(--ridge-edge-drop) - 2px);
+  height: calc(var(--edge-tuck) + clamp(118px, 10vw, 180px) + var(--edge-clearance));
+  margin-top: calc(-1 * var(--edge-tuck));
   margin-bottom: -1px;
   pointer-events: none;
   line-height: 0;
-  background: #07090f;
+  background: var(--navy);
   overflow: hidden;
 }
 
@@ -920,23 +937,6 @@ body.menu-open {
   height: 4px;
   background: #161822;
   pointer-events: none;
-}
-
-.ridge-edge::before {
-  content: "";
-  position: absolute;
-  inset: -14% 0;
-  /* Architecture, not mountains (client, 9.09): a close-up of roof trusses
-     with no building edge, baked into the hero's light - terracotta where the
-     sun catches the steel, cooling to dusk violet at the foot - so the gap
-     reads as the same sunset seen through steel and glass. */
-  background-image: url("arch-edge-truss.webp");
-  background-size: cover;
-  background-position: 50% 30%;
-  transform: scaleX(-1) translate3d(0, calc((var(--ridge-progress, 0.5) - 0.5) * 12vh), 0);
-  transform-origin: center center;
-  z-index: 0;
-  will-change: transform;
 }
 
 .ridge-edge__leaders {
@@ -954,17 +954,6 @@ body.menu-open {
   stroke-width: var(--trail-leader-width);
   stroke-dasharray: var(--trail-leader-dash);
   vector-effect: non-scaling-stroke;
-}
-
-.ridge-edge__img {
-  position: relative;
-  display: block;
-  width: 104%;
-  margin-left: -2%;
-  height: auto;
-  transform: scale(-1, -1);
-  transform-origin: center center;
-  z-index: 2;
 }
 
 .hero-content {
@@ -1179,9 +1168,11 @@ main:focus {
 .audience-intro {
   --audience-cut-offset: clamp(-180px, -10vw, -118px);
   --audience-bottom-lift: clamp(54px, 6vh, 86px);
-  /* the top edge (the Home route), smooth until script.js draws its rock */
-  --audience-edge-top: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath d='M0 94 C36.8 94.7 149 97.7 221 98 C293 98.3 370.7 100.3 432 96 C493.3 91.7 536.7 79.5 589 72 C641.3 64.5 691.3 58.3 746 51 C800.7 43.7 865 32.5 917 28 C969 23.5 1016.8 27.7 1058 24 C1099.2 20.3 1140.3 9.8 1164 6 C1187.7 2.2 1194 1.8 1200 1 L1200 160 L0 160 Z' fill='%23fff'/%3E%3C/svg%3E");
-  --audience-edge-top-line: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath d='M0 94 C36.8 94.7 149 97.7 221 98 C293 98.3 370.7 100.3 432 96 C493.3 91.7 536.7 79.5 589 72 C641.3 64.5 691.3 58.3 746 51 C800.7 43.7 865 32.5 917 28 C969 23.5 1016.8 27.7 1058 24 C1099.2 20.3 1140.3 9.8 1164 6 C1187.7 2.2 1194 1.8 1200 1' stroke='%23FFA86E' stroke-opacity='.95' stroke-width='1.1' fill='none' stroke-linecap='round' stroke-linejoin='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+  /* the top edge (the Home route), smooth until script.js draws its rock;
+     it ends 10 units under the box's top so the rock never climbs out of
+     the box and gets cut off at the screen's right edge */
+  --audience-edge-top: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath d='M0 94 C36.8 94.7 149 97.7 221 98 C293 98.3 370.7 100.3 432 96 C493.3 91.7 536.7 79.5 589 72 C641.3 64.5 691.3 58.3 746 51 C800.7 43.7 865 32.5 917 28 C969 23.5 1016.8 26.7 1058 24 C1099.2 21.3 1140.3 14.3 1164 12 C1187.7 9.7 1194 10.3 1200 10 L1200 160 L0 160 Z' fill='%23fff'/%3E%3C/svg%3E");
+  --audience-edge-top-line: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath d='M0 94 C36.8 94.7 149 97.7 221 98 C293 98.3 370.7 100.3 432 96 C493.3 91.7 536.7 79.5 589 72 C641.3 64.5 691.3 58.3 746 51 C800.7 43.7 865 32.5 917 28 C969 23.5 1016.8 26.7 1058 24 C1099.2 21.3 1140.3 14.3 1164 12 C1187.7 9.7 1194 10.3 1200 10' stroke='%23FFA86E' stroke-opacity='.95' stroke-width='1.1' fill='none' stroke-linecap='round' stroke-linejoin='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
   /* the bottom edge: a ridge climbing to the right - the torn edge's rise
      with the How We Work ridge's small steps along it. The fill cuts the
      section, the line draws the same path over the cut. */
@@ -2874,9 +2865,14 @@ main:focus {
 }
 
 .ridge-edge--light::before {
+  content: "";
+  position: absolute;
   display: block;
   inset: 0;
   z-index: 2;
+  transform: scaleX(-1) translate3d(0, calc((var(--ridge-progress, 0.5) - 0.5) * 12vh), 0);
+  transform-origin: center center;
+  will-change: transform;
   /* Dark navy replaces old cream -- ridge now merges into the dark stage */
   background: #070912;
   clip-path: polygon(
@@ -2908,10 +2904,6 @@ main:focus {
 }
 
 .ridge-edge--light::after {
-  display: none;
-}
-
-.ridge-edge--light .ridge-edge__img {
   display: none;
 }
 
@@ -9100,44 +9092,12 @@ main {
     line-height: 1.5;
   }
 
-  /* The band is a window of truss photo between its ridge art, hung
-     upside down from the land, and the next section's route line. That
-     line climbs a fixed 118px into the band at the right edge while the
-     art scales with the width, so art drawn at a phone's width left only a
-     5-30px crag of photo above the line - a glitch, not a window. The art
-     is drawn at least 620px wide instead, its right end where the usual
-     104% ends and the rest overhanging the left edge: on every phone the
-     window's peak stands 80-100px clear of the line. From 596px it is the
-     usual 104%, so nothing jumps.
-
-     The window peaks 43.6% down the art (0.1853 of its width), and the
-     band comes up into the land until that peak is 24px under the hero.
-     The route line's right end is then 50px or more under the hero, clear
-     of the land that would cut its last stretch flat. */
+  /* the notes stand in the stats' own flow here, above the hero's foot,
+     so the route only keeps its air under it; the ridge holds still and
+     the stats' land runs down to the foot, so the band starts there */
   .page--home .ridge-edge {
-    --edge-art: max(104%, 620px);
-    margin-top: calc(24px - 0.1853 * var(--edge-art));
-  }
-
-  .page--home .ridge-edge__img {
-    width: var(--edge-art);
-    max-width: none;
-    margin-left: min(-2%, 102% - var(--edge-art));
-  }
-
-  /* the truss is a sliver of window here: a width-appropriate file */
-  .page--home .ridge-edge::before {
-    background-image: url("arch-edge-truss-1024.webp");
-    background-image: -webkit-image-set(url("arch-edge-truss-1024.webp") 1x, url("arch-edge-truss.webp") 2x);
-    background-image: image-set(url("arch-edge-truss-1024.webp") 1x, url("arch-edge-truss.webp") 2x);
-  }
-}
-
-@media (max-width: 767px) {
-  .page--home .ridge-edge::before {
-    background-image: url("arch-edge-truss-640.webp");
-    background-image: -webkit-image-set(url("arch-edge-truss-640.webp") 1x, url("arch-edge-truss-1024.webp") 2x);
-    background-image: image-set(url("arch-edge-truss-640.webp") 1x, url("arch-edge-truss-1024.webp") 2x);
+    --edge-tuck: 2px;
+    --edge-clearance: clamp(32px, 5vh, 64px);
   }
 }
 
@@ -10137,17 +10097,15 @@ main {
    A 12.9" iPad held upright (1024x1366), or a portrait monitor, gets the
    desktop hero, which is built for a landscape screen: the hero is one
    screen tall and the ridge hangs 11% of it below the foot, so the taller
-   the screen, the lower the ridge sits against the stats and the band.
-   The first checkpoints landed on 200+ and 300+, and the band's straight
-   top edge showed over the ridge's low left side as a hard cut through
-   the photo. Here the desktop's own correction (--hero-ridge-room, the
-   drop capped by what the width leaves) may lift the ridge as well, so
-   the checkpoints keep their 1440x900 clearance over the stats; and the
-   band's top edge follows the art instead of the screen, 0.26 of the
-   width under the art's top - just past the silhouette's deepest dip
-   (0.2395 of the art, which is 1.0816 x the width wide and 0.4597 x the
-   width tall). A landscape window never matches: the desktop is as it
-   was. */
+   the screen, the lower the ridge sits against the stats. The first
+   checkpoints landed on 200+ and 300+. Here the desktop's own correction
+   (--hero-ridge-room, the drop capped by what the width leaves) may lift
+   the ridge as well, so the checkpoints keep their 1440x900 clearance
+   over the stats; and the band's tuck follows the ridge art instead of
+   the screen, its top 0.26 of the width under the art's top - just past
+   the silhouette's deepest dip (0.2395 of the art, which is 1.0816 x the
+   width wide and 0.4597 x the width tall). A landscape window never
+   matches: the desktop is as it was. */
 @media (min-width: 1024px) and (orientation: portrait) {
   .page--home {
     --hero-ridge-drop: min(var(--hero-ridge-room), clamp(52px, 8vh, 96px));
@@ -10157,7 +10115,7 @@ main {
      one-screen hero plus the drop, less the art's height (45.97vw); the
      band starts 25.97vw under it */
   .page--home .ridge-edge {
-    margin-top: calc(11svh + var(--hero-ridge-drop) - 20vw);
+    --edge-tuck: calc(20vw - 11svh - var(--hero-ridge-drop));
   }
 }
 

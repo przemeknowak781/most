@@ -906,7 +906,7 @@ function setupAudienceConnectors() {
   // so the connector dots land on the line and not on a notch.
   const trailPoints = [
     [0, 94], [221, 98], [432, 96], [589, 72], [746, 51],
-    [917, 28], [1058, 24], [1164, 6], [1200, 1],
+    [917, 28], [1058, 24], [1164, 12], [1200, 10],
   ];
   const trailSegments = [];
   for (let i = 0; i < trailPoints.length - 1; i++) {
