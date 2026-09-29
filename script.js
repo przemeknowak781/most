@@ -1258,17 +1258,22 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
 
 /* Expertise "Our Areas": eight areas as tabs, one open at a time.
 
-   The markup is a list of in-page links and the eight areas in order, so
-   without script every area is there to read. This turns it into ARIA tabs:
-   the links become the tabs (roles, aria-selected, a roving tabindex) and
-   the areas their panels, and only the chosen one shows. A click or a key
-   only swaps the panel - nothing scrolls and nothing pins, so the page
-   scrolls on to the next section as any other would.
+   The markup is a list of in-page links and the eight areas in order, each
+   under its own drawing, so without script every area is there to read.
+   This turns it into ARIA tabs: the links become the tabs (roles,
+   aria-selected, a roving tabindex) and the areas their panels, and only the
+   chosen one shows. The marker on the rail follows the open area. A link to
+   #area-panel-N (or #area-tab-N) opens that area.
 
-   On desktop the tabs stand down the rail (vertical); under 1024px they run
-   across a strip above the panel (horizontal), as in the Figma frames. The
-   marker on the rail follows the open area. A link to #area-panel-N (or
-   #area-tab-N) opens that area. */
+   Every drawing is one unbroken line, so a change of area is a thread: the
+   open drawing winds back up along its line while the next one unwinds
+   beside it, a moment behind. The first one draws itself as the section
+   arrives. With reduced motion the drawings simply swap.
+
+   A click or a key only swaps the panel - nothing scrolls and nothing pins,
+   so the page scrolls on to the next section as any other would. On
+   desktop the tabs stand down the rail (vertical); under 1024px they run
+   across a strip above the panel (horizontal), as in the Figma frames. */
 (() => {
   const section = document.querySelector(".ex-areas");
   const nav = section ? section.querySelector(".ex-areas__nav") : null;
@@ -1278,7 +1283,6 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
   if (!list || !tabs.length || tabs.length !== panels.length) return;
 
   const dot = nav.querySelector(".ex-areas__dot");
-  const art = section.querySelector(".ex-areas__art");
   /* Under 1024px the strip's line is a ridge (styles.css --ex-strip-ridge:
      a 1076 x 30 profile stretched over the tab list, in a 30px band). These
      are its heights in px, one every 2 units, so the marker can stand on it
@@ -1289,8 +1293,8 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     const i = Math.min(Math.floor(x), STRIP_RIDGE.length - 2);
     return STRIP_RIDGE[i] + (STRIP_RIDGE[i + 1] - STRIP_RIDGE[i]) * (x - i);
   };
-  const line = art ? art.querySelector("path") : null;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const last = tabs.length - 1;
   let index = -1;
 
   /* ---------- the widget ---------- */
@@ -1310,21 +1314,32 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
   const orient = () => list.setAttribute("aria-orientation", compactQuery.matches ? "horizontal" : "vertical");
 
   /* The marker sits on the rail beside the open tab: level with its middle
-     on the vertical rail, over its middle on the strip. Measured from
-     layout, so fonts, wrapping and resizes just change the answer. */
-  const place = (instant) => {
-    if (!dot || index < 0) return;
+     on the vertical rail, over its middle on the strip. Every tab's spot is
+     measured from layout at once (fonts, wrapping and resizes just change
+     the answer), so a change of area only writes. */
+  let spots = [];
+  const measureSpots = () => {
     const box = nav.getBoundingClientRect();
-    const tab = tabs[index].getBoundingClientRect();
+    const strip = list.getBoundingClientRect();
+    const across = compactQuery.matches;
+    spots = tabs.map((tab) => {
+      const r = tab.getBoundingClientRect();
+      if (!across) return { y: Math.round(r.top - box.top + nav.scrollTop + r.height / 2) };
+      const mid = r.left + r.width / 2;
+      /* on the strip, the ridge's height over the tab's middle */
+      return { x: Math.round(mid - box.left + nav.scrollLeft), ride: ridgeAt(strip.width ? (mid - strip.left) / strip.width : 0) };
+    });
+  };
+
+  const place = (instant) => {
+    const spot = spots[index];
+    if (!dot || !spot) return;
     if (instant) dot.style.transition = "none";
-    if (compactQuery.matches) {
-      const strip = list.getBoundingClientRect();
-      const mid = tab.left + tab.width / 2;
-      setCssVar(dot, "--dot-x", `${Math.round(mid - box.left + nav.scrollLeft)}px`);
-      /* the ridge's height over the tab's middle */
-      setCssVar(dot, "--dot-ride", `${ridgeAt(strip.width ? (mid - strip.left) / strip.width : 0).toFixed(1)}px`);
+    if ("x" in spot) {
+      setCssVar(dot, "--dot-x", `${spot.x}px`);
+      setCssVar(dot, "--dot-ride", `${spot.ride.toFixed(1)}px`);
     } else {
-      setCssVar(dot, "--dot-y", `${Math.round(tab.top - box.top + nav.scrollTop + tab.height / 2)}px`);
+      setCssVar(dot, "--dot-y", `${spot.y}px`);
     }
     if (instant) {
       void dot.offsetWidth;
@@ -1345,19 +1360,84 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     if (dx) nav.scrollBy({ left: dx, behavior: reduceMotion.matches ? "auto" : "smooth" });
   };
 
-  /* The Figma drawing is one unbroken line: it draws itself when the section
-     comes into view, and again whenever the area changes. */
+  /* ---------- the drawings: one thread each ----------
+     A line is wound by its dash offset (its length: nothing shows) and
+     unwound to 0. Script measures each line into --len (the dash), and only
+     a line that is drawn or on the move is shown (.is-live). A change starts
+     every line from wherever it stands, so a quick run of changes turns the
+     lines back smoothly and never leaves one half drawn. */
+  const WIND_MS = 700;
+  const UNWIND_MS = 1250;
+  const LAG_MS = 180;
+  const FIRST_MS = 1600;
+  const WIND_EASE = "cubic-bezier(0.45, 0.05, 0.6, 1)";
+  const UNWIND_EASE = "cubic-bezier(0.3, 0.06, 0.38, 0.94)";
   let seen = false;
-  const draw = () => {
-    if (!art || !line) return;
-    art.classList.remove("is-drawn");
-    if (reduceMotion.matches) return;
-    void art.getBoundingClientRect();
-    art.classList.add("is-drawn");
+
+  const threads = panels.map((panel) => {
+    const art = panel.previousElementSibling;
+    const path = art && art.classList.contains("ex-areas__art") ? art.querySelector("path") : null;
+    if (!path) return null;
+    let len = 0;
+    try {
+      len = Math.ceil(path.getTotalLength());
+    } catch {}
+    if (len) setCssVar(art, "--len", String(len));
+    path.style.strokeDashoffset = `${len}px`;
+    return { art, path, len, at: len, anim: null };
+  });
+
+  const offsetOf = (t) => {
+    if (!t.anim) return t.at;
+    const v = parseFloat(getComputedStyle(t.path).strokeDashoffset);
+    return Number.isFinite(v) ? v : t.at;
+  };
+
+  const wind = (t, drawn, ms = 0, delay = 0, ease = UNWIND_EASE) => {
+    if (!t) return;
+    const to = drawn ? 0 : t.len;
+    const from = offsetOf(t);
+    if (t.anim) {
+      t.anim.cancel();
+      t.anim = null;
+    }
+    t.at = to;
+    t.path.style.strokeDashoffset = `${to}px`;
+    const move = ms > 0 && t.len > 0 && typeof t.path.animate === "function" && Math.abs(from - to) >= 1;
+    t.art.classList.toggle("is-live", drawn || move);
+    if (!move) return;
+    const anim = t.path.animate([{ strokeDashoffset: `${from}px` }, { strokeDashoffset: `${to}px` }], {
+      duration: ms * Math.max(0.3, Math.abs(to - from) / t.len),
+      delay,
+      easing: ease,
+      fill: "backwards",
+    });
+    t.anim = anim;
+    anim.onfinish = () => {
+      if (t.anim !== anim) return;
+      t.anim = null;
+      if (!drawn) t.art.classList.remove("is-live");
+    };
+  };
+
+  /* The open line winds up while the next unwinds beside it, a moment
+     behind. A line still winding from an earlier change is put away at
+     once, so a quick run of changes never shows more than the two. */
+  const swap = (from, to, instant) => {
+    const still = instant || reduceMotion.matches;
+    threads.forEach((t, n) => {
+      if (t && n !== from && n !== to && (t.anim || t.at === 0)) wind(t, false);
+    });
+    const out = from >= 0 && from !== to ? threads[from] : null;
+    if (out) wind(out, false, still ? 0 : WIND_MS, 0, WIND_EASE);
+    const next = threads[to];
+    if (!seen) wind(next, false);
+    else wind(next, true, still ? 0 : UNWIND_MS, out && out.anim ? LAG_MS : 0, UNWIND_EASE);
   };
 
   const select = (i, { instant = false } = {}) => {
     if (i === index) return;
+    const from = index;
     index = i;
     tabs.forEach((tab, n) => {
       const on = n === i;
@@ -1365,8 +1445,13 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
       tab.tabIndex = on ? 0 : -1;
       panels[n].hidden = !on;
     });
+    swap(from, i, instant || from < 0);
     place(instant);
-    if (seen && !instant) draw();
+  };
+
+  const layout = () => {
+    measureSpots();
+    place(true);
   };
 
   tabs.forEach((tab, i) => {
@@ -1392,7 +1477,7 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
           next = 0;
           break;
         case "End":
-          next = tabs.length - 1;
+          next = last;
           break;
         case " ":
           /* a link does not answer Space; a tab does */
@@ -1423,28 +1508,24 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
   orient();
   select(start >= 0 ? start : 0, { instant: true });
   section.classList.add("is-tabs");
-  place(true);
+  layout();
   if (start >= 0) bringIntoStrip(tabs[start]);
 
   window.addEventListener("hashchange", () => {
     const n = fromHash();
-    if (n >= 0) {
-      select(n);
-      bringIntoStrip(tabs[n]);
-    }
+    if (n < 0) return;
+    select(n);
+    bringIntoStrip(tabs[n]);
   });
 
-  /* ---------- the drawing ---------- */
-  if (line) {
-    try {
-      setCssVar(art, "--len", String(Math.ceil(line.getTotalLength())));
-    } catch {}
-  }
+  /* ---------- the first drawing ---------- */
   const arrive = () => {
+    if (seen) return;
     seen = true;
-    draw();
+    wind(threads[index], true, reduceMotion.matches ? 0 : FIRST_MS, 0, UNWIND_EASE);
   };
-  if (art && "IntersectionObserver" in window && !reduceMotion.matches) {
+  const firstArt = threads[index] ? threads[index].art : null;
+  if (firstArt && "IntersectionObserver" in window && !reduceMotion.matches) {
     const io = new IntersectionObserver(
       (entries) => {
         if (!entries.some((entry) => entry.isIntersecting)) return;
@@ -1453,19 +1534,33 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
       },
       { threshold: 0.6 }
     );
-    io.observe(art);
+    io.observe(firstArt);
   } else {
     arrive();
   }
 
   /* ---------- layout changes ---------- */
+  let relayoutFrame = 0;
+  const relayout = () => {
+    if (relayoutFrame) return;
+    relayoutFrame = requestAnimationFrame(() => {
+      relayoutFrame = 0;
+      layout();
+    });
+  };
+  window.addEventListener("resize", relayout);
   onCompactChange(() => {
     orient();
-    place(true);
+    relayout();
     bringIntoStrip(tabs[index]);
   });
-  if (typeof ResizeObserver === "function") new ResizeObserver(() => place(true)).observe(list);
-  if (document.fonts) document.fonts.ready.then(() => place(true));
+  if (typeof ResizeObserver === "function") new ResizeObserver(relayout).observe(list);
+  /* the fonts come in with a stylesheet that loads late, after fonts.ready
+     may already have answered */
+  if (document.fonts) {
+    document.fonts.ready.then(relayout);
+    if (document.fonts.addEventListener) document.fonts.addEventListener("loadingdone", relayout);
+  }
 })();
 
 /* Scroll-in reveals, plus one-at-a-time icon drawing.
