@@ -9922,8 +9922,12 @@ main {
     height: clamp(52px, 6.4vw, 64px);
   }
 
+  /* fb-home2: the old <=900px rule also pushed the even rows' drawings
+     against the spine (flex-start), so up to 900px they sat off-centre
+     and from 901px centred; they centre in their column as on desktop */
   .page--home .ex-rail__step:nth-of-type(even) .ex-rail__art {
     order: 2;
+    justify-content: center;
   }
 
   .page--home .ex-rail__body {
