@@ -6028,11 +6028,12 @@ a.contact-channels__value:focus-visible {
 
      What We Help You Achieve   cream - the Figma list: a rule beside each
                                 point, three to a row, no card chrome
-     How We Work                the scene's ground (navy, taupe, slate) with
+     How We Work                the scene's ground (navy, mauve, slate) with
                                 the page's architecture as the section's
                                 backdrop - the wireframe's "photo in the
                                 section background" instead of a band of
                                 its own - and the points on one trail
+                                (Companies and Investors: see fb-aud2)
      Our Expertise              cream - the copy beside the rail
 
    Every section shares one column - the container, from the edge where the
@@ -6066,8 +6067,10 @@ a.contact-channels__value:focus-visible {
   --aud-ground-rgb: 22, 24, 34;
 }
 
+/* fb-aud2: the land of the Companies hero (--hz-field #5f545b), not the
+   taupe #5f5853 it had been - Basia saw the band's colour as off the page's */
 .page--companies {
-  --aud-ground-rgb: 95, 88, 83;
+  --aud-ground-rgb: 95, 84, 91;
 }
 
 .page--investors {
@@ -6381,6 +6384,48 @@ a.contact-channels__value:focus-visible {
   margin: 0;
   color: rgba(244, 236, 231, 0.88);
   font: 400 var(--fs-small) / var(--lh-small) "Outfit", system-ui, sans-serif;
+}
+
+/* === fb-aud2: How We Work on the page colour (Companies, Investors) ===
+   Basia (29.09): the band's colour did not match the page and the
+   concrete behind it was not pretty. The band is now the page's own colour,
+   the land of its hero (Companies #5f545b, Investors #313e59), and the
+   architecture is the hero's own photograph - the same file, already
+   loaded - drawn into that colour as a texture: the luminosity blend keeps
+   the page's hue and takes only the photograph's light and shade, scaled
+   (--aud-tex) so that on average it is the ground's own lightness. It is
+   strongest along the top, behind the title, and dissolves before the
+   trail (41-48% down the band at every desktop width), so the markers, the
+   line and the points stand on the plain colour.
+   Founders keeps its dark band: on its terracotta the cream type (2.5:1)
+   and the orange trail (1.6:1) would not hold. */
+.page--companies {
+  --aud-tex: brightness(0.88);
+  --aud-tex-alpha: 0.4;
+}
+
+.page--investors {
+  /* the lattice is pale steel on pale glass: lifted apart, then brought
+     down to the slate's lightness */
+  --aud-tex: contrast(1.2) brightness(0.33);
+  --aud-tex-alpha: 1;
+}
+
+:is(.page--companies, .page--investors) .aud-work__photo {
+  background: rgb(var(--aud-ground-rgb));
+  -webkit-mask-image: linear-gradient(180deg, #000 12%, transparent 44%);
+  mask-image: linear-gradient(180deg, #000 12%, transparent 44%);
+}
+
+:is(.page--companies, .page--investors) .aud-work__photo img {
+  filter: var(--aud-tex);
+  mix-blend-mode: luminosity;
+  opacity: var(--aud-tex-alpha);
+}
+
+/* no veil: the fade is the mask's */
+:is(.page--companies, .page--investors) .aud-work__photo::after {
+  content: none;
 }
 
 /* ---------- Our Expertise ---------- */
@@ -13274,6 +13319,18 @@ main {
     background: linear-gradient(180deg, var(--trail-line), rgba(255, 168, 110, 0));
   }
 
+}
+
+/* === fb-aud2: How We Work on the page colour, compact (Companies, Investors) ===
+   The points follow the title closely here (32px under it), so the texture
+   is the title's alone: full across the top, gone by the first point. The
+   fade is measured from the section's top padding, where the title starts,
+   not from the photo's box, whose height follows the width. */
+@media (max-width: 1023px) {
+  :is(.page--companies, .page--investors) .aud-work__photo {
+    -webkit-mask-image: linear-gradient(180deg, #000 calc(var(--m-section) + 16px), transparent calc(var(--m-section) + 72px));
+    mask-image: linear-gradient(180deg, #000 calc(var(--m-section) + 16px), transparent calc(var(--m-section) + 72px));
+  }
 }
 
 /* a tablet has the width for each point's name and note side by side: the
