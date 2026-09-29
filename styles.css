@@ -2688,7 +2688,6 @@ main:focus {
 /* ============================================================
    PAGE-LEVEL ADDITIONS â€” multi-page architecture
    - .page-hero        mini-hero on sub-pages
-   - .expertise-cards  new visual cards (replaces route-map)
    - .site-footer__lede  tagline above footer columns
    - .photo-break      architectural full-bleed photos
    - .team-editorial / .member   our-team editorial layout
@@ -2795,47 +2794,6 @@ main:focus {
   max-width: 620px;
   color: var(--light-80);
   font: 400 clamp(15px, 1.2vw, 19px) / 1.55 "Outfit", system-ui, sans-serif;
-  text-wrap: pretty;
-}
-
-/* ---------- EXPERTISE CARDS (home) ---------- */
-
-.expertise-cards {
-  position: relative;
-  padding: clamp(96px, 12vh, 144px) var(--container-x);
-  background:
-    radial-gradient(900px 540px at 78% 560px, rgba(255, 97, 44, 0.08), transparent 70%),
-    linear-gradient(180deg, #0a0d18 0%, #07090f 100%);
-  overflow: hidden;
-}
-
-.expertise-cards__head {
-  max-width: 880px;
-  margin: 0 auto clamp(48px, 7vh, 80px);
-  text-align: center;
-}
-
-.expertise-cards__eyebrow {
-  margin: 0 0 22px;
-  color: var(--eyebrow-color);
-  font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-}
-
-.expertise-cards__title {
-  margin: 0;
-  color: var(--light);
-  font: 500 clamp(30px, 4vw, 56px) / 1.06 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.005em;
-  text-wrap: balance;
-}
-
-.expertise-cards__lede {
-  max-width: 620px;
-  margin: 22px auto 0;
-  color: var(--light-80);
-  font: 400 clamp(15px, 1.1vw, 17px) / 1.55 "Outfit", system-ui, sans-serif;
   text-wrap: pretty;
 }
 
@@ -4277,39 +4235,6 @@ a.contact-channels__value:focus-visible {
   }
 }
 
-/* ============ HOME - expertise teaser CTA ============ */
-.expertise-cards__cta-wrap {
-  margin-top: clamp(40px, 5.5vh, 64px);
-  text-align: center;
-}
-
-.expertise-cards__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 30px;
-  border: 1px solid rgba(240, 235, 233, 0.35);
-  border-radius: 999px;
-  color: var(--light);
-  background: rgba(240, 235, 233, 0.06);
-  font: 500 12.5px / 1 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
-}
-
-.expertise-cards__cta svg {
-  width: 16px;
-  height: 16px;
-}
-
-.expertise-cards__cta:hover {
-  background: rgba(240, 235, 233, 0.14);
-  border-color: rgba(240, 235, 233, 0.6);
-  transform: translateY(-2px);
-}
-
 /* ============ HOW WE WORK - Figma terrain: the route along a ridge at dusk ============
    Design 2.0: the hand-drawn ridge stands against the sky as the hero's
    silhouettes do - deep navy overhead, warming toward the horizon - the line
@@ -5116,7 +5041,7 @@ a.contact-channels__value:focus-visible {
 /* === end fb-expertise === */
 
 
-/* Figma one-line teaser icons inside the expertise cards, at the Figma
+/* Figma one-line teaser icons in the Home rail (Who we are), at the Figma
    height: the six drawings are 65px tall in the 1440 frame (home-icon-1..6) */
 .ex-icon {
   display: block;
@@ -5155,10 +5080,11 @@ a.contact-channels__value:focus-visible {
   }
 }
 
-/* ============ HOME EXPERTISE RAIL ============
+/* ============ HOME RAIL ============
    Alternating zig-zag rows threaded on a vertical trail - the same
    journey motif as the hero, at editorial scale. Two rows fill a
-   screen, and each one draws its icon as it arrives. */
+   screen, and each one draws its icon as it arrives. It ran under Our
+   Expertise; since fb-home2 it carries Who we are. */
 .ex-rail {
   position: relative;
   list-style: none;
@@ -6990,13 +6916,19 @@ a.contact-channels__value:focus-visible {
   color: #9c2415;
 }
 
-/* ===================================================================
-   WHO WE ARE
-   The About Us bridge the wireframe puts between the three routes and
-   the expertise rail. It carries the one cross-page link to About Us,
-   and its middle column is the one the review said must stop repeating
-   the hero's numbers.
-   =================================================================== */
+/* === fb-home2: WHO WE ARE - the intro and the rail (client, 29.09) ===
+   The About Us bridge between the three routes and the closing band. The
+   client liked the expertise rail but not the weight on expertise on Home,
+   so the rail moved in here and Our Expertise left the page: the intro on
+   the container edge, then five rows - perspective, experience, approach,
+   mission, commitment - on the rail's spine down the middle, and the one
+   link to About Us where the spine ends. The rail is HOME RAIL's as it
+   was (rows, spine, markers, drawings, motion); only its place is new.
+   One scene: the facade photo the client chose for this band (9.09 and
+   14.09) stays behind the intro, from under the torn edge of Three routes
+   as before, and fades out into the rail's near-black before the first
+   row. The ground runs on under the rows and ends on the closing band's
+   navy-deep, so that seam does not show either. */
 
 .whoweare {
   /* Starts under the torn bottom edge of Three routes (one cut depth up), so
@@ -7007,50 +6939,80 @@ a.contact-channels__value:focus-visible {
      section's top. The copy starts one section rhythm under that line, not
      one rhythm under the section's top - that left it 30px from the line. */
   --whoweare-air: clamp(80px, 11vh, 128px);
+  --whoweare-top: calc(var(--whoweare-under) * 1.5 + var(--whoweare-air));
+  /* from the intro to the rail; the photo has faded out by its end */
+  --whoweare-gap: clamp(48px, 7vh, 80px);
+  --whoweare-fade: calc(var(--whoweare-gap) + 96px);
+  /* The photo keeps the size and crop it had when it filled the whole band
+     with the three notes under the intro: that band was about 1.45 times
+     the intro's height on a desktop (1.85 on a phone, see compact). Blown
+     down to the intro alone it would show its light building edges at
+     the sides of the page. */
+  --whoweare-photo-h: 145%;
   position: relative;
   margin-top: calc(-1 * var(--whoweare-under));
-  padding: calc(var(--whoweare-under) * 1.5 + var(--whoweare-air)) var(--container-x) clamp(88px, 12vh, 150px);
-  background: var(--navy);
+  padding: var(--whoweare-top) var(--container-x) clamp(88px, 12vh, 150px);
+  /* the rail's ground: its glow on the right where the rows run, deepening
+     to navy-deep */
+  background:
+    radial-gradient(900px 540px at 78% 45%, rgba(255, 97, 44, 0.08), transparent 70%),
+    linear-gradient(180deg, #0a0d18 0%, var(--navy-deep) 100%);
   color: var(--light);
   overflow: hidden;
   isolation: isolate;
 }
 
+.whoweare__intro {
+  position: relative;
+  margin-bottom: var(--whoweare-gap);
+}
+
+/* The photo layer runs from the section's top edge, under the torn edge,
+   to the rail, full width; its last stretch fades out into the ground
+   (slowly behind the lede, all the way in the gap) - no edge, no band. */
 .whoweare__bg {
   position: absolute;
-  inset: 0;
   z-index: 0;
+  top: calc(-1 * var(--whoweare-top));
+  right: calc(-1 * var(--container-x));
+  bottom: calc(-1 * var(--whoweare-gap));
+  left: calc(-1 * var(--container-x));
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - var(--whoweare-fade)), rgba(0, 0, 0, 0.82) calc(100% - var(--whoweare-fade) * 0.62), rgba(0, 0, 0, 0.4) calc(100% - var(--whoweare-fade) * 0.3), transparent 100%);
+  mask-image: linear-gradient(180deg, #000 calc(100% - var(--whoweare-fade)), rgba(0, 0, 0, 0.82) calc(100% - var(--whoweare-fade) * 0.62), rgba(0, 0, 0, 0.4) calc(100% - var(--whoweare-fade) * 0.3), transparent 100%);
+}
+
+/* the photo and its wash as they were, at the band's old size */
+.whoweare__bg img,
+.whoweare__wash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--whoweare-photo-h);
 }
 
 /* A close-up of facade mullions, pre-toned to the navy ramp - no tower
    silhouette or sky edge (client, 9.09 and 14.09). */
 .whoweare__bg img {
-  width: 100%;
-  height: 100%;
   object-fit: cover;
   opacity: 0.9;
 }
 
 .whoweare__wash {
-  position: absolute;
-  inset: 0;
   background:
     radial-gradient(900px 560px at 18% 8%, rgba(255, 97, 44, 0.12), transparent 70%),
     linear-gradient(180deg, rgba(22, 24, 34, 0.9) 0%, rgba(22, 24, 34, 0.82) 46%, rgba(10, 13, 24, 0.97) 90%, #0a0d18 100%);
 }
 
-.whoweare__inner {
+/* on the container edge, where the hero and every section start; the
+   measure is capped, the edge is not moved. The rail under it keeps its
+   own centred column, spine on the page's axis. */
+.whoweare__head {
   position: relative;
   z-index: 1;
-  /* on the container edge, where the hero and every section start; the
-     measure is capped, the edge is not moved */
-  max-width: 1160px;
-  margin: 0;
-}
-
-.whoweare__head {
   max-width: 760px;
-  margin: 0 0 clamp(44px, 6vh, 76px);
+  margin: 0;
 }
 
 .whoweare__eyebrow {
@@ -7070,70 +7032,41 @@ a.contact-channels__value:focus-visible {
 }
 
 .whoweare__lede {
-  margin: 0 0 28px;
+  margin: 0;
   color: var(--light-80);
   font: 400 clamp(15px, 1.1vw, 17px) / 1.62 "Outfit", system-ui, sans-serif;
 }
 
-.whoweare__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--light);
-  font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  padding-bottom: 6px;
-  border-bottom: 1px solid rgba(240, 235, 233, 0.28);
-  transition: color 240ms ease, border-color 240ms ease, gap 240ms var(--ease-out);
+/* where the spine ends, as the rail's old call to action stood; the link
+   is the shared link-arrow */
+.whoweare__more {
+  margin: clamp(40px, 5.5vh, 64px) 0 0;
+  text-align: center;
 }
 
-.whoweare__link svg {
-  width: 16px;
-  height: 16px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
+/* Without script nothing reveals: the intro, the rows, their markers and
+   the link would stay invisible and the drawings undrawn. They are simply
+   shown, as reduced motion shows them - and with its !important, as the
+   rows' start offsets are set per row and per width (the even rows'
+   compact rise outranks a plain selector here). */
+@media (scripting: none) {
+  .page--home .whoweare [data-reveal],
+  .page--home .whoweare .io-reveal,
+  .page--home .whoweare .ex-rail__art,
+  .page--home .whoweare .ex-rail__body,
+  .page--home .whoweare .ex-rail__node {
+    opacity: 1 !important;
+    translate: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
 
-.whoweare__link:hover,
-.whoweare__link:focus-visible {
-  color: var(--orange-soft);
-  border-color: rgba(255, 176, 119, 0.6);
-  gap: 16px;
+  .page--home .whoweare .ex-icon path {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+  }
 }
-
-.whoweare__cols {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(28px, 4vw, 64px);
-  margin: 0;
-}
-
-.whoweare__col {
-  padding-top: 22px;
-  border-top: 1px solid var(--light-28);
-}
-
-.whoweare__col dt {
-  margin: 0 0 14px;
-  color: rgba(255, 168, 110, 0.84);
-  font: 500 var(--fs-label) / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: var(--ls-label);
-  text-transform: uppercase;
-}
-
-.whoweare__col dd {
-  margin: 0;
-  color: var(--light-80);
-  font: 400 clamp(14px, 1vw, 16px) / 1.62 "Outfit", system-ui, sans-serif;
-}
-
-@media (max-width: 860px) {
-  .whoweare__cols { grid-template-columns: 1fr; }
-}
+/* === end fb-home2 === */
 
 /* ============ NAV: one rule set for every page ============
    At rest the bar is transparent and its type wears the hero's ink (set per
@@ -9974,10 +9907,19 @@ main {
   }
 }
 
-/* ---------- Who we are ---------- */
+/* === fb-home2: Who we are - the intro and the rail (<=1023px) ===
+   The intro as it was, on its photo; the rows keep the rail's own compact
+   layout (see "Who we are: the rail" below). The rail follows the intro at
+   the gap the old Our Expertise head left above it, and the link to About
+   Us closes the section on the spine's axis: centred on a tablet, down the
+   left edge on a phone, where the spine runs. */
 @media (max-width: 1023px) {
   .page--home .whoweare {
     --whoweare-air: clamp(64px, 15vw, 96px);
+    --whoweare-gap: 48px;
+    /* the notes stacked here, so the band the photo filled was taller
+       beside the intro than on a desktop: it keeps that size */
+    --whoweare-photo-h: 185%;
     padding-bottom: var(--m-section);
   }
 
@@ -9991,7 +9933,6 @@ main {
 
   .page--home .whoweare__head {
     max-width: 40rem;
-    margin-bottom: 44px;
   }
 
   .page--home .whoweare__eyebrow {
@@ -10007,13 +9948,14 @@ main {
 
   .page--home .whoweare__lede {
     max-width: var(--m-measure);
-    margin-bottom: 18px;
     font-size: var(--m-lede);
     line-height: var(--lh-lead);
   }
 
-  /* a 48px target that still looks like the desktop's underlined label:
-     the rule is drawn just under the words, not at the foot of the box */
+  .page--home .whoweare__more {
+    margin-top: 48px;
+  }
+
   /* a 48px target; the label and its hover are the shared link-arrow's */
   .page--home .whoweare__link {
     min-height: 48px;
@@ -10024,132 +9966,18 @@ main {
     outline-offset: 4px;
     border-radius: 4px;
   }
-
-  .page--home .whoweare__col dt {
-    margin-bottom: 12px;
-    font-size: var(--m-label);
-  }
-
-  .page--home .whoweare__col dd {
-    max-width: var(--m-measure);
-    font-size: var(--m-body);
-    line-height: 1.6;
-  }
 }
 
 @media (max-width: 639px) {
-  .page--home .whoweare__cols {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 28px;
-  }
-}
-
-/* From 640px (a phone on its side, a tablet) one column of notes runs to
-   80-100 characters a line, and three columns squeeze each to ~30 with
-   one note twice as long as the others. The list reads as what it is,
-   a definition list: each note is a row under its own rule, the label on
-   the left and the text beside it at the body size, inside the shared
-   measure, two to four lines each. */
-@media (min-width: 640px) and (max-width: 919px) {
-  .page--home .whoweare__cols {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
-  }
-
-  .page--home .whoweare__col {
-    display: grid;
-    grid-template-columns: clamp(168px, 26%, 212px) minmax(0, 1fr);
-    align-items: baseline;
-    column-gap: 32px;
-    padding: 22px 0 26px;
-  }
-
-  .page--home .whoweare__col dt {
-    margin: 0;
-  }
-}
-
-/* three columns once each is ~260px wide, as on desktop */
-@media (min-width: 920px) and (max-width: 1023px) {
-  .page--home .whoweare__cols {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-/* ---------- Our Expertise: head and link ---------- */
-@media (max-width: 1023px) {
-  /* it follows Who we are on the same near-black, with no edge between
-     them: two full section paddings read as a hole, so this one is lighter */
-  .page--home .expertise-cards {
-    padding: calc(var(--m-section) * 0.75) var(--m-gutter) calc(var(--m-section) + 8px);
-  }
-
-  .page--home .expertise-cards__head {
-    margin-bottom: 48px;
-  }
-
-  .page--home .expertise-cards__eyebrow {
-    margin-bottom: 16px;
-    font-size: var(--m-label);
-  }
-
-  .page--home .expertise-cards__title {
-    font-size: var(--m-h2);
-    line-height: 1.12;
-  }
-
-  .page--home .expertise-cards__lede {
-    margin-top: 18px;
-    font-size: var(--m-lede);
-    text-wrap: balance;
-  }
-
-  .page--home .expertise-cards__cta-wrap {
-    margin-top: 48px;
-  }
-
-  .page--home .expertise-cards__cta {
-    justify-content: center;
-    min-height: 52px;
-    padding: 0 28px;
-    font-size: var(--m-label);
-    white-space: nowrap;
-  }
-
-  .page--home .expertise-cards__cta:focus-visible {
-    outline: 2px solid var(--orange);
-    outline-offset: 4px;
-  }
-}
-
-/* a phone reads the section down its left edge, like the rail under it */
-@media (max-width: 639px) {
-  .page--home .expertise-cards__head {
+  .page--home .whoweare__more {
     text-align: left;
-  }
-
-  .page--home .expertise-cards__lede {
-    margin-left: 0;
-  }
-
-  .page--home .expertise-cards__cta-wrap {
-    text-align: left;
-  }
-}
-
-/* the label keeps one line at 320px */
-@media (max-width: 374px) {
-  .page--home .expertise-cards__cta {
-    padding-inline: 16px;
-    letter-spacing: 0.12em;
   }
 }
 
 /* a tap leaves :hover stuck on a touch screen: the lifts stay on devices
    that can hover (the foundation's rule for the shared buttons) */
 @media (max-width: 1023px) and (hover: none) {
-  .page--home .primary-cta:hover,
-  .page--home .expertise-cards__cta:hover {
+  .page--home .primary-cta:hover {
     transform: none;
   }
 
@@ -10157,12 +9985,13 @@ main {
     gap: 10px;
   }
 }
+/* === end fb-home2 === */
 
-/* ---------- Our Expertise: the rail ----------
-   Phone: one column threaded on a spine down the left. Each area is its
+/* ---------- Who we are: the rail ----------
+   Phone: one column threaded on a spine down the left. Each row is its
    drawing and then its number, name and text; the drawings alternate
    left and right across the column, the desktop's zig-zag in one column,
-   and each area's marker sits on the spine level with its number - the
+   and each row's marker sits on the spine level with its number - the
    checkpoint the text hangs from.
    From 640px (a tablet, a phone on its side) the desktop's two-column
    zig-zag comes back, on the centre spine: the old <=900px rule had
@@ -10282,8 +10111,12 @@ main {
     height: clamp(52px, 6.4vw, 64px);
   }
 
+  /* fb-home2: the old <=900px rule also pushed the even rows' drawings
+     against the spine (flex-start), so up to 900px they sat off-centre
+     and from 901px centred; they centre in their column as on desktop */
   .page--home .ex-rail__step:nth-of-type(even) .ex-rail__art {
     order: 2;
+    justify-content: center;
   }
 
   .page--home .ex-rail__body {
@@ -13756,7 +13589,6 @@ main {
   .page-hero__eyebrow,
   .audience-intro__eyebrow,
   .whoweare__eyebrow,
-  .expertise-cards__eyebrow,
   .clients__eyebrow,
   .routes-strip__eyebrow,
   .team-editorial__eyebrow,
@@ -13775,7 +13607,6 @@ main {
 
   /* ---------- H2: section titles ---------- */
   .whoweare__title,
-  .expertise-cards__title,
   .aud-grow__title,
   .perspective__title,
   .track-record__title,
@@ -13808,7 +13639,6 @@ main {
   /* ---------- lead ---------- */
   .audience-intro__lede,
   .whoweare__lede,
-  .expertise-cards__lede,
   .track-record__lede,
   .clients__lede,
   .ex-areas__lede,
@@ -13822,7 +13652,6 @@ main {
 
   /* ---------- body ---------- */
   .ex-rail__copy,
-  .whoweare__col dd,
   .perspective__pillars > p,
   .track-record__foot > p,
   .manifesto__copy,
@@ -13858,7 +13687,6 @@ main {
 .page-hero__eyebrow,
 .audience-intro__eyebrow,
 .whoweare__eyebrow,
-.expertise-cards__eyebrow,
 .clients__eyebrow,
 .routes-strip__eyebrow,
 .team-editorial__eyebrow {
@@ -13869,7 +13697,6 @@ main {
 .page-hero__eyebrow,
 .audience-intro__eyebrow,
 .whoweare__eyebrow,
-.expertise-cards__eyebrow,
 .clients__eyebrow,
 .routes-strip__eyebrow,
 .team-editorial__eyebrow {
