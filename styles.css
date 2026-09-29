@@ -6028,11 +6028,12 @@ a.contact-channels__value:focus-visible {
 
      What We Help You Achieve   cream - the Figma list: a rule beside each
                                 point, three to a row, no card chrome
-     How We Work                the scene's ground (navy, taupe, slate) with
+     How We Work                the scene's ground (navy, mauve, slate) with
                                 the page's architecture as the section's
                                 backdrop - the wireframe's "photo in the
                                 section background" instead of a band of
                                 its own - and the points on one trail
+                                (Companies and Investors: see fb-aud2)
      Our Expertise              cream - the copy beside the rail
 
    Every section shares one column - the container, from the edge where the
@@ -6066,8 +6067,10 @@ a.contact-channels__value:focus-visible {
   --aud-ground-rgb: 22, 24, 34;
 }
 
+/* fb-aud2: the land of the Companies hero (--hz-field #5f545b), not the
+   taupe #5f5853 it had been - Basia saw the band's colour as off the page's */
 .page--companies {
-  --aud-ground-rgb: 95, 88, 83;
+  --aud-ground-rgb: 95, 84, 91;
 }
 
 .page--investors {
@@ -6383,6 +6386,48 @@ a.contact-channels__value:focus-visible {
   font: 400 var(--fs-small) / var(--lh-small) "Outfit", system-ui, sans-serif;
 }
 
+/* === fb-aud2: How We Work on the page colour (Companies, Investors) ===
+   Basia (29.09): the band's colour did not match the page and the
+   concrete behind it was not pretty. The band is now the page's own colour,
+   the land of its hero (Companies #5f545b, Investors #313e59), and the
+   architecture is the hero's own photograph - the same file, already
+   loaded - drawn into that colour as a texture: the luminosity blend keeps
+   the page's hue and takes only the photograph's light and shade, scaled
+   (--aud-tex) so that on average it is the ground's own lightness. It is
+   strongest along the top, behind the title, and dissolves before the
+   trail (41-48% down the band at every desktop width), so the markers, the
+   line and the points stand on the plain colour.
+   Founders keeps its dark band: on its terracotta the cream type (2.5:1)
+   and the orange trail (1.6:1) would not hold. */
+.page--companies {
+  --aud-tex: brightness(0.88);
+  --aud-tex-alpha: 0.4;
+}
+
+.page--investors {
+  /* the lattice is pale steel on pale glass: lifted apart, then brought
+     down to the slate's lightness */
+  --aud-tex: contrast(1.2) brightness(0.33);
+  --aud-tex-alpha: 1;
+}
+
+:is(.page--companies, .page--investors) .aud-work__photo {
+  background: rgb(var(--aud-ground-rgb));
+  -webkit-mask-image: linear-gradient(180deg, #000 12%, transparent 44%);
+  mask-image: linear-gradient(180deg, #000 12%, transparent 44%);
+}
+
+:is(.page--companies, .page--investors) .aud-work__photo img {
+  filter: var(--aud-tex);
+  mix-blend-mode: luminosity;
+  opacity: var(--aud-tex-alpha);
+}
+
+/* no veil: the fade is the mask's */
+:is(.page--companies, .page--investors) .aud-work__photo::after {
+  content: none;
+}
+
 /* ---------- Our Expertise ---------- */
 /* On the same three columns as What We Help: the copy takes the first, the
    list the other two, and the rail stands where the second column's rules
@@ -6498,6 +6543,24 @@ a.contact-channels__value:focus-visible {
   width: var(--rail-dot-end);
   height: var(--rail-dot-end);
   box-shadow: 0 0 0 5px rgba(var(--aud-accent-rgb), 0.14);
+}
+
+/* === fb-aud2: the rail keeps only its two ends ===
+   Basia (29.09): too many dots. The rail runs from the marker level with
+   the first point to the one level with the last; the points between stand
+   on it without a dot of their own, in the same places as before. */
+:is(.page--founders, .page--companies, .page--investors) .aud-expertise__list li:not(:first-child):not(:last-child)::before {
+  content: none;
+}
+
+/* With no dot over the joins, the rail's stretches meet in the open: each
+   runs 1px into the next, square-ended (the end markers cap the rail), in
+   the same 42% of the accent on the cream, mixed opaque so that the overlap
+   cannot show as a darker pixel. */
+:is(.page--founders, .page--companies, .page--investors) .aud-expertise__list li::after {
+  bottom: calc(-1 * (var(--exp-row-gap) + var(--exp-dot-y)) - 1px);
+  border-radius: 0;
+  background: color-mix(in srgb, var(--aud-accent) 42%, var(--light));
 }
 
 /* ===================================================================
@@ -13276,6 +13339,18 @@ main {
 
 }
 
+/* === fb-aud2: How We Work on the page colour, compact (Companies, Investors) ===
+   The points follow the title closely here (32px under it), so the texture
+   is the title's alone: full across the top, gone by the first point. The
+   fade is measured from the section's top padding, where the title starts,
+   not from the photo's box, whose height follows the width. */
+@media (max-width: 1023px) {
+  :is(.page--companies, .page--investors) .aud-work__photo {
+    -webkit-mask-image: linear-gradient(180deg, #000 calc(var(--m-section) + 16px), transparent calc(var(--m-section) + 72px));
+    mask-image: linear-gradient(180deg, #000 calc(var(--m-section) + 16px), transparent calc(var(--m-section) + 72px));
+  }
+}
+
 /* a tablet has the width for each point's name and note side by side: the
    name takes a little more of the row than its note (at 0.8fr the names
    broke on almost every point; at 1.1fr they sit on one line from 820px,
@@ -13458,6 +13533,86 @@ main {
 @media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .aud-grow {
     padding-top: 40px;
+  }
+}
+
+/* === fb-aud2: the closing scene in the page colour (For Founders, Companies, Investors) ===
+   Basia (29.09): on Investors the evening photograph under "Want to Grow
+   Together?" did not go with the page and cut hard into it; Companies sat
+   better. As the Figma frames draw it, each audience page now closes on a
+   sky of its own colour - Founders' terracotta, Companies' mauve,
+   Investors' slate - with the navy ridge and its four walkers standing on
+   it and running on into the footer. These pages no longer carry the
+   photograph (no .footer-ridge__bg in their markup, so it is not
+   downloaded); every other page keeps its photographic scene. The type
+   takes each hero's ink - the navy ink on terracotta (5.9:1), cream on the
+   mauve (6.1:1) and the slate (9.1:1) - and the focus ring follows it. */
+:is(.page--founders, .page--companies, .page--investors) .aud-grow {
+  background: linear-gradient(180deg, var(--grow-sky-top) 0%, var(--grow-sky-mid) 46%, var(--grow-sky-low) 100%);
+}
+
+/* the photograph's navy veil goes with it */
+:is(.page--founders, .page--companies, .page--investors) .aud-grow > .footer-ridge::before {
+  content: none;
+}
+
+/* Founders: its hero's sky, light overhead and deepening to the land */
+.page--founders .aud-grow {
+  --grow-sky-top: var(--fnd-sky-high);
+  --grow-sky-mid: var(--fnd-sky);
+  --grow-sky-low: var(--fnd-sky-low);
+  --focus-ring: var(--fnd-ink);
+}
+
+.page--founders .aud-grow__title {
+  color: var(--fnd-ink);
+}
+
+.page--founders .aud-grow__alt {
+  --link-ink: var(--fnd-ink);
+}
+
+/* Companies and Investors: the page colour itself (--hz-field), clearing
+   a little towards the horizon behind the walkers */
+.page--companies .aud-grow {
+  --grow-sky-top: var(--hz-field);
+  --grow-sky-mid: var(--hz-field);
+  --grow-sky-low: #6a5e65;
+}
+
+.page--investors .aud-grow {
+  --grow-sky-top: var(--hz-field);
+  --grow-sky-mid: var(--hz-field);
+  --grow-sky-low: #384766;
+}
+
+:is(.page--companies, .page--investors) .aud-grow {
+  --focus-ring: var(--scene-cream);
+}
+
+/* the pill sits flat on the sky, as in the Figma frames: the drop shadow
+   that lifted it off the photograph only smudges a lit colour */
+:is(.page--founders, .page--companies, .page--investors) .aud-grow__btn,
+:is(.page--founders, .page--companies, .page--investors) .aud-grow__btn:is(:hover, :focus-visible) {
+  box-shadow: none;
+}
+
+/* the quieter second route at 0.9 rather than 0.78: 5.3:1 on the mauve */
+:is(.page--companies, .page--investors) .aud-grow__alt {
+  --link-ink: rgba(240, 235, 233, 0.9);
+}
+
+/* the dark halo the photograph needed under that link on a phone would
+   only muddy a flat sky */
+:is(.page--founders, .page--companies, .page--investors) .aud-grow__alt {
+  text-shadow: none;
+}
+
+/* the compact layer rings the band's links in orange, which these skies
+   swallow (1.0:1 on the terracotta, 2.4:1 on the mauve) */
+@media (max-width: 1023px) {
+  :is(.page--founders, .page--companies, .page--investors) .aud-grow a:focus-visible {
+    outline-color: var(--focus-ring);
   }
 }
 
