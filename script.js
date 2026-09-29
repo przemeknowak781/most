@@ -1450,7 +1450,7 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
      The first area holds for EDGE of a step once pinned, each of the six in
      between for a step, and the eighth for EDGE of a step before the stage
      lets go; a step is STEP of the window's height. */
-  const STEP = 0.3;
+  const STEP = 0.2;
   const EDGE = 0.25;
   let track = false;
   const geo = { offset: 0, step: 1, edge: 0, length: 0, slack: [] };
@@ -1508,7 +1508,7 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
         const pin = Math.round(Math.max(floor, under + (vh - under - tallest) / 2));
         setCssVar(section, "--ex-pin", `${pin}px`);
         track = true;
-        geo.step = clamp(Math.round(vh * STEP), 220, 360);
+        geo.step = clamp(Math.round(vh * STEP), 160, 300);
         geo.edge = Math.round(geo.step * EDGE);
         geo.length = 2 * geo.edge + (last - 1) * geo.step;
         geo.slack = heights.map((h) => tallest - h);

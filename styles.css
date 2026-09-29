@@ -4598,7 +4598,7 @@ a.contact-channels__value:focus-visible {
    On a desktop window tall enough to hold the rail and the longest area,
    and without reduced motion, the areas also follow the scroll (.is-track):
    the rail and the open area pin under the bar while a short track - about
-   30% of the window per area - walks them from the first to the eighth,
+   20% of the window per area - walks them from the first to the eighth,
    and the page runs straight on into How We Work. A click scrolls to that
    area's place on the track, so the two never disagree. Everywhere else
    the section is as tall as the rail or the open area, whichever is
