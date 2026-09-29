@@ -6858,6 +6858,28 @@ a.contact-channels__value:focus-visible {
   text-align: center;
 }
 
+/* Without script nothing reveals: the intro, the rows, their markers and
+   the link would stay invisible and the drawings undrawn. They are simply
+   shown, as reduced motion shows them - and with its !important, as the
+   rows' start offsets are set per row and per width (the even rows'
+   compact rise outranks a plain selector here). */
+@media (scripting: none) {
+  .page--home .whoweare [data-reveal],
+  .page--home .whoweare .io-reveal,
+  .page--home .whoweare .ex-rail__art,
+  .page--home .whoweare .ex-rail__body,
+  .page--home .whoweare .ex-rail__node {
+    opacity: 1 !important;
+    translate: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .page--home .whoweare .ex-icon path {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+  }
+}
 /* === end fb-home2 === */
 
 /* ============ NAV: one rule set for every page ============
