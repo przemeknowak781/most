@@ -5433,17 +5433,64 @@ a.contact-channels__value:focus-visible {
   background: var(--scene-ground);
 }
 
-/* The intro copy sits on the ground the artwork cuts - no panel, no card.
-   The hero is 100svh and the artwork crosses at --scene-cross, so this pulls
-   the block up onto that ground and drops the lead exactly --scene-gap below
-   the crossing. */
+/* The intro copy sits on the ground the artwork cuts - no panel, no card. */
 .scene-intro {
-  --scene-gap: clamp(70px, 8.5vh, 116px);
   position: relative;
-  margin-top: calc(var(--scene-cross) - 100svh + var(--scene-gap));
   padding: 0 var(--container-x) clamp(90px, 14vh, 168px);
   color: var(--scene-cream);
   background: var(--scene-ground);
+}
+
+/* Desktop: the hero is --scene-h tall and the artwork crosses at
+   --scene-cross, so the intro is pulled up onto that ground by --scene-pull
+   and the lead drops exactly --scene-gap below the crossing.
+
+   --scene-h is a screen, or more where a screen cannot hold the valley. The
+   route's lowest point lies 0.06341 of the art's width below the crossing
+   (the valley floor 0.0554), and the crossing cannot rise to make room: its
+   px + vw floor keeps the left peak clear of the button. So on a wide or
+   short window - 32:9, ultrawide, a 1366 x 768 laptop - the hero's clip cut
+   the valley flat, the route left its bottom edge and came back on the far
+   slope, and the pull, measured from 100svh, turned into a push that let a
+   band of the page show between hero and intro (29.09). The hero now
+   reaches at least 36px under the route, the margin the crossing's own cap
+   keeps from the foot, and every overlap below is measured from that
+   height; a window that holds the valley keeps its one-screen hero.
+
+   The strip of the intro that overlaps the hero stays clear: the hero's own
+   ground is under it, and so is the route where it walks down into the
+   valley. The intro's ground starts where the hero ends (1px early, so the
+   two edges never open a hairline of the page between them), and the hero's
+   spine ends where the intro starts, handing over to the intro's own
+   segment and ring instead of running through them. (Queried as "not the
+   compact tier", so a zoomed window between 1023 and 1024px is desktop.) */
+@media not all and (max-width: 1023px) {
+  :is(.page--founders, .page--horizon) {
+    --scene-gap: clamp(70px, 8.5vh, 116px);
+    --scene-h: max(100svh, calc(var(--scene-cross) + 0.06341 * 100vw + 36px));
+    --scene-pull: max(0px, calc(var(--scene-h) - var(--scene-cross) - var(--scene-gap)));
+  }
+
+  :is(.page--founders, .page--horizon) .hero {
+    min-height: var(--scene-h);
+  }
+
+  .scene-intro {
+    margin-top: calc(-1 * var(--scene-pull));
+    background: linear-gradient(180deg, transparent calc(var(--scene-pull) - 1px), var(--scene-ground) 0);
+  }
+
+  .scene-spine--hero {
+    bottom: var(--scene-pull);
+  }
+}
+
+/* the laptop hero's 780px floor (HERO) holds here too, inside --scene-h so
+   the pull still lands the lead on its gap */
+@media (min-width: 1024px) and (max-width: 1120px) {
+  :is(.page--founders, .page--horizon) {
+    --scene-h: max(780px, 100svh, calc(var(--scene-cross) + 0.06341 * 100vw + 36px));
+  }
 }
 
 .scene-intro__lead {
@@ -12774,12 +12821,13 @@ main {
    tall).
 
    ---------- the scene ----------
-   On desktop the hero is a full screen and the artwork is pinned to a
-   crossing measured from its top (--scene-cross), with the intro pulled up
-   by 100svh to meet it. Below 1024px the hero is content-sized instead:
-   the copy in the flow, and the artwork anchored to the hero's foot, so the
-   ridge always starts just under the copy whatever the headline wraps to
-   and whatever the screen's height.
+   On desktop the hero is a full screen (taller where a screen cannot hold
+   the valley, --scene-h) and the artwork is pinned to a crossing measured
+   from its top (--scene-cross), with the intro pulled up onto it. Below
+   1024px the hero is content-sized instead: the copy in the flow, and the
+   artwork anchored to the hero's foot, so the ridge always starts just
+   under the copy whatever the headline wraps to and whatever the screen's
+   height.
 
    The artwork is the Figma ridge, 1443 x 658 (0.456 as tall as wide),
    mirrored so its mass rises on the right. Its constants, measured off the
