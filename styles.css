@@ -6545,6 +6545,24 @@ a.contact-channels__value:focus-visible {
   box-shadow: 0 0 0 5px rgba(var(--aud-accent-rgb), 0.14);
 }
 
+/* === fb-aud2: the rail keeps only its two ends ===
+   Basia (29.09): too many dots. The rail runs from the marker level with
+   the first point to the one level with the last; the points between stand
+   on it without a dot of their own, in the same places as before. */
+:is(.page--founders, .page--companies, .page--investors) .aud-expertise__list li:not(:first-child):not(:last-child)::before {
+  content: none;
+}
+
+/* With no dot over the joins, the rail's stretches meet in the open: each
+   runs 1px into the next, square-ended (the end markers cap the rail), in
+   the same 42% of the accent on the cream, mixed opaque so that the overlap
+   cannot show as a darker pixel. */
+:is(.page--founders, .page--companies, .page--investors) .aud-expertise__list li::after {
+  bottom: calc(-1 * (var(--exp-row-gap) + var(--exp-dot-y)) - 1px);
+  border-radius: 0;
+  background: color-mix(in srgb, var(--aud-accent) 42%, var(--light));
+}
+
 /* ===================================================================
    ROUTE SHORTCUTS
    The client's review asks for the same three-route shortcut on Our
