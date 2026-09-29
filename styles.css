@@ -3042,9 +3042,16 @@ main:focus {
    MEMBER ARTICLE -- spotlight gallery treatment
    ============================================================ */
 
+/* The portrait has a track of its own and the text its reading width
+   beside it; the pair hangs on the container edge (a reversed card, right
+   to left, on the other edge). The client found the portraits too big
+   (29.09): they took nearly half the row, 545 x 636px at 1440 and 626 x
+   731px from 1640; now 389 x 454px at 1440 and 400 x 467px at most. */
 .member {
+  --member-photo: clamp(300px, 27vw, 400px);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
+  grid-template-columns: minmax(0, var(--member-photo)) minmax(0, 620px);
+  justify-content: start;
   gap: clamp(48px, 7vw, 112px);
   align-items: center;
   opacity: 0;
@@ -11962,8 +11969,8 @@ main {
 }
 
 /* ---------- members: phones held upright ----------
-   One column. The portrait takes four fifths of the width on alternate
-   sides - the desktop zigzag, folded - and its number stands in the fifth
+   One column. The portrait takes two thirds of the width on alternate
+   sides - the desktop zigzag, folded - and its number stands in the third
    it leaves, behind the frame. (A small phone on its side, 568x320, is
    under 600px too, but has the width for the zigzag below.) */
 @media (max-width: 599px) and (orientation: portrait),
@@ -11975,8 +11982,8 @@ main {
   }
 
   .page--team .member__photo {
-    width: 80%;
-    max-width: 340px;
+    width: 66%;
+    max-width: 280px;
   }
 
   .page--team .member--reverse .member__photo {
@@ -12004,14 +12011,14 @@ main {
   (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .page--team .member,
   .page--team .member--reverse {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
     gap: clamp(36px, 6vw, 64px);
     align-items: start;
     direction: ltr;
   }
 
   .page--team .member--reverse {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
   }
 
   .page--team .member--reverse .member__photo {
