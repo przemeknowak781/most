@@ -6792,41 +6792,95 @@ a.contact-channels__value:focus-visible {
    mission, commitment - on the rail's spine down the middle, and the one
    link to About Us where the spine ends. The rail is HOME RAIL's as it
    was (rows, spine, markers, drawings, motion); only its place is new.
-   One ground runs under all of it, the one the rail had. The facade photo
-   the band stood on would have had to stop partway down, so the first
-   rows sat on the photo and the rest on plain dark, or be blown up to
-   twice its size to cover a section twice as tall. The torn edge of Three
-   routes reads as a clean silhouette over the near-black, and the foot
-   is the closing band's navy-deep, so that seam does not show. */
+   One scene: the facade photo the client chose for this band (9.09 and
+   14.09) stays behind the intro, from under the torn edge of Three routes
+   as before, and fades out into the rail's near-black before the first
+   row. The ground runs on under the rows and ends on the closing band's
+   navy-deep, so that seam does not show either. */
 
 .whoweare {
   /* Starts under the torn bottom edge of Three routes (one cut depth up), so
-     the ground fills right up to that edge's rim instead of a flat line. */
+     the facade fills right up to that edge's rim instead of a flat line. */
   --whoweare-under: var(--audience-cut-depth);
   /* The torn edge and its trail line hang into this section: on the left,
      where the copy starts, the line runs about 1.5 cut depths below the
      section's top. The copy starts one section rhythm under that line, not
      one rhythm under the section's top - that left it 30px from the line. */
   --whoweare-air: clamp(80px, 11vh, 128px);
+  --whoweare-top: calc(var(--whoweare-under) * 1.5 + var(--whoweare-air));
+  /* from the intro to the rail; the photo has faded out by its end */
+  --whoweare-gap: clamp(48px, 7vh, 80px);
+  --whoweare-fade: calc(var(--whoweare-gap) + 96px);
+  /* The photo keeps the size and crop it had when it filled the whole band
+     with the three notes under the intro: that band was about 1.45 times
+     the intro's height on a desktop (1.85 on a phone, see compact). Blown
+     down to the intro alone it would show its light building edges at
+     the sides of the page. */
+  --whoweare-photo-h: 145%;
   position: relative;
   margin-top: calc(-1 * var(--whoweare-under));
-  padding: calc(var(--whoweare-under) * 1.5 + var(--whoweare-air)) var(--container-x) clamp(88px, 12vh, 150px);
-  /* the warm light that sat over the title, and the rail's own glow on
-     the right where the rows run; the ground deepens to navy-deep */
+  padding: var(--whoweare-top) var(--container-x) clamp(88px, 12vh, 150px);
+  /* the rail's ground: its glow on the right where the rows run, deepening
+     to navy-deep */
   background:
-    radial-gradient(900px 560px at 18% 80px, rgba(255, 97, 44, 0.1), transparent 70%),
     radial-gradient(900px 540px at 78% 45%, rgba(255, 97, 44, 0.08), transparent 70%),
     linear-gradient(180deg, #0a0d18 0%, var(--navy-deep) 100%);
   color: var(--light);
   overflow: hidden;
+  isolation: isolate;
+}
+
+.whoweare__intro {
+  position: relative;
+  margin-bottom: var(--whoweare-gap);
+}
+
+/* The photo layer runs from the section's top edge, under the torn edge,
+   to the rail, full width; its last stretch fades out into the ground
+   (slowly behind the lede, all the way in the gap) - no edge, no band. */
+.whoweare__bg {
+  position: absolute;
+  z-index: 0;
+  top: calc(-1 * var(--whoweare-top));
+  right: calc(-1 * var(--container-x));
+  bottom: calc(-1 * var(--whoweare-gap));
+  left: calc(-1 * var(--container-x));
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - var(--whoweare-fade)), rgba(0, 0, 0, 0.82) calc(100% - var(--whoweare-fade) * 0.62), rgba(0, 0, 0, 0.4) calc(100% - var(--whoweare-fade) * 0.3), transparent 100%);
+  mask-image: linear-gradient(180deg, #000 calc(100% - var(--whoweare-fade)), rgba(0, 0, 0, 0.82) calc(100% - var(--whoweare-fade) * 0.62), rgba(0, 0, 0, 0.4) calc(100% - var(--whoweare-fade) * 0.3), transparent 100%);
+}
+
+/* the photo and its wash as they were, at the band's old size */
+.whoweare__bg img,
+.whoweare__wash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--whoweare-photo-h);
+}
+
+/* A close-up of facade mullions, pre-toned to the navy ramp - no tower
+   silhouette or sky edge (client, 9.09 and 14.09). */
+.whoweare__bg img {
+  object-fit: cover;
+  opacity: 0.9;
+}
+
+.whoweare__wash {
+  background:
+    radial-gradient(900px 560px at 18% 8%, rgba(255, 97, 44, 0.12), transparent 70%),
+    linear-gradient(180deg, rgba(22, 24, 34, 0.9) 0%, rgba(22, 24, 34, 0.82) 46%, rgba(10, 13, 24, 0.97) 90%, #0a0d18 100%);
 }
 
 /* on the container edge, where the hero and every section start; the
    measure is capped, the edge is not moved. The rail under it keeps its
    own centred column, spine on the page's axis. */
 .whoweare__head {
+  position: relative;
+  z-index: 1;
   max-width: 760px;
-  margin: 0 0 clamp(48px, 7vh, 80px);
+  margin: 0;
 }
 
 .whoweare__eyebrow {
@@ -9722,14 +9776,18 @@ main {
 }
 
 /* === fb-home2: Who we are - the intro and the rail (<=1023px) ===
-   The intro as it was; the rows keep the rail's own compact layout (see
-   "Who we are: the rail" below). The rail follows the intro at the gap the
-   old Our Expertise head left above it, and the link to About Us closes
-   the section on the spine's axis: centred on a tablet, down the left edge
-   on a phone, where the spine runs. */
+   The intro as it was, on its photo; the rows keep the rail's own compact
+   layout (see "Who we are: the rail" below). The rail follows the intro at
+   the gap the old Our Expertise head left above it, and the link to About
+   Us closes the section on the spine's axis: centred on a tablet, down the
+   left edge on a phone, where the spine runs. */
 @media (max-width: 1023px) {
   .page--home .whoweare {
     --whoweare-air: clamp(64px, 15vw, 96px);
+    --whoweare-gap: 48px;
+    /* the notes stacked here, so the band the photo filled was taller
+       beside the intro than on a desktop: it keeps that size */
+    --whoweare-photo-h: 185%;
     padding-bottom: var(--m-section);
   }
 
@@ -9743,7 +9801,6 @@ main {
 
   .page--home .whoweare__head {
     max-width: 40rem;
-    margin-bottom: 48px;
   }
 
   .page--home .whoweare__eyebrow {
