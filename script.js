@@ -1270,17 +1270,24 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
    beside it, a moment behind. The first one draws itself as the section
    arrives. With reduced motion the drawings simply swap.
 
-   A click or a key only swaps the panel - nothing scrolls and nothing pins,
-   so the page scrolls on to the next section as any other would. On
-   desktop the tabs stand down the rail (vertical); under 1024px they run
-   across a strip above the panel (horizontal), as in the Figma frames. */
+   On a desktop window tall enough to hold the rail and the longest area,
+   and without reduced motion, the areas also follow the scroll: the rail
+   and the open area pin under the bar (sticky, .is-track in the
+   stylesheet) while a short track walks them from the first to the eighth,
+   and the page then runs straight on into How We Work. A click, an arrow
+   key or a link glides to that area's place on the track, so the tabs and
+   the scroll never disagree. Everywhere else - under 1024px, where the tabs
+   run across a strip, on short windows and with reduced motion - a click or
+   a key only swaps the panel and nothing follows the scroll. */
 (() => {
   const section = document.querySelector(".ex-areas");
   const nav = section ? section.querySelector(".ex-areas__nav") : null;
   const list = nav ? nav.querySelector(".ex-areas__tabs") : null;
   const tabs = list ? Array.from(list.querySelectorAll(".ex-areas__tab")) : [];
   const panels = section ? Array.from(section.querySelectorAll(".ex-areas__panel")) : [];
-  if (!list || !tabs.length || tabs.length !== panels.length) return;
+  const body = section ? section.querySelector(".ex-areas__body") : null;
+  const head = section ? section.querySelector(".ex-areas__head") : null;
+  if (!list || !body || !head || !tabs.length || tabs.length !== panels.length) return;
 
   const dot = nav.querySelector(".ex-areas__dot");
   /* Under 1024px the strip's line is a ridge (styles.css --ex-strip-ridge:
@@ -1294,6 +1301,9 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     return STRIP_RIDGE[i] + (STRIP_RIDGE[i + 1] - STRIP_RIDGE[i]) * (x - i);
   };
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  /* the track wants a desktop window with some height and motion; whether
+     the stage really fits under the bar is measured (layout) */
+  const trackQuery = window.matchMedia("(min-width: 1024px) and (min-height: 691px) and (prefers-reduced-motion: no-preference)");
   const last = tabs.length - 1;
   let index = -1;
 
@@ -1435,6 +1445,27 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     else wind(next, true, still ? 0 : UNWIND_MS, out && out.anim ? LAG_MS : 0, UNWIND_EASE);
   };
 
+  /* ---------- the track ----------
+     s is how far the page has scrolled past the point where the stage pins.
+     The first area holds for EDGE of a step once pinned, each of the six in
+     between for a step, and the eighth for EDGE of a step before the stage
+     lets go; a step is STEP of the window's height. */
+  const STEP = 0.3;
+  const EDGE = 0.25;
+  let track = false;
+  const geo = { offset: 0, step: 1, edge: 0, length: 0, slack: [] };
+
+  const travelled = () => -section.getBoundingClientRect().top - geo.offset;
+  const areaAt = (s) => clamp(Math.floor((s - geo.edge) / geo.step) + 1, 0, last);
+  const spotOf = (i) => (i <= 0 ? 0 : i >= last ? geo.length : geo.edge + (i - 0.5) * geo.step);
+
+  /* The spacer after the stage is the track plus the difference between
+     the open area and the tallest, so the section keeps one height. */
+  const setSpacer = () => {
+    if (track) setCssVar(section, "--ex-track", `${(geo.length + (geo.slack[index] || 0)).toFixed(2)}px`);
+    else clearCssVar(section, "--ex-track");
+  };
+
   const select = (i, { instant = false } = {}) => {
     if (i === index) return;
     const from = index;
@@ -1445,21 +1476,127 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
       tab.tabIndex = on ? 0 : -1;
       panels[n].hidden = !on;
     });
+    setSpacer();
     swap(from, i, instant || from < 0);
     place(instant);
   };
 
+  /* Reads, then writes: the track's rules go on, the stage is measured with
+     every area laid out, and if the tallest does not fit between the pin
+     line and the foot of the window the section stays plain tabs. Where
+     there is room to spare the stage pins in the middle of the space under
+     the bar rather than tight under it. */
+  const bar = document.querySelector(".top-nav");
   const layout = () => {
+    track = false;
+    clearCssVar(section, "--ex-pin");
+    section.classList.toggle("is-track", trackQuery.matches);
+    if (trackQuery.matches) {
+      /* the layout viewport: on a tablet on its side it holds still while
+         the browser's bars slide away, where innerHeight does not */
+      const vh = document.documentElement.clientHeight || window.innerHeight;
+      const floor = parseFloat(getComputedStyle(body).top) || 0;
+      const rail = nav.getBoundingClientRect().height;
+      /* the panels stand under the drawings' row (read off a drawing: the
+         open panel may be mid fade-in, moved by its transform) */
+      const art = threads[index] ? threads[index].art : null;
+      const row = art ? art.getBoundingClientRect().height + (parseFloat(getComputedStyle(art).marginBottom) || 0) : panels[index].offsetTop;
+      const heights = panels.map((panel) => Math.max(rail, row + panel.getBoundingClientRect().height));
+      const tallest = Math.max(...heights);
+      if (floor + tallest + 8 <= vh) {
+        const under = bar ? bar.getBoundingClientRect().bottom : 0;
+        const pin = Math.round(Math.max(floor, under + (vh - under - tallest) / 2));
+        setCssVar(section, "--ex-pin", `${pin}px`);
+        track = true;
+        geo.step = clamp(Math.round(vh * STEP), 220, 360);
+        geo.edge = Math.round(geo.step * EDGE);
+        geo.length = 2 * geo.edge + (last - 1) * geo.step;
+        geo.slack = heights.map((h) => tallest - h);
+        geo.offset = head.offsetTop + head.offsetHeight + (parseFloat(getComputedStyle(head).marginBottom) || 0) - pin;
+      } else {
+        section.classList.remove("is-track");
+      }
+    }
+    setSpacer();
     measureSpots();
     place(true);
   };
+
+  /* A click, a key or a link glides to the area's place on the track; the
+     area is chosen at once and held while the page travels, so the ones in
+     between do not flash past. The hold ends when the page arrives, when
+     the scroll stops short, or as soon as the reader scrolls themselves. */
+  let hold = -1;
+  let holdTimer = 0;
+  let frame = 0;
+
+  const sync = () => {
+    frame = 0;
+    if (!track) return;
+    const s = travelled();
+    if (hold >= 0) {
+      if (Math.abs(s - spotOf(hold)) > 2) return;
+      hold = -1;
+      clearTimeout(holdTimer);
+    }
+    select(areaAt(s));
+  };
+
+  const schedule = () => {
+    if (!frame) frame = requestAnimationFrame(sync);
+  };
+
+  const letGo = () => {
+    if (hold < 0) return;
+    hold = -1;
+    clearTimeout(holdTimer);
+    schedule();
+  };
+
+  const goTo = (i, { instant = false, force = false } = {}) => {
+    if (!track) {
+      select(i);
+      return;
+    }
+    const s = travelled();
+    select(i);
+    if (!force && areaAt(s) === i) return;
+    hold = i;
+    clearTimeout(holdTimer);
+    holdTimer = setTimeout(letGo, 400);
+    window.scrollTo({ top: Math.round(window.scrollY + spotOf(i) - s), behavior: instant || reduceMotion.matches ? "instant" : "smooth" });
+  };
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (hold >= 0) {
+        clearTimeout(holdTimer);
+        holdTimer = setTimeout(letGo, 240);
+      }
+      schedule();
+    },
+    { passive: true }
+  );
+
+  /* the reader's own scrolling ends a glide (and a deep link's landing) */
+  const SCROLL_KEYS = new Set(["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "]);
+  let landing = -1;
+  const own = (e) => {
+    if (e.type === "keydown" && (e.defaultPrevented || !SCROLL_KEYS.has(e.key))) return;
+    landing = -1;
+    letGo();
+  };
+  window.addEventListener("wheel", own, { passive: true });
+  window.addEventListener("touchstart", own, { passive: true });
+  window.addEventListener("keydown", own);
 
   tabs.forEach((tab, i) => {
     tab.addEventListener("click", (e) => {
       /* a modified click still opens the link as a link would */
       if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       e.preventDefault();
-      select(i);
+      goTo(i);
       bringIntoStrip(tab);
     });
     tab.addEventListener("keydown", (e) => {
@@ -1482,16 +1619,32 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
         case " ":
           /* a link does not answer Space; a tab does */
           e.preventDefault();
-          select(i);
+          goTo(i);
           return;
         default:
           return;
       }
       e.preventDefault();
-      select(next);
+      goTo(next);
       tabs[next].focus({ preventScroll: true });
       bringIntoStrip(tabs[next]);
     });
+  });
+
+  /* On the track, a tab or a panel reached with the keyboard is shown
+     where the page stands: if focusing it scrolled the page to another
+     area's place, the page is put back on its own. The scroll never moves
+     focus; focus only moves the scroll. */
+  section.addEventListener("focusin", (e) => {
+    if (!track || hold >= 0) return;
+    let i = tabs.indexOf(e.target);
+    if (i < 0) i = panels.indexOf(e.target);
+    if (i < 0) return;
+    let keyboard = true;
+    try {
+      keyboard = e.target.matches(":focus-visible");
+    } catch {}
+    if (keyboard && areaAt(travelled()) !== i) goTo(i, { instant: true });
   });
 
   /* ---------- deep links ---------- */
@@ -1504,17 +1657,30 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     return panels.findIndex((panel, n) => panel.id === id || tabs[n].id === id);
   };
 
+  /* On the track the page lands on the area's place (the browser's own jump
+     lands on the stage), again after fonts and images have settled, until
+     the reader scrolls. */
+  const land = () => {
+    if (landing >= 0 && track) goTo(landing, { instant: true, force: true });
+  };
+
   const start = fromHash();
   orient();
   select(start >= 0 ? start : 0, { instant: true });
   section.classList.add("is-tabs");
   layout();
-  if (start >= 0) bringIntoStrip(tabs[start]);
+  if (start >= 0) {
+    landing = start;
+    land();
+    bringIntoStrip(tabs[start]);
+  } else if (track) {
+    select(areaAt(travelled()), { instant: true });
+  }
 
   window.addEventListener("hashchange", () => {
     const n = fromHash();
     if (n < 0) return;
-    select(n);
+    goTo(n, { force: true });
     bringIntoStrip(tabs[n]);
   });
 
@@ -1539,6 +1705,22 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     arrive();
   }
 
+  /* The trail over the seam draws as the section arrives. The shared reveal
+     waits for 18% of a section to show, which on the track (a section three
+     screens tall) came long after the seam: it draws as the section's top
+     comes in instead, as it did when the section was one screen. */
+  if (section.classList.contains("has-trail") && "IntersectionObserver" in window) {
+    const seam = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        seam.disconnect();
+        section.classList.add("is-visible");
+      },
+      { rootMargin: "0px 0px -18% 0px" }
+    );
+    seam.observe(section);
+  }
+
   /* ---------- layout changes ---------- */
   let relayoutFrame = 0;
   const relayout = () => {
@@ -1546,9 +1728,15 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     relayoutFrame = requestAnimationFrame(() => {
       relayoutFrame = 0;
       layout();
+      if (!track) hold = -1;
+      land();
+      schedule();
     });
   };
   window.addEventListener("resize", relayout);
+  const onTrackChange = () => relayout();
+  if (trackQuery.addEventListener) trackQuery.addEventListener("change", onTrackChange);
+  else if (trackQuery.addListener) trackQuery.addListener(onTrackChange);
   onCompactChange(() => {
     orient();
     relayout();
@@ -1561,6 +1749,13 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     document.fonts.ready.then(relayout);
     if (document.fonts.addEventListener) document.fonts.addEventListener("loadingdone", relayout);
   }
+  window.addEventListener("load", () => {
+    relayout();
+    /* past the load the page is the reader's */
+    setTimeout(() => {
+      landing = -1;
+    }, 600);
+  });
 })();
 
 /* Scroll-in reveals, plus one-at-a-time icon drawing.
