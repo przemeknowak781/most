@@ -13518,6 +13518,86 @@ main {
   }
 }
 
+/* === fb-aud2: the closing scene in the page colour (For Founders, Companies, Investors) ===
+   Basia (29.09): on Investors the evening photograph under "Want to Grow
+   Together?" did not go with the page and cut hard into it; Companies sat
+   better. As the Figma frames draw it, each audience page now closes on a
+   sky of its own colour - Founders' terracotta, Companies' mauve,
+   Investors' slate - with the navy ridge and its four walkers standing on
+   it and running on into the footer. These pages no longer carry the
+   photograph (no .footer-ridge__bg in their markup, so it is not
+   downloaded); every other page keeps its photographic scene. The type
+   takes each hero's ink - the navy ink on terracotta (5.9:1), cream on the
+   mauve (6.1:1) and the slate (9.1:1) - and the focus ring follows it. */
+:is(.page--founders, .page--companies, .page--investors) .aud-grow {
+  background: linear-gradient(180deg, var(--grow-sky-top) 0%, var(--grow-sky-mid) 46%, var(--grow-sky-low) 100%);
+}
+
+/* the photograph's navy veil goes with it */
+:is(.page--founders, .page--companies, .page--investors) .aud-grow > .footer-ridge::before {
+  content: none;
+}
+
+/* Founders: its hero's sky, light overhead and deepening to the land */
+.page--founders .aud-grow {
+  --grow-sky-top: var(--fnd-sky-high);
+  --grow-sky-mid: var(--fnd-sky);
+  --grow-sky-low: var(--fnd-sky-low);
+  --focus-ring: var(--fnd-ink);
+}
+
+.page--founders .aud-grow__title {
+  color: var(--fnd-ink);
+}
+
+.page--founders .aud-grow__alt {
+  --link-ink: var(--fnd-ink);
+}
+
+/* Companies and Investors: the page colour itself (--hz-field), clearing
+   a little towards the horizon behind the walkers */
+.page--companies .aud-grow {
+  --grow-sky-top: var(--hz-field);
+  --grow-sky-mid: var(--hz-field);
+  --grow-sky-low: #6a5e65;
+}
+
+.page--investors .aud-grow {
+  --grow-sky-top: var(--hz-field);
+  --grow-sky-mid: var(--hz-field);
+  --grow-sky-low: #384766;
+}
+
+:is(.page--companies, .page--investors) .aud-grow {
+  --focus-ring: var(--scene-cream);
+}
+
+/* the pill sits flat on the sky, as in the Figma frames: the drop shadow
+   that lifted it off the photograph only smudges a lit colour */
+:is(.page--founders, .page--companies, .page--investors) .aud-grow__btn,
+:is(.page--founders, .page--companies, .page--investors) .aud-grow__btn:is(:hover, :focus-visible) {
+  box-shadow: none;
+}
+
+/* the quieter second route at 0.9 rather than 0.78: 5.3:1 on the mauve */
+:is(.page--companies, .page--investors) .aud-grow__alt {
+  --link-ink: rgba(240, 235, 233, 0.9);
+}
+
+/* the dark halo the photograph needed under that link on a phone would
+   only muddy a flat sky */
+:is(.page--founders, .page--companies, .page--investors) .aud-grow__alt {
+  text-shadow: none;
+}
+
+/* the compact layer rings the band's links in orange, which these skies
+   swallow (1.0:1 on the terracotta, 2.4:1 on the mauve) */
+@media (max-width: 1023px) {
+  :is(.page--founders, .page--companies, .page--investors) .aud-grow a:focus-visible {
+    outline-color: var(--focus-ring);
+  }
+}
+
 /* ============================================================
    DESIGN SYSTEM - type roles (1024px and up)
    One scale for every page; the tokens live on :root at the top of this
