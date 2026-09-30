@@ -1772,8 +1772,14 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
    backs the reveal up. */
 (() => {
   const pending = new Set(document.querySelectorAll(".io-reveal"));
-  const icons = Array.from(document.querySelectorAll(".ex-icon, .js-draw"));
-  if (!pending.size && !icons.length) return;
+  /* A group (data-draw-group) draws as one: Our Expertise's row on Home,
+     six drawings side by side, reaches the band all at once, and the
+     queue below would have snapped five of them finished to draw the
+     last. Its drawings follow each other a beat apart instead. */
+  const groups = Array.from(document.querySelectorAll("[data-draw-group]"));
+  const allIcons = Array.from(document.querySelectorAll(".ex-icon, .js-draw"));
+  const icons = allIcons.filter((svg) => !svg.closest("[data-draw-group]"));
+  if (!pending.size && !allIcons.length) return;
 
   /* ---------- icon drawing: one at a time, inside the reading band ---------- */
   const DRAW_MS = 2600;
@@ -1798,7 +1804,7 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     path.style.setProperty("--len", len);
   };
   const measureAll = () =>
-    icons.forEach((svg) => svg.querySelectorAll("path").forEach(measure));
+    allIcons.forEach((svg) => svg.querySelectorAll("path").forEach(measure));
   measureAll();
   let measureTimer = 0;
   window.addEventListener("resize", () => {
@@ -1861,6 +1867,35 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     }
   }
 
+  const GROUP_BEAT = 180;
+  const undrawnGroups = new Set(groups);
+  let groupIo = null;
+  const drawGroup = (group, done) => {
+    undrawnGroups.delete(group);
+    if (groupIo) groupIo.unobserve(group);
+    group.querySelectorAll(".ex-icon, .js-draw").forEach((svg, i) => {
+      if (done) {
+        finish(svg);
+        return;
+      }
+      svg.style.setProperty("--draw-delay", `${i * GROUP_BEAT}ms`);
+      svg.classList.add("is-drawing");
+    });
+    teardown();
+  };
+  if (groups.length) {
+    if ("IntersectionObserver" in window) {
+      groupIo = new IntersectionObserver(
+        (entries) => entries.forEach((entry) => entry.isIntersecting && drawGroup(entry.target, false)),
+        { rootMargin: `-${BAND_TOP * 100}% 0px -${(1 - BAND_BOTTOM) * 100}% 0px` }
+      );
+      groups.forEach((group) => groupIo.observe(group));
+    } else {
+      groups.forEach((group) => group.querySelectorAll(".ex-icon, .js-draw").forEach(finish));
+      undrawnGroups.clear();
+    }
+  }
+
   /* A jump - the End key, an anchor, a fling, a restored scroll position -
      can carry an icon from below the band to above it between two frames,
      and the observer only sees where an icon is, never what it passed: it
@@ -1872,6 +1907,11 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
      drawing) waits. */
   const sweepIcons = () => {
     const bandTop = window.innerHeight * BAND_TOP;
+    undrawnGroups.forEach((group) => {
+      const r = group.getBoundingClientRect();
+      if ((!r.width && !r.height) || r.bottom >= bandTop) return;
+      drawGroup(group, r.bottom <= 0);
+    });
     undrawn.forEach((svg) => {
       const r = svg.getBoundingClientRect();
       if ((!r.width && !r.height) || r.bottom >= bandTop) return;
@@ -1909,7 +1949,7 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
 
   // the sweep stays until every reveal has run and every icon is claimed
   function teardown() {
-    if (pending.size || undrawn.size) return;
+    if (pending.size || undrawn.size || undrawnGroups.size) return;
     io?.disconnect();
     window.removeEventListener("scroll", onScroll);
     window.removeEventListener("resize", onScroll);
@@ -1922,7 +1962,7 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     );
     pending.forEach((el) => io.observe(el));
   }
-  if (pending.size || undrawn.size) {
+  if (pending.size || undrawn.size || undrawnGroups.size) {
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
     sweep();

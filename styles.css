@@ -900,7 +900,8 @@ body.menu-open {
 
 /* The band under the Home hero. It opened a window of steel trusses in
    the land until the client asked for it to go (29.09); it is now the land
-   itself, the hero's navy, down to Three routes.
+   itself, the hero's navy, down to Who we are, which starts on the same
+   navy (the first section after the hero since 30.09).
 
    Its top is tucked up under the hero's ridge (--edge-tuck): on desktop
    the ridge rises with the scroll, and its foot would otherwise lift off
@@ -908,19 +909,15 @@ body.menu-open {
    iPad Pro, up to 100px). The tuck stays below the ridge's lowest dip, so
    the band's straight top never shows over it.
 
-   Three routes' top edge, the route line, reaches up into the band by the
-   cut's offset (--audience-cut-offset, 118-180px), so under the hero's
-   foot the band is that tall plus the clearance the route keeps: the
-   line's right end, its highest point, sits that far below the foot. On
-   desktop the stats' notes hang under the foot once the page scrolls (up
-   to 88px), so the clearance is 96px for them and 40-72px of air under
-   the last one. */
+   Under the hero's foot it holds the stats' notes: on desktop they hang
+   under the foot once the page scrolls, up to 88px (--edge-notes), and
+   the band keeps them off Who we are's own air. */
 .ridge-edge {
   --edge-tuck: calc(clamp(120px, 20vh, 260px) - var(--ridge-edge-drop) + 2px);
-  --edge-clearance: calc(96px + clamp(40px, 5vh, 72px));
+  --edge-notes: 96px;
   position: relative;
   z-index: 6;
-  height: calc(var(--edge-tuck) + clamp(118px, 10vw, 180px) + var(--edge-clearance));
+  height: calc(var(--edge-tuck) + var(--edge-notes));
   margin-top: calc(-1 * var(--edge-tuck));
   margin-bottom: -1px;
   pointer-events: none;
@@ -5014,8 +5011,8 @@ a.contact-channels__value:focus-visible {
 /* === end fb-expertise === */
 
 
-/* Figma one-line teaser icons in the Home rail (Who we are), at the Figma
-   height: the six drawings are 65px tall in the 1440 frame (home-icon-1..6) */
+/* Figma one-line teaser icons: Our Expertise's six drawings on Home, 64px
+   tall in the 1440 frame (home-icon-1..6) */
 .ex-icon {
   display: block;
   width: auto;
@@ -5054,11 +5051,15 @@ a.contact-channels__value:focus-visible {
 }
 
 /* ============ HOME RAIL ============
-   Alternating zig-zag rows threaded on a vertical trail - the same
-   journey motif as the hero, at editorial scale. Two rows fill a
-   screen, and each one draws its icon as it arrives. It ran under Our
-   Expertise; since fb-home2 it carries Who we are. */
+   Who we are's rows threaded on a vertical trail - the same journey motif
+   as the hero, at editorial scale. Text only since the drawings went back
+   to Our Expertise (client, 30.09): the rows take turns either side of the
+   spine, each starting part way down the one before (--rail-overlap), the
+   classic timeline - a row's empty half is where its neighbours stand, so
+   the rail is as short as its text allows. A row's marker sits on the
+   spine level with its number, the checkpoint the text hangs from. */
 .ex-rail {
+  --rail-overlap: clamp(56px, 8vh, 96px);
   position: relative;
   list-style: none;
   max-width: 1180px;
@@ -5069,20 +5070,20 @@ a.contact-channels__value:focus-visible {
   gap: clamp(26px, 4vh, 58px);
 }
 
-/* the rail's spine - a pseudo-element, as an <ol> may only hold <li> */
+/* the rail's spine - a pseudo-element, as an <ol> may only hold <li> - from
+   the first marker, fading out under the last row */
 .ex-rail::before {
   content: "";
   position: absolute;
-  top: 0;
+  top: calc(var(--fs-label) / 2);
   bottom: 0;
   left: 50%;
   width: var(--rail-width);
   transform: translateX(-50%);
   background: linear-gradient(
     180deg,
-    transparent,
-    rgba(240, 235, 233, 0.16) 7%,
-    rgba(240, 235, 233, 0.16) 93%,
+    rgba(240, 235, 233, 0.16),
+    rgba(240, 235, 233, 0.16) 82%,
     transparent
   );
 }
@@ -5090,12 +5091,13 @@ a.contact-channels__value:focus-visible {
 .ex-rail__step {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: clamp(36px, 6vw, 96px);
-  /* the drawings are Figma-sized now (52-72px, 65 at 1440), so a row is
-     as tall as its text needs plus air, not as tall as a drawing */
-  min-height: clamp(148px, 17vh, 196px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  column-gap: clamp(36px, 6vw, 96px);
+}
+
+.ex-rail__step + .ex-rail__step {
+  margin-top: calc(-1 * var(--rail-overlap));
 }
 
 /* the step itself only carries the .is-in hook - its children animate */
@@ -5108,7 +5110,7 @@ a.contact-channels__value:focus-visible {
 .ex-rail__node {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: calc(var(--fs-label) / 2);
   margin: calc(var(--marker-size) / -2) 0 0 calc(var(--marker-size) / -2);
   width: var(--marker-size);
   height: var(--marker-size);
@@ -5127,17 +5129,9 @@ a.contact-channels__value:focus-visible {
   transform: none;
 }
 
-.ex-rail__art {
-  display: flex;
-  justify-content: center;
-  opacity: 0;
-  transform: translateX(-38px);
-  transition:
-    opacity 800ms ease,
-    transform 900ms cubic-bezier(0.32, 0.72, 0.3, 1);
-}
-
+/* odd rows right of the spine, even rows left of it, towards it */
 .ex-rail__body {
+  grid-column: 2;
   padding-left: clamp(8px, 2.4vw, 34px);
   opacity: 0;
   transform: translateX(38px);
@@ -5146,22 +5140,16 @@ a.contact-channels__value:focus-visible {
     transform 900ms cubic-bezier(0.32, 0.72, 0.3, 1) 120ms;
 }
 
-/* every other row mirrors: text left of the spine, drawing right of it */
-.ex-rail__step:nth-of-type(even) .ex-rail__art {
-  order: 2;
-  transform: translateX(38px);
-}
-
 .ex-rail__step:nth-of-type(even) .ex-rail__body {
+  grid-column: 1;
+  grid-row: 1;
   text-align: right;
   padding-left: 0;
   padding-right: clamp(8px, 2.4vw, 34px);
   transform: translateX(-38px);
 }
 
-.ex-rail__step.is-in .ex-rail__art,
 .ex-rail__step.is-in .ex-rail__body,
-.ex-rail__step:nth-of-type(even).is-in .ex-rail__art,
 .ex-rail__step:nth-of-type(even).is-in .ex-rail__body {
   opacity: 1;
   transform: none;
@@ -5194,45 +5182,7 @@ a.contact-channels__value:focus-visible {
   margin-left: auto;
 }
 
-@media (max-width: 900px) {
-  .ex-rail::before {
-    left: 6px;
-  }
-
-  .ex-rail__step,
-  .ex-rail__step:nth-of-type(even) {
-    grid-template-columns: 1fr;
-    gap: 22px;
-    min-height: 0;
-    padding-left: 34px;
-  }
-
-  .ex-rail__node {
-    left: 6px;
-    top: 30px;
-  }
-
-  .ex-rail__art,
-  .ex-rail__step:nth-of-type(even) .ex-rail__art {
-    order: 0;
-    justify-content: flex-start;
-    transform: translateX(-24px);
-  }
-
-  .ex-rail__body,
-  .ex-rail__step:nth-of-type(even) .ex-rail__body {
-    text-align: left;
-    padding: 0;
-    transform: translateX(24px);
-  }
-
-  .ex-rail__step:nth-of-type(even) .ex-rail__copy {
-    margin-left: 0;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .ex-rail__art,
   .ex-rail__body,
   .ex-rail__node {
     opacity: 1 !important;
@@ -6889,30 +6839,27 @@ a.contact-channels__value:focus-visible {
   color: #9c2415;
 }
 
-/* === fb-home2: WHO WE ARE - the intro and the rail (client, 29.09) ===
-   The About Us bridge between the three routes and the closing band. The
-   client liked the expertise rail but not the weight on expertise on Home,
-   so the rail moved in here and Our Expertise left the page: the intro on
-   the container edge, then five rows - perspective, experience, approach,
-   mission, commitment - on the rail's spine down the middle, and the one
-   link to About Us where the spine ends. The rail is HOME RAIL's as it
-   was (rows, spine, markers, drawings, motion); only its place is new.
-   One scene: the facade photo the client chose for this band (9.09 and
-   14.09) stays behind the intro, from under the torn edge of Three routes
-   as before, and fades out into the rail's near-black before the first
-   row. The ground runs on under the rows and ends on the closing band's
-   navy-deep, so that seam does not show either. */
+/* === WHO WE ARE - the intro and the rail ===
+   The first section after the hero (client, 30.09: first who we are, then
+   what we do and for whom). The intro on the container edge, then five
+   rows - perspective, experience, approach, mission, commitment - on the
+   rail's spine down the middle (29.09), and the one link to About Us where
+   the spine ends. The rows are text only: the drawings were Our
+   Expertise's and went back to it (30.09).
+   One scene: the hero's navy land runs on into the section's top, the
+   facade photo the client chose for this band (9.09 and 14.09) fades in
+   behind the intro and out into the rail's near-black before the first
+   row, and the ground deepens under the rows to navy-deep, where Three
+   routes' torn edge and route line come in over it. */
 
 .whoweare {
-  /* Starts under the torn bottom edge of Three routes (one cut depth up), so
-     the facade fills right up to that edge's rim instead of a flat line. */
-  --whoweare-under: var(--audience-cut-depth);
-  /* The torn edge and its trail line hang into this section: on the left,
-     where the copy starts, the line runs about 1.5 cut depths below the
-     section's top. The copy starts one section rhythm under that line, not
-     one rhythm under the section's top - that left it 30px from the line. */
-  --whoweare-air: clamp(80px, 11vh, 128px);
-  --whoweare-top: calc(var(--whoweare-under) * 1.5 + var(--whoweare-air));
+  /* from the band's navy to the eyebrow */
+  --whoweare-air: clamp(64px, 9vh, 112px);
+  --whoweare-top: var(--whoweare-air);
+  /* Three routes' top edge reaches up into the section's foot by the cut's
+     offset (--audience-cut-offset, 118-180px); the link to About Us stands
+     that much, and some air, above the section's end */
+  --whoweare-foot: calc(clamp(118px, 10vw, 180px) + clamp(56px, 8vh, 96px));
   /* from the intro to the rail; the photo has faded out by its end */
   --whoweare-gap: clamp(48px, 7vh, 80px);
   --whoweare-fade: calc(var(--whoweare-gap) + 96px);
@@ -6923,13 +6870,17 @@ a.contact-channels__value:focus-visible {
      the sides of the page. */
   --whoweare-photo-h: 145%;
   position: relative;
-  margin-top: calc(-1 * var(--whoweare-under));
-  padding: var(--whoweare-top) var(--container-x) clamp(88px, 12vh, 150px);
-  /* the rail's ground: its glow on the right where the rows run, deepening
-     to navy-deep */
+  /* over the hero's ridge, as the band is: on desktop the ridge hangs
+     below the band's foot, and its drop shadow laid a soft dark line
+     across the section's top */
+  z-index: 6;
+  padding: var(--whoweare-top) var(--container-x) var(--whoweare-foot);
+  /* the band's navy at the top, so the hero's land runs on into it; the
+     rail's ground under it, its glow on the right where the rows run,
+     deepening to navy-deep */
   background:
-    radial-gradient(900px 540px at 78% 45%, rgba(255, 97, 44, 0.08), transparent 70%),
-    linear-gradient(180deg, #0a0d18 0%, var(--navy-deep) 100%);
+    radial-gradient(900px 540px at 78% 60%, rgba(255, 97, 44, 0.08), transparent 70%),
+    linear-gradient(180deg, var(--navy) 0%, #0a0d18 30%, var(--navy-deep) 100%);
   color: var(--light);
   overflow: hidden;
   isolation: isolate;
@@ -6940,9 +6891,12 @@ a.contact-channels__value:focus-visible {
   margin-bottom: var(--whoweare-gap);
 }
 
-/* The photo layer runs from the section's top edge, under the torn edge,
-   to the rail, full width; its last stretch fades out into the ground
-   (slowly behind the lede, all the way in the gap) - no edge, no band. */
+/* The photo layer runs from the section's top edge to the rail, full
+   width. It rises out of the hero's navy land slowly, from nothing at the
+   section's top to full 240px under the eyebrow's line (a quicker fade
+   drew a line under the stats, a window again), and its last stretch
+   fades out into the ground (slowly behind the lede, all the way in the
+   gap) - no edge at either end. */
 .whoweare__bg {
   position: absolute;
   z-index: 0;
@@ -6951,8 +6905,8 @@ a.contact-channels__value:focus-visible {
   bottom: calc(-1 * var(--whoweare-gap));
   left: calc(-1 * var(--container-x));
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - var(--whoweare-fade)), rgba(0, 0, 0, 0.82) calc(100% - var(--whoweare-fade) * 0.62), rgba(0, 0, 0, 0.4) calc(100% - var(--whoweare-fade) * 0.3), transparent 100%);
-  mask-image: linear-gradient(180deg, #000 calc(100% - var(--whoweare-fade)), rgba(0, 0, 0, 0.82) calc(100% - var(--whoweare-fade) * 0.62), rgba(0, 0, 0, 0.4) calc(100% - var(--whoweare-fade) * 0.3), transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, rgba(0, 0, 0, 0.1) calc(var(--whoweare-top) * 0.6), rgba(0, 0, 0, 0.4) calc(var(--whoweare-top) + 60px), rgba(0, 0, 0, 0.78) calc(var(--whoweare-top) + 150px), #000 calc(var(--whoweare-top) + 240px), #000 calc(100% - var(--whoweare-fade)), rgba(0, 0, 0, 0.82) calc(100% - var(--whoweare-fade) * 0.62), rgba(0, 0, 0, 0.4) calc(100% - var(--whoweare-fade) * 0.3), transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0, rgba(0, 0, 0, 0.1) calc(var(--whoweare-top) * 0.6), rgba(0, 0, 0, 0.4) calc(var(--whoweare-top) + 60px), rgba(0, 0, 0, 0.78) calc(var(--whoweare-top) + 150px), #000 calc(var(--whoweare-top) + 240px), #000 calc(100% - var(--whoweare-fade)), rgba(0, 0, 0, 0.82) calc(100% - var(--whoweare-fade) * 0.62), rgba(0, 0, 0, 0.4) calc(100% - var(--whoweare-fade) * 0.3), transparent 100%);
 }
 
 /* the photo and its wash as they were, at the band's old size */
@@ -7018,14 +6972,13 @@ a.contact-channels__value:focus-visible {
 }
 
 /* Without script nothing reveals: the intro, the rows, their markers and
-   the link would stay invisible and the drawings undrawn. They are simply
-   shown, as reduced motion shows them - and with its !important, as the
-   rows' start offsets are set per row and per width (the even rows'
-   compact rise outranks a plain selector here). */
+   the link would stay invisible, and Our Expertise's drawings undrawn.
+   They are simply shown, as reduced motion shows them - and with its
+   !important, as the rows' start offsets are set per row and per width
+   (the even rows' compact rise outranks a plain selector here). */
 @media (scripting: none) {
   .page--home .whoweare [data-reveal],
   .page--home .whoweare .io-reveal,
-  .page--home .whoweare .ex-rail__art,
   .page--home .whoweare .ex-rail__body,
   .page--home .whoweare .ex-rail__node {
     opacity: 1 !important;
@@ -7034,12 +6987,101 @@ a.contact-channels__value:focus-visible {
     transition: none !important;
   }
 
-  .page--home .whoweare .ex-icon path {
+  .page--home .home-expertise .ex-icon path {
     stroke-dasharray: none;
     stroke-dashoffset: 0;
   }
 }
-/* === end fb-home2 === */
+/* === end WHO WE ARE === */
+
+/* === OUR EXPERTISE on Home, in one view ===
+   Back on Home after Three routes (client, 30.09), simplified to what the
+   Figma lays out (Home - Desktop, Section 2, 2796:2274): the line and the
+   six areas in one row, each under its drawing - 144px columns 16px apart
+   at 1440, the drawings 64px tall in a 120px frame - then the way to the
+   full page. Nothing to scroll through: the section is a screen or less.
+   It starts under Three routes' torn bottom edge, as Who we are did (one
+   cut depth up, so its ground fills to the edge's rim), on the navy the
+   Figma sets the row on, deepening to the closing band's navy-deep. */
+.home-expertise {
+  --hx-under: var(--audience-cut-depth);
+  /* the torn edge's line runs about 1.5 cut depths under the section's
+     top at the left, higher to the right; the eyebrow stands a section
+     rhythm under that */
+  --hx-air: clamp(48px, 7vh, 88px);
+  position: relative;
+  margin-top: calc(-1 * var(--hx-under));
+  padding: calc(var(--hx-under) * 1.5 + var(--hx-air)) var(--container-x) clamp(88px, 12vh, 140px);
+  background: linear-gradient(180deg, var(--navy) 0%, var(--navy) 50%, var(--navy-deep) 100%);
+  color: var(--light);
+  text-align: center;
+}
+
+.home-expertise__inner {
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.home-expertise__eyebrow {
+  margin: 0 0 18px;
+  color: var(--eyebrow-color);
+  font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+/* the Figma line, in the drawings' own lavender (5:1 on the navy) */
+.home-expertise__title {
+  max-width: 640px;
+  margin: 0 auto;
+  color: #8087ad;
+  font: 400 clamp(18px, 1.45vw, 21px) / 1.45 "Outfit", system-ui, sans-serif;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.home-expertise__list {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 144px));
+  justify-content: center;
+  gap: 32px 16px;
+  margin: clamp(32px, 5vh, 56px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-expertise__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-expertise__art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(96px, 8.4vw, 120px);
+}
+
+.home-expertise .ex-icon {
+  height: clamp(52px, 4.45vw, 64px);
+}
+
+.home-expertise__name {
+  color: var(--light);
+  font: 400 16px / 1.2 "Outfit", system-ui, sans-serif;
+  text-wrap: balance;
+}
+
+.home-expertise__link {
+  margin-top: clamp(32px, 5vh, 56px);
+}
+
+/* the row draws as one, each drawing a beat after the one before it */
+[data-draw-group] .ex-icon.is-drawing path {
+  transition-delay: var(--draw-delay, 0ms);
+}
+/* === end OUR EXPERTISE === */
 
 /* ============ NAV: one rule set for every page ============
    At rest the bar is transparent and its type wears the hero's ink (set per
@@ -9073,11 +9115,11 @@ main {
   }
 
   /* the notes stand in the stats' own flow here, above the hero's foot,
-     so the route only keeps its air under it; the ridge holds still and
-     the stats' land runs down to the foot, so the band starts there */
+     and the ridge holds still with the stats' land run down to the foot:
+     the band is only the 2px seam cover, Who we are's air does the rest */
   .page--home .ridge-edge {
     --edge-tuck: 2px;
-    --edge-clearance: clamp(32px, 5vh, 64px);
+    --edge-notes: 0px;
   }
 }
 
@@ -9847,27 +9889,26 @@ main {
   }
 }
 
-/* === fb-home2: Who we are - the intro and the rail (<=1023px) ===
+/* === Who we are - the intro and the rail (<=1023px) ===
    The intro as it was, on its photo; the rows keep the rail's own compact
-   layout (see "Who we are: the rail" below). The rail follows the intro at
-   the gap the old Our Expertise head left above it, and the link to About
-   Us closes the section on the spine's axis: centred on a tablet, down the
-   left edge on a phone, where the spine runs. */
+   layout (see "Who we are: the rail" below). The link to About Us closes
+   the section on the spine's axis: centred on a tablet, down the left edge
+   on a phone, where the spine runs; Three routes' torn edge comes in 118px
+   up into the section's foot, under the link. */
 @media (max-width: 1023px) {
   .page--home .whoweare {
-    --whoweare-air: clamp(64px, 15vw, 96px);
+    --whoweare-air: clamp(56px, 13vw, 88px);
     --whoweare-gap: 48px;
+    --whoweare-foot: calc(118px + var(--m-section));
     /* the notes stacked here, so the band the photo filled was taller
        beside the intro than on a desktop: it keeps that size */
     --whoweare-photo-h: 185%;
-    padding-bottom: var(--m-section);
   }
 
-  /* a phone on its side: the air under the trail follows the screen's
-     height, or the first screen after the torn edge is ridge and navy */
+  /* a phone on its side: the air follows the screen's height */
   @media (max-height: 500px) and (orientation: landscape) {
     .page--home .whoweare {
-      --whoweare-air: 32px;
+      --whoweare-air: 40px;
     }
   }
 
@@ -9925,23 +9966,17 @@ main {
     gap: 10px;
   }
 }
-/* === end fb-home2 === */
+/* === end Who we are (<=1023px) === */
 
 /* ---------- Who we are: the rail ----------
-   Phone: one column threaded on a spine down the left. Each row is its
-   drawing and then its number, name and text; the drawings alternate
-   left and right across the column, the desktop's zig-zag in one column,
-   and each row's marker sits on the spine level with its number - the
-   checkpoint the text hangs from.
-   From 640px (a tablet, a phone on its side) the desktop's two-column
-   zig-zag comes back, on the centre spine: the old <=900px rule had
-   stacked it into one column that left the right half of a tablet empty. */
+   Phone: one column threaded on a spine down the left, each row's marker
+   on the spine level with its number - the checkpoint the text hangs
+   from. From 640px (a tablet, a phone on its side) the desktop's timeline
+   comes back on the centre spine, the rows taking turns either side of it
+   with the same overlap, a little less of it. */
 @media (max-width: 1023px) {
   .page--home .ex-rail {
-    /* the Figma drawings are 65px tall at 1440; a phone takes them at
-       the same share of its width's type as the desktop does */
-    --art-h: 52px;
-    --art-gap: 16px;
+    --rail-overlap: 48px;
   }
 
   .page--home .ex-rail__name {
@@ -9956,14 +9991,11 @@ main {
   }
 
   /* gentle rises, not slides across the narrow screen */
-  .page--home .ex-rail__art,
   .page--home .ex-rail__body,
-  .page--home .ex-rail__step:nth-of-type(even) .ex-rail__art,
   .page--home .ex-rail__step:nth-of-type(even) .ex-rail__body {
     transform: translateY(16px);
   }
 
-  .page--home .ex-rail__step.is-in .ex-rail__art,
   .page--home .ex-rail__step.is-in .ex-rail__body {
     transform: none;
   }
@@ -9975,43 +10007,28 @@ main {
     gap: 48px;
   }
 
-  /* the spine starts on the first marker and fades out under the last area */
   .page--home .ex-rail::before {
-    top: calc(var(--art-h) + var(--art-gap) + 6px);
     left: var(--rail-x);
-    background: linear-gradient(180deg, rgba(240, 235, 233, 0.18), rgba(240, 235, 233, 0.18) 88%, transparent);
   }
 
   .page--home .ex-rail__step,
   .page--home .ex-rail__step:nth-of-type(even) {
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--art-gap);
-    min-height: 0;
     padding-left: 34px;
   }
 
-  .page--home .ex-rail__art {
-    height: var(--art-h);
-    justify-content: flex-start;
+  /* one column: no row stands beside another, so none overlaps */
+  .page--home .ex-rail__step + .ex-rail__step {
+    margin-top: 0;
   }
 
-  .page--home .ex-rail__step:nth-of-type(even) .ex-rail__art {
-    order: 0;
-    justify-content: flex-end;
-  }
-
-  .page--home .ex-rail .ex-icon {
-    height: 100%;
-  }
-
-  /* level with the number's line (13px caps, line-height 1) */
   .page--home .ex-rail__node {
-    top: calc(var(--art-h) + var(--art-gap) + 6.5px);
     left: var(--rail-x);
   }
 
   .page--home .ex-rail__body,
   .page--home .ex-rail__step:nth-of-type(even) .ex-rail__body {
+    grid-column: 1;
     padding: 0;
     text-align: left;
   }
@@ -10026,37 +10043,9 @@ main {
     gap: 40px;
   }
 
-  .page--home .ex-rail::before {
-    left: 50%;
-  }
-
   .page--home .ex-rail__step,
   .page--home .ex-rail__step:nth-of-type(even) {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(40px, 6vw, 64px);
-    min-height: 0;
-    padding: 12px 0;
-  }
-
-  .page--home .ex-rail__node {
-    top: 50%;
-    left: 50%;
-  }
-
-  .page--home .ex-rail__art {
-    justify-content: center;
-  }
-
-  .page--home .ex-rail .ex-icon {
-    height: clamp(52px, 6.4vw, 64px);
-  }
-
-  /* fb-home2: the old <=900px rule also pushed the even rows' drawings
-     against the spine (flex-start), so up to 900px they sat off-centre
-     and from 901px centred; they centre in their column as on desktop */
-  .page--home .ex-rail__step:nth-of-type(even) .ex-rail__art {
-    order: 2;
-    justify-content: center;
+    column-gap: clamp(40px, 6vw, 64px);
   }
 
   .page--home .ex-rail__body {
@@ -10067,9 +10056,71 @@ main {
     padding: 0;
     text-align: right;
   }
+}
 
-  .page--home .ex-rail__step:nth-of-type(even) .ex-rail__copy {
-    margin-left: auto;
+/* ---------- Our Expertise (<=1023px) ----------
+   The row folds into three columns on a tablet, two on a phone, still one
+   screen; the torn edge above it is a phone's 130px cut. */
+@media (max-width: 1023px) {
+  .page--home .home-expertise {
+    --hx-air: clamp(40px, 9vw, 64px);
+    padding-bottom: var(--m-section);
+  }
+
+  .page--home .home-expertise__eyebrow {
+    margin-bottom: 16px;
+    font-size: var(--m-label);
+  }
+
+  .page--home .home-expertise__list {
+    grid-template-columns: repeat(3, minmax(0, 168px));
+    gap: 28px 16px;
+  }
+}
+
+@media (max-width: 559px) {
+  .page--home .home-expertise__list {
+    grid-template-columns: repeat(2, minmax(0, 168px));
+    gap: 24px 12px;
+  }
+
+  .page--home .home-expertise__art {
+    height: 84px;
+  }
+
+  .page--home .home-expertise .ex-icon {
+    height: 52px;
+  }
+
+  .page--home .home-expertise__name {
+    font-size: 15px;
+  }
+}
+
+/* a phone on its side has the width for the Figma's one row and not the
+   height for two: the six stand in a row, their drawings smaller, so the
+   section is still one screen */
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page--home .home-expertise__list {
+    grid-template-columns: repeat(6, minmax(0, 124px));
+    gap: 16px 12px;
+    margin-top: 24px;
+  }
+
+  .page--home .home-expertise__art {
+    height: 68px;
+  }
+
+  .page--home .home-expertise .ex-icon {
+    height: 44px;
+  }
+
+  .page--home .home-expertise__name {
+    font-size: 14px;
+  }
+
+  .page--home .home-expertise__link {
+    margin-top: 24px;
   }
 }
 
