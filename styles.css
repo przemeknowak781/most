@@ -10519,14 +10519,15 @@ main {
     text-shadow: 0 1px 6px rgba(8, 11, 19, 0.5);
   }
 
-  /* On the h1 scale. "cross-border growth." is one unit (a no-break
-     space ties it) 9.3em wide: on the narrowest phones the heading steps
-     down just enough to hold it, instead of splitting "cross-" from
-     "border" at the hyphen (34px needs 316px; a 320px phone has 280px). */
+  /* On the h1 scale. "Cross-Border Growth." is one unit (a no-break
+     space ties it) 9.55em wide in title case: on the narrowest phones the
+     heading steps down just enough to hold it, instead of splitting
+     "Cross-" from "Border" at the hyphen (34px needs 325px; a 360px phone
+     has 320px, a 320px phone 280px). */
   .page--about .page-hero__title,
   .page--expertise .page-hero__title {
     margin-bottom: 18px;
-    font-size: min(var(--m-h1), (100vw - 2 * var(--m-gutter)) / 9.4);
+    font-size: min(var(--m-h1), (100vw - 2 * var(--m-gutter)) / 9.7);
     line-height: 1.08;
     text-shadow: 0 2px 14px rgba(8, 11, 19, 0.35);
   }
@@ -10706,10 +10707,10 @@ main {
 }
 
 /* ---------- small phones: the heading ladder ----------
-   The smallest phones: the h1 steps down to hold "cross-border growth."
-   on one line (29.8px at 320), so the chapter headings step down in
-   proportion and never outrank it. From about 360px up these resolve to
-   the shared scale. */
+   The smallest phones: the h1 steps down to hold "Cross-Border Growth."
+   on one line (28.9px at 320), so the chapter headings step down with it
+   and never outrank it. From about 360px up these resolve to the shared
+   scale. */
 @media (max-width: 374px) {
   .page--about .perspective__title,
   .page--about .track-record__title,
