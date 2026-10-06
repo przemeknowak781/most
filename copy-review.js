@@ -167,10 +167,10 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
-   "t": "We integrate legal considerations into business strategy.",
-   "c": "g1-edited",
-   "s": "G1:10 \"We integrate legal considerations into business strategy, supporting our clients in:\"",
-   "a": ""
+   "t": "— what we do —",
+   "c": "ours",
+   "s": "none (Wasz komentarz 30.09: 'first who we are, then what we do and for whom')",
+   "a": "Etykieta nad nowym tytułem 'Our Expertise' na Home: '— what we do —'. Akceptujecie?"
   },
   {
    "t": "Interconnected areas of support — grown with your business, adapted to your stage.",

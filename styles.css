@@ -7082,57 +7082,95 @@ a.contact-channels__value:focus-visible {
 /* === end WHO WE ARE on a light ground === */
 
 /* === OUR EXPERTISE on Home, in one view ===
-   Back on Home after Three routes (client, 30.09), simplified to what the
-   Figma lays out (Home - Desktop, Section 2, 2796:2274): the line and the
-   six areas in one row, each under its drawing - 144px columns 16px apart
-   at 1440, the drawings 64px tall in a 120px frame - then the way to the
-   full page. Nothing to scroll through: the section is a screen or less.
+   Back on Home after Three routes (client, 30.09), as one view: the
+   section is a screen or less. Laid out now as the other sections are
+   (client, 6.10): the title on one side - the eyebrow, a large white
+   title in Who we are's style, the client's line as its lede and the way
+   to the full page under it - and the six areas on the other, two rows of
+   three, each name directly under its drawing - as the audience pages
+   set their Our Expertise, the copy in a third of the width and the list
+   across the rest.
    It starts under Three routes' torn bottom edge, as Who we are did (one
    cut depth up, so its ground fills to the edge's rim), on the navy the
-   Figma sets the row on, deepening to the closing band's navy-deep. */
+   Figma sets the drawings on, deepening to navy-deep, where the client
+   marks carry on. */
 .home-expertise {
   --hx-under: var(--audience-cut-depth);
   /* the torn edge's line runs about 1.5 cut depths under the section's
-     top at the left, higher to the right; the eyebrow stands a section
-     rhythm under that */
-  --hx-air: clamp(48px, 7vh, 88px);
+     top at the left, higher to the right; the eyebrow stands at the left,
+     under the line's lowest dip, and as far under it as Who we are's
+     eyebrow stands under the hero's band */
+  --hx-air: clamp(64px, 9vh, 112px);
+  /* the drawings' height: the Figma's 64px at 1440 */
+  --hx-icon: clamp(52px, 4.45vw, 64px);
   position: relative;
   margin-top: calc(-1 * var(--hx-under));
   padding: calc(var(--hx-under) * 1.5 + var(--hx-air)) var(--container-x) clamp(88px, 12vh, 140px);
   background: linear-gradient(180deg, var(--navy) 0%, var(--navy) 50%, var(--navy-deep) 100%);
   color: var(--light);
-  text-align: center;
 }
 
+/* The link follows the six in the markup - the lede ends "supporting our
+   clients in:" and the areas answer it - and on the grid it stands in the
+   copy's column, under the lede. */
 .home-expertise__inner {
-  max-width: 1040px;
-  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "copy list"
+    "link list";
+  align-items: start;
+  column-gap: clamp(32px, 3.4vw, 56px);
 }
 
+.home-expertise__copy {
+  grid-area: copy;
+  max-width: 34rem;
+}
+
+/* Who we are's eyebrow, title and lede: the type scale's roles */
 .home-expertise__eyebrow {
   margin: 0 0 18px;
   color: var(--eyebrow-color);
-  font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.26em;
+  font: 500 var(--fs-eyebrow) / var(--lh-eyebrow) "Montserrat", system-ui, sans-serif;
+  letter-spacing: var(--ls-eyebrow);
   text-transform: uppercase;
 }
 
-/* the Figma line, in the drawings' own lavender (5:1 on the navy) */
 .home-expertise__title {
-  max-width: 640px;
-  margin: 0 auto;
-  color: #8087ad;
-  font: 400 clamp(18px, 1.45vw, 21px) / 1.45 "Outfit", system-ui, sans-serif;
-  letter-spacing: 0;
+  margin: 0 0 22px;
+  color: var(--light);
+  font: 500 var(--fs-h2) / var(--lh-h2) "Urbanist", system-ui, sans-serif;
+  letter-spacing: var(--ls-heading);
   text-wrap: balance;
 }
 
+.home-expertise__lede {
+  margin: 0;
+  color: var(--light-80);
+  font: 400 var(--fs-lead) / var(--lh-lead) "Outfit", system-ui, sans-serif;
+  text-wrap: pretty;
+}
+
+.home-expertise__link {
+  grid-area: link;
+  justify-self: start;
+  margin-top: 28px;
+}
+
+/* three to a row, each drawing centred over its name; past 1920 the two
+   columns' width would leave the six far apart, and the rows keep to the
+   1040px the one row had */
 .home-expertise__list {
+  grid-area: list;
+  justify-self: start;
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 144px));
-  justify-content: center;
-  gap: 32px 16px;
-  margin: clamp(32px, 5vh, 56px) 0 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: 100%;
+  max-width: 1040px;
+  gap: clamp(36px, 5.6vh, 56px) clamp(16px, 2vw, 32px);
+  margin: 0;
   padding: 0;
   list-style: none;
 }
@@ -7141,30 +7179,34 @@ a.contact-channels__value:focus-visible {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 
+/* the drawing's box, a little taller than the drawing for the strokes
+   that run to its edge; the name hangs right under it */
 .home-expertise__art {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: clamp(96px, 8.4vw, 120px);
+  height: calc(var(--hx-icon) + 16px);
 }
 
 .home-expertise .ex-icon {
-  height: clamp(52px, 4.45vw, 64px);
+  height: var(--hx-icon);
 }
 
+/* two short lines at most, balanced, as the Figma's 144px columns set
+   them: a caption under its drawing rather than a line across the cell */
 .home-expertise__name {
+  max-width: 11em;
+  margin-top: 8px;
   color: var(--light);
-  font: 400 16px / 1.2 "Outfit", system-ui, sans-serif;
+  font: 400 16px / 1.3 "Outfit", system-ui, sans-serif;
   text-wrap: balance;
 }
 
-.home-expertise__link {
-  margin-top: clamp(32px, 5vh, 56px);
-}
-
-/* the row draws as one, each drawing a beat after the one before it */
+/* the six draw as one, each drawing a beat after the one before it: row
+   by row, left to right, in the order they are read */
 [data-draw-group] .ex-icon.is-drawing path {
   transition-delay: var(--draw-delay, 0ms);
 }
@@ -10146,68 +10188,138 @@ main {
 }
 
 /* ---------- Our Expertise (<=1023px) ----------
-   The row folds into three columns on a tablet, two on a phone, still one
-   screen; the torn edge above it is a phone's 130px cut. */
+   Stacked, in the markup's order: the title block, the six under it -
+   three to a row on a tablet, two on a phone, each name under its
+   drawing - and the link closing the section on the container edge. A
+   phone on its side keeps the desktop's two columns (below). The torn
+   edge above is a phone's 130px cut. */
 @media (max-width: 1023px) {
   .page--home .home-expertise {
     --hx-air: clamp(40px, 9vw, 64px);
     padding-bottom: var(--m-section);
   }
 
+  .page--home .home-expertise__inner {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    grid-template-areas:
+      "copy"
+      "list"
+      "link";
+  }
+
+  .page--home .home-expertise__copy {
+    max-width: 40rem;
+  }
+
+  /* Who we are's head at this size */
   .page--home .home-expertise__eyebrow {
     margin-bottom: 16px;
-    font-size: var(--m-label);
+  }
+
+  .page--home .home-expertise__title {
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .page--home .home-expertise__lede {
+    max-width: var(--m-measure);
   }
 
   .page--home .home-expertise__list {
-    grid-template-columns: repeat(3, minmax(0, 168px));
-    gap: 28px 16px;
+    gap: 32px 16px;
+    margin-top: 40px;
+  }
+
+  /* a 48px target, as Who we are's link */
+  .page--home .home-expertise__link {
+    min-height: 48px;
+    margin-top: 28px;
+  }
+
+  .page--home .home-expertise__link:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 4px;
+    border-radius: 4px;
   }
 }
 
-@media (max-width: 559px) {
+/* a phone: two to a row, three rows, a little closer together, so the
+   section from the torn edge down is still one screen at 390x844 */
+@media (max-width: 639px) {
+  .page--home .home-expertise {
+    --hx-icon: 52px;
+  }
+
   .page--home .home-expertise__list {
-    grid-template-columns: repeat(2, minmax(0, 168px));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 24px 12px;
-  }
-
-  .page--home .home-expertise__art {
-    height: 84px;
-  }
-
-  .page--home .home-expertise .ex-icon {
-    height: 52px;
+    margin-top: 32px;
   }
 
   .page--home .home-expertise__name {
     font-size: 15px;
   }
-}
-
-/* a phone on its side has the width for the Figma's one row and not the
-   height for two: the six stand in a row, their drawings smaller, so the
-   section is still one screen */
-@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
-  .page--home .home-expertise__list {
-    grid-template-columns: repeat(6, minmax(0, 124px));
-    gap: 16px 12px;
-    margin-top: 24px;
-  }
-
-  .page--home .home-expertise__art {
-    height: 68px;
-  }
-
-  .page--home .home-expertise .ex-icon {
-    height: 44px;
-  }
-
-  .page--home .home-expertise__name {
-    font-size: 14px;
-  }
 
   .page--home .home-expertise__link {
     margin-top: 24px;
+  }
+}
+
+/* A phone on its side has the width for the desktop's two columns and not
+   the height for the stack: the title block and the link on the left, the
+   six on the right in their two rows of three, the drawings smaller, so
+   the section from its eyebrow down is one screen. */
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page--home .home-expertise {
+    --hx-icon: 40px;
+  }
+
+  .page--home .home-expertise__inner {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "copy list"
+      "link list";
+    column-gap: 32px;
+  }
+
+  .page--home .home-expertise__title {
+    margin-bottom: 14px;
+  }
+
+  .page--home .home-expertise__lede {
+    font-size: 16px;
+  }
+
+  .page--home .home-expertise__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px 12px;
+    margin-top: 0;
+  }
+
+  .page--home .home-expertise__name {
+    margin-top: 6px;
+    font-size: 14px;
+  }
+
+  /* On the narrower of these (under about 680px) the column is narrower
+     than the link: set inline, its arrow follows the last word onto the
+     second line, as the audience pages' long link does, and a padded line
+     keeps the 44px target. */
+  .page--home .home-expertise__link {
+    display: inline-block;
+    min-height: 0;
+    margin-top: 0;
+    padding: 13px 0;
+    line-height: 1.5;
+    text-wrap: balance;
+  }
+
+  .page--home .home-expertise__link svg {
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: -3px;
   }
 }
 
