@@ -3803,7 +3803,16 @@ a.contact-channels__value:focus-visible {
    The same construction as About at every width. On a desktop window the
    photo is framed on its sunlit peaks and the sun rises over them, so the
    copy keeps the deep, cool left and the page does not open on About's
-   picture. Phones keep About's framing: they see the middle of the photo. */
+   picture. Phones keep About's framing: they see the middle of the photo.
+   The silhouette is the page's own (ridge-andes.svg): the client (06.10)
+   wants Expertise and Our Team told apart by the shape of their mountains,
+   Expertise with higher, sharper peaks, as in the Andes - and no more
+   mountains than before. Low foothills keep under the copy at every width;
+   on the right a skyline of granite spires rises where the sun is - a great
+   tower with a notched summit, a needle either side of it and smaller ones
+   down to the edge, as Fitz Roy and its neighbours stand over Patagonia.
+   Its crests carry the site's own rock grain (RIDGE_TEXTURE in script.js),
+   kept off the sheer walls. */
 @media (min-width: 1024px) {
   .page--expertise .page-hero__bg {
     object-position: 84% 66%;
@@ -3823,10 +3832,20 @@ a.contact-channels__value:focus-visible {
     right: 12%;
   }
 
-  /* the silhouette mirrored: its mass stands under the copy and its low end
-     under the sun, so the lit peaks show and the light clears the ridge */
+  /* Drawn as wide as the window, the art outgrows the hero from about
+     1930px and its summits would go over the top edge. There it stops at
+     1.06 times the hero's height, at the right, in proportion, and the
+     foothills it draws past its left edge (xMaxYMax meet) run on to the
+     window's. */
+  .page--expertise .page-hero__ridges {
+    top: 0;
+  }
+
   .page--expertise .page-hero__ridge {
-    transform: scaleX(-1);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    max-height: 106%;
   }
 }
 
@@ -10472,9 +10491,22 @@ main {
     padding: calc(var(--nav-height) + var(--ab-hero-sky)) var(--m-gutter) max(48px, 27.6vw - 60px);
   }
 
-  .page--about .page-hero__ridges,
-  .page--expertise .page-hero__ridges {
+  /* Expertise's spires stand on the right and its foothills stay low, so its
+     art is not sunk by a third: only 2vw goes under the foot, and the
+     foothills still meet it under the seam's trail. A phone's button runs
+     on over the stretch where the first spires rise, so the floor under it
+     is 72px rather than 48px: the spires stand beside the button, the great
+     tower up to just under the tagline. */
+  .page--expertise .page-hero {
+    padding-bottom: max(72px, 27.6vw - 60px);
+  }
+
+  .page--about .page-hero__ridges {
     bottom: -14.9vw;
+  }
+
+  .page--expertise .page-hero__ridges {
+    bottom: -2vw;
   }
 
   .page--about .page-hero__bg,
@@ -10698,9 +10730,14 @@ main {
 
   /* 39% of the art shows: the left half's crest stays under the hero's
      foot, the right-hand peaks climb beside the copy */
-  .page--about .page-hero__ridges,
-  .page--expertise .page-hero__ridges {
+  .page--about .page-hero__ridges {
     bottom: -25.9vw;
+  }
+
+  /* Expertise's foothills go under the foot and the spires climb beside
+     the copy, which runs across 72% of the hero */
+  .page--expertise .page-hero__ridges {
+    bottom: -7vw;
   }
 
 }
@@ -10728,6 +10765,11 @@ main {
   .page--expertise .page-hero {
     padding-top: calc(var(--nav-height) + 12px);
     padding-bottom: 18px;
+  }
+
+  /* the tagline reaches the first needle here: the spires go a little lower */
+  .page--expertise .page-hero__ridges {
+    bottom: -10vw;
   }
 
   .page--about .page-hero__content,
