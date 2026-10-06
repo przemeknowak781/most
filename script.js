@@ -1075,6 +1075,27 @@ function setupPortraitProposal() {
   });
 }
 
+/* Alternatives for the client to look at, off by default (client, 6.10):
+   ?who=ivory|grey|latte shows Home's Who we are on a light ground, and
+   ?titles=caps|smaller the titles in capitals or a size smaller, each as
+   a data attribute on <html> the stylesheet answers. #who-latte,
+   #titles-caps and the like do the same where a preview host drops the
+   query. Without one the page is as it ships. */
+const PREVIEW_SWITCHES = {
+  who: ["ivory", "grey", "latte"],
+  titles: ["caps", "smaller"],
+};
+
+function setupPreviewSwitches() {
+  const params = new URLSearchParams(window.location.search);
+  const hash = window.location.hash.slice(1);
+  Object.entries(PREVIEW_SWITCHES).forEach(([name, values]) => {
+    const fromHash = values.find((v) => hash === `${name}-${v}`);
+    const asked = params.get(name) || fromHash;
+    if (values.includes(asked)) document.documentElement.dataset[name] = asked;
+  });
+}
+
 /* Copy review for the client: ?copy=draft outlines every text that is not
    the client's own wording, by where it comes from (data-copy on the
    element): "ours" - written by us and never seen by the client as text;
@@ -1251,6 +1272,7 @@ setupAudienceTriptych();
 setupAudienceConnectors();
 setupMemberReadmore();
 setupMarqueePause();
+setupPreviewSwitches();
 setupPortraitProposal();
 setupCopyReview();
 
