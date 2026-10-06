@@ -1076,23 +1076,37 @@ function setupPortraitProposal() {
 }
 
 /* Alternatives for the client to look at, off by default (client, 6.10):
-   ?who=ivory|grey|latte shows Home's Who we are on a light ground, and
-   ?titles=caps|smaller the titles in capitals or a size smaller, each as
-   a data attribute on <html> the stylesheet answers. #who-latte,
+   ?who=ivory|grey|latte shows Home's Who we are on a light ground,
+   ?titles=caps|smaller the titles in capitals or a size smaller, and
+   ?mountains=less the ridges between sections drawn as straight lines,
+   each as a data attribute on <html> the stylesheet answers. #who-latte,
    #titles-caps and the like do the same where a preview host drops the
-   query. Without one the page is as it ships. */
+   query. Without one the page is as it ships. While one is on, the links
+   to the site's pages carry it, so the whole site can be walked in it. */
 const PREVIEW_SWITCHES = {
   who: ["ivory", "grey", "latte"],
   titles: ["caps", "smaller"],
+  mountains: ["less"],
 };
 
 function setupPreviewSwitches() {
   const params = new URLSearchParams(window.location.search);
   const hash = window.location.hash.slice(1);
+  const active = new URLSearchParams();
   Object.entries(PREVIEW_SWITCHES).forEach(([name, values]) => {
     const fromHash = values.find((v) => hash === `${name}-${v}`);
     const asked = params.get(name) || fromHash;
-    if (values.includes(asked)) document.documentElement.dataset[name] = asked;
+    if (!values.includes(asked)) return;
+    document.documentElement.dataset[name] = asked;
+    active.set(name, asked);
+  });
+  if (!active.toString()) return;
+  document.querySelectorAll("a[href]").forEach((link) => {
+    if (link.getAttribute("href").startsWith("#")) return;
+    const url = new URL(link.href, window.location.href);
+    if (url.origin !== window.location.origin || !/(\.html|\/)$/.test(url.pathname)) return;
+    active.forEach((value, name) => url.searchParams.set(name, value));
+    link.href = url.href;
   });
 }
 

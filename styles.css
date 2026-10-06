@@ -7950,6 +7950,38 @@ a.contact-channels__value:focus-visible {
   }
 }
 
+/* ============ FEWER MOUNTAINS PREVIEW (?mountains=less) ============
+   The client's question (6.10): are there too many mountains, do they
+   lead the story? This shows the middle of the pages without them: the
+   ridges drawn between sections - Our Team's five between the people,
+   About's two, the one under Our Expertise's hero - run as straight lines
+   through their checkpoints, the dots where they stand. The mountains that
+   frame each page stay: the heroes, Team's walkers, the closing bands.
+   script.js sets data-mountains on <html> from the query (or
+   #mountains-less); without it nothing here applies. Each line passes
+   through the centre of its dot: 17.75% down the band for profile A,
+   15.083% for B, as the summits they replace. */
+:root[data-mountains="less"] :is(.member-trail, .has-trail:not(.team-edge))::before {
+  background-image: linear-gradient(90deg, transparent, rgba(255, 168, 110, 0.8) 12%, rgba(255, 168, 110, 0.8) 88%, transparent);
+  background-size: 100% 1px;
+}
+
+:root[data-mountains="less"] .member-trail.member-trail::before {
+  background-position: 0 17.75%;
+}
+
+:root[data-mountains="less"] .member--reverse + .member-trail.member-trail::before {
+  background-position: 0 15.083%;
+}
+
+:root[data-mountains="less"] .has-trail.has-trail--a::before {
+  background-position: 0 calc(0.1775 * clamp(72px, 9vw, 120px) - 0.5px);
+}
+
+:root[data-mountains="less"] .has-trail.has-trail--b:not(.team-edge)::before {
+  background-position: 0 calc(0.15083 * clamp(72px, 9vw, 120px) - 0.5px);
+}
+
 /* 'Day-to-Day' keeps its ordinary hyphens (the webfonts have no
    non-breaking hyphen glyph) and simply does not wrap */
 .nowrap {
