@@ -4224,6 +4224,17 @@ a.contact-channels__value:focus-visible {
   text-align: left;
 }
 
+/* The client asked for an eyebrow over every section title on the pages
+   left of the menu; this one takes the site's "— label —" role. */
+.exwork__eyebrow {
+  margin: 0 0 18px;
+  color: var(--eyebrow-color);
+  font: 500 var(--fs-eyebrow) / var(--lh-eyebrow) "Montserrat", system-ui, sans-serif;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
 .exwork--terrain .exwork__title {
   margin: 0 0 10px;
   color: var(--light);
@@ -4536,6 +4547,20 @@ a.contact-channels__value:focus-visible {
   grid-template-columns: var(--ex-cols);
   align-items: end;
   margin: 0 0 clamp(48px, 8vh, 96px);
+}
+
+/* The eyebrow the client asked for over every section title on the pages
+   left of the menu, in the site's "— label —" role. It takes a row of its
+   own across the head, so the title and the lede still share theirs and
+   the lede keeps its foot on the title's last line. */
+.ex-areas__eyebrow {
+  grid-column: 1 / -1;
+  margin: 0 0 18px;
+  color: var(--eyebrow-color);
+  font: 500 var(--fs-eyebrow) / var(--lh-eyebrow) "Montserrat", system-ui, sans-serif;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  text-wrap: balance;
 }
 
 .ex-areas__title {
@@ -4853,6 +4878,11 @@ a.contact-channels__value:focus-visible {
     gap: 16px;
     max-width: 680px;
     margin: 0 0 clamp(20px, 5vw, 36px);
+  }
+
+  /* the head's 16px gap sets it off the title, as the heroes' eyebrows are */
+  .ex-areas__eyebrow {
+    margin: 0;
   }
 
   .ex-areas__title {
@@ -10194,6 +10224,11 @@ main {
     z-index: 2;
     max-width: 36em;
     margin: 0 0 8px;
+  }
+
+  /* the eyebrows stand 14px over their titles on About at these widths */
+  .page--expertise .exwork__eyebrow {
+    margin-bottom: 14px;
   }
 
   .page--expertise .exwork--terrain .exwork__title {
