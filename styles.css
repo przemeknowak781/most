@@ -7827,7 +7827,7 @@ a.contact-channels__value:focus-visible {
     font-size: calc(var(--title-scale) * var(--fs-display));
   }
 
-  :root[data-titles] :is(.whoweare__title, .aud-grow__title, .perspective__title, .track-record__title, .philosophy__title, .manifesto__title, .clients__title, .routes-strip__title, .ex-areas__title, .exwork__title, .contact-band__title, .aud-help__title, .aud-work__title, .aud-expertise__title) {
+  :root[data-titles] :is(.whoweare__title, .home-expertise__title, .aud-grow__title, .perspective__title, .track-record__title, .philosophy__title, .manifesto__title, .clients__title, .routes-strip__title, .ex-areas__title, .exwork__title, .contact-band__title, .aud-help__title, .aud-work__title, .aud-expertise__title) {
     font-size: calc(var(--title-scale) * var(--fs-h2));
   }
 }
@@ -7847,7 +7847,7 @@ a.contact-channels__value:focus-visible {
     font-size: calc(var(--title-scale) * clamp(40px, 30px + 2.6vw, 56px));
   }
 
-  :root[data-titles] :is(.whoweare__title, .aud-grow__title, .perspective__title, .track-record__title, .philosophy__title, .manifesto__title, .clients__title, .routes-strip__title, .ex-areas__title, .exwork__title, .contact-band__title, .aud-help__title, .aud-work__title, .aud-expertise__title),
+  :root[data-titles] :is(.whoweare__title, .home-expertise__title, .aud-grow__title, .perspective__title, .track-record__title, .philosophy__title, .manifesto__title, .clients__title, .routes-strip__title, .ex-areas__title, .exwork__title, .contact-band__title, .aud-help__title, .aud-work__title, .aud-expertise__title),
   :root[data-titles] .page--expertise .exwork--terrain .exwork__title {
     font-size: calc(var(--title-scale) * var(--m-h2));
   }
@@ -7910,7 +7910,7 @@ a.contact-channels__value:focus-visible {
    up to 2% longer on the titles richest in narrow letters): the titles
    keep their line breaks. With nothing below the baseline the lines look
    further apart, so the leading closes up a little. */
-:root[data-titles="caps"] :is(.hero-title, .page-hero__title, .audience-intro__title, .whoweare__title, .aud-grow__title, .perspective__title, .track-record__title, .philosophy__title, .manifesto__title, .clients__title, .routes-strip__title, .ex-areas__title, .exwork__title, .contact-band__title, .aud-help__title, .aud-work__title, .aud-expertise__title) {
+:root[data-titles="caps"] :is(.hero-title, .page-hero__title, .audience-intro__title, .whoweare__title, .home-expertise__title, .aud-grow__title, .perspective__title, .track-record__title, .philosophy__title, .manifesto__title, .clients__title, .routes-strip__title, .ex-areas__title, .exwork__title, .contact-band__title, .aud-help__title, .aud-work__title, .aud-expertise__title) {
   letter-spacing: 0.02em;
   text-transform: uppercase;
 }
@@ -7919,7 +7919,7 @@ a.contact-channels__value:focus-visible {
   line-height: 1.04;
 }
 
-:root[data-titles="caps"] :is(.whoweare__title, .aud-grow__title, .perspective__title, .track-record__title, .philosophy__title, .manifesto__title, .clients__title, .routes-strip__title, .ex-areas__title, .exwork__title, .contact-band__title, .aud-help__title, .aud-work__title, .aud-expertise__title),
+:root[data-titles="caps"] :is(.whoweare__title, .home-expertise__title, .aud-grow__title, .perspective__title, .track-record__title, .philosophy__title, .manifesto__title, .clients__title, .routes-strip__title, .ex-areas__title, .exwork__title, .contact-band__title, .aud-help__title, .aud-work__title, .aud-expertise__title),
 :root[data-titles="caps"] .page--expertise .exwork--terrain .exwork__title {
   line-height: 1.06;
 }
