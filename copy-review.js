@@ -617,6 +617,18 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
+   "t": "— what we do —",
+   "c": "ours",
+   "s": "none (nadtytuł nad \"Our Areas of Expertise\"; Wasza prośba z 6.10: pomarańczowy nadtytuł nad tytułem każdej sekcji na podstronach z lewej strony menu)",
+   "a": "czy nad \"Our Areas of Expertise\" może zostać nadtytuł \"— what we do —\"?"
+  },
+  {
+   "t": "— making things happen —",
+   "c": "ours",
+   "s": "none (nadtytuł nad \"How We Work?\" na Waszą prośbę z 6.10; słowa z Waszego zdania pod tym tytułem, G1 l.18 \"We are driven by a passion for making things happen\")",
+   "a": "czy nad \"How We Work?\" może zostać nadtytuł \"— making things happen —\" (z Waszego zdania pod tytułem)?"
+  },
+  {
    "t": "We are driven by a passion for making things happen. That is why we:",
    "c": "g1-edited",
    "s": "G1 l.18 \"...That's why we:\"; F1 l.167 identycznie jak na stronie",

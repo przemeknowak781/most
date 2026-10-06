@@ -4346,6 +4346,17 @@ a.contact-channels__value:focus-visible {
   text-align: left;
 }
 
+/* The client asked for an eyebrow over every section title on the pages
+   left of the menu; this one takes the site's "— label —" role. */
+.exwork__eyebrow {
+  margin: 0 0 18px;
+  color: var(--eyebrow-color);
+  font: 500 var(--fs-eyebrow) / var(--lh-eyebrow) "Montserrat", system-ui, sans-serif;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
 .exwork--terrain .exwork__title {
   margin: 0 0 10px;
   color: var(--light);
@@ -4658,6 +4669,20 @@ a.contact-channels__value:focus-visible {
   grid-template-columns: var(--ex-cols);
   align-items: end;
   margin: 0 0 clamp(48px, 8vh, 96px);
+}
+
+/* The eyebrow the client asked for over every section title on the pages
+   left of the menu, in the site's "— label —" role. It takes a row of its
+   own across the head, so the title and the lede still share theirs and
+   the lede keeps its foot on the title's last line. */
+.ex-areas__eyebrow {
+  grid-column: 1 / -1;
+  margin: 0 0 18px;
+  color: var(--eyebrow-color);
+  font: 500 var(--fs-eyebrow) / var(--lh-eyebrow) "Montserrat", system-ui, sans-serif;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  text-wrap: balance;
 }
 
 .ex-areas__title {
@@ -4975,6 +5000,11 @@ a.contact-channels__value:focus-visible {
     gap: 16px;
     max-width: 680px;
     margin: 0 0 clamp(20px, 5vw, 36px);
+  }
+
+  /* the head's 16px gap sets it off the title, as the heroes' eyebrows are */
+  .ex-areas__eyebrow {
+    margin: 0;
   }
 
   .ex-areas__title {
@@ -7760,6 +7790,165 @@ a.contact-channels__value:focus-visible {
 .copy-legend__swatch--ours { outline: 2px dashed #ff3d7f; }
 .copy-legend__swatch--wireframe { outline: 2px dashed #f5b400; }
 .copy-legend__swatch--g1-edited { outline: 2px dotted #36c2b4; }
+
+/* ============ TITLE PREVIEWS (?titles=caps | ?titles=smaller) ============
+   The two alternatives the client asked to see beside the shipped titles
+   (6.10): every H1 and H2 title in capitals, or the titles a size smaller
+   in the case they ship in. script.js sets data-titles on <html> from the
+   query (or #titles-caps, #titles-smaller); without it nothing here applies
+   and every title is as it ships. Eyebrows and the names inside a section
+   (H3) keep their style in both.
+
+   Each title keeps the size its role gives it at every width - H1 for the
+   heroes, the display size for the one slogan, H2 for the section titles,
+   with the steps the compact layer takes for phones and for phones on their
+   side - times --title-scale. The rules restate those sizes under
+   :root[data-titles], which outranks the rules further down that set them
+   (How We Work's, three classes deep, is named in full).
+
+   A size smaller is 87%: at 1440 the H1 goes from 56 to 49px and the H2
+   from 48 to 42px, on a phone from 34.5 to 30px and from 28 to 25px. The
+   measures set in a title's own ems shrink with it, so those titles keep
+   their line breaks; the rest gain room and some take a line less. */
+:root[data-titles="smaller"] {
+  --title-scale: 0.87;
+}
+
+:root[data-titles="caps"] {
+  --title-scale: 0.78;
+}
+
+@media (min-width: 1024px) {
+  :root[data-titles] :is(.hero-title, .page-hero__title) {
+    font-size: calc(var(--title-scale) * var(--fs-h1));
+  }
+
+  :root[data-titles] .audience-intro__title {
+    font-size: calc(var(--title-scale) * var(--fs-display));
+  }
+
+  :root[data-titles] :is(.whoweare__title, .aud-grow__title, .perspective__title, .track-record__title, .philosophy__title, .manifesto__title, .clients__title, .routes-strip__title, .ex-areas__title, .exwork__title, .contact-band__title, .aud-help__title, .aud-work__title, .aud-expertise__title) {
+    font-size: calc(var(--title-scale) * var(--fs-h2));
+  }
+}
+
+@media (max-width: 1023px) {
+  :root[data-titles] :is(.hero-title, .page-hero__title) {
+    font-size: calc(var(--title-scale) * var(--m-h1));
+  }
+
+  /* About's and Our Expertise's headlines step down with the width on the
+     smallest phones, to hold "Cross-Border Growth." whole */
+  :root[data-titles] :is(.page--about, .page--expertise) .page-hero__title {
+    font-size: calc(var(--title-scale) * min(var(--m-h1), (100vw - 2 * var(--m-gutter)) / 9.7));
+  }
+
+  :root[data-titles] .audience-intro__title {
+    font-size: calc(var(--title-scale) * clamp(40px, 30px + 2.6vw, 56px));
+  }
+
+  :root[data-titles] :is(.whoweare__title, .aud-grow__title, .perspective__title, .track-record__title, .philosophy__title, .manifesto__title, .clients__title, .routes-strip__title, .ex-areas__title, .exwork__title, .contact-band__title, .aud-help__title, .aud-work__title, .aud-expertise__title),
+  :root[data-titles] .page--expertise .exwork--terrain .exwork__title {
+    font-size: calc(var(--title-scale) * var(--m-h2));
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  :root[data-titles] .page--contact .contact-band__title {
+    font-size: calc(var(--title-scale) * clamp(28px, 3.2vw, 34px));
+  }
+}
+
+@media (max-width: 374px) {
+  :root[data-titles] .page--about .clients__title {
+    font-size: calc(var(--title-scale) * min(var(--m-h2), (100vw - 2 * var(--m-gutter)) / 9.4 * 0.87));
+  }
+}
+
+/* phones on their side: each hero's headline is fitted to the one short
+   screen */
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  :root[data-titles] .page--home .hero-title {
+    font-size: calc(var(--title-scale) * min(var(--m-h1), 36px));
+  }
+
+  :root[data-titles] .page--home .audience-intro__title {
+    font-size: calc(var(--title-scale) * 36px);
+  }
+
+  :root[data-titles] :is(.page--about, .page--expertise) .page-hero__title {
+    font-size: calc(var(--title-scale) * clamp(28px, 4.5vw, 36px));
+  }
+
+  :root[data-titles] .page--team .page-hero__title {
+    font-size: calc(var(--title-scale) * clamp(28px, 4.4vw, 36px));
+  }
+
+  :root[data-titles] :is(.page--founders, .page--companies, .page--investors) .hero-title {
+    font-size: calc(var(--title-scale) * clamp(34px, 9svh, 36px));
+  }
+}
+
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 360px) and (orientation: landscape) {
+  :root[data-titles] :is(.page--about, .page--expertise) .page-hero__title {
+    font-size: calc(var(--title-scale) * clamp(26px, 4.2vw, 32px));
+  }
+}
+
+@media (min-width: 560px) and (max-width: 666px) and (max-height: 500px) and (orientation: landscape), (min-width: 560px) and (max-width: 767px) and (max-height: 350px) and (orientation: landscape) {
+  :root[data-titles] .page--contact .page-hero__title {
+    font-size: calc(var(--title-scale) * clamp(34px, 10.6svh, 40px));
+  }
+}
+
+/* Capitals: Urbanist's run about a fifth wider than the same words in
+   title case and stand 0.70em tall where the lower case stands 0.51em, so
+   at the shipped size they read a size up and break onto more lines. At
+   78% (H1 44px, H2 37px at 1440) they stand just over the lower case they
+   replace, and with the +0.02em of tracking capitals need to stay open a
+   line runs a little shorter than it does in title case (2-3% on average,
+   up to 2% longer on the titles richest in narrow letters): the titles
+   keep their line breaks. With nothing below the baseline the lines look
+   further apart, so the leading closes up a little. */
+:root[data-titles="caps"] :is(.hero-title, .page-hero__title, .audience-intro__title, .whoweare__title, .aud-grow__title, .perspective__title, .track-record__title, .philosophy__title, .manifesto__title, .clients__title, .routes-strip__title, .ex-areas__title, .exwork__title, .contact-band__title, .aud-help__title, .aud-work__title, .aud-expertise__title) {
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+:root[data-titles="caps"] :is(.hero-title, .page-hero__title) {
+  line-height: 1.04;
+}
+
+:root[data-titles="caps"] :is(.whoweare__title, .aud-grow__title, .perspective__title, .track-record__title, .philosophy__title, .manifesto__title, .clients__title, .routes-strip__title, .ex-areas__title, .exwork__title, .contact-band__title, .aud-help__title, .aud-work__title, .aud-expertise__title),
+:root[data-titles="caps"] .page--expertise .exwork--terrain .exwork__title {
+  line-height: 1.06;
+}
+
+/* the titles measured in their own ems keep the measure they ship with */
+:root[data-titles="caps"] .page--about :is(.perspective__title, .manifesto__title) {
+  max-width: calc(15em / var(--title-scale));
+}
+
+@media (max-width: 1023px) {
+  :root[data-titles="caps"] :is(.page--founders, .page--companies, .page--investors) .hero-title {
+    max-width: calc(15em / var(--title-scale));
+  }
+}
+
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  :root[data-titles="caps"] :is(.page--founders, .page--companies, .page--investors) .hero-title {
+    max-width: calc(18em / var(--title-scale));
+  }
+}
+
+/* "CROSS-BORDER GROWTH." is 12.4em of its own capitals: About's and Our
+   Expertise's headlines hold it whole on the narrowest phones as they hold
+   the title case */
+@media (max-width: 559px) {
+  :root[data-titles="caps"] :is(.page--about, .page--expertise) .page-hero__title {
+    font-size: min(calc(var(--title-scale) * var(--m-h1)), (100vw - 2 * var(--m-gutter)) / 12.65);
+  }
+}
 
 /* 'Day-to-Day' keeps its ordinary hyphens (the webfonts have no
    non-breaking hyphen glyph) and simply does not wrap */
@@ -10637,6 +10826,11 @@ main {
     margin: 0 0 8px;
   }
 
+  /* the eyebrows stand 14px over their titles on About at these widths */
+  .page--expertise .exwork__eyebrow {
+    margin-bottom: 14px;
+  }
+
   .page--expertise .exwork--terrain .exwork__title {
     margin-bottom: 12px;
     font-size: var(--m-h2);
@@ -10973,14 +11167,15 @@ main {
     text-shadow: 0 1px 6px rgba(8, 11, 19, 0.5);
   }
 
-  /* On the h1 scale. "cross-border growth." is one unit (a no-break
-     space ties it) 9.3em wide: on the narrowest phones the heading steps
-     down just enough to hold it, instead of splitting "cross-" from
-     "border" at the hyphen (34px needs 316px; a 320px phone has 280px). */
+  /* On the h1 scale. "Cross-Border Growth." is one unit (a no-break
+     space ties it) 9.55em wide in title case: on the narrowest phones the
+     heading steps down just enough to hold it, instead of splitting
+     "Cross-" from "Border" at the hyphen (34px needs 325px; a 360px phone
+     has 320px, a 320px phone 280px). */
   .page--about .page-hero__title,
   .page--expertise .page-hero__title {
     margin-bottom: 18px;
-    font-size: min(var(--m-h1), (100vw - 2 * var(--m-gutter)) / 9.4);
+    font-size: min(var(--m-h1), (100vw - 2 * var(--m-gutter)) / 9.7);
     line-height: 1.08;
     text-shadow: 0 2px 14px rgba(8, 11, 19, 0.35);
   }
@@ -11165,10 +11360,10 @@ main {
 }
 
 /* ---------- small phones: the heading ladder ----------
-   The smallest phones: the h1 steps down to hold "cross-border growth."
-   on one line (29.8px at 320), so the chapter headings step down in
-   proportion and never outrank it. From about 360px up these resolve to
-   the shared scale. */
+   The smallest phones: the h1 steps down to hold "Cross-Border Growth."
+   on one line (28.9px at 320), so the chapter headings step down with it
+   and never outrank it. From about 360px up these resolve to the shared
+   scale. */
 @media (max-width: 374px) {
   .page--about .perspective__title,
   .page--about .track-record__title,
