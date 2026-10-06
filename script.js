@@ -1081,33 +1081,111 @@ function setupPortraitProposal() {
    ?mountains=less the ridges between sections drawn as straight lines,
    each as a data attribute on <html> the stylesheet answers. #who-latte,
    #titles-caps and the like do the same where a preview host drops the
-   query. Without one the page is as it ships. While one is on, the links
-   to the site's pages carry it, so the whole site can be walked in it. */
+   query. Without one the page is as it ships. ?preview (or any of them)
+   brings up a panel that switches them in place; while it is up, the
+   links to the site's pages carry the choice and the panel, so the whole
+   site can be walked in an alternative. */
 const PREVIEW_SWITCHES = {
   who: ["ivory", "grey", "latte"],
   titles: ["caps", "smaller"],
   mountains: ["less"],
 };
 
+/* the panel's words, in Polish as the client reviews in it: each switch's
+   name, then its choices, the shipped one first */
+const PREVIEW_PANEL = [
+  ["who", "Who We Are (Home)", [["", "ciemne"], ["ivory", "złamana biel"], ["grey", "szarość"], ["latte", "latte"]]],
+  ["titles", "Tytuły", [["", "obecne"], ["caps", "wielkie litery"], ["smaller", "mniejsze"]]],
+  ["mountains", "Góry między sekcjami", [["", "obecne"], ["less", "mniej"]]],
+];
+
 function setupPreviewSwitches() {
+  const root = document.documentElement;
   const params = new URLSearchParams(window.location.search);
   const hash = window.location.hash.slice(1);
-  const active = new URLSearchParams();
   Object.entries(PREVIEW_SWITCHES).forEach(([name, values]) => {
     const fromHash = values.find((v) => hash === `${name}-${v}`);
     const asked = params.get(name) || fromHash;
-    if (!values.includes(asked)) return;
-    document.documentElement.dataset[name] = asked;
-    active.set(name, asked);
+    if (values.includes(asked)) root.dataset[name] = asked;
   });
-  if (!active.toString()) return;
-  document.querySelectorAll("a[href]").forEach((link) => {
-    if (link.getAttribute("href").startsWith("#")) return;
-    const url = new URL(link.href, window.location.href);
-    if (url.origin !== window.location.origin || !/(\.html|\/)$/.test(url.pathname)) return;
-    active.forEach((value, name) => url.searchParams.set(name, value));
-    link.href = url.href;
+  const chosen = () => Object.keys(PREVIEW_SWITCHES).filter((name) => root.dataset[name]);
+  if (!params.has("preview") && hash !== "preview" && !chosen().length) return;
+
+  const withChoice = (url) => {
+    Object.keys(PREVIEW_SWITCHES).forEach((name) => url.searchParams.delete(name));
+    chosen().forEach((name) => url.searchParams.set(name, root.dataset[name]));
+    url.searchParams.set("preview", "1");
+    return url;
+  };
+  const carry = () => {
+    document.querySelectorAll("a[href]").forEach((link) => {
+      const href = link.dataset.previewHref || link.getAttribute("href");
+      if (href.startsWith("#")) return;
+      const url = new URL(href, window.location.href);
+      if (url.origin !== window.location.origin || !/(\.html|\/)$/.test(url.pathname)) return;
+      link.dataset.previewHref = href;
+      link.href = withChoice(url).href;
+    });
+  };
+  carry();
+
+  const panel = document.createElement("aside");
+  panel.className = "variant-panel";
+  panel.setAttribute("aria-label", "Warianty do porównania");
+  panel.lang = "pl";
+  panel.innerHTML =
+    '<button type="button" class="variant-panel__toggle" aria-expanded="true" aria-controls="variant-panel-body">' +
+    'Warianty do porównania<span class="variant-panel__sign" aria-hidden="true">–</span></button>' +
+    '<div class="variant-panel__body" id="variant-panel-body">' +
+    PREVIEW_PANEL.map(([name, label, choices]) =>
+      `<div class="variant-panel__group" role="group" aria-labelledby="variant-panel-${name}">` +
+      `<p class="variant-panel__label" id="variant-panel-${name}">${label}</p>` +
+      choices.map(([value, text]) =>
+        `<button type="button" class="variant-panel__choice" data-name="${name}" data-value="${value}" aria-pressed="false">${text}</button>`
+      ).join("") +
+      "</div>"
+    ).join("") +
+    '<p class="variant-panel__note">Wybór przechodzi na kolejne podstrony.</p>' +
+    "</div>";
+  const choices = panel.querySelectorAll(".variant-panel__choice");
+  const mark = () => choices.forEach((button) => {
+    button.setAttribute("aria-pressed", String((root.dataset[button.dataset.name] || "") === button.dataset.value));
   });
+  panel.addEventListener("click", (event) => {
+    const button = event.target.closest(".variant-panel__choice");
+    if (!button) return;
+    if (button.dataset.value) root.dataset[button.dataset.name] = button.dataset.value;
+    else delete root.dataset[button.dataset.name];
+    mark();
+    carry();
+    history.replaceState(history.state, "", withChoice(new URL(window.location.href)).href);
+    /* the titles change size and Who we are its edge: what the page
+       measured, it measures again */
+    window.dispatchEvent(new Event("resize"));
+  });
+
+  /* it folds down to its title, as the copy review's legend does; folded
+     to begin with on a phone, and as the reader left it from page to page */
+  const toggle = panel.querySelector(".variant-panel__toggle");
+  const fold = (folded) => {
+    panel.classList.toggle("is-collapsed", folded);
+    toggle.setAttribute("aria-expanded", String(!folded));
+    toggle.querySelector(".variant-panel__sign").textContent = folded ? "+" : "–";
+  };
+  toggle.addEventListener("click", () => {
+    const folded = !panel.classList.contains("is-collapsed");
+    fold(folded);
+    try {
+      sessionStorage.setItem("most-variant-panel", folded ? "folded" : "open");
+    } catch {}
+  });
+  let left = null;
+  try {
+    left = sessionStorage.getItem("most-variant-panel");
+  } catch {}
+  fold(left ? left === "folded" : !window.matchMedia("(min-width: 1024px)").matches);
+  mark();
+  document.body.appendChild(panel);
 }
 
 /* Copy review for the client: ?copy=draft outlines every text that is not
@@ -1214,7 +1292,9 @@ function markCopyReview(data) {
     };
     let best = "";
     let least = Infinity;
-    ["", "copy-legend--bl", "copy-legend--br"].forEach((corner) => {
+    /* bottom right is the variant panel's when it is up */
+    const corners = document.querySelector(".variant-panel") ? ["", "copy-legend--bl"] : ["", "copy-legend--bl", "copy-legend--br"];
+    corners.forEach((corner) => {
       legend.classList.remove("copy-legend--bl", "copy-legend--br");
       if (corner) legend.classList.add(corner);
       const n = covered();

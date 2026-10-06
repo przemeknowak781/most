@@ -7791,6 +7791,105 @@ a.contact-channels__value:focus-visible {
 .copy-legend__swatch--wireframe { outline: 2px dashed #f5b400; }
 .copy-legend__swatch--g1-edited { outline: 2px dotted #36c2b4; }
 
+/* ============ VARIANT PANEL (?preview) ============
+   The switches for the client's alternatives (6.10) in the copy review's
+   dark card, bottom right: the heroes keep their stats and trail markers
+   bottom left, and the copy legend takes the top right. script.js builds
+   it only on a page opened with ?preview or with one of the alternatives
+   on; a choice applies in place and the panel folds down to its title. */
+.variant-panel {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 9000;
+  width: min(300px, calc(100vw - 32px));
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: rgba(10, 12, 20, 0.92);
+  color: #f0ebe9;
+  font: 400 12px / 1.45 "Outfit", system-ui, sans-serif;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.variant-panel.is-collapsed {
+  width: auto;
+}
+
+.variant-panel__toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: 500 12px / 1.45 "Outfit", system-ui, sans-serif;
+  letter-spacing: 0.04em;
+  text-align: left;
+  cursor: pointer;
+}
+
+.variant-panel__sign {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.variant-panel.is-collapsed .variant-panel__body {
+  display: none;
+}
+
+.variant-panel__group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.variant-panel__label {
+  flex: 0 0 100%;
+  margin: 0;
+  color: rgba(240, 235, 233, 0.6);
+}
+
+.variant-panel__choice {
+  min-height: 34px;
+  padding: 6px 12px;
+  border: 1px solid rgba(240, 235, 233, 0.28);
+  border-radius: 999px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.variant-panel__choice:hover {
+  border-color: rgba(240, 235, 233, 0.6);
+}
+
+.variant-panel__choice[aria-pressed="true"] {
+  border-color: #ff612c;
+  background: #ff612c;
+  color: #0a0c14;
+}
+
+.variant-panel__toggle:focus-visible,
+.variant-panel__choice:focus-visible {
+  outline: 2px solid #ff612c;
+  outline-offset: 3px;
+}
+
+.variant-panel__toggle:focus-visible {
+  border-radius: 4px;
+}
+
+.variant-panel__note {
+  margin: 12px 0 0;
+  color: rgba(240, 235, 233, 0.6);
+}
+
 /* ============ TITLE PREVIEWS (?titles=caps | ?titles=smaller) ============
    The two alternatives the client asked to see beside the shipped titles
    (6.10): every H1 and H2 title in capitals, or the titles a size smaller
