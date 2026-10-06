@@ -7212,6 +7212,51 @@ a.contact-channels__value:focus-visible {
 }
 /* === end OUR EXPERTISE === */
 
+/* === CLIENT MARKS on Home ===
+   About Us' carousel (CLIENT MARKS, above) closes Home as well: with
+   About Us set aside for now, the client asked for the clients at the
+   foot of Home (6.10). The component is About's as it is; About keeps it
+   unchanged. Home gives it its ground and restates the pieces About
+   scopes to its own page: the compact sizes and the still row (see
+   "Client marks (<=1023px)"), the Pause button's ring and touch area.
+   The ground is navy-deep from edge to edge, where About gives the row a
+   band of navy of its own: Our Expertise ends on navy-deep and the closing
+   band starts on it, so the three run on as one ground, with no seam. */
+.page--home .clients {
+  background: var(--navy-deep);
+}
+
+/* the marquee's Pause control takes the site's focus ring at every width */
+.page--home .clients__pause:focus-visible {
+  outline: 2px solid var(--focus-ring, var(--orange));
+  outline-offset: 3px;
+}
+
+/* a touch screen 1024px and up: the 27px button gets About's invisible
+   hit area, 45px tall (see "touch screens 1024px and up: hit areas") */
+@media (min-width: 1024px) and (any-pointer: coarse) {
+  .page--home .clients__pause {
+    position: relative;
+  }
+
+  .page--home .clients__pause::after {
+    content: "";
+    position: absolute;
+    inset: -9px 0;
+  }
+}
+
+/* without script the head would never reveal: it is shown, as reduced
+   motion shows it */
+@media (scripting: none) {
+  .page--home .clients [data-reveal] {
+    opacity: 1;
+    translate: none;
+    transition: none;
+  }
+}
+/* === end CLIENT MARKS on Home === */
+
 /* ============ NAV: one rule set for every page ============
    At rest the bar is transparent and its type wears the hero's ink (set per
    page above). Once the page moves, every page gets the same navy bar with
@@ -10320,6 +10365,81 @@ main {
     display: inline-block;
     margin-left: 10px;
     vertical-align: -3px;
+  }
+}
+
+/* ---------- Client marks (<=1023px) ----------
+   As About Us sets them: the row keeps moving at a phone's scale, the
+   title and lede take the H2 and lead of the other heads here, the
+   placeholder marks' word holds 4.5:1, and Pause is a real 44px
+   control. */
+@media (max-width: 1023px) {
+  .page--home .clients {
+    padding: var(--m-section) 0;
+  }
+
+  .page--home .clients__head {
+    margin-bottom: 32px;
+    padding: 0 var(--m-gutter);
+  }
+
+  .page--home .clients__eyebrow {
+    margin-bottom: 14px;
+    font-size: var(--m-label);
+  }
+
+  .page--home .clients__title {
+    margin-bottom: 12px;
+    font-size: var(--m-h2);
+    line-height: var(--lh-h2);
+    letter-spacing: var(--ls-heading);
+  }
+
+  .page--home .clients__lede {
+    max-width: var(--m-measure);
+    font-size: var(--m-lede);
+    line-height: var(--lh-lead);
+  }
+
+  .page--home .clients__track {
+    gap: 28px;
+    padding-right: 28px;
+  }
+
+  .page--home .clients__mark {
+    width: 132px;
+    height: 56px;
+    color: rgba(240, 235, 233, 0.6);
+    font-size: var(--m-label);
+  }
+
+  .page--home .clients__pause {
+    min-height: 44px;
+    margin-top: 24px;
+    padding: 0 22px;
+    font-size: var(--m-label);
+  }
+}
+
+/* Less motion, at every width: the row stops and becomes a short
+   horizontal scroller (the base rule). The loop's duplicate set has no job
+   in a still row - it showed every mark twice - so only the real list
+   shows, from the container edge to the container edge, and the fade is
+   the gutter's width at each end: marks passing under an edge soften, and
+   at either end of the scroll the fade falls on the empty gutter. (After
+   the compact rules, whose track padding it replaces.) */
+@media (prefers-reduced-motion: reduce) {
+  .page--home .clients__track[aria-hidden="true"] {
+    display: none;
+  }
+
+  .page--home .clients__track {
+    padding-inline: var(--container-x);
+  }
+
+  .page--home .clients__viewport {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--container-x), #000 calc(100% - var(--container-x)), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 var(--container-x), #000 calc(100% - var(--container-x)), transparent);
   }
 }
 

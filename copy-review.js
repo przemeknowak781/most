@@ -215,6 +215,30 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
+   "t": "— who we work with —",
+   "c": "wireframe",
+   "s": "S5c:332",
+   "a": ""
+  },
+  {
+   "t": "Teams we have helped build, scale, and back.",
+   "c": "ours",
+   "s": "none (jak na About Us; zastępuje S5c:333 'Those we have helped build, scale, and invest across markets.')",
+   "a": "Karuzela klientów na dole Home (jak na About Us): nagłówek 'Teams We Have Helped Build, Scale, and Back.'. Akceptujecie?"
+  },
+  {
+   "t": "Founders, growing companies, and funds across Europe, the US, and the UK.",
+   "c": "ours",
+   "s": "none (jak na About Us)",
+   "a": "Zdanie pod nagłówkiem karuzeli, jak na About Us; czy 'funds' i zakres rynków się zgadzają?"
+  },
+  {
+   "t": "Logo",
+   "c": "wireframe",
+   "s": "S5c:334-339 \"LOGO\" (×6 w karuzeli wireframe'u)",
+   "a": "Prosimy o logotypy klientów do karuzeli i potwierdzenie zgód na ich publikację."
+  },
+  {
    "t": "Want to Grow Together?",
    "c": "wireframe",
    "s": "S5c:73",
