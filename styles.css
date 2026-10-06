@@ -6994,6 +6994,93 @@ a.contact-channels__value:focus-visible {
 }
 /* === end WHO WE ARE === */
 
+/* === WHO WE ARE on a light ground: three previews ===
+   The client (6.10) feared the page reads too dark and asked to see Who
+   we are in lighter colours - off-white, a delicate grey or latte - as
+   alternatives to look at, not as a change: the page ships dark, and
+   ?who=ivory, ?who=grey or ?who=latte (#who-ivory and the like where a
+   preview host drops the query; the switch is in script.js) set the
+   section on one of three grounds. Only colours and tones change: the
+   intro, the rail and the link keep their places at every width.
+     ivory  the site's cream (--light), the ground of the audience pages'
+            light sections
+     grey   a cool pale grey, from the navy's side of the palette
+     latte  a warm milky coffee, from the photographs' side
+   The type takes the ink of the audience pages' cream sections: titles
+   in #1c1419 (15.3, 14.5 and 13.0:1 on ivory, grey and latte), the lede
+   and the rows' copy in its softer 72% (6.6, 6.4 and 6.1:1), the link in
+   the ink. The labels - the eyebrow and the rows' numbers - take the rust
+   the cream contact form rings its fields with: the peach and the orange
+   of the dark grounds fall to 1.6-2.9:1 here, #a8380b holds 5.5, 5.2 and
+   4.7:1. */
+:root[data-who="ivory"] {
+  --who-ground: #f0ebe9;
+}
+
+:root[data-who="grey"] {
+  --who-ground: #e6e6ea;
+}
+
+:root[data-who="latte"] {
+  --who-ground: #e7d9c7;
+}
+
+:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare {
+  --who-ink: #1c1419;
+  --who-ink-soft: rgba(28, 20, 25, 0.72);
+  --who-rust: #a8380b;
+  --eyebrow-color: var(--who-rust);
+  --link-ink: var(--who-ink);
+  --focus-ring: var(--who-rust);
+  /* the rail's markers sit flat on the light, in their ring alone: the
+     halo and the aura that light them on the dark blur them here */
+  --marker-shadow: 0 0 0 calc(var(--marker-size) * 0.33) var(--marker-ring);
+  background: var(--who-ground);
+  color: var(--who-ink);
+}
+
+/* No photograph: the facade, toned for the navy, turned into a grey band
+   on a light ground - a window again, of the kind the client had taken
+   out under the hero (29.09). The ground runs clean from the hero's band
+   to Three routes' ridge. */
+:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare__bg {
+  display: none;
+}
+
+:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) :is(.whoweare__title, .ex-rail__name) {
+  color: var(--who-ink);
+}
+
+:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) :is(.whoweare__lede, .ex-rail__copy) {
+  color: var(--who-ink-soft);
+}
+
+/* the spine: the same hairline, in the ink, fading out under the last row */
+:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare .ex-rail::before {
+  background: linear-gradient(180deg, rgba(28, 20, 25, 0.18), rgba(28, 20, 25, 0.18) 82%, transparent);
+}
+
+/* under 1024px the link is ringed in the site's orange, 2.9:1 on ivory */
+:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare__link:focus-visible {
+  outline-color: var(--focus-ring);
+}
+
+/* The edges. The top is straight, as the audience pages turn from dark to
+   cream. On a desktop the hero's stats notes hang under its foot into the
+   band, down to a few pixels over its end, and on the navy they ran on
+   into the section; on a light ground the edge came right under their
+   last line, so the band keeps a strip of its navy under them. (Below
+   1024px the notes stand in the hero, well clear of it.) At the foot
+   Three routes' torn edge comes in over the ground as it did: its dark
+   land rises into the light as the hero's ridge does against its sky,
+   the route line on the crest, the connector dots on the line. */
+@media (min-width: 1024px) {
+  :root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .ridge-edge {
+    --edge-notes: calc(96px + clamp(28px, 4vh, 44px));
+  }
+}
+/* === end WHO WE ARE on a light ground === */
+
 /* === OUR EXPERTISE on Home, in one view ===
    Back on Home after Three routes (client, 30.09), simplified to what the
    Figma lays out (Home - Desktop, Section 2, 2796:2274): the line and the
