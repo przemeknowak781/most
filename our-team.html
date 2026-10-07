@@ -125,16 +125,14 @@
 
     <main id="main" tabindex="-1" class="team-page">
       <!-- PAGE HERO -->
-      <section class="page-hero page-hero--team" aria-labelledby="page-hero-title">
+      <!-- The hero's light is the aurora of the client's picture (7.10): the
+           May "harmonijka" in orange and navy, drawn by script.js (AURORA),
+           and in front of it a rocky slope with the team going up it. -->
+      <section class="page-hero page-hero--team page-hero--aurora" aria-labelledby="page-hero-title">
         <div class="page-hero__media" aria-hidden="true">
-          <picture>
-            <source media="(max-width: 480px) and (max-aspect-ratio: 3/4)" srcset="background-crop-team.webp" width="1596" height="1696" />
-            <img class="page-hero__bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background-1920.webp 1920w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, (orientation: landscape) 100vw, 1060px" width="2496" height="1696" alt="" fetchpriority="high" decoding="async" />
-          </picture>
-          <div class="page-hero__wash"></div>
+          <div class="page-hero__aurora" data-aurora="team"></div>
         </div>
-        <div class="page-hero__glow" aria-hidden="true"><span class="page-hero__sun"></span></div>
-        <div class="page-hero__ridges" aria-hidden="true"><img class="page-hero__ridge" src="gora-bez-tla-2000px.svg" width="2000" height="850" alt="" decoding="async" /></div>
+        <div class="page-hero__ridges" aria-hidden="true"><img class="page-hero__ridge page-hero__ridge--scene" src="team-slope.svg" width="2000" height="760" alt="" decoding="async" /></div>
         <div class="page-hero__content">
           <p class="page-hero__eyebrow reveal">— our team —</p>
           <h1 class="page-hero__title reveal" id="page-hero-title">
@@ -154,9 +152,6 @@
 
       <div class="team-edge has-trail has-trail--b" aria-hidden="true">
         <span class="has-trail__dot"></span>
-        <img class="team-edge__walker team-edge__walker--1" src="trail-walker-1.svg" width="67" height="116" alt="" decoding="async" />
-        <img class="team-edge__walker team-edge__walker--2" src="trail-walker-2.svg" width="100" height="119" alt="" decoding="async" />
-        <img class="team-edge__walker team-edge__walker--3" src="trail-walker-3.svg" width="65" height="117" alt="" decoding="async" />
       </div>
 
       <!-- TEAM SECTION (light, editorial alternating rows) -->

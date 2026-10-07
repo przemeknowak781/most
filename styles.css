@@ -2871,109 +2871,6 @@ main:focus {
   mask: var(--trail-fill-b) 0 0 / 100% 100% no-repeat;
 }
 
-/* ---------- Our Team: people on the trail ----------
-   The client (06.10) wants Our Team's mountains told apart from
-   Expertise's by the people on them. Three walkers from the closing band's
-   drawing (footer.svg) are cut out one by one and spaced out along this
-   ridge, heading for its checkpoint - a different party from the band's
-   group of four, which closes every page, this one included. No new
-   mountain is added: they walk the line that was already here.
-   The hero's foot is as dark as their navy, so a plain silhouette would
-   vanish on it: they take the line's own warm outline and glow, as if the
-   trail drew them. Each image's origin is the walker's foot point, and it
-   stands where the line runs lowest under its feet (the B profile at its
-   x, y/120 of the box, as the checkpoint is placed), so no walker floats
-   at any width; its legs go on down under the section's navy below the
-   line. The walkers grow with the band, about 50px tall at its full 120px
-   and 30px at its 72px, and show once the line is drawn, before the
-   checkpoint. */
-.team-edge__walker {
-  /* px per unit of the drawing */
-  --walker-u: calc(var(--team-edge-h) * 0.00375);
-  position: absolute;
-  z-index: 0;
-  /* half a pixel down, into the line's 1.1px stroke, so no sliver of sky
-     shows under a foot where the line runs level */
-  top: calc(var(--team-edge-h) * var(--walker-y) / 120 + 0.5px);
-  left: var(--walker-x);
-  width: calc(var(--walker-u) * var(--walker-w));
-  height: auto;
-  translate: calc(var(--walker-u) * var(--walker-ax) * -1) calc(var(--walker-u) * var(--walker-ay) * -1);
-  filter: drop-shadow(0 0 5px var(--trail-glow));
-  opacity: 0;
-  transition: opacity 700ms var(--ease-out) var(--walker-delay);
-}
-
-.has-trail.is-visible .team-edge__walker {
-  opacity: 1;
-}
-
-/* in front, on the shoulder under the summit; then one in the dip with
-   poles and a big pack; the last coming over the rise behind them */
-.team-edge__walker--1 {
-  --walker-x: 24%;
-  --walker-y: 41.94;
-  --walker-w: 67;
-  --walker-ax: 29.9;
-  --walker-ay: 110;
-  --walker-delay: 450ms;
-}
-
-.team-edge__walker--2 {
-  --walker-x: 39%;
-  --walker-y: 75.5;
-  --walker-w: 100;
-  --walker-ax: 38;
-  --walker-ay: 113;
-  --walker-delay: 600ms;
-}
-
-.team-edge__walker--3 {
-  --walker-x: 51.5%;
-  --walker-y: 53.3;
-  --walker-w: 65;
-  --walker-ax: 27.7;
-  --walker-ay: 111;
-  --walker-delay: 750ms;
-}
-
-/* the wider screens draw the line's fine steps taller (SECTION TRAIL), so
-   the lowest point under each walker moves a little */
-@media (min-width: 1600px) {
-  .team-edge__walker--1 {
-    --walker-y: 41.8;
-  }
-
-  .team-edge__walker--2 {
-    --walker-y: 76.5;
-  }
-
-  .team-edge__walker--3 {
-    --walker-y: 53.1;
-  }
-}
-
-@media (min-width: 2240px) {
-  .team-edge__walker--1 {
-    --walker-y: 41.3;
-  }
-
-  .team-edge__walker--2 {
-    --walker-y: 77.3;
-  }
-
-  .team-edge__walker--3 {
-    --walker-y: 52.9;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .team-edge__walker {
-    opacity: 1;
-    transition: none;
-  }
-}
-
 /* ============================================================
    TEAM EDITORIAL SECTION
    ============================================================ */
@@ -3849,14 +3746,12 @@ a.contact-channels__value:focus-visible {
   padding-bottom: clamp(120px, 16vh, 190px);
 }
 
-.page--about .page-hero__bg,
-.page--expertise .page-hero__bg {
+.page--about .page-hero__bg {
   object-position: 56% 72%;
   filter: saturate(0.94) contrast(1.06) brightness(0.74);
 }
 
-.page--about .page-hero__wash,
-.page--expertise .page-hero__wash {
+.page--about .page-hero__wash {
   background:
     radial-gradient(820px 520px at 18% 38%, rgba(255, 97, 44, 0.32), transparent 68%),
     radial-gradient(700px 460px at 62% 50%, rgba(255, 176, 119, 0.12), transparent 72%),
@@ -3893,8 +3788,7 @@ a.contact-channels__value:focus-visible {
   animation: hero-haze-drift 12s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-.page--about .page-hero__sun,
-.page--expertise .page-hero__sun {
+.page--about .page-hero__sun {
   top: 12%;
   left: 12%;
   width: clamp(240px, 30vw, 420px);
@@ -3902,11 +3796,9 @@ a.contact-channels__value:focus-visible {
   animation: hero-sun-breathe 9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
-/* ---------- PAGE HERO (expertise): the About scene, lit from the right ----------
-   The same construction as About at every width. On a desktop window the
-   photo is framed on its sunlit peaks and the sun rises over them, so the
-   copy keeps the deep, cool left and the page does not open on About's
-   picture. Phones keep About's framing: they see the middle of the photo.
+/* ---------- PAGE HERO (expertise): the page's own peaks ----------
+   Built as About's at every width, lit by its own aurora (AURORA HEROES,
+   at the end of this file) instead of the photograph and its sun.
    The silhouette is the page's own (ridge-andes.svg): the client (06.10)
    wants Expertise and Our Team told apart by the shape of their mountains,
    Expertise with higher, sharper peaks, as in the Andes - and no more
@@ -3917,24 +3809,6 @@ a.contact-channels__value:focus-visible {
    Its crests carry the site's own rock grain (RIDGE_TEXTURE in script.js),
    kept off the sheer walls. */
 @media (min-width: 1024px) {
-  .page--expertise .page-hero__bg {
-    object-position: 84% 66%;
-  }
-
-  .page--expertise .page-hero__wash {
-    background:
-      radial-gradient(760px 520px at 80% 44%, rgba(255, 97, 44, 0.28), transparent 68%),
-      radial-gradient(620px 420px at 44% 56%, rgba(255, 176, 119, 0.1), transparent 72%),
-      linear-gradient(90deg, rgba(4, 6, 12, 0.88) 0%, rgba(11, 14, 25, 0.62) 38%, rgba(18, 20, 31, 0.2) 72%, rgba(8, 10, 17, 0.28) 100%),
-      linear-gradient(180deg, rgba(8, 11, 19, 0.36) 0%, rgba(8, 11, 19, 0.55) 58%, rgba(8, 11, 19, 0.95) 100%);
-  }
-
-  .page--expertise .page-hero__sun {
-    top: 14%;
-    left: auto;
-    right: 12%;
-  }
-
   /* Drawn as wide as the window, the art outgrows the hero from about
      1930px and its summits would go over the top edge. There it stops at
      1.06 times the hero's height, at the right, in proportion, and the
@@ -11189,8 +11063,7 @@ main {
     bottom: -2vw;
   }
 
-  .page--about .page-hero__bg,
-  .page--expertise .page-hero__bg {
+  .page--about .page-hero__bg {
     inset: 0 auto 0 56%;
     width: auto;
     min-width: 100%;
@@ -11205,8 +11078,7 @@ main {
      on the heading, so the small eyebrow falls in the glow's softer outer
      half and keeps 4.5:1. A little quieter than desktop's, with no blur:
      the glow is already soft, and a blur on top is an offscreen pass. */
-  .page--about .page-hero__sun,
-  .page--expertise .page-hero__sun {
+  .page--about .page-hero__sun {
     --ab-sun: clamp(240px, 62vw, 400px);
     top: calc(var(--nav-height) + var(--ab-hero-sky) - var(--ab-sun) * 0.225);
     left: -12%;
@@ -11272,8 +11144,7 @@ main {
    smaller sun, about desktop's share of the width, keeps the tagline at
    4.5:1 with the sun at full strength (as it is with reduced motion). */
 @media (min-width: 600px) and (max-width: 1023px) {
-  .page--about .page-hero__sun,
-  .page--expertise .page-hero__sun {
+  .page--about .page-hero__sun {
     --ab-sun: clamp(240px, 44vw, 360px);
   }
 }
@@ -11286,8 +11157,7 @@ main {
    the hero ever show more than the crop holds, it only scales up a little
    (never a gap at the sides). */
 @media (max-width: 480px) and (max-aspect-ratio: 3/4) {
-  .page--about .page-hero__bg,
-  .page--expertise .page-hero__bg {
+  .page--about .page-hero__bg {
     inset: 0;
     width: 100%;
     min-width: 0;
@@ -11385,8 +11255,7 @@ main {
 
   /* a small sun, high in the corner: at full size it filled the height
      of the hero behind the copy */
-  .page--about .page-hero__sun,
-  .page--expertise .page-hero__sun {
+  .page--about .page-hero__sun {
     top: -40%;
     left: -8%;
     width: 280px;
@@ -11395,8 +11264,7 @@ main {
 
   /* the copy runs across 72% of a wide, short hero, further into the lit
      peaks than desktop's; the wash's dark side reaches as far */
-  .page--about .page-hero__wash,
-  .page--expertise .page-hero__wash {
+  .page--about .page-hero__wash {
     background:
       radial-gradient(60% 70% at 18% 38%, rgba(255, 97, 44, 0.26), transparent 68%),
       linear-gradient(90deg, rgba(4, 6, 12, 0.86) 0%, rgba(11, 14, 25, 0.72) 50%, rgba(18, 20, 31, 0.5) 76%, rgba(8, 10, 17, 0.34) 100%),
@@ -12364,35 +12232,14 @@ main {
 
 /* ---------- hero ----------
    Content-sized; the copy starts on the sky where every hero's does
-   (--m-hero-top) and the ridge crosses the foot. Standing low in a hero
-   86svh tall it put 250px of empty sky over the headline, which sat 180px
-   lower than on any other page. The photo is drawn at its own proportions
-   as tall as the hero, so the <img> box is the picture that shows (the
-   sizes attribute names that width) and --team-hero-focus is the point of
-   the photo that stays in the middle. */
+   (--m-hero-top). Standing low in a hero 86svh tall it put 250px of empty
+   sky over the headline, which sat 180px lower than on any other page.
+   The slope under it has a floor of its own (AURORA HEROES). */
 @media (max-width: 1023px) {
   .page--team .page-hero {
-    --team-hero-focus: 58%;
     min-height: 0;
     padding: var(--m-hero-top) var(--m-gutter) clamp(112px, 30vw, 168px);
     align-items: start;
-  }
-
-  .page--team .page-hero__bg {
-    inset: 0 auto 0 var(--team-hero-focus);
-    width: auto;
-    min-width: 100%;
-    max-width: none;
-    height: 100%;
-    aspect-ratio: 2496 / 1696;
-    translate: calc(var(--team-hero-focus) * -1) 0;
-  }
-
-  /* the glow is already soft, so no blur on top of it (an offscreen pass
-     per frame); where it stands is set per composition below */
-  .page--team .page-hero__sun {
-    filter: none;
-    background: radial-gradient(closest-side, rgba(255, 168, 110, 0.5), rgba(255, 97, 44, 0.2) 55%, transparent);
   }
 
   .page--team .page-hero__content {
@@ -12433,40 +12280,10 @@ main {
   }
 }
 
-/* Phones held upright: the copy stands left, so the sun and the warm light
-   of the wash go to the right. The sun hangs from the copy itself (the
-   content's ::before, the hero's own sun is hidden), just above and to the
-   right of the eyebrow: with the copy near the top it rises to the bar
-   instead of glowing behind the first line of the title. The wash keeps its
-   dark gradient and moves its orange to the sun's corner, off the copy
-   column. */
+/* Phones held upright: the copy stands left */
 @media (max-width: 767px) and (orientation: portrait),
   (max-width: 767px) and (min-height: 501px),
   (max-width: 559px) {
-  .page--team .page-hero__sun {
-    display: none;
-  }
-
-  .page--team .page-hero__content::before {
-    --team-sun: clamp(220px, 68vw, 400px);
-    content: "";
-    position: absolute;
-    z-index: -1;
-    right: calc(var(--m-gutter) * -1 - var(--team-sun) * 0.24);
-    bottom: calc(100% - var(--team-sun) * 0.2);
-    width: var(--team-sun);
-    height: var(--team-sun);
-    border-radius: 50%;
-    background: radial-gradient(closest-side, rgba(255, 168, 110, 0.5), rgba(255, 97, 44, 0.2) 55%, transparent);
-    pointer-events: none;
-  }
-
-  .page--team .page-hero__wash {
-    background:
-      radial-gradient(120% 52% at 90% 12%, rgba(255, 97, 44, 0.32), transparent 70%),
-      linear-gradient(180deg, rgba(8, 11, 19, 0.32) 0%, rgba(8, 11, 19, 0.6) 60%, rgba(8, 11, 19, 0.96) 100%);
-  }
-
   /* a phone's measure at every upright width: two lines that break after
      "Polish," rather than one long line and "in one team." under it */
   .page--team .page-hero__tagline {
@@ -12483,14 +12300,9 @@ main {
 }
 
 /* Tablets, and phones on their side, have the width for the desktop
-   composition: the copy right-aligned on the ridge, the sun low on the
-   left, the photo centred as on desktop. */
+   composition: the copy right-aligned over the slope. */
 @media (min-width: 768px) and (max-width: 1023px),
   (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
-  .page--team .page-hero {
-    --team-hero-focus: 50%;
-  }
-
   .page--team .page-hero__content {
     justify-self: end;
     max-width: min(36rem, 74%);
@@ -12501,14 +12313,6 @@ main {
   .page--team .page-hero__tagline {
     margin-left: auto;
     text-wrap: balance;
-  }
-
-  .page--team .page-hero__sun {
-    top: 22%;
-    left: 4%;
-    right: auto;
-    width: clamp(240px, 40vw, 380px);
-    height: clamp(240px, 40vw, 380px);
   }
 }
 
@@ -12521,7 +12325,7 @@ main {
   }
 }
 
-/* a phone on its side: one screen at most, the sun above the ridge */
+/* a phone on its side: the copy as short as it goes */
 @media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   .page--team .page-hero {
     min-height: 0;
@@ -12530,13 +12334,6 @@ main {
 
   .page--team .page-hero__content {
     max-width: min(40rem, 76%);
-  }
-
-  .page--team .page-hero__sun {
-    top: 4%;
-    left: 6%;
-    width: clamp(200px, 34vw, 300px);
-    height: clamp(200px, 34vw, 300px);
   }
 
   .page--team .page-hero__eyebrow {
@@ -12559,33 +12356,11 @@ main {
   }
 }
 
-/* A phone held upright sees the middle of the photo only (under two
-   thirds of its width, around the 58% focus), so it loads just that
-   part: background-crop-team, the <source> in the markup, cut so that its
-   58% point is the photo's. The box is the hero itself here and the crop
-   covers it from the focus, which draws it exactly where the full photo's
-   part was; should the hero ever show more than the crop holds, it only
-   scales up a little (never a gap at the sides). */
-@media (max-width: 480px) and (max-aspect-ratio: 3/4) {
-  .page--team .page-hero__bg {
-    inset: 0;
-    width: 100%;
-    min-width: 0;
-    height: 100%;
-    aspect-ratio: auto;
-    translate: none;
-    object-position: var(--team-hero-focus) 50%;
-  }
-}
-
 /* ---------- the hero's edge ----------
    A phone draws half of the ridge across its width, as About draws its
    chapter trails: the whole 1200-unit ridge squeezed into 390px would
    crowd its steps into a fuzz. The fill takes the same half, and the
-   checkpoint follows its summit (168, 18.1) into it: 168 / 600.
-   The walkers keep their order on the half that shows, spread over the
-   right of the phone, clear of the button: x * 600 is their place on the
-   ridge, and each stands where the line runs lowest under its feet. */
+   checkpoint follows its summit (168, 18.1) into it: 168 / 600. */
 @media (max-width: 767px) {
   .page--team .team-edge::before {
     background-size: 200% 100%;
@@ -12599,41 +12374,6 @@ main {
 
   .page--team .team-edge .has-trail__dot {
     left: 28%;
-  }
-
-  .page--team .team-edge__walker--1 {
-    --walker-x: 46%;
-    --walker-y: 41.5;
-  }
-
-  .page--team .team-edge__walker--2 {
-    --walker-x: 67%;
-    --walker-y: 63.9;
-  }
-
-  .page--team .team-edge__walker--3 {
-    --walker-x: 82%;
-    --walker-y: 73.53;
-  }
-}
-
-/* A phone on its side has the tablet's composition, the copy and its
-   button on the right: the walkers keep to the left, closer to the
-   checkpoint, as they do on a tablet. */
-@media (min-width: 560px) and (max-width: 767px) and (max-height: 500px) and (orientation: landscape) {
-  .page--team .team-edge__walker--1 {
-    --walker-x: 37%;
-    --walker-y: 37.54;
-  }
-
-  .page--team .team-edge__walker--2 {
-    --walker-x: 46%;
-    --walker-y: 41.5;
-  }
-
-  .page--team .team-edge__walker--3 {
-    --walker-x: 54%;
-    --walker-y: 46.98;
   }
 }
 
@@ -14800,5 +14540,189 @@ main {
     min-height: 0;
     padding: 13px 4px;
     line-height: 1.5;
+  }
+}
+
+/* ============================================================
+   AURORA HEROES - Our Team and Our Expertise (client, 7.10)
+   The client loved a picture of Our Team's hero lit by the "harmonijka"
+   - the May bar pattern (a3319a5) grown into an aurora - with the team
+   climbing a dark slope in front of it, and wants both of these heroes
+   built that way, each in its own colours: Our Team in orange and navy,
+   the darker, Our Expertise in beiges and browns, the lighter, with more
+   contrast. script.js draws the bars (AURORA); the photographs, their
+   washes and the suns go from these two heroes.
+   Without script the bars are the stylesheet's: the palette as a
+   gradient, with a fixed weave of light and dark lines over it.
+   ============================================================ */
+.page-hero__aurora {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--aurora-weave), var(--aurora-ground);
+}
+
+.page-hero__aurora-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* deep where the copy stands and under the bar, as the picture's left is */
+.page-hero__aurora::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--aurora-veil);
+}
+
+.page-hero--aurora {
+  --aurora-weave: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.07) 0 2px, transparent 2px 5px, rgba(8, 11, 19, 0.14) 5px 9px, transparent 9px 13px, rgba(255, 255, 255, 0.04) 13px 14px, transparent 14px 23px);
+}
+
+/* the scene stands on the hero's foot, as tall as the hero lets it: the
+   drawing covers its box from the bottom right (xMaxYMax slice), so a
+   narrower window loses the left of the slope, never the people */
+.page-hero--team.page-hero--aurora .page-hero__ridges {
+  top: 0;
+}
+
+.page-hero--aurora .page-hero__ridge--scene {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: var(--scene-h, 64%);
+  opacity: 1;
+  filter: none;
+}
+
+/* ---------- Our Team: orange and navy ---------- */
+.page-hero--team.page-hero--aurora {
+  --aurora-ground: linear-gradient(90deg, #080b13 0%, #121a2e 5%, #22304d 10%, #36405e 15%, #1f2740 20%, #322f44 25%, #4f3c4a 30%, #6d464c 36%, #5c2e2e 42%, #9a3d27 48%, #d14a22 53%, #e2532a 58%, #d65d38 63%, #c86c50 67%, #a0625a 71%, #704c53 75%, #5b4a58 80%, #40435c 85%, #1f2d4b 90%, #0e1830 95%, #080b13 100%);
+  --aurora-veil:
+    linear-gradient(180deg, rgba(8, 11, 19, 0.6) 0%, rgba(8, 11, 19, 0.22) 15%, transparent 28%),
+    linear-gradient(90deg, rgba(8, 11, 19, 0.5) 0%, rgba(8, 11, 19, 0.24) 32%, transparent 56%);
+  --aurora-scrim: rgba(8, 11, 19, 0.5);
+  background: #0b1122;
+}
+
+/* ---------- Our Expertise: beiges and browns ---------- */
+.page-hero--expertise.page-hero--aurora {
+  --aurora-ground: linear-gradient(90deg, #120c09 0%, #21150e 6%, #382417 12%, #4c3121 18%, #2e1e14 24%, #553826 30%, #6f4a32 36%, #4a3022 42%, #8a5a3a 48%, #a97650 54%, #c8996c 60%, #dfbb8f 66%, #efd7b4 72%, #e3c19a 78%, #c39469 84%, #8e6243 90%, #4f3626 95%, #1c130d 100%);
+  --aurora-veil:
+    linear-gradient(180deg, rgba(18, 12, 9, 0.8) 0%, rgba(18, 12, 9, 0.34) 15%, transparent 30%),
+    linear-gradient(90deg, rgba(18, 12, 9, 0.66) 0%, rgba(18, 12, 9, 0.5) 38%, rgba(18, 12, 9, 0.26) 60%, transparent 78%);
+  --aurora-scrim: rgba(18, 12, 9, 0.6);
+  background: #161822;
+}
+
+/* Where the copy runs across most of the window (under 1280px) a soft
+   shade lies behind the copy block - a blurred field a little larger than
+   it - so the type keeps AA where a lit bar passes behind it; wider, the
+   copy stands in the deep left and the shadows round the letters do.
+   (On Our Team's tablets this pseudo-element was the photo's sun; the
+   aurora needs none.) */
+@media (max-width: 1279px) {
+  .page-hero--aurora .page-hero__content::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -56px -72px;
+    width: auto;
+    height: auto;
+    border-radius: 48px;
+    background: var(--aurora-scrim);
+    filter: blur(44px);
+    pointer-events: none;
+  }
+}
+
+/* Under 1024px the copy spans the hero: the light rises from the foot,
+   behind the slope or the peaks, and the upper part where the copy stands
+   stays deep */
+@media (max-width: 1023px) {
+  .page-hero--team.page-hero--aurora {
+    --aurora-veil: linear-gradient(180deg, rgba(8, 11, 19, 0.7) 0%, rgba(8, 11, 19, 0.62) 46%, rgba(8, 11, 19, 0.18) 74%, transparent 92%);
+  }
+
+  .page-hero--expertise.page-hero--aurora {
+    --aurora-veil: linear-gradient(180deg, rgba(18, 12, 9, 0.8) 0%, rgba(18, 12, 9, 0.76) 56%, rgba(18, 12, 9, 0.26) 78%, transparent 94%);
+  }
+}
+
+/* the copy keeps its contrast where a lit bar runs behind a letter: a
+   shade that hugs the letters, in the ground's own dark */
+.page-hero--aurora .page-hero__eyebrow,
+.page-hero--aurora .page-hero__title,
+.page-hero--aurora .page-hero__tagline {
+  text-shadow: 0 0 2px rgba(8, 11, 19, 0.4), 0 1px 16px rgba(8, 11, 19, 0.62), 0 2px 40px rgba(8, 11, 19, 0.42);
+}
+
+.page-hero--expertise.page-hero--aurora .page-hero__eyebrow,
+.page-hero--expertise.page-hero--aurora .page-hero__title,
+.page-hero--expertise.page-hero--aurora .page-hero__tagline {
+  text-shadow: 0 0 2px rgba(18, 12, 9, 0.45), 0 1px 16px rgba(18, 12, 9, 0.7), 0 2px 40px rgba(18, 12, 9, 0.5);
+}
+
+/* a screen tall, as Our Team's: the light rises over the peaks */
+@media (min-width: 1024px) {
+  .page-hero--expertise.page-hero--aurora {
+    min-height: 100svh;
+  }
+}
+
+/* the peaks stand solid against the light, without the photo's shadow */
+.page-hero--aurora .page-hero__ridge {
+  opacity: 1;
+  filter: none;
+}
+
+/* The slope is drawn to the window's width (36vw tall, a sliver of sky
+   cut from its top), so the people keep their size against the copy; the
+   hero is a screen tall, or taller where the first walker's head
+   (25.7vw over the hero's foot) would come up beside the copy (about
+   420px under --hero-top). */
+@media (min-width: 1024px) {
+  .page-hero--team.page-hero--aurora {
+    --scene-h: 36vw;
+    min-height: max(100svh, calc(var(--hero-top) + 420px + 25.7vw));
+  }
+
+  /* the tagline breaks in two and keeps to the deep left, as the
+     picture's does, clear of the orange where the people climb */
+  .page-hero--team.page-hero--aurora .page-hero__tagline {
+    max-width: 30em;
+    text-wrap: balance;
+  }
+}
+
+/* Under 1024px the copy takes the width (and on a tablet stands on the
+   right), so the slope has a floor of its own under the button: the hero
+   grows by the scene's height, which shows the right of the drawing - the
+   two climbers at the top and the walkers coming up to them. */
+@media (max-width: 1023px) {
+  .page-hero--team.page-hero--aurora {
+    --scene-h: clamp(190px, 58vw, 420px);
+    padding-bottom: calc(var(--scene-h) + 20px);
+  }
+}
+
+/* A phone on its side keeps a low strip of the slope. Drawn to that
+   width it would lose the climbers' heads off its top, so it takes the
+   right part of the floor only, coming up out of the light on its left. */
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page-hero--team.page-hero--aurora {
+    --scene-h: clamp(150px, 26vw, 220px);
+  }
+
+  .page-hero--team.page-hero--aurora .page-hero__ridge--scene {
+    left: auto;
+    right: 0;
+    width: 64%;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 24%);
+    mask-image: linear-gradient(90deg, transparent, #000 24%);
   }
 }

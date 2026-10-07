@@ -123,21 +123,12 @@
     </div>
 
     <main id="main" tabindex="-1">
-      <!-- PAGE HERO: the mountain scene every inner page opens on (About,
-           Our Team, Contact), framed here on the sunlit peaks -->
-      <section class="page-hero" aria-labelledby="page-hero-title">
+      <!-- PAGE HERO: the aurora of the client's picture (7.10) in beiges and
+           browns, drawn by script.js (AURORA), behind the page's own high,
+           sharp peaks -->
+      <section class="page-hero page-hero--expertise page-hero--aurora" aria-labelledby="page-hero-title">
         <div class="page-hero__media" aria-hidden="true">
-          <picture>
-            <source media="(max-width: 480px) and (max-aspect-ratio: 3/4)" srcset="background-crop-about.webp" width="1696" height="1696" />
-            <img class="page-hero__bg" src="background.webp" srcset="background-640.webp 640w, background-1280.webp 1280w, background-1920.webp 1920w, background.webp 2496w" sizes="(min-width: 1024px) 2496px, (orientation: landscape) 100vw, 1000px" width="2496" height="1696" alt="" fetchpriority="high" decoding="async" />
-          </picture>
-          <div class="page-hero__wash"></div>
-          <div class="page-hero__vignette"></div>
-          <div class="page-hero__noise"></div>
-        </div>
-        <div class="page-hero__glow" aria-hidden="true">
-          <span class="page-hero__sun"></span>
-          <span class="page-hero__haze"></span>
+          <div class="page-hero__aurora" data-aurora="expertise"></div>
         </div>
         <div class="page-hero__ridges" aria-hidden="true">
           <img class="page-hero__ridge" src="ridge-andes.svg" width="2000" height="850" alt="" decoding="async" />

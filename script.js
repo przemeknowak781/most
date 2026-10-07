@@ -1354,12 +1354,198 @@ function setupParallax() {
   onCompactChange(tick);
 }
 
+/* ------------------------------------------------------------------
+   AURORA
+
+   The light behind Our Team's and Our Expertise's heroes (client, 7.10):
+   the "harmonijka" - the bar pattern the About fold carried in May
+   (a3319a5), hundreds of upright bars of the palette, hairlines among
+   them, each a little lighter or darker than the light it samples. There
+   they shimmered as the page scrolled; here they shimmer on their own,
+   slowly, as an aurora does: the same three waves - each bar's own, a
+   sweep that crosses the band and a quicker pulse - now run on the clock.
+
+   One canvas per hero, drawn at half the hero's width and 48 rows tall and
+   stretched over it: the bars stand upright, so the rows only have to
+   carry each bar's glow, which runs from a crest of its own down to the
+   ridge; and drawn at half width their edges soften, as the light's do in
+   the client's picture. It draws 25 times a second while the hero is on
+   screen and the tab is in front, and once, still, under reduced motion.
+   Without script the hero keeps the stylesheet's own bars (the same
+   palette as a gradient, with a fixed pattern of lines over it). */
+const AURORA_PALETTES = {
+  /* Our Team: orange and navy, the darker - the navy of the page at both
+     edges, the blues and plums under the copy, the orange in the middle
+     where the people climb */
+  team: {
+    stops: [[0, "#080b13"], [0.05, "#121a2e"], [0.1, "#22304d"], [0.15, "#36405e"], [0.2, "#1f2740"], [0.25, "#322f44"],
+      [0.3, "#4f3c4a"], [0.36, "#6d464c"], [0.42, "#5c2e2e"], [0.48, "#9a3d27"], [0.53, "#d14a22"], [0.58, "#e2532a"],
+      [0.63, "#d65d38"], [0.67, "#c86c50"], [0.71, "#a0625a"], [0.75, "#704c53"], [0.8, "#5b4a58"], [0.85, "#40435c"],
+      [0.9, "#1f2d4b"], [0.95, "#0e1830"], [1, "#080b13"]],
+    light: [0.08, 0.16],
+    spread: 0.3,
+  },
+  /* Our Expertise: beiges and browns, the lighter, with more contrast
+     from bar to bar - chocolate under the copy, sand and latte behind the
+     peaks */
+  expertise: {
+    stops: [[0, "#120c09"], [0.06, "#21150e"], [0.12, "#382417"], [0.18, "#4c3121"], [0.24, "#2e1e14"], [0.3, "#553826"],
+      [0.36, "#6f4a32"], [0.42, "#4a3022"], [0.48, "#8a5a3a"], [0.54, "#a97650"], [0.6, "#c8996c"], [0.66, "#dfbb8f"],
+      [0.72, "#efd7b4"], [0.78, "#e3c19a"], [0.84, "#c39469"], [0.9, "#8e6243"], [0.95, "#4f3626"], [1, "#1c130d"]],
+    light: [0.12, 0.2],
+    spread: 0.44,
+  },
+};
+
+function setupAurora() {
+  const hosts = document.querySelectorAll("[data-aurora]");
+  if (!hosts.length) return;
+  const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const ROWS = 48;
+  const SCALE = 0.5;
+  const FRAME = 1000 / 25;
+  const PERIOD = 30;
+
+  const toRgb = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+  const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+  hosts.forEach((host) => {
+    const palette = AURORA_PALETTES[host.dataset.aurora];
+    if (!palette) return;
+    const stops = palette.stops.map(([at, hex]) => ({ at, rgb: toRgb(hex) }));
+    const colorAt = (x) => {
+      x = clamp(x, 0, 1);
+      let i = 1;
+      while (i < stops.length - 1 && x > stops[i].at) i += 1;
+      const a = stops[i - 1];
+      const b = stops[i];
+      const t = clamp((x - a.at) / (b.at - a.at), 0, 1);
+      return a.rgb.map((c, k) => Math.round(c + (b.rgb[k] - c) * t));
+    };
+    const shade = (rgb, amount) => {
+      const target = amount >= 0 ? 255 : 0;
+      return rgb.map((c) => Math.round(c + (target - c) * Math.abs(amount)));
+    };
+
+    const canvas = document.createElement("canvas");
+    canvas.className = "page-hero__aurora-canvas";
+    host.prepend(canvas);
+    const ctx = canvas.getContext("2d", { alpha: false });
+    if (!ctx) return;
+
+    /* the May strip's bars, from the same seed: hairlines and bars of
+       2-10px, each sampling the palette near its place, a few of them
+       lit streaks */
+    let bars = [];
+    let width = 0;
+    let base = null;
+    const build = () => {
+      const cssWidth = Math.max(320, Math.ceil(host.getBoundingClientRect().width));
+      if (bars.length && Math.abs(cssWidth - width) < 16) return false;
+      width = cssWidth;
+      canvas.width = Math.round(width * SCALE);
+      canvas.height = ROWS;
+      base = ctx.createLinearGradient(0, 0, canvas.width, 0);
+      stops.forEach((s) => base.addColorStop(s.at, `rgb(${s.rgb.join(",")})`));
+      let seed = 0x4d4f5354;
+      const rand = () => {
+        seed = (seed + 0x6d2b79f5) | 0;
+        let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+      bars = [];
+      for (let x = 0; x < width * 1.025;) {
+        const hairline = rand() > 0.76;
+        const lit = rand() > 0.89;
+        const w = hairline ? 0.8 + rand() * 1.8 : 2.2 + Math.pow(rand(), 1.45) * 8.2;
+        const xNorm = clamp(x / width, 0, 1);
+        bars.push({
+          x,
+          w,
+          xNorm,
+          sample: clamp(xNorm + (rand() - 0.5) * 0.034, 0, 1),
+          shade: lit ? palette.light[0] + rand() * palette.light[1] : (rand() - 0.5) * palette.spread,
+          alpha: lit ? 0.72 + rand() * 0.2 : 0.58 + rand() * 0.34,
+          phase: rand(),
+          crest: rand(),
+        });
+        x += w;
+      }
+      return true;
+    };
+
+    const draw = (t) => {
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = base;
+      ctx.fillRect(0, 0, canvas.width, ROWS);
+      for (let i = 0; i < bars.length; i++) {
+        const b = bars[i];
+        const shimmer = Math.sin((b.phase + t * 1.65) * Math.PI * 2);
+        const sweep = Math.cos((b.xNorm * 9.5 - t * 3.2) * Math.PI * 2);
+        const pulse = Math.sin((b.xNorm * 18 + b.phase * 2.4 + t * 4.1) * Math.PI * 2);
+        const rgb = shade(
+          colorAt(b.sample + shimmer * 0.012 + sweep * 0.018),
+          b.shade + shimmer * 0.075 + sweep * 0.065 + pulse * 0.035
+        ).join(",");
+        const alpha = clamp(b.alpha + shimmer * 0.055 + sweep * 0.04 + pulse * 0.03, 0.42, 1);
+        const w = b.w * (1 + sweep * 0.1 + pulse * 0.045) * SCALE;
+        const crest = clamp(0.12 + b.crest * 0.3 + Math.sin((b.phase * 3 + t * 0.9) * Math.PI * 2) * 0.06, 0.05, 0.5);
+        const glow = ctx.createLinearGradient(0, 0, 0, ROWS);
+        glow.addColorStop(0, `rgba(${rgb},${(alpha * 0.55).toFixed(3)})`);
+        glow.addColorStop(crest, `rgba(${rgb},${alpha.toFixed(3)})`);
+        glow.addColorStop(1, `rgba(${rgb},${(alpha * 0.7).toFixed(3)})`);
+        ctx.fillStyle = glow;
+        ctx.fillRect((b.x + b.w / 2) * SCALE - w / 2, 0, w, ROWS);
+      }
+    };
+
+    build();
+    let clock = 0;
+    let last = 0;
+    let raf = 0;
+    let onScreen = true;
+    const frame = (now) => {
+      raf = 0;
+      if (!onScreen || document.hidden) return;
+      raf = requestAnimationFrame(frame);
+      if (last && now - last < FRAME) return;
+      clock += last ? Math.min(now - last, 100) : 0;
+      last = now;
+      draw(clock / 1000 / PERIOD);
+    };
+    const run = () => {
+      if (still || raf || !onScreen || document.hidden) return;
+      last = 0;
+      raf = requestAnimationFrame(frame);
+    };
+
+    draw(0);
+    host.classList.add("is-drawn");
+    if (typeof ResizeObserver === "function") {
+      new ResizeObserver(() => {
+        if (build()) draw(clock / 1000 / PERIOD);
+      }).observe(host);
+    }
+    if (still) return;
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver((entries) => {
+        onScreen = entries[entries.length - 1].isIntersecting;
+        run();
+      }).observe(host);
+    }
+    document.addEventListener("visibilitychange", run);
+    run();
+  });
+}
+
 setupParallax();
 updateScroll();
 setupSectionReveal();
 setupMobileMenu();
 setupPlaceholderLinks();
 setupHeroTrail();
+setupAurora();
 setupAudienceTriptych();
 setupAudienceConnectors();
 setupMemberReadmore();
