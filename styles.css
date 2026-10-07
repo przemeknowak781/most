@@ -7161,10 +7161,11 @@ a.contact-channels__value:focus-visible {
    The type takes the ink of the audience pages' cream sections: titles
    in #1c1419 (15.3, 14.5 and 13.0:1 on ivory, grey and latte), the lede
    and the rows' copy in its softer 72% (6.6, 6.4 and 6.1:1), the link in
-   the ink. The labels - the eyebrow and the rows' numbers - take the rust
-   the cream contact form rings its fields with: the peach and the orange
-   of the dark grounds fall to 1.6-2.9:1 here, #a8380b holds 5.5, 5.2 and
-   4.7:1. */
+   the ink. The labels - the eyebrow and the rows' numbers - take a rust
+   a shade deeper than the one the cream contact form rings its fields
+   with (#a8380b): the peach and the orange of the dark grounds fall to
+   1.6-2.9:1 here, #9e340a holds 4.7:1 or better, over the facade's fade
+   under the eyebrow too. */
 :root[data-who="ivory"] {
   --who-ground: #f0ebe9;
 }
@@ -7180,7 +7181,7 @@ a.contact-channels__value:focus-visible {
 :root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare {
   --who-ink: #1c1419;
   --who-ink-soft: rgba(28, 20, 25, 0.72);
-  --who-rust: #a8380b;
+  --who-rust: #9e340a;
   --eyebrow-color: var(--who-rust);
   --link-ink: var(--who-ink);
   --focus-ring: var(--who-rust);
@@ -7191,11 +7192,26 @@ a.contact-channels__value:focus-visible {
   color: var(--who-ink);
 }
 
-/* No photograph: the facade, toned for the navy, turned into a grey band
-   on a light ground - a window again, of the kind the client had taken
-   out under the hero (29.09). The ground runs clean from the hero's band
-   to Three routes' ridge. */
+/* The facade stays, as on the dark page (client, 7.10: the architecture
+   exactly as before, only the colours broken): the same photograph in
+   the same place, rising and fading as it does there, toned for the
+   light. Taken as it is, the navy-toned photo and its wash made a dark
+   window on the light ground, a light strip over it and the head's dark
+   type on the dark. Turned to its negative in grey and multiplied into
+   the ground - the layer, not the photo, so the blend reaches past the
+   fades - the mullions draw in a pale grey and the glass is the ground
+   itself: no band, no edge. At 34% the lede keeps 4.6:1 and the title
+   8.5:1 over their darkest mullions; the wash is the dark page's alone. */
 :root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare__bg {
+  mix-blend-mode: multiply;
+}
+
+:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare__bg img {
+  filter: grayscale(1) invert(1) brightness(1.15) contrast(0.85);
+  opacity: 0.34;
+}
+
+:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare__wash {
   display: none;
 }
 
@@ -7890,13 +7906,15 @@ a.contact-channels__value:focus-visible {
   color: rgba(240, 235, 233, 0.6);
 }
 
-/* ============ TITLE PREVIEWS (?titles=caps | ?titles=smaller) ============
-   The two alternatives the client asked to see beside the shipped titles
-   (6.10): every H1 and H2 title in capitals, or the titles a size smaller
-   in the case they ship in. script.js sets data-titles on <html> from the
-   query (or #titles-caps, #titles-smaller); without it nothing here applies
-   and every title is as it ships. Eyebrows and the names inside a section
-   (H3) keep their style in both.
+/* ============ TITLE PREVIEW (?titles=smaller) ============
+   The client wondered (6.10) whether the titles run a little large, and
+   feared a smaller size would break the layout: this shows every H1 and
+   H2 title a size smaller, in the case they ship in (title case - the
+   capitals they had asked for were the words' initials, not whole titles
+   in capitals, 7.10). script.js sets data-titles on <html> from the query
+   (or #titles-smaller); without it nothing here applies and every title
+   is as it ships. Eyebrows and the names inside a section (H3) keep their
+   style.
 
    Each title keeps the size its role gives it at every width - H1 for the
    heroes, the display size for the one slogan, H2 for the section titles,
@@ -7911,10 +7929,6 @@ a.contact-channels__value:focus-visible {
    their line breaks; the rest gain room and some take a line less. */
 :root[data-titles="smaller"] {
   --title-scale: 0.87;
-}
-
-:root[data-titles="caps"] {
-  --title-scale: 0.78;
 }
 
 @media (min-width: 1024px) {
@@ -7998,87 +8012,6 @@ a.contact-channels__value:focus-visible {
   :root[data-titles] .page--contact .page-hero__title {
     font-size: calc(var(--title-scale) * clamp(34px, 10.6svh, 40px));
   }
-}
-
-/* Capitals: Urbanist's run about a fifth wider than the same words in
-   title case and stand 0.70em tall where the lower case stands 0.51em, so
-   at the shipped size they read a size up and break onto more lines. At
-   78% (H1 44px, H2 37px at 1440) they stand just over the lower case they
-   replace, and with the +0.02em of tracking capitals need to stay open a
-   line runs a little shorter than it does in title case (2-3% on average,
-   up to 2% longer on the titles richest in narrow letters): the titles
-   keep their line breaks. With nothing below the baseline the lines look
-   further apart, so the leading closes up a little. */
-:root[data-titles="caps"] :is(.hero-title, .page-hero__title, .audience-intro__title, .whoweare__title, .home-expertise__title, .aud-grow__title, .perspective__title, .track-record__title, .philosophy__title, .manifesto__title, .clients__title, .routes-strip__title, .ex-areas__title, .exwork__title, .contact-band__title, .aud-help__title, .aud-work__title, .aud-expertise__title) {
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-}
-
-:root[data-titles="caps"] :is(.hero-title, .page-hero__title) {
-  line-height: 1.04;
-}
-
-:root[data-titles="caps"] :is(.whoweare__title, .home-expertise__title, .aud-grow__title, .perspective__title, .track-record__title, .philosophy__title, .manifesto__title, .clients__title, .routes-strip__title, .ex-areas__title, .exwork__title, .contact-band__title, .aud-help__title, .aud-work__title, .aud-expertise__title),
-:root[data-titles="caps"] .page--expertise .exwork--terrain .exwork__title {
-  line-height: 1.06;
-}
-
-/* the titles measured in their own ems keep the measure they ship with */
-:root[data-titles="caps"] .page--about :is(.perspective__title, .manifesto__title) {
-  max-width: calc(15em / var(--title-scale));
-}
-
-@media (max-width: 1023px) {
-  :root[data-titles="caps"] :is(.page--founders, .page--companies, .page--investors) .hero-title {
-    max-width: calc(15em / var(--title-scale));
-  }
-}
-
-@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
-  :root[data-titles="caps"] :is(.page--founders, .page--companies, .page--investors) .hero-title {
-    max-width: calc(18em / var(--title-scale));
-  }
-}
-
-/* "CROSS-BORDER GROWTH." is 12.4em of its own capitals: About's and Our
-   Expertise's headlines hold it whole on the narrowest phones as they hold
-   the title case */
-@media (max-width: 559px) {
-  :root[data-titles="caps"] :is(.page--about, .page--expertise) .page-hero__title {
-    font-size: min(calc(var(--title-scale) * var(--m-h1)), (100vw - 2 * var(--m-gutter)) / 12.65);
-  }
-}
-
-/* ============ FEWER MOUNTAINS PREVIEW (?mountains=less) ============
-   The client's question (6.10): are there too many mountains, do they
-   lead the story? This shows the middle of the pages without them: the
-   ridges drawn between sections - Our Team's five between the people,
-   About's two, the one under Our Expertise's hero - run as straight lines
-   through their checkpoints, the dots where they stand. The mountains that
-   frame each page stay: the heroes, Team's walkers, the closing bands.
-   script.js sets data-mountains on <html> from the query (or
-   #mountains-less); without it nothing here applies. Each line passes
-   through the centre of its dot: 17.75% down the band for profile A,
-   15.083% for B, as the summits they replace. */
-:root[data-mountains="less"] :is(.member-trail, .has-trail:not(.team-edge))::before {
-  background-image: linear-gradient(90deg, transparent, rgba(255, 168, 110, 0.8) 12%, rgba(255, 168, 110, 0.8) 88%, transparent);
-  background-size: 100% 1px;
-}
-
-:root[data-mountains="less"] .member-trail.member-trail::before {
-  background-position: 0 17.75%;
-}
-
-:root[data-mountains="less"] .member--reverse + .member-trail.member-trail::before {
-  background-position: 0 15.083%;
-}
-
-:root[data-mountains="less"] .has-trail.has-trail--a::before {
-  background-position: 0 calc(0.1775 * clamp(72px, 9vw, 120px) - 0.5px);
-}
-
-:root[data-mountains="less"] .has-trail.has-trail--b:not(.team-edge)::before {
-  background-position: 0 calc(0.15083 * clamp(72px, 9vw, 120px) - 0.5px);
 }
 
 /* 'Day-to-Day' keeps its ordinary hyphens (the webfonts have no

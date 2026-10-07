@@ -1076,27 +1076,25 @@ function setupPortraitProposal() {
 }
 
 /* Alternatives for the client to look at, off by default (client, 6.10):
-   ?who=ivory|grey|latte shows Home's Who we are on a light ground,
-   ?titles=caps|smaller the titles in capitals or a size smaller, and
-   ?mountains=less the ridges between sections drawn as straight lines,
-   each as a data attribute on <html> the stylesheet answers. #who-latte,
-   #titles-caps and the like do the same where a preview host drops the
-   query. Without one the page is as it ships. ?preview (or any of them)
+   ?who=ivory|grey|latte shows Home's Who we are on a light ground, and
+   ?titles=smaller the titles a size smaller, each as a data attribute on
+   <html> the stylesheet answers. #who-latte, #titles-smaller and the like
+   do the same where a preview host drops the query. Without one the page
+   is as it ships. (The titles in capitals and the ridges drawn straight
+   were looked at and set aside, 7.10.) ?preview (or either of them)
    brings up a panel that switches them in place; while it is up, the
    links to the site's pages carry the choice and the panel, so the whole
    site can be walked in an alternative. */
 const PREVIEW_SWITCHES = {
   who: ["ivory", "grey", "latte"],
-  titles: ["caps", "smaller"],
-  mountains: ["less"],
+  titles: ["smaller"],
 };
 
 /* the panel's words, in Polish as the client reviews in it: each switch's
    name, then its choices, the shipped one first */
 const PREVIEW_PANEL = [
   ["who", "Who We Are (Home)", [["", "ciemne"], ["ivory", "złamana biel"], ["grey", "szarość"], ["latte", "latte"]]],
-  ["titles", "Tytuły", [["", "obecne"], ["caps", "wielkie litery"], ["smaller", "mniejsze"]]],
-  ["mountains", "Góry między sekcjami", [["", "obecne"], ["less", "mniej"]]],
+  ["titles", "Tytuły", [["", "obecne"], ["smaller", "mniejsze"]]],
 ];
 
 function setupPreviewSwitches() {
