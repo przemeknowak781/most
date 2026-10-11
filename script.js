@@ -2335,7 +2335,7 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
 
     // a bot filled the hidden field: accept quietly, deliver nothing
     if (trap && trap.value) {
-      say("Thanks — your message is with us.");
+      say("Thanks\u00a0– your message is with us.");
       return;
     }
 
@@ -2360,7 +2360,7 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
       });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       form.reset();
-      say("Thanks — your message is on the way. We will get back to you shortly.");
+      say("Thanks\u00a0– your message is on the way. We will get back to you shortly.");
       if (submit) submit.textContent = "Sent";
     } catch (error) {
       if (submit) {
@@ -2368,7 +2368,7 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
         submit.textContent = submitLabel;
       }
       say(
-        `That did not go through${mailto ? ` — please write to ${mailto} instead.` : "."}`,
+        `That did not go through${mailto ? `\u00a0– please write to ${mailto} instead.` : "."}`,
         "error"
       );
     }

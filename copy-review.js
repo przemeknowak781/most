@@ -47,7 +47,7 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
-   "t": "Lawyers with backgrounds in Polish, English, and US law — working with founders, companies, and investors.",
+   "t": "Lawyers with backgrounds in Polish, English, and US law – working with founders, companies, and investors.",
    "c": "wireframe",
    "s": "S5c:13",
    "a": ""
@@ -77,7 +77,7 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
-   "t": "Different priorities, different stages — but always the same long-term partnership in law and business.",
+   "t": "Different priorities, different stages – but always the same long-term partnership in law and business.",
    "c": "wireframe",
    "s": "S5c:18",
    "a": ""
@@ -143,7 +143,7 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
-   "t": "At MOST, we focus on helping founders, companies, and investors make deals happen, avoid costly mistakes, and unlock business opportunities across markets. We work alongside our clients as long-term partners in law and business — supporting them as they build, scale, and invest.",
+   "t": "At MOST, we focus on helping founders, companies, and investors make deals happen, avoid costly mistakes, and unlock business opportunities across markets. We work alongside our clients as long-term partners in law and business – supporting them as they build, scale, and invest.",
    "c": "g1-edited",
    "s": "G1:203-204 (sekcja 'About us – na stronie głównej')",
    "a": ""
@@ -155,13 +155,13 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
-   "t": "Enough closed transactions behind us to recognise which terms bite later — and which ones never matter.",
+   "t": "Enough closed transactions behind us to recognise which terms bite later – and which ones never matter.",
    "c": "ours",
    "s": "none (zacytowane w naszej odpowiedzi R1:16)",
    "a": "Our experience na Home: prosiliście o tekst bez powtarzania liczb z hero. Potrzebujemy 1 zdania; nasza propozycja jest taka jak na stronie."
   },
   {
-   "t": "Legal foundations that support strategy — integrated into a broader business context.",
+   "t": "Legal foundations that support strategy – integrated into a broader business context.",
    "c": "g1-edited",
    "s": "G1:207 + G1:208",
    "a": ""
@@ -173,43 +173,43 @@ window.MOST_COPY_REVIEW = {
    "a": "Etykieta nad nowym tytułem 'Our Expertise' na Home: '— what we do —'. Akceptujecie?"
   },
   {
-   "t": "Interconnected areas of support — grown with your business, adapted to your stage.",
+   "t": "Interconnected areas of support – grown with your business, adapted to your stage.",
    "c": "wireframe",
    "s": "S5c:46",
    "a": ""
   },
   {
-   "t": "Set up and structure businesses — locally and internationally — so you are ready to scale and raise capital.",
+   "t": "Set up and structure businesses – locally and internationally – so you are ready to scale and raise capital.",
    "c": "g1-edited",
    "s": "G1:192",
    "a": ""
   },
   {
-   "t": "Cover the legal side of hiring, equity plans, and working with contractors — so you build the right team with confidence.",
+   "t": "Cover the legal side of hiring, equity plans, and working with contractors – so you build the right team with confidence.",
    "c": "g1-edited",
    "s": "G1:194",
    "a": ""
   },
   {
-   "t": "We support you through every stage of fundraising and lead M&A transactions — so deals are clear, fair, and future-proof.",
+   "t": "We support you through every stage of fundraising and lead M&A transactions – so deals are clear, fair, and future-proof.",
    "c": "g1-edited",
    "s": "G1:193 (obszar 2: \"We support you through every stage of fundraising\") + wireframe S5c:58 (\"and lead M&A transactions – so deals are clear, fair, and future-proof\")",
    "a": "Zdanie mówi, że prowadzimy transakcje M&A; w dokumencie tego sformułowania nie ma (obszar 7: \"We support buy- and sell-side deals\"). Pytanie 5 w pakiecie."
   },
   {
-   "t": "From everyday agreements to commercial partnerships — contracts that support your product, platform, and operations.",
+   "t": "From everyday agreements to commercial partnerships – contracts that support your product, platform, and operations.",
    "c": "g1-edited",
    "s": "G1:195",
    "a": ""
   },
   {
-   "t": "Protect what you build — covering IP ownership, licensing, confidentiality, and open-source risk.",
+   "t": "Protect what you build – covering IP ownership, licensing, confidentiality, and open-source risk.",
    "c": "g1-edited",
    "s": "G1:196",
    "a": ""
   },
   {
-   "t": "Guide your international growth — foreign entities, global contracts, and cross-border compliance.",
+   "t": "Guide your international growth – foreign entities, global contracts, and cross-border compliance.",
    "c": "g1-edited",
    "s": "G1:197 \"We guide your international growth, helping structure foreign entities, review global contracts, and manage compliance.\"",
    "a": ""
@@ -257,7 +257,7 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
-   "t": "Start a conversation — we'll meet you at your next step.",
+   "t": "Start a conversation – we'll meet you at your next step.",
    "c": "wireframe",
    "s": "S5c:76",
    "a": ""
@@ -275,7 +275,7 @@ window.MOST_COPY_REVIEW = {
    "a": "nie dotyczy (usuwamy z kodu, klienta nie pytamy)"
   },
   {
-   "t": "MOST Partners — Legal Partner for Growth / MOST accompanies founders, tech companies, and investors as long-term partners in law and business.",
+   "t": "MOST Partners – Legal Partner for Growth / MOST accompanies founders, tech companies, and investors as long-term partners in law and business.",
    "c": "g1-edited",
    "s": "G1:4 (skrót) / G1:6 (skrót)",
    "a": ""
@@ -409,7 +409,7 @@ window.MOST_COPY_REVIEW = {
    "a": "Potrzebujemy 1 zdania opisu etapu Formation. Nasza propozycja jest taka jak na stronie."
   },
   {
-   "t": "SAFEs, term sheets, convertibles, VC and venture debt — closed with clarity, speed, and confidence.",
+   "t": "SAFEs, term sheets, convertibles, VC and venture debt – closed with clarity, speed, and confidence.",
    "c": "ours",
    "s": "none",
    "a": "Potrzebujemy 1 zdania opisu etapu Funding. Nasza propozycja jest taka jak na stronie."
@@ -457,7 +457,7 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
-   "t": "Build the legal foundations that support your strategy — integrating legal considerations into a broader business context.",
+   "t": "Build the legal foundations that support your strategy – integrating legal considerations into a broader business context.",
    "c": "g1-edited",
    "s": "G1:131 + G1:132",
    "a": ""
@@ -517,19 +517,19 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
-   "t": "Building from zero — foundations, funding, talent, and IP.",
+   "t": "Building from zero – foundations, funding, talent, and IP.",
    "c": "wireframe",
    "s": "S5c:343",
    "a": ""
   },
   {
-   "t": "Scaling with structure — contracts, governance, cross-border growth.",
+   "t": "Scaling with structure – contracts, governance, cross-border growth.",
    "c": "wireframe",
    "s": "S5c:344",
    "a": ""
   },
   {
-   "t": "Deals that close — structuring, diligence, protected value.",
+   "t": "Deals that close – structuring, diligence, protected value.",
    "c": "wireframe",
    "s": "S5c:345",
    "a": ""
@@ -541,7 +541,7 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
-   "t": "About us — MOST Partners / MOST Partners — a law firm built for tech, venture, and cross-border growth. Our perspective, experience, approach, mission and commitment.",
+   "t": "About us – MOST Partners / MOST Partners – a law firm built for tech, venture, and cross-border growth. Our perspective, experience, approach, mission and commitment.",
    "c": "g1-edited",
    "s": "G1:117 + etykiety G1:120-141",
    "a": ""
@@ -555,19 +555,19 @@ window.MOST_COPY_REVIEW = {
    "a": "Komunikat po kliknięciu Submit (otwiera się program pocztowy): nasza propozycja jest taka jak na stronie. Czy jest OK?"
   },
   {
-   "t": "Thanks — your message is with us.",
+   "t": "Thanks – your message is with us.",
    "c": "ours",
    "s": "none (script.js:1673)",
    "a": "nie dotyczy (widoczne tylko dla botów)"
   },
   {
-   "t": "Thanks — your message is on the way. We will get back to you shortly.",
+   "t": "Thanks – your message is on the way. We will get back to you shortly.",
    "c": "ours",
    "s": "none",
    "a": "Czy możemy obiecać odpowiedź 'within two business days'? Jeśli nie, podajcie termin albo usuniemy to zdanie."
   },
   {
-   "t": "That did not go through — please write to bemost@mostpartners.com instead.",
+   "t": "That did not go through – please write to bemost@mostpartners.com instead.",
    "c": "ours",
    "s": "none (script.js:1706)",
    "a": "Komunikat o nieudanej wysyłce: nasza propozycja jest taka jak na stronie. Czy jest OK?"
@@ -603,7 +603,7 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
-   "t": "Start a conversation with MOST Partners — long-term partners in law and business.",
+   "t": "Start a conversation with MOST Partners – long-term partners in law and business.",
    "c": "ours",
    "s": "none. Połączone przez nas \"Start a conversation\" z wireframe'u (S5c l.76 / l.139, gdzie dalej jest inaczej: \"– we'll meet you at your next step\" / \"about your n",
    "a": ""
@@ -611,7 +611,7 @@ window.MOST_COPY_REVIEW = {
  ],
  "expertise.html": [
   {
-   "t": "Eight interconnected areas of support — grown with your business, adapted to your stage.",
+   "t": "Eight interconnected areas of support – grown with your business, adapted to your stage.",
    "c": "wireframe",
    "s": "S5c l.46 \"Interconnected areas of support – grown with your business, adapted to your stage.\"",
    "a": ""
@@ -641,7 +641,7 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
-   "t": "Always driven by what matters most. Our documents are designed to be understood and used, and focused on the underlying objectives of your team, your partners, your investors — whoever needs to act on them.",
+   "t": "Always driven by what matters most. Our documents are designed to be understood and used, and focused on the underlying objectives of your team, your partners, your investors – whoever needs to act on them.",
    "c": "g1-edited",
    "s": "G1 l.21; F1 l.5 identycznie jak na stronie",
    "a": ""
@@ -653,7 +653,7 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
-   "t": "Supporting your business in what comes next. Your business evolves, and so does our support. We're not just here for the deal — we are your long-term partner in law and business.",
+   "t": "Supporting your business in what comes next. Your business evolves, and so does our support. We're not just here for the deal – we are your long-term partner in law and business.",
    "c": "g1-edited",
    "s": "G1 l.24; F1 l.158 identycznie jak na stronie",
    "a": ""
@@ -677,19 +677,19 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
-   "t": "Building from zero — foundations, funding, talent, and IP.",
+   "t": "Building from zero – foundations, funding, talent, and IP.",
    "c": "wireframe",
    "s": "S5c l.343",
    "a": ""
   },
   {
-   "t": "Scaling with structure — contracts, governance, cross-border growth.",
+   "t": "Scaling with structure – contracts, governance, cross-border growth.",
    "c": "wireframe",
    "s": "S5c l.344",
    "a": ""
   },
   {
-   "t": "Deals that close — structuring, diligence, protected value.",
+   "t": "Deals that close – structuring, diligence, protected value.",
    "c": "wireframe",
    "s": "S5c l.345",
    "a": ""
@@ -707,7 +707,7 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
-   "t": "Eight interconnected areas of legal support — incorporation and structuring, funding rounds, hiring, commercial contracts, IP and technology, cross-border expansion, M&A and exits, and ongoing support. Grown with your business.",
+   "t": "Eight interconnected areas of legal support – incorporation and structuring, funding rounds, hiring, commercial contracts, IP and technology, cross-border expansion, M&A and exits, and ongoing support. Grown with your business.",
    "c": "ours",
    "s": "none. To nasz opis złożony z hasła z wireframe'u (S5c l.46 \"Interconnected areas of support – grown with your business\") i skróconych przez nas nazw 8 obszarów ",
    "a": ""
@@ -715,7 +715,7 @@ window.MOST_COPY_REVIEW = {
  ],
  "our-team.html": [
   {
-   "t": "Over 20 years of experience across Polish, English, and US law — in one team.",
+   "t": "Over 20 years of experience across Polish, English, and US law – in one team.",
    "c": "wireframe",
    "s": "S5c:434, słowo w słowo; skrót pierwszych zdań sekcji TEAM z G1:148",
    "a": ""
@@ -745,7 +745,7 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
-   "t": "Incentive Programs (ESOPs and VSOPs — virtual/phantom programs)",
+   "t": "Incentive Programs (ESOPs and VSOPs – virtual/phantom programs)",
    "c": "g1-edited",
    "s": "G1 \"Incentive Programs (ESOPs and VSOPs (virtual/phantom programs))\"; myślnik z wireframe'u",
    "a": "Pytanie 4 w pakiecie: myślnik (wireframe) czy nawias w nawiasie (dokument)?"
@@ -759,7 +759,7 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
-   "t": "Just a glimpse of how legal pulls its weight when scaling fast and across borders — pick the ones that matter.",
+   "t": "Just a glimpse of how legal pulls its weight when scaling fast and across borders – pick the ones that matter.",
    "c": "ours",
    "s": "none",
    "a": "Potrzebujemy 1 zdania wprowadzenia pod 'What We Help You Achieve' (albo zgody na usunięcie); nasza robocza propozycja jak na stronie."
