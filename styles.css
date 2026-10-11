@@ -6483,7 +6483,11 @@ a.contact-channels__value:focus-visible {
   content: none;
 }
 
+/* The ends are dots over the rail. The first row's own segment (its
+   ::after, painted after the ::before) would otherwise run over its dot
+   from the centre down - Zuza's "line over the dot". */
 :is(.page--founders, .page--companies, .page--investors) .aud-expertise__list li:is(:first-child, :last-child)::before {
+  z-index: 1;
   width: var(--rail-dot-end);
   height: var(--rail-dot-end);
   box-shadow: 0 0 0 5px rgba(var(--aud-accent-rgb), 0.14);
