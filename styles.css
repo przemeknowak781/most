@@ -13293,7 +13293,7 @@ main {
    The artwork is the Figma ridge, 1443 x 658 (0.456 as tall as wide),
    mirrored so its mass rises on the right. Its constants, measured off the
    path as fractions of its width W, down from the art's top edge:
-     0.1386W  the wanderer's head (Founders)
+     0.1835W  the wanderer's head (Founders)
      0.2058W  the plateau, the highest land left of the far slope
      0.2266W  the highest land in the art's left third (under the button
               when the art is drawn at the screen's width)
@@ -13301,7 +13301,7 @@ main {
      0.2602W  the art's left edge (the ground a plain can carry on)
    On a phone held upright the art is drawn 145vw wide and right-aligned,
    so the far peak stands at the screen's edge and the wanderer is a figure
-   rather than a speck (60px tall at 390); on a tablet it is drawn at the
+   rather than a speck (36px tall at 390); on a tablet it is drawn at the
    screen's width, as on desktop; on a phone on its side it is drawn
    narrower, right of the button, and the hero is exactly one screen (see
    the short-landscape tokens).
@@ -13310,7 +13310,8 @@ main {
      --aud-hero-pb   the hero's bottom padding, i.e. how far the art's foot
                      reaches below the button. The art is 0.456W tall, so
                      upright on a phone (the wanderer under the button)
-                     0.3174W + 28px leaves 28px of sky over his head;
+                     0.2725W + 28px leaves 28px of sky over his head
+                     (Companies and Investors keep 0.3174W, see there);
                      on a tablet 0.2294W + 88px leaves 88px between the
                      button and the land under it, and the far peak rises
                      beside the copy.
@@ -13351,9 +13352,16 @@ main {
 @media (max-width: 767px) and (orientation: portrait), (max-width: 559px) {
   :is(.page--founders, .page--companies, .page--investors) {
     --aud-art-w: 145vw;
-    /* the wanderer stands under the button: 28px of sky between them */
+    /* Companies and Investors keep the ridge where the founders' first,
+       taller wanderer put it (head at 0.1386W): their trail's checkpoints
+       rise beside the button, and any higher they crowd it */
     --aud-hero-pb: calc(0.3174 * var(--aud-art-w) + 28px);
     --aud-intro-gap: 32px;
+  }
+
+  /* the wanderer stands under the button: 28px of sky between them */
+  .page--founders {
+    --aud-hero-pb: calc(0.2725 * var(--aud-art-w) + 28px);
   }
 }
 
