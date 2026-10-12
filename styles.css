@@ -576,6 +576,38 @@ body.menu-open {
   will-change: transform;
 }
 
+/* The client's review (10.10): the headline stands on the navy sky. On a
+   screen 1024px and up the photo is cut 6.5% further on the left - where
+   its big lit peak stood behind the headline - and set 9vh lower, so only
+   the last line meets the far ridges; the zoom grows to 1.14 so the picture
+   still covers the hero's right edge (it may move by half the growth, 7%).
+   Narrower screens keep their framing: there the mountains already sit low
+   under the copy, and higher the bright sky would come behind the button. */
+@media (min-width: 1024px) {
+  .hero-bg {
+    transform: scaleX(-1)
+      translate3d(
+        6.5%,
+        calc(var(--scroll-y, 0px) * 0.2 + 9vh),
+        0
+      )
+      scale(calc(1.14 + var(--hero-progress, 0) * 0.025));
+  }
+
+  /* Lower, the photo's lit horizon came up behind the headline's last
+     line and the tagline; a soft navy deepens the sky behind the copy
+     only, so the lines keep the contrast they had over the rock (and the
+     copy stands on more of the navy, as asked). */
+  .hero-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: radial-gradient(ellipse 46% 36% at 27% 44%, rgba(8, 12, 22, 0.5), rgba(8, 12, 22, 0.3) 50%, rgba(8, 12, 22, 0.1) 78%, transparent 100%);
+  }
+}
+
 /* Scrim over the photo: navy up top for nav/headline legibility, warm
    browns near the horizon. No multiply — warm tones never darken the
    photo; the vertical mask lets the ridges keep their natural light. */
