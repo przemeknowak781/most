@@ -6953,13 +6953,18 @@ a.contact-channels__value:focus-visible {
    silhouette or sky edge (client, 9.09 and 14.09). */
 .whoweare__bg img {
   object-fit: cover;
-  opacity: 0.9;
+  opacity: 1;
 }
 
+/* The client's review (10.10): the facade a touch lighter and warmer on
+   the navy - the wash a little thinner, the orange light on the left a
+   little stronger, a violet glow on the right where the mullions show.
+   The lede keeps over 5:1 against the brightest of it. */
 .whoweare__wash {
   background:
-    radial-gradient(900px 560px at 18% 8%, rgba(255, 97, 44, 0.12), transparent 70%),
-    linear-gradient(180deg, rgba(22, 24, 34, 0.9) 0%, rgba(22, 24, 34, 0.82) 46%, rgba(10, 13, 24, 0.97) 90%, #0a0d18 100%);
+    radial-gradient(900px 560px at 18% 8%, rgba(255, 97, 44, 0.17), transparent 70%),
+    radial-gradient(1100px 640px at 84% 28%, rgba(128, 135, 173, 0.12), transparent 72%),
+    linear-gradient(180deg, rgba(22, 24, 34, 0.84) 0%, rgba(22, 24, 34, 0.74) 46%, rgba(10, 13, 24, 0.97) 90%, #0a0d18 100%);
 }
 
 /* on the container edge, where the hero and every section start; the
