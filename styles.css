@@ -5834,7 +5834,7 @@ a.contact-channels__value:focus-visible {
   fill: currentColor;
 }
 
-/* Basia asked for depth behind the ridge rather than a second mountain, so
+/* The client asked for depth behind the ridge rather than a second mountain, so
    this is a lit face and a shaded face meeting on one crease, blurred and
    hazed out towards its base. It carries no outline of its own: at these
    opacities it is atmosphere, and it disappears entirely under the ridge
@@ -6012,7 +6012,7 @@ a.contact-channels__value:focus-visible {
 }
 
 /* fb-aud2: the land of the Companies hero (--hz-field #5f545b), not the
-   taupe #5f5853 it had been - Basia saw the band's colour as off the page's */
+   taupe #5f5853 it had been - the client saw the band's colour as off the page's */
 .page--companies {
   --aud-ground-rgb: 95, 84, 91;
 }
@@ -6331,7 +6331,7 @@ a.contact-channels__value:focus-visible {
 }
 
 /* === fb-aud2: How We Work on the page colour (Companies, Investors) ===
-   Basia (29.09): the band's colour did not match the page and the
+   Client review (29.09): the band's colour did not match the page and the
    concrete behind it was not pretty. The band is now the page's own colour,
    the land of its hero (Companies #5f545b, Investors #313e59), and the
    architecture is the hero's own photograph - the same file, already
@@ -6485,7 +6485,7 @@ a.contact-channels__value:focus-visible {
 
 /* The ends are dots over the rail. The first row's own segment (its
    ::after, painted after the ::before) would otherwise run over its dot
-   from the centre down - Zuza's "line over the dot". */
+   from the centre down - the review's "line over the dot". */
 :is(.page--founders, .page--companies, .page--investors) .aud-expertise__list li:is(:first-child, :last-child)::before {
   z-index: 1;
   width: var(--rail-dot-end);
@@ -6494,7 +6494,7 @@ a.contact-channels__value:focus-visible {
 }
 
 /* === fb-aud2: the rail keeps only its two ends ===
-   Basia (29.09): too many dots. The rail runs from the marker level with
+   Client review (29.09): too many dots. The rail runs from the marker level with
    the first point to the one level with the last; the points between stand
    on it without a dot of their own, in the same places as before. */
 :is(.page--founders, .page--companies, .page--investors) .aud-expertise__list li:not(:first-child):not(:last-child)::before {
@@ -13947,7 +13947,7 @@ main {
 }
 
 /* === fb-aud2: the closing scene in the page colour (For Founders, Companies, Investors) ===
-   Basia (29.09): on Investors the evening photograph under "Want to Grow
+   Client review (29.09): on Investors the evening photograph under "Want to Grow
    Together?" did not go with the page and cut hard into it; Companies sat
    better. As the Figma frames draw it, each audience page now closes on a
    sky of its own colour - Founders' terracotta, Companies' mauve,
