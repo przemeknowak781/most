@@ -3828,13 +3828,35 @@ a.contact-channels__value:focus-visible {
   animation: hero-sun-breathe 9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
-/* ---------- PAGE HERO (expertise): its own peaks ----------
+/* ---------- PAGE HERO (expertise): the page's own peaks ----------
    Built as About's at every width, lit by its own aurora (AURORA HEROES,
-   at the end of this file) instead of the photograph and its sun. The
-   client (06.10) wants Expertise and Our Team told apart by the shape of
-   their mountains, Expertise with higher, sharper peaks; since 13.10 they
-   are the generated scene's own, a range standing in the aurora's light
-   (the drawn ridge was taken out at the review). */
+   at the end of this file) instead of the photograph and its sun.
+   The silhouette is the page's own (ridge-andes.svg): the client (06.10)
+   wants Expertise and Our Team told apart by the shape of their mountains,
+   Expertise with higher, sharper peaks, as in the Andes. Low foothills
+   keep under the copy; on the right a skyline of granite spires rises - a
+   great tower with a notched summit, a needle either side of it and
+   smaller ones down to the edge, as Fitz Roy and its neighbours stand over
+   Patagonia. It stands in front of the aurora's scene, in the colour of
+   the section below, as Our Team's slope does. Under 1024px it is drawn
+   as Our Team's (AURORA HEROES). */
+@media (min-width: 1024px) {
+  /* Drawn as wide as the window, the art outgrows the hero from about
+     1930px and its summits would go over the top edge. There it stops at
+     1.06 times the hero's height, at the right, in proportion, and the
+     foothills it draws past its left edge (xMaxYMax meet) run on to the
+     window's. */
+  .page--expertise .page-hero__ridges {
+    top: 0;
+  }
+
+  .page--expertise .page-hero__ridge {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    max-height: 106%;
+  }
+}
 
 /* Key facts strip pinned to hero foot — mirrors homepage hero-stats */
 /* The meta row is out of flow at the foot of the hero, so a hero that
@@ -11064,14 +11086,6 @@ main {
     padding: calc(var(--nav-height) + var(--ab-hero-sky)) var(--m-gutter) max(48px, 27.6vw - 60px);
   }
 
-  /* Expertise's peaks are its scene's own (AURORA HEROES): their skyline
-     stands at about 0.78 of the hero's height there, so the hero keeps a
-     floor under the button for them, as Our Team's does for its slope, and
-     they rise under the copy, not behind the button. */
-  .page--expertise .page-hero {
-    padding-bottom: max(200px, 27.6vw - 60px);
-  }
-
   .page--about .page-hero__ridges {
     bottom: -14.9vw;
   }
@@ -14562,9 +14576,10 @@ main {
    of 10.10 the light is generated: Our Team's an aurora sky, graded onto
    the Home hero's palette, the slope in front of it as before; Our
    Expertise's a range of sharp peaks under the same aurora in browns and
-   sand. Since 13.10 the sky moves: one generated clip of the curtains
-   swaying (10 s, looped), graded for each page, on Expertise laid into
-   the scene's sky behind its peaks. The picture in the markup is the
+   sand, the page's own ridge in front of it. Since 13.10 the sky moves:
+   one generated clip of the curtains swaying (10 s, looped), graded for
+   each page, on Expertise laid into the scene's sky behind its peaks.
+   The picture in the markup is the
    film's first frame; script.js (AURORA FILM) fades the film in over it
    once it plays, and under reduced motion, with Save-Data on or without
    script the picture stays. Behind the copy the veil keeps the sky deep.
@@ -14696,16 +14711,51 @@ main {
   text-shadow: 0 0 2px rgba(18, 12, 9, 0.45), 0 1px 16px rgba(18, 12, 9, 0.7), 0 2px 40px rgba(18, 12, 9, 0.5);
 }
 
-/* Under 1024px the scene is drawn from the hero's top 1.12 times its
-   height: its dark foreground goes under the foot and the skyline comes
-   down to about 0.78 of the hero, under the button (the hero's floor,
-   PAGE HERO above) */
+/* Under 1024px Our Expertise is laid out as Our Team: the ridge has a
+   floor of its own under the button, the hero growing by its height, and
+   is drawn to it from the right (the spires, the tower 0.74 of its height
+   up), the foothills running off to the left. The scene behind is drawn
+   from the hero's top 1.12 times its height, so its far peaks come down
+   to about 0.78 of the hero, under the button, over the ridge's foothills. */
 @media (max-width: 1023px) {
+  .page-hero--expertise.page-hero--aurora {
+    --scene-h: clamp(190px, 58vw, 420px);
+    padding-bottom: calc(var(--scene-h) + 20px);
+  }
+
+  .page-hero--expertise.page-hero--aurora .page-hero__ridges {
+    top: 0;
+  }
+
+  .page-hero--expertise.page-hero--aurora .page-hero__ridge {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: var(--scene-h);
+    object-fit: cover;
+    object-position: 100% 100%;
+  }
+
   .page-hero--expertise.page-hero--aurora .page-hero__sky,
   .page-hero--expertise.page-hero--aurora .page-hero__film {
     top: 0;
     bottom: auto;
     height: 112%;
+  }
+}
+
+/* A phone on its side keeps a low strip of the ridge, as Our Team's. The
+   strip is wider than the drawing, so it is drawn to the strip's height
+   from the right and its foothills run on to the left (the drawing's own
+   xMaxYMax meet): covered, it would lose the spires' tops. */
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page-hero--expertise.page-hero--aurora {
+    --scene-h: clamp(150px, 26vw, 220px);
+  }
+
+  .page-hero--expertise.page-hero--aurora .page-hero__ridge {
+    object-fit: fill;
   }
 }
 
