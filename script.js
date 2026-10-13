@@ -1354,7 +1354,72 @@ function setupParallax() {
   onCompactChange(tick);
 }
 
+/* AURORA FILM: Our Team's and Our Expertise's skies move (AURORA HEROES in
+   styles.css). The picture in the markup is the film's first frame; once
+   the page has loaded the film is fetched in the size the hero needs (the
+   720p cut where its cover takes no more than 1400 device pixels across),
+   fades in over the picture when it plays and rests while the hero is out
+   of the window or the tab hidden. Under reduced motion, with Save-Data on
+   or on a 2G link the picture stays. */
+function setupAuroraFilm() {
+  const films = Array.from(document.querySelectorAll(".page-hero__film[data-film]"));
+  if (!films.length) return;
+  const conn = navigator.connection;
+  if (conn && (conn.saveData || /2g/.test(conn.effectiveType || ""))) return;
+  const still = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  films.forEach((film) => {
+    const hero = film.closest(".page-hero") || film.parentElement;
+    let loaded = false;
+    let inView = true;
+    let ready = document.readyState === "complete";
+
+    const load = () => {
+      loaded = true;
+      const box = hero.getBoundingClientRect();
+      const across = Math.max(box.width, (box.height * 16) / 9) * Math.min(window.devicePixelRatio || 1, 2);
+      const name = film.dataset.film + (across > 1400 ? "" : "-720");
+      [["webm", 'video/webm; codecs="vp9"'], ["mp4", "video/mp4"]].forEach(([ext, type]) => {
+        const source = document.createElement("source");
+        source.src = `${name}.${ext}`;
+        source.type = type;
+        film.appendChild(source);
+      });
+      film.addEventListener("playing", () => film.classList.add("is-playing"), { once: true });
+      film.muted = true;
+      film.load();
+    };
+
+    const sync = () => {
+      if (!ready || still.matches || !inView || document.hidden) {
+        if (loaded) film.pause();
+        return;
+      }
+      if (!loaded) load();
+      const playing = film.play();
+      if (playing && playing.catch) playing.catch(() => {});
+    };
+
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver((entries) => {
+        inView = entries[entries.length - 1].isIntersecting;
+        sync();
+      }).observe(hero);
+    }
+    document.addEventListener("visibilitychange", sync);
+    still.addEventListener("change", sync);
+    if (!ready) {
+      window.addEventListener("load", () => {
+        ready = true;
+        sync();
+      }, { once: true });
+    }
+    sync();
+  });
+}
+
 setupParallax();
+setupAuroraFilm();
 updateScroll();
 setupSectionReveal();
 setupMobileMenu();

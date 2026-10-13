@@ -3828,35 +3828,13 @@ a.contact-channels__value:focus-visible {
   animation: hero-sun-breathe 9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
-/* ---------- PAGE HERO (expertise): the page's own peaks ----------
+/* ---------- PAGE HERO (expertise): its own peaks ----------
    Built as About's at every width, lit by its own aurora (AURORA HEROES,
-   at the end of this file) instead of the photograph and its sun.
-   The silhouette is the page's own (ridge-andes.svg): the client (06.10)
-   wants Expertise and Our Team told apart by the shape of their mountains,
-   Expertise with higher, sharper peaks, as in the Andes - and no more
-   mountains than before. Low foothills keep under the copy at every width;
-   on the right a skyline of granite spires rises where the sun is - a great
-   tower with a notched summit, a needle either side of it and smaller ones
-   down to the edge, as Fitz Roy and its neighbours stand over Patagonia.
-   Its crests carry the site's own rock grain (RIDGE_TEXTURE in script.js),
-   kept off the sheer walls. */
-@media (min-width: 1024px) {
-  /* Drawn as wide as the window, the art outgrows the hero from about
-     1930px and its summits would go over the top edge. There it stops at
-     1.06 times the hero's height, at the right, in proportion, and the
-     foothills it draws past its left edge (xMaxYMax meet) run on to the
-     window's. */
-  .page--expertise .page-hero__ridges {
-    top: 0;
-  }
-
-  .page--expertise .page-hero__ridge {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    max-height: 106%;
-  }
-}
+   at the end of this file) instead of the photograph and its sun. The
+   client (06.10) wants Expertise and Our Team told apart by the shape of
+   their mountains, Expertise with higher, sharper peaks; since 13.10 they
+   are the generated scene's own, a range standing in the aurora's light
+   (the drawn ridge was taken out at the review). */
 
 /* Key facts strip pinned to hero foot — mirrors homepage hero-stats */
 /* The meta row is out of flow at the foot of the hero, so a hero that
@@ -11086,22 +11064,16 @@ main {
     padding: calc(var(--nav-height) + var(--ab-hero-sky)) var(--m-gutter) max(48px, 27.6vw - 60px);
   }
 
-  /* Expertise's spires stand on the right and its foothills stay low, so its
-     art is not sunk by a third: only 2vw goes under the foot, and the
-     foothills still meet it under the seam's trail. A phone's button runs
-     on over the stretch where the first spires rise, so the floor under it
-     is 72px rather than 48px: the spires stand beside the button, the great
-     tower up to just under the tagline. */
+  /* Expertise's peaks are its scene's own (AURORA HEROES): their skyline
+     stands at about 0.78 of the hero's height there, so the hero keeps a
+     floor under the button for them, as Our Team's does for its slope, and
+     they rise under the copy, not behind the button. */
   .page--expertise .page-hero {
-    padding-bottom: max(72px, 27.6vw - 60px);
+    padding-bottom: max(200px, 27.6vw - 60px);
   }
 
   .page--about .page-hero__ridges {
     bottom: -14.9vw;
-  }
-
-  .page--expertise .page-hero__ridges {
-    bottom: -2vw;
   }
 
   .page--about .page-hero__bg {
@@ -11324,12 +11296,6 @@ main {
     bottom: -25.9vw;
   }
 
-  /* Expertise's foothills go under the foot and the spires climb beside
-     the copy, which runs across 72% of the hero */
-  .page--expertise .page-hero__ridges {
-    bottom: -7vw;
-  }
-
 }
 
 /* ---------- small phones: the heading ladder ----------
@@ -11355,11 +11321,6 @@ main {
   .page--expertise .page-hero {
     padding-top: calc(var(--nav-height) + 12px);
     padding-bottom: 18px;
-  }
-
-  /* the tagline reaches the first needle here: the spires go a little lower */
-  .page--expertise .page-hero__ridges {
-    bottom: -10vw;
   }
 
   .page--about .page-hero__content,
@@ -14598,13 +14559,15 @@ main {
    team climbing a dark slope in front of it, and wants both heroes built
    that way, each in its own colours: Our Team in navy and orange, the
    darker, Our Expertise in browns and sand, the lighter. After the review
-   of 10.10 the light is a picture: an aurora sky generated for each page
-   (sky only, no land) and graded onto the Home hero's palette, the slope
-   and the peaks in front of it as before. Over it a light, slow overlay
-   keeps it alive - faint rays drifting sideways and a glow that breathes
-   where the curtains are brightest - all of it transforms and opacity on
-   the compositor, still under reduced motion. Behind the copy the veil
-   keeps the sky deep.
+   of 10.10 the light is generated: Our Team's an aurora sky, graded onto
+   the Home hero's palette, the slope in front of it as before; Our
+   Expertise's a range of sharp peaks under the same aurora in browns and
+   sand. Since 13.10 the sky moves: one generated clip of the curtains
+   swaying (10 s, looped), graded for each page, on Expertise laid into
+   the scene's sky behind its peaks. The picture in the markup is the
+   film's first frame; script.js (AURORA FILM) fades the film in over it
+   once it plays, and under reduced motion, with Save-Data on or without
+   script the picture stays. Behind the copy the veil keeps the sky deep.
    ============================================================ */
 .page-hero__aurora {
   position: absolute;
@@ -14613,7 +14576,8 @@ main {
   background: var(--aurora-base);
 }
 
-.page-hero__sky {
+.page-hero__sky,
+.page-hero__film {
   position: absolute;
   inset: 0;
   display: block;
@@ -14621,90 +14585,20 @@ main {
   height: 100%;
   object-fit: cover;
   object-position: var(--sky-pos, 60% 100%);
-  transform-origin: 70% 100%;
-  animation: aurora-sky 48s ease-in-out infinite alternate;
 }
 
-/* rays: hairlines of the curtains' light, drifting a little sideways,
-   only where the aurora is */
-.page-hero__rays {
-  position: absolute;
-  inset: 0 -6%;
-  background: repeating-linear-gradient(90deg, transparent 0 9px, rgba(var(--glow-rgb), 0.12) 9px 10px, transparent 10px 23px, rgba(var(--glow-rgb), 0.08) 23px 25px, transparent 25px 38px, rgba(255, 236, 214, 0.05) 38px 39px, transparent 39px 57px);
-  mix-blend-mode: screen;
-  -webkit-mask-image: radial-gradient(ellipse 46% 62% at var(--glow-x) 74%, #000 0%, rgba(0, 0, 0, 0.55) 46%, transparent 78%);
-  mask-image: radial-gradient(ellipse 46% 62% at var(--glow-x) 74%, #000 0%, rgba(0, 0, 0, 0.55) 46%, transparent 78%);
-  animation: aurora-rays 26s ease-in-out infinite alternate;
+.page-hero__film {
+  opacity: 0;
+  transition: opacity 1.2s ease;
 }
 
-/* the glow: the curtains brighten and fade, slowly, in two places */
-.page-hero__glow,
-.page-hero__glow::after {
-  position: absolute;
-  width: 64vw;
-  aspect-ratio: 1.7;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(var(--glow-rgb), 0.34), rgba(var(--glow-rgb), 0.1) 56%, transparent);
-  mix-blend-mode: screen;
-  pointer-events: none;
-}
-
-.page-hero__glow {
-  left: var(--glow-x);
-  top: var(--glow-y);
-  translate: -50% -50%;
-  animation: aurora-breathe 17s ease-in-out infinite;
-}
-
-.page-hero__glow::after {
-  content: "";
-  left: -18%;
-  top: -24%;
-  width: 72%;
-  animation: aurora-breathe 23s ease-in-out -9s infinite;
-}
-
-@keyframes aurora-sky {
-  from {
-    transform: scale(1);
-  }
-
-  to {
-    transform: scale(1.045) translate3d(-1%, 0, 0);
-  }
-}
-
-@keyframes aurora-rays {
-  from {
-    transform: translate3d(-1.5%, 0, 0);
-    opacity: 0.55;
-  }
-
-  to {
-    transform: translate3d(1.5%, 0, 0);
-    opacity: 1;
-  }
-}
-
-@keyframes aurora-breathe {
-  0%,
-  100% {
-    opacity: 0.3;
-    transform: translate3d(-3%, 1.5%, 0) scale(0.94);
-  }
-
-  50% {
-    opacity: 0.9;
-    transform: translate3d(3%, -2%, 0) scale(1.06);
-  }
+.page-hero__film.is-playing {
+  opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .page-hero__sky,
-  .page-hero__rays,
-  .page-hero__glow,
-  .page-hero__glow::after {
-    animation: none;
+  .page-hero__film {
+    display: none;
   }
 }
 
@@ -14737,9 +14631,6 @@ main {
 /* ---------- Our Team: orange and navy ---------- */
 .page-hero--team.page-hero--aurora {
   --aurora-base: #090d18;
-  --glow-rgb: 188, 121, 87;
-  --glow-x: 74%;
-  --glow-y: 70%;
   --aurora-veil:
     linear-gradient(180deg, rgba(8, 11, 19, 0.6) 0%, rgba(8, 11, 19, 0.22) 15%, transparent 28%),
     linear-gradient(90deg, rgba(8, 11, 19, 0.5) 0%, rgba(8, 11, 19, 0.24) 32%, transparent 56%);
@@ -14750,12 +14641,9 @@ main {
 /* ---------- Our Expertise: beiges and browns ---------- */
 .page-hero--expertise.page-hero--aurora {
   --aurora-base: #0e0a09;
-  --glow-rgb: 207, 168, 136;
-  --glow-x: 76%;
-  --glow-y: 74%;
   --aurora-veil:
     linear-gradient(180deg, rgba(18, 12, 9, 0.8) 0%, rgba(18, 12, 9, 0.34) 15%, transparent 30%),
-    linear-gradient(90deg, rgba(18, 12, 9, 0.66) 0%, rgba(18, 12, 9, 0.5) 38%, rgba(18, 12, 9, 0.26) 60%, transparent 78%);
+    linear-gradient(90deg, rgba(18, 12, 9, 0.66) 0%, rgba(18, 12, 9, 0.56) 40%, rgba(18, 12, 9, 0.3) 62%, transparent 80%);
   --aurora-scrim: rgba(18, 12, 9, 0.6);
   background: #161822;
 }
@@ -14808,10 +14696,30 @@ main {
   text-shadow: 0 0 2px rgba(18, 12, 9, 0.45), 0 1px 16px rgba(18, 12, 9, 0.7), 0 2px 40px rgba(18, 12, 9, 0.5);
 }
 
-/* a screen tall, as Our Team's: the light rises over the peaks */
+/* Under 1024px the scene is drawn from the hero's top 1.12 times its
+   height: its dark foreground goes under the foot and the skyline comes
+   down to about 0.78 of the hero, under the button (the hero's floor,
+   PAGE HERO above) */
+@media (max-width: 1023px) {
+  .page-hero--expertise.page-hero--aurora .page-hero__sky,
+  .page-hero--expertise.page-hero--aurora .page-hero__film {
+    top: 0;
+    bottom: auto;
+    height: 112%;
+  }
+}
+
+/* a screen tall, as Our Team's: the light rises over the peaks. On a
+   low screen the tagline comes down to the curtains' lit band, so it keeps
+   to the deep left in two lines, as Our Team's does. */
 @media (min-width: 1024px) {
   .page-hero--expertise.page-hero--aurora {
     min-height: 100svh;
+  }
+
+  .page-hero--expertise.page-hero--aurora .page-hero__tagline {
+    max-width: 30em;
+    text-wrap: balance;
   }
 }
 
@@ -14829,7 +14737,6 @@ main {
 @media (min-width: 1024px) {
   .page-hero--team.page-hero--aurora {
     --scene-h: 36vw;
-    --glow-y: 56%;
     --aurora-veil:
       linear-gradient(180deg, rgba(8, 11, 19, 0.5) 0%, rgba(8, 11, 19, 0.16) 12%, transparent 22%),
       linear-gradient(90deg, rgba(8, 11, 19, 0.5) 0%, rgba(8, 11, 19, 0.24) 32%, transparent 56%);
@@ -14842,7 +14749,8 @@ main {
      the curtains' lit edges stand just over the crest, behind the people
      (the slope still covers its foot everywhere: the crest is at least
      0.38 of the drawing's height up, at its left edge) */
-  .page-hero--team.page-hero--aurora .page-hero__sky {
+  .page-hero--team.page-hero--aurora .page-hero__sky,
+  .page-hero--team.page-hero--aurora .page-hero__film {
     top: 0;
     bottom: auto;
     height: calc(100% - var(--scene-h) * 0.32);

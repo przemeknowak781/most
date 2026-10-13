@@ -124,18 +124,14 @@
 
     <main id="main" tabindex="-1">
       <!-- PAGE HERO: the aurora of the client's picture (7.10) in beiges and
-           browns, drawn by script.js (AURORA), behind the page's own high,
-           sharp peaks -->
+           browns over a range of high, sharp peaks: a still of the scene
+           and, over it, its film (script.js, AURORA FILM) -->
       <section class="page-hero page-hero--expertise page-hero--aurora" aria-labelledby="page-hero-title">
         <div class="page-hero__media" aria-hidden="true">
           <div class="page-hero__aurora">
             <img class="page-hero__sky" src="aurora-expertise.webp" srcset="aurora-expertise-960.webp 960w, aurora-expertise-1440.webp 1440w, aurora-expertise.webp 2560w" sizes="(orientation: portrait) 180vh, 100vw" width="2560" height="1437" alt="" decoding="async" fetchpriority="high" />
-            <span class="page-hero__rays"></span>
-            <span class="page-hero__glow"></span>
+            <video class="page-hero__film" data-film="aurora-expertise-loop" muted loop playsinline disablepictureinpicture preload="none"></video>
           </div>
-        </div>
-        <div class="page-hero__ridges" aria-hidden="true">
-          <img class="page-hero__ridge" src="ridge-andes.svg" width="2000" height="850" alt="" decoding="async" />
         </div>
         <div class="page-hero__content">
           <p class="page-hero__eyebrow reveal">— our expertise —</p>
