@@ -7295,6 +7295,242 @@ a.contact-channels__value:focus-visible {
 }
 /* === end OUR EXPERTISE === */
 
+/* === OUR EXPERTISE on Home: three previews ===
+   The client (10.10) asked to see the six areas set three other ways,
+   to choose from, without a scroll trap and with the copy at its size:
+   ?expertise=icons, ?expertise=tiles or ?expertise=light (#expertise-tiles
+   and the like where a preview host drops the query; the switch is in
+   script.js) set one of them. Without one the section ships as it is.
+     icons  the present layout, the drawings larger and their strokes
+            heavier
+     tiles  the six as tiles, as About's "Find the Route Built for Your
+            Stage" cards (.routes-strip): side by side, unnumbered, each
+            name over its drawing enlarged, blurred and cut off by the
+            tile's edge, in a corner; the tiles take the cards' three
+            tints, warm, taupe and blue, along each row
+     light  the section on the site's cream, the type in the ink of the
+            light sections (as the light Who we are previews: title and
+            names 15.3:1, lede 6.6:1, the eyebrow in rust 6.0:1), Three
+            routes' torn edge coming down over it as dark land, the
+            section fading at its foot into the navy-deep the client
+            marks run on; the fade is eased in oklab so it does not muddy
+            midway */
+
+/* ---------- icons ---------- */
+:root[data-expertise="icons"] .home-expertise {
+  --hx-icon: clamp(76px, 6.6vw, 96px);
+}
+
+:root[data-expertise="icons"] .home-expertise .ex-icon path {
+  stroke-width: 1.6;
+}
+
+:root[data-expertise="icons"] .home-expertise__list {
+  row-gap: clamp(44px, 6.4vh, 68px);
+}
+
+:root[data-expertise="icons"] .home-expertise__name {
+  margin-top: 12px;
+  font-size: 17px;
+}
+
+@media (max-width: 1023px) {
+  :root[data-expertise="icons"] .home-expertise {
+    --hx-icon: 72px;
+  }
+}
+
+@media (max-width: 639px) {
+  :root[data-expertise="icons"] .home-expertise {
+    --hx-icon: 62px;
+  }
+
+  :root[data-expertise="icons"] .home-expertise__list {
+    row-gap: 32px;
+  }
+
+  :root[data-expertise="icons"] .home-expertise__name {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  :root[data-expertise="icons"] .home-expertise {
+    --hx-icon: 52px;
+  }
+
+  :root[data-expertise="icons"] .home-expertise__list {
+    row-gap: 22px;
+  }
+
+  :root[data-expertise="icons"] .home-expertise__name {
+    margin-top: 6px;
+    font-size: 14px;
+  }
+}
+
+/* ---------- tiles ---------- */
+:root[data-expertise="tiles"] .home-expertise__inner {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: none;
+  grid-template-areas:
+    "copy"
+    "list"
+    "link";
+}
+
+:root[data-expertise="tiles"] .home-expertise__copy {
+  max-width: 40rem;
+}
+
+:root[data-expertise="tiles"] .home-expertise__list {
+  justify-self: stretch;
+  max-width: none;
+  gap: clamp(16px, 1.8vw, 28px);
+  margin-top: clamp(40px, 5.2vh, 64px);
+}
+
+:root[data-expertise="tiles"] .home-expertise__item {
+  --hx-tint: 209, 126, 95;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  align-items: flex-start;
+  min-height: clamp(150px, 12.5vw, 196px);
+  padding: clamp(24px, 2.2vw, 36px);
+  border: 1px solid rgba(var(--hx-tint), 0.24);
+  border-radius: 2px;
+  background: linear-gradient(155deg, rgba(var(--hx-tint), 0.11), transparent 62%);
+  text-align: left;
+}
+
+:root[data-expertise="tiles"] .home-expertise__item:nth-child(3n + 2) {
+  --hx-tint: 171, 142, 130;
+}
+
+:root[data-expertise="tiles"] .home-expertise__item:nth-child(3n) {
+  --hx-tint: 115, 145, 196;
+}
+
+/* the drawing behind the name: more than the tile's height, its right
+   and foot cut off by the edges, blurred, its strokes thickened so the
+   blur leaves a soft line rather than nothing */
+:root[data-expertise="tiles"] .home-expertise__art {
+  position: absolute;
+  z-index: -1;
+  right: -12%;
+  bottom: -26%;
+  height: 112%;
+  opacity: 0.4;
+  filter: blur(5px);
+}
+
+:root[data-expertise="tiles"] .home-expertise .ex-icon {
+  height: 100%;
+}
+
+:root[data-expertise="tiles"] .home-expertise .ex-icon path {
+  stroke-width: 2.4;
+}
+
+/* the cards' name, in their type */
+:root[data-expertise="tiles"] .home-expertise__name {
+  max-width: 11em;
+  margin: 0;
+  font: 500 clamp(20px, 1.7vw, 25px) / 1.15 "Urbanist", system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+:root[data-expertise="tiles"] .home-expertise__link {
+  margin-top: clamp(28px, 4vh, 40px);
+}
+
+@media (max-width: 639px) {
+  :root[data-expertise="tiles"] .home-expertise__list {
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  :root[data-expertise="tiles"] .home-expertise__item {
+    min-height: 124px;
+    padding: 18px 16px;
+  }
+
+  :root[data-expertise="tiles"] .home-expertise__name {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  :root[data-expertise="tiles"] .home-expertise__list {
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  :root[data-expertise="tiles"] .home-expertise__item {
+    min-height: 104px;
+    padding: 16px;
+  }
+
+  :root[data-expertise="tiles"] .home-expertise__name {
+    font-size: 17px;
+  }
+
+  :root[data-expertise="tiles"] .home-expertise__link {
+    margin-top: 20px;
+  }
+}
+
+/* ---------- light ---------- */
+:root[data-expertise="light"] .home-expertise {
+  --hx-ink: #1c1419;
+  --hx-ink-soft: rgba(28, 20, 25, 0.72);
+  --eyebrow-color: #9e340a;
+  --link-ink: var(--hx-ink);
+  --focus-ring: #9e340a;
+  /* the fade under the link, and a shorter foot over it than the dark
+     section's: the fade is air enough */
+  --hx-fade: clamp(200px, 26vh, 300px);
+  --hx-foot: clamp(48px, 7vh, 88px);
+  padding-bottom: calc(var(--hx-foot) + var(--hx-fade));
+  background: linear-gradient(180deg,
+    var(--light) 0%,
+    var(--light) calc(100% - var(--hx-fade)),
+    #e0dbda calc(100% - var(--hx-fade) * 0.85),
+    #a6a4a6 calc(100% - var(--hx-fade) * 0.65),
+    #707075 calc(100% - var(--hx-fade) * 0.5),
+    #3f4047 calc(100% - var(--hx-fade) * 0.35),
+    #12161d calc(100% - var(--hx-fade) * 0.15),
+    var(--navy-deep) 100%);
+  color: var(--hx-ink);
+}
+
+:root[data-expertise="light"] :is(.home-expertise__title, .home-expertise__name) {
+  color: var(--hx-ink);
+}
+
+:root[data-expertise="light"] .home-expertise__lede {
+  color: var(--hx-ink-soft);
+}
+
+:root[data-expertise="light"] .home-expertise__link:focus-visible {
+  outline-color: var(--focus-ring);
+}
+
+@media (max-width: 1023px) {
+  :root[data-expertise="light"] .home-expertise {
+    --hx-fade: clamp(160px, 40vw, 240px);
+    --hx-foot: 32px;
+  }
+}
+
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  :root[data-expertise="light"] .home-expertise {
+    --hx-fade: 140px;
+  }
+}
+/* === end OUR EXPERTISE on Home: three previews === */
+
 /* === CLIENT MARKS on Home ===
    About Us' carousel (CLIENT MARKS, above) closes Home as well: with
    About Us set aside for now, the client asked for the clients at the

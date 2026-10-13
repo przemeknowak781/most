@@ -1076,8 +1076,10 @@ function setupPortraitProposal() {
 }
 
 /* Alternatives for the client to look at, off by default (client, 6.10):
-   ?who=ivory|grey|latte shows Home's Who we are on a light ground, and
-   ?titles=smaller the titles a size smaller, each as a data attribute on
+   ?who=ivory|grey|latte shows Home's Who we are on a light ground,
+   ?titles=smaller the titles a size smaller and (client, 10.10)
+   ?expertise=icons|tiles|light Home's Our Expertise with larger drawings,
+   as tiles or on a light ground, each as a data attribute on
    <html> the stylesheet answers. #who-latte, #titles-smaller and the like
    do the same where a preview host drops the query. Without one the page
    is as it ships. (The titles in capitals and the ridges drawn straight
@@ -1088,6 +1090,7 @@ function setupPortraitProposal() {
 const PREVIEW_SWITCHES = {
   who: ["ivory", "grey", "latte"],
   titles: ["smaller"],
+  expertise: ["icons", "tiles", "light"],
 };
 
 /* the panel's words, in Polish as the client reviews in it: each switch's
@@ -1095,6 +1098,7 @@ const PREVIEW_SWITCHES = {
 const PREVIEW_PANEL = [
   ["who", "Who We Are (Home)", [["", "ciemne"], ["ivory", "złamana biel"], ["grey", "szarość"], ["latte", "latte"]]],
   ["titles", "Tytuły", [["", "obecne"], ["smaller", "mniejsze"]]],
+  ["expertise", "Our Expertise (Home)", [["", "obecne"], ["icons", "większe ikony"], ["tiles", "kafelki"], ["light", "jasna sekcja"]]],
 ];
 
 function setupPreviewSwitches() {
