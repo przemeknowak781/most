@@ -14829,7 +14829,23 @@ main {
 @media (min-width: 1024px) {
   .page-hero--team.page-hero--aurora {
     --scene-h: 36vw;
+    --glow-y: 56%;
+    --aurora-veil:
+      linear-gradient(180deg, rgba(8, 11, 19, 0.5) 0%, rgba(8, 11, 19, 0.16) 12%, transparent 22%),
+      linear-gradient(90deg, rgba(8, 11, 19, 0.5) 0%, rgba(8, 11, 19, 0.24) 32%, transparent 56%);
     min-height: max(100svh, calc(var(--hero-top) + 420px + 25.7vw));
+  }
+
+  /* The sky's brightest curtains lie low in the picture; at the hero's
+     full height the slope hid them and only the rays' tips showed. The
+     picture ends a third of the way up the slope's drawing instead, so
+     the curtains' lit edges stand just over the crest, behind the people
+     (the slope still covers its foot everywhere: the crest is at least
+     0.38 of the drawing's height up, at its left edge) */
+  .page-hero--team.page-hero--aurora .page-hero__sky {
+    top: 0;
+    bottom: auto;
+    height: calc(100% - var(--scene-h) * 0.32);
   }
 
   /* the tagline breaks in two and keeps to the deep left, as the
