@@ -14594,31 +14594,118 @@ main {
 
 /* ============================================================
    AURORA HEROES - Our Team and Our Expertise (client, 7.10)
-   The client loved a picture of Our Team's hero lit by the "harmonijka"
-   - the May bar pattern (a3319a5) grown into an aurora - with the team
-   climbing a dark slope in front of it, and wants both of these heroes
-   built that way, each in its own colours: Our Team in orange and navy,
-   the darker, Our Expertise in beiges and browns, the lighter, with more
-   contrast. script.js draws the light (AURORA) - since the review of
-   10.10 curtains rising along the ridge, after the picture the client
-   sent, calm behind the copy; the photographs, their washes and the suns
-   went from these two heroes.
-   Without script the bars are the stylesheet's: the palette as a
-   gradient, with a fixed weave of light and dark lines over it.
+   The client loved a picture of Our Team's hero lit by an aurora, the
+   team climbing a dark slope in front of it, and wants both heroes built
+   that way, each in its own colours: Our Team in navy and orange, the
+   darker, Our Expertise in browns and sand, the lighter. After the review
+   of 10.10 the light is a picture: an aurora sky generated for each page
+   (sky only, no land) and graded onto the Home hero's palette, the slope
+   and the peaks in front of it as before. Over it a light, slow overlay
+   keeps it alive - faint rays drifting sideways and a glow that breathes
+   where the curtains are brightest - all of it transforms and opacity on
+   the compositor, still under reduced motion. Behind the copy the veil
+   keeps the sky deep.
    ============================================================ */
 .page-hero__aurora {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  background: var(--aurora-weave), var(--aurora-ground);
+  background: var(--aurora-base);
 }
 
-.page-hero__aurora-canvas {
+.page-hero__sky {
   position: absolute;
   inset: 0;
   display: block;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  object-position: var(--sky-pos, 60% 100%);
+  transform-origin: 70% 100%;
+  animation: aurora-sky 48s ease-in-out infinite alternate;
+}
+
+/* rays: hairlines of the curtains' light, drifting a little sideways,
+   only where the aurora is */
+.page-hero__rays {
+  position: absolute;
+  inset: 0 -6%;
+  background: repeating-linear-gradient(90deg, transparent 0 9px, rgba(var(--glow-rgb), 0.12) 9px 10px, transparent 10px 23px, rgba(var(--glow-rgb), 0.08) 23px 25px, transparent 25px 38px, rgba(255, 236, 214, 0.05) 38px 39px, transparent 39px 57px);
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(ellipse 46% 62% at var(--glow-x) 74%, #000 0%, rgba(0, 0, 0, 0.55) 46%, transparent 78%);
+  mask-image: radial-gradient(ellipse 46% 62% at var(--glow-x) 74%, #000 0%, rgba(0, 0, 0, 0.55) 46%, transparent 78%);
+  animation: aurora-rays 26s ease-in-out infinite alternate;
+}
+
+/* the glow: the curtains brighten and fade, slowly, in two places */
+.page-hero__glow,
+.page-hero__glow::after {
+  position: absolute;
+  width: 64vw;
+  aspect-ratio: 1.7;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(var(--glow-rgb), 0.34), rgba(var(--glow-rgb), 0.1) 56%, transparent);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.page-hero__glow {
+  left: var(--glow-x);
+  top: var(--glow-y);
+  translate: -50% -50%;
+  animation: aurora-breathe 17s ease-in-out infinite;
+}
+
+.page-hero__glow::after {
+  content: "";
+  left: -18%;
+  top: -24%;
+  width: 72%;
+  animation: aurora-breathe 23s ease-in-out -9s infinite;
+}
+
+@keyframes aurora-sky {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.045) translate3d(-1%, 0, 0);
+  }
+}
+
+@keyframes aurora-rays {
+  from {
+    transform: translate3d(-1.5%, 0, 0);
+    opacity: 0.55;
+  }
+
+  to {
+    transform: translate3d(1.5%, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes aurora-breathe {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translate3d(-3%, 1.5%, 0) scale(0.94);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: translate3d(3%, -2%, 0) scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-hero__sky,
+  .page-hero__rays,
+  .page-hero__glow,
+  .page-hero__glow::after {
+    animation: none;
+  }
 }
 
 /* deep where the copy stands and under the bar, as the picture's left is */
@@ -14629,9 +14716,6 @@ main {
   background: var(--aurora-veil);
 }
 
-.page-hero--aurora {
-  --aurora-weave: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.07) 0 2px, transparent 2px 5px, rgba(8, 11, 19, 0.14) 5px 9px, transparent 9px 13px, rgba(255, 255, 255, 0.04) 13px 14px, transparent 14px 23px);
-}
 
 /* the scene stands on the hero's foot, as tall as the hero lets it: the
    drawing covers its box from the bottom right (xMaxYMax slice), so a
@@ -14652,7 +14736,10 @@ main {
 
 /* ---------- Our Team: orange and navy ---------- */
 .page-hero--team.page-hero--aurora {
-  --aurora-ground: linear-gradient(90deg, #080b13 0%, #0d1421 5%, #161c2a 10%, #232838 15%, #1b1f2c 20%, #2b2a34 25%, #3a3843 30%, #53494d 36%, #412f2f 42%, #6d463a 48%, #9a654b 53%, #b57353 58%, #a8694c 63%, #855240 67%, #6b4c45 71%, #563b36 75%, #3a3843 80%, #2b2a34 85%, #1f222f 90%, #161822 95%, #080b13 100%);
+  --aurora-base: #090d18;
+  --glow-rgb: 188, 121, 87;
+  --glow-x: 74%;
+  --glow-y: 70%;
   --aurora-veil:
     linear-gradient(180deg, rgba(8, 11, 19, 0.6) 0%, rgba(8, 11, 19, 0.22) 15%, transparent 28%),
     linear-gradient(90deg, rgba(8, 11, 19, 0.5) 0%, rgba(8, 11, 19, 0.24) 32%, transparent 56%);
@@ -14662,7 +14749,10 @@ main {
 
 /* ---------- Our Expertise: beiges and browns ---------- */
 .page-hero--expertise.page-hero--aurora {
-  --aurora-ground: linear-gradient(90deg, #0f0b0a 0%, #1a1414 6%, #2a1f1e 12%, #412f2f 18%, #2b2223 24%, #563b36 30%, #6d463a 36%, #4a3430 42%, #855240 48%, #9a654b 54%, #b57f62 60%, #c69878 66%, #cfa888 72%, #c09378 78%, #a0725a 84%, #796257 90%, #4a3a35 95%, #1a1414 100%);
+  --aurora-base: #0e0a09;
+  --glow-rgb: 207, 168, 136;
+  --glow-x: 76%;
+  --glow-y: 74%;
   --aurora-veil:
     linear-gradient(180deg, rgba(18, 12, 9, 0.8) 0%, rgba(18, 12, 9, 0.34) 15%, transparent 30%),
     linear-gradient(90deg, rgba(18, 12, 9, 0.66) 0%, rgba(18, 12, 9, 0.5) 38%, rgba(18, 12, 9, 0.26) 60%, transparent 78%);
