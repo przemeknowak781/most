@@ -1079,7 +1079,8 @@ function setupPortraitProposal() {
    ?who=ivory|grey|latte shows Home's Who we are on a light ground,
    ?titles=smaller the titles a size smaller and (client, 10.10)
    ?expertise=icons|tiles|light Home's Our Expertise with larger drawings,
-   as tiles or on a light ground, each as a data attribute on
+   as tiles or on a light ground and ?scroll=peek|cue a cue to scroll on
+   Our Team's hero, each as a data attribute on
    <html> the stylesheet answers. #who-latte, #titles-smaller and the like
    do the same where a preview host drops the query. Without one the page
    is as it ships. (The titles in capitals and the ridges drawn straight
@@ -1091,6 +1092,7 @@ const PREVIEW_SWITCHES = {
   who: ["ivory", "grey", "latte"],
   titles: ["smaller"],
   expertise: ["icons", "tiles", "light"],
+  scroll: ["peek", "cue"],
 };
 
 /* the panel's words, in Polish as the client reviews in it: each switch's
@@ -1099,6 +1101,7 @@ const PREVIEW_PANEL = [
   ["who", "Who We Are (Home)", [["", "ciemne"], ["ivory", "złamana biel"], ["grey", "szarość"], ["latte", "latte"]]],
   ["titles", "Tytuły", [["", "obecne"], ["smaller", "mniejsze"]]],
   ["expertise", "Our Expertise (Home)", [["", "obecne"], ["icons", "większe ikony"], ["tiles", "kafelki"], ["light", "jasna sekcja"]]],
+  ["scroll", "Our Team: zachęta do przewinięcia", [["", "bez"], ["peek", "portrety spod hero"], ["cue", "napis ze strzałką"]]],
 ];
 
 function setupPreviewSwitches() {

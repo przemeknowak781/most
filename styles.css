@@ -15077,3 +15077,159 @@ main {
     mask-image: linear-gradient(90deg, transparent, #000 24%);
   }
 }
+
+/* ============================================================
+   OUR TEAM: SCROLL CUE - two previews (client, 10.10)
+   On a desktop Our Team's hero is a screen tall, and nothing in it says
+   the people are below. Two ways to say it, to choose from in the
+   preview panel (script.js); without one neither shows and the hero is
+   as it ships.
+     ?scroll=peek  the six portraits' tops rise over the hero's foot,
+                   behind the edge's ridge, as walkers coming up a crest:
+                   each a link to its person, lifting a little under the
+                   pointer
+     ?scroll=cue   a short line at the foot, "Meet the people", with an
+                   arrow that sinks and rises (still under reduced motion);
+                   the words wait for the client's approval
+   ============================================================ */
+.team-peek,
+.team-cue {
+  display: none;
+}
+
+/* From 1024px the hero is a screen tall or taller (AURORA HEROES: the
+   first walker's head stays clear of the copy); what it runs on past the
+   screen, both stand that much higher, so they are in the first screen */
+@media (min-width: 1024px) {
+  .page-hero--team.page-hero--aurora {
+    --hero-over: max(0px, calc(var(--hero-top) + 420px + 25.7vw - 100svh));
+  }
+}
+
+/* the row stands on the container edge, under the copy, its foot under
+   the hero's: the edge's ridge (TEAM EDITORIAL, .team-edge) lays the
+   section's navy over the lower part, so the faces come up over its
+   line, and each fades out at its foot into the slope's dark, where the
+   hero runs on past the screen and the ridge is lower than they are. Six
+   to the width of a phone. */
+:root[data-scroll="peek"] .team-peek {
+  --peek-gap: clamp(10px, 1vw, 16px);
+  --peek-w: min(clamp(64px, 7.4vw, 116px), calc((100vw - 2 * var(--container-x) - 5 * var(--peek-gap)) / 6));
+  --peek-up: clamp(84px, 9.2vw, 138px);
+  position: absolute;
+  z-index: 3;
+  left: var(--container-x);
+  bottom: calc(var(--peek-up) - var(--peek-w) * 747 / 640 + var(--hero-over, 0px));
+  display: flex;
+  gap: var(--peek-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:root[data-scroll="peek"] .team-peek li {
+  display: block;
+}
+
+.team-peek__face {
+  display: block;
+  width: var(--peek-w);
+  aspect-ratio: 640 / 747;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+  background: #0b1122;
+  box-shadow:
+    0 0 0 1px rgba(255, 168, 110, 0.16),
+    0 -12px 40px -14px rgba(0, 0, 0, 0.7);
+  -webkit-mask-image: linear-gradient(180deg, #000 52%, transparent 96%);
+  mask-image: linear-gradient(180deg, #000 52%, transparent 96%);
+  transition: translate 400ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 400ms ease;
+}
+
+.team-peek__face img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 12%;
+}
+
+.team-peek__face:hover,
+.team-peek__face:focus-visible {
+  translate: 0 -10px;
+  box-shadow:
+    0 0 0 1px rgba(255, 168, 110, 0.32),
+    0 -12px 40px -14px rgba(0, 0, 0, 0.7);
+}
+
+.team-peek__face:focus-visible {
+  outline: 2px solid var(--focus-ring, var(--orange));
+  outline-offset: 3px;
+}
+
+/* the cue stands centred over the edge's ridge (four fifths of the edge
+   over the hero's foot), in the first screen. On a phone the hero is
+   shorter than the screen and the section's head already shows under it:
+   no cue there. */
+:root[data-scroll="cue"] .team-cue {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: calc(clamp(72px, 9vw, 120px) * 0.8 + 18px + var(--hero-over, 0px));
+  translate: -50% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  color: var(--light);
+  font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  text-shadow: 0 1px 12px rgba(8, 11, 19, 0.7);
+}
+
+.team-cue svg {
+  width: 16px;
+  height: 40px;
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: team-cue 2.6s ease-in-out infinite;
+}
+
+.team-cue:focus-visible {
+  outline: 2px solid var(--focus-ring, var(--orange));
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+@keyframes team-cue {
+  0%,
+  100% {
+    translate: 0 -4px;
+    opacity: 0.55;
+  }
+
+  50% {
+    translate: 0 6px;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-cue svg {
+    animation: none;
+  }
+}
+
+@media (max-width: 639px), (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  :root[data-scroll="cue"] .team-cue {
+    display: none;
+  }
+}
+/* === end OUR TEAM: SCROLL CUE === */
