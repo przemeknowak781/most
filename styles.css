@@ -14650,7 +14650,7 @@ main {
 
 /* ---------- Our Team: orange and navy ---------- */
 .page-hero--team.page-hero--aurora {
-  --aurora-ground: linear-gradient(90deg, #080b13 0%, #121a2e 5%, #22304d 10%, #36405e 15%, #1f2740 20%, #322f44 25%, #4f3c4a 30%, #6d464c 36%, #5c2e2e 42%, #9a3d27 48%, #d14a22 53%, #e2532a 58%, #d65d38 63%, #c86c50 67%, #a0625a 71%, #704c53 75%, #5b4a58 80%, #40435c 85%, #1f2d4b 90%, #0e1830 95%, #080b13 100%);
+  --aurora-ground: linear-gradient(90deg, #080b13 0%, #0d1421 5%, #161c2a 10%, #232838 15%, #1b1f2c 20%, #2b2a34 25%, #3a3843 30%, #53494d 36%, #412f2f 42%, #6d463a 48%, #9a654b 53%, #b57353 58%, #a8694c 63%, #855240 67%, #6b4c45 71%, #563b36 75%, #3a3843 80%, #2b2a34 85%, #1f222f 90%, #161822 95%, #080b13 100%);
   --aurora-veil:
     linear-gradient(180deg, rgba(8, 11, 19, 0.6) 0%, rgba(8, 11, 19, 0.22) 15%, transparent 28%),
     linear-gradient(90deg, rgba(8, 11, 19, 0.5) 0%, rgba(8, 11, 19, 0.24) 32%, transparent 56%);
@@ -14660,7 +14660,7 @@ main {
 
 /* ---------- Our Expertise: beiges and browns ---------- */
 .page-hero--expertise.page-hero--aurora {
-  --aurora-ground: linear-gradient(90deg, #120c09 0%, #21150e 6%, #382417 12%, #4c3121 18%, #2e1e14 24%, #553826 30%, #6f4a32 36%, #4a3022 42%, #8a5a3a 48%, #a97650 54%, #c8996c 60%, #dfbb8f 66%, #efd7b4 72%, #e3c19a 78%, #c39469 84%, #8e6243 90%, #4f3626 95%, #1c130d 100%);
+  --aurora-ground: linear-gradient(90deg, #0f0b0a 0%, #1a1414 6%, #2a1f1e 12%, #412f2f 18%, #2b2223 24%, #563b36 30%, #6d463a 36%, #4a3430 42%, #855240 48%, #9a654b 54%, #b57f62 60%, #c69878 66%, #cfa888 72%, #c09378 78%, #a0725a 84%, #796257 90%, #4a3a35 95%, #1a1414 100%);
   --aurora-veil:
     linear-gradient(180deg, rgba(18, 12, 9, 0.8) 0%, rgba(18, 12, 9, 0.34) 15%, transparent 30%),
     linear-gradient(90deg, rgba(18, 12, 9, 0.66) 0%, rgba(18, 12, 9, 0.5) 38%, rgba(18, 12, 9, 0.26) 60%, transparent 78%);

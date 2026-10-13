@@ -1374,26 +1374,29 @@ function setupParallax() {
    Without script the hero keeps the stylesheet's own bars (the same
    palette as a gradient, with a fixed pattern of lines over it). */
 const AURORA_PALETTES = {
-  /* Our Team: orange and navy, the darker - the navy of the page at both
-     edges, the blues and plums under the copy, the orange in the middle
-     where the people climb */
+  /* Our Team: navy and orange, the darker - every colour taken from the
+     Home hero (the client's review, 10.10: the aurora in the home page's
+     colours, not brighter): its navies at both edges, its slates and plums
+     under the copy, its terracotta in the middle where the people climb.
+     The lit streaks and the spread from bar to bar are kept low, so it
+     stays as calm as the photo. */
   team: {
-    stops: [[0, "#080b13"], [0.05, "#121a2e"], [0.1, "#22304d"], [0.15, "#36405e"], [0.2, "#1f2740"], [0.25, "#322f44"],
-      [0.3, "#4f3c4a"], [0.36, "#6d464c"], [0.42, "#5c2e2e"], [0.48, "#9a3d27"], [0.53, "#d14a22"], [0.58, "#e2532a"],
-      [0.63, "#d65d38"], [0.67, "#c86c50"], [0.71, "#a0625a"], [0.75, "#704c53"], [0.8, "#5b4a58"], [0.85, "#40435c"],
-      [0.9, "#1f2d4b"], [0.95, "#0e1830"], [1, "#080b13"]],
-    light: [0.08, 0.16],
-    spread: 0.3,
+    stops: [[0, "#080b13"], [0.05, "#0d1421"], [0.1, "#161c2a"], [0.15, "#232838"], [0.2, "#1b1f2c"], [0.25, "#2b2a34"],
+      [0.3, "#3a3843"], [0.36, "#53494d"], [0.42, "#412f2f"], [0.48, "#6d463a"], [0.53, "#9a654b"], [0.58, "#b57353"],
+      [0.63, "#a8694c"], [0.67, "#855240"], [0.71, "#6b4c45"], [0.75, "#563b36"], [0.8, "#3a3843"], [0.85, "#2b2a34"],
+      [0.9, "#1f222f"], [0.95, "#161822"], [1, "#080b13"]],
+    light: [0.04, 0.08],
+    spread: 0.24,
   },
-  /* Our Expertise: beiges and browns, the lighter, with more contrast
-     from bar to bar - chocolate under the copy, sand and latte behind the
-     peaks */
+  /* Our Expertise: browns and sand, the lighter, as asked (7.10) - the
+     Home hero's browns rising to its lit haze and on to a muted sand behind
+     the peaks (#cfa888, where the old latte was #efd7b4); calm streaks */
   expertise: {
-    stops: [[0, "#120c09"], [0.06, "#21150e"], [0.12, "#382417"], [0.18, "#4c3121"], [0.24, "#2e1e14"], [0.3, "#553826"],
-      [0.36, "#6f4a32"], [0.42, "#4a3022"], [0.48, "#8a5a3a"], [0.54, "#a97650"], [0.6, "#c8996c"], [0.66, "#dfbb8f"],
-      [0.72, "#efd7b4"], [0.78, "#e3c19a"], [0.84, "#c39469"], [0.9, "#8e6243"], [0.95, "#4f3626"], [1, "#1c130d"]],
-    light: [0.12, 0.2],
-    spread: 0.44,
+    stops: [[0, "#0f0b0a"], [0.06, "#1a1414"], [0.12, "#2a1f1e"], [0.18, "#412f2f"], [0.24, "#2b2223"], [0.3, "#563b36"],
+      [0.36, "#6d463a"], [0.42, "#4a3430"], [0.48, "#855240"], [0.54, "#9a654b"], [0.6, "#b57f62"], [0.66, "#c69878"],
+      [0.72, "#cfa888"], [0.78, "#c09378"], [0.84, "#a0725a"], [0.9, "#796257"], [0.95, "#4a3a35"], [1, "#1a1414"]],
+    light: [0.05, 0.1],
+    spread: 0.34,
   },
 };
 
