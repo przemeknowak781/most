@@ -1357,22 +1357,26 @@ function setupParallax() {
 /* ------------------------------------------------------------------
    AURORA
 
-   The light behind Our Team's and Our Expertise's heroes (client, 7.10):
-   the "harmonijka" - the bar pattern the About fold carried in May
-   (a3319a5), hundreds of upright bars of the palette, hairlines among
-   them, each a little lighter or darker than the light it samples. There
-   they shimmered as the page scrolled; here they shimmer on their own,
-   slowly, as an aurora does: the same three waves - each bar's own, a
-   sweep that crosses the band and a quicker pulse - now run on the clock.
+   The light behind Our Team's and Our Expertise's heroes (client, 7.10),
+   shaped after the picture the client sent with the review of 10.10: not
+   a flat wall of bars any more but an aurora with depth - three curtains
+   of light rising along the ridge one behind the other, each with a bright
+   lower edge and rays that fade upwards, drifting and dimming in turn, the
+   brightest just over the ridge behind the people, and the sky deep and
+   calm on the left where the copy stands. The rays are the "harmonijka" -
+   the bar pattern the About fold carried in May (a3319a5): hundreds of
+   upright bars and hairlines, each a little lighter or darker, shimmering
+   on the clock. The colours are the palette's (the Home hero's).
 
-   One canvas per hero, drawn at half the hero's width and 48 rows tall and
-   stretched over it: the bars stand upright, so the rows only have to
-   carry each bar's glow, which runs from a crest of its own down to the
-   ridge; and drawn at half width their edges soften, as the light's do in
-   the client's picture. It draws 25 times a second while the hero is on
-   screen and the tab is in front, and once, still, under reduced motion.
-   Without script the hero keeps the stylesheet's own bars (the same
-   palette as a gradient, with a fixed pattern of lines over it). */
+   The curtains follow the ridge on screen: the line along its crest is
+   taken from the ridge drawing's own box and its preserveAspectRatio, so
+   they stay on the slope at every width. One canvas per hero, half the
+   hero's width and 64 rows, written pixel by pixel and stretched over the
+   hero - the stretch softens the light as the picture's is soft. It draws
+   25 times a second while the hero is on screen and the tab is in front,
+   and once, still, under reduced motion. Without script the hero keeps
+   the stylesheet's own bars (the palette as a gradient, a fixed pattern
+   of lines over it). */
 const AURORA_PALETTES = {
   /* Our Team: navy and orange, the darker - every colour taken from the
      Home hero (the client's review, 10.10: the aurora in the home page's
@@ -1387,6 +1391,12 @@ const AURORA_PALETTES = {
       [0.9, "#1f222f"], [0.95, "#161822"], [1, "#080b13"]],
     light: [0.04, 0.08],
     spread: 0.24,
+    /* the slope's crest in its drawing (team-slope.svg, xMaxYMax slice) */
+    ridge: { sel: ".page-hero__ridge--scene", art: [2000, 760], fit: "slice", from: [0, 472], to: [2000, 165] },
+    sky: ["#080c17", "#151b2c"],
+    hot: 0.58,
+    cool: 0.45,
+    calm: [0.12, 0.6],
   },
   /* Our Expertise: browns and sand, the lighter, as asked (7.10) - the
      Home hero's browns rising to its lit haze and on to a muted sand behind
@@ -1397,6 +1407,12 @@ const AURORA_PALETTES = {
       [0.72, "#cfa888"], [0.78, "#c09378"], [0.84, "#a0725a"], [0.9, "#796257"], [0.95, "#4a3a35"], [1, "#1a1414"]],
     light: [0.05, 0.1],
     spread: 0.34,
+    /* a line under the peaks of ridge-andes.svg (xMaxYMax meet) */
+    ridge: { sel: ".page-hero__ridge", art: [2000, 850], fit: "meet", from: [0, 742], to: [2000, 430] },
+    sky: ["#0e0a09", "#211817"],
+    hot: 0.72,
+    cool: 0.4,
+    calm: [0.14, 0.62],
   },
 };
 
@@ -1404,13 +1420,27 @@ function setupAurora() {
   const hosts = document.querySelectorAll("[data-aurora]");
   if (!hosts.length) return;
   const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const ROWS = 48;
+  const ROWS = 64;
   const SCALE = 0.5;
   const FRAME = 1000 / 25;
   const PERIOD = 30;
+  /* the three curtains, front to back: height over the ridge and the
+     depth of the rays (fractions of the hero's height), the softness of
+     the lower edge, strength; then the wave along each (height, waves per
+     width, speed) and how it dims and returns (speed, depth) */
+  const CURTAINS = [
+    { lift: 0.015, rays: 0.42, edge: 0.03, power: 1.8, wave: [0.03, 1.3, 0.55], fade: [0.45, 0.3] },
+    { lift: 0.18, rays: 0.46, edge: 0.04, power: 1.15, wave: [0.045, 1.7, -0.4], fade: [0.6, 0.5] },
+    { lift: 0.35, rays: 0.5, edge: 0.055, power: 0.8, wave: [0.055, 2.1, 0.32], fade: [0.8, 0.55] },
+  ];
 
   const toRgb = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
   const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+  const smooth = (a, b, v) => {
+    const t = clamp((v - a) / (b - a), 0, 1);
+    return t * t * (3 - 2 * t);
+  };
+  const TAU = Math.PI * 2;
 
   hosts.forEach((host) => {
     const palette = AURORA_PALETTES[host.dataset.aurora];
@@ -1423,12 +1453,12 @@ function setupAurora() {
       const a = stops[i - 1];
       const b = stops[i];
       const t = clamp((x - a.at) / (b.at - a.at), 0, 1);
-      return a.rgb.map((c, k) => Math.round(c + (b.rgb[k] - c) * t));
+      return a.rgb.map((c, k) => c + (b.rgb[k] - c) * t);
     };
-    const shade = (rgb, amount) => {
-      const target = amount >= 0 ? 255 : 0;
-      return rgb.map((c) => Math.round(c + (target - c) * Math.abs(amount)));
-    };
+    const skyTop = toRgb(palette.sky[0]);
+    const skyLow = toRgb(palette.sky[1]);
+    const hero = host.closest(".page-hero") || host.parentElement;
+    const ridgeImg = hero && palette.ridge ? hero.querySelector(palette.ridge.sel) : null;
 
     const canvas = document.createElement("canvas");
     canvas.className = "page-hero__aurora-canvas";
@@ -1437,19 +1467,90 @@ function setupAurora() {
     if (!ctx) return;
 
     /* the May strip's bars, from the same seed: hairlines and bars of
-       2-10px, each sampling the palette near its place, a few of them
-       lit streaks */
+       2-10px, each a little lighter or darker, a few of them lit streaks;
+       here they are the rays */
+    let cols = 0;
+    let colBar = null;
     let bars = [];
     let width = 0;
-    let base = null;
+    let image = null;
+    /* the ridge's crest as a line in the canvas: rows at its left and
+       right edges */
+    let crest = [ROWS * 0.82, ROWS * 0.5];
+    /* where the copy stands - each line of it and the button - the light
+       is held down (the client: calm behind the copy, the aurora beside
+       it): a soft mask, one value per pixel of the canvas, made when the
+       layout changes */
+    const copy = hero ? hero.querySelector(".page-hero__content") : null;
+    let quiet = null;
+    const measureCopy = (box) => {
+      quiet = null;
+      if (!copy || !cols || !box.width || !box.height) return;
+      const rects = [];
+      for (const el of copy.children) {
+        if (!el.getBoundingClientRect().width) continue;
+        if (el.matches("a, button, .btn")) {
+          rects.push(el.getBoundingClientRect());
+          continue;
+        }
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        for (const r of range.getClientRects()) if (r.width > 2) rects.push(r);
+      }
+      if (!rects.length) return;
+      const sx = cols / box.width;
+      const sy = ROWS / box.height;
+      const padX = 36 * sx;
+      const softX = 180 * sx;
+      const padY = 18 * sy;
+      const softY = 120 * sy;
+      quiet = new Float32Array(cols * ROWS);
+      for (const r of rects) {
+        const x0 = (r.left - box.left) * sx - padX;
+        const x1 = (r.right - box.left) * sx + padX;
+        const y0 = (r.top - box.top) * sy - padY;
+        const y1 = (r.bottom - box.top) * sy + padY;
+        const cMin = Math.max(0, Math.floor(x0 - softX));
+        const cMax = Math.min(cols - 1, Math.ceil(x1 + softX));
+        const yMin = Math.max(0, Math.floor(y0 - softY));
+        const yMax = Math.min(ROWS - 1, Math.ceil(y1 + softY));
+        for (let c = cMin; c <= cMax; c++) {
+          const fx = 1 - smooth(0, softX, Math.max(x0 - c, c - x1, 0));
+          if (!fx) continue;
+          for (let y = yMin; y <= yMax; y++) {
+            const v = fx * (1 - smooth(0, softY, Math.max(y0 - y, y - y1, 0)));
+            const o = y * cols + c;
+            if (v > quiet[o]) quiet[o] = v;
+          }
+        }
+      }
+    };
+    const measureRidge = () => {
+      const box = host.getBoundingClientRect();
+      measureCopy(box);
+      if (!ridgeImg || !box.height) return;
+      const r = ridgeImg.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      const [aw, ah] = palette.ridge.art;
+      const k = palette.ridge.fit === "slice" ? Math.max(r.width / aw, r.height / ah) : Math.min(r.width / aw, r.height / ah);
+      const ox = r.right - aw * k;
+      const oy = r.bottom - ah * k;
+      const a = [ox + palette.ridge.from[0] * k, oy + palette.ridge.from[1] * k];
+      const b = [ox + palette.ridge.to[0] * k, oy + palette.ridge.to[1] * k];
+      const yAt = (x) => a[1] + ((b[1] - a[1]) * (x - a[0])) / (b[0] - a[0]);
+      crest = [((yAt(box.left) - box.top) / box.height) * ROWS, ((yAt(box.right) - box.top) / box.height) * ROWS];
+    };
     const build = () => {
       const cssWidth = Math.max(320, Math.ceil(host.getBoundingClientRect().width));
-      if (bars.length && Math.abs(cssWidth - width) < 16) return false;
+      if (bars.length && Math.abs(cssWidth - width) < 16) {
+        measureRidge();
+        return false;
+      }
       width = cssWidth;
-      canvas.width = Math.round(width * SCALE);
+      cols = Math.round(width * SCALE);
+      canvas.width = cols;
       canvas.height = ROWS;
-      base = ctx.createLinearGradient(0, 0, canvas.width, 0);
-      stops.forEach((s) => base.addColorStop(s.at, `rgb(${s.rgb.join(",")})`));
+      image = ctx.createImageData(cols, ROWS);
       let seed = 0x4d4f5354;
       const rand = () => {
         seed = (seed + 0x6d2b79f5) | 0;
@@ -1458,49 +1559,122 @@ function setupAurora() {
         return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
       };
       bars = [];
+      colBar = new Uint16Array(cols);
       for (let x = 0; x < width * 1.025;) {
         const hairline = rand() > 0.76;
         const lit = rand() > 0.89;
         const w = hairline ? 0.8 + rand() * 1.8 : 2.2 + Math.pow(rand(), 1.45) * 8.2;
-        const xNorm = clamp(x / width, 0, 1);
         bars.push({
-          x,
-          w,
-          xNorm,
-          sample: clamp(xNorm + (rand() - 0.5) * 0.034, 0, 1),
           shade: lit ? palette.light[0] + rand() * palette.light[1] : (rand() - 0.5) * palette.spread,
           alpha: lit ? 0.72 + rand() * 0.2 : 0.58 + rand() * 0.34,
           phase: rand(),
-          crest: rand(),
+          reach: 0.55 + rand() * 0.9,
         });
+        const c0 = Math.floor(x * SCALE);
+        const c1 = Math.min(cols, Math.ceil((x + w) * SCALE));
+        for (let c = c0; c < c1; c++) colBar[c] = bars.length - 1;
         x += w;
       }
+      measureRidge();
       return true;
     };
 
+    /* tables, so a frame is lookups: the palette at 256 places, and the
+       two falloffs (the rays' exponential, the lower edge's bell) */
+    const LUT = 256;
+    const pal = new Float32Array(LUT * 3);
+    for (let i = 0; i < LUT; i++) {
+      const c = colorAt(i / (LUT - 1));
+      pal[i * 3] = c[0];
+      pal[i * 3 + 1] = c[1];
+      pal[i * 3 + 2] = c[2];
+    }
+    const SPAN = 12;
+    const STEPS = 1024;
+    const decay = new Float32Array(STEPS + 1);
+    const bell = new Float32Array(STEPS + 1);
+    for (let i = 0; i <= STEPS; i++) {
+      const u = (i / STEPS) * SPAN;
+      decay[i] = Math.exp(-u);
+      bell[i] = Math.exp(-u * u);
+    }
+    const look = (table, u) => (u >= SPAN ? 0 : table[(u * (STEPS / SPAN)) | 0]);
+    const column = new Float32Array(ROWS * 3);
+
     const draw = (t) => {
-      ctx.globalAlpha = 1;
-      ctx.fillStyle = base;
-      ctx.fillRect(0, 0, canvas.width, ROWS);
-      for (let i = 0; i < bars.length; i++) {
-        const b = bars[i];
-        const shimmer = Math.sin((b.phase + t * 1.65) * Math.PI * 2);
-        const sweep = Math.cos((b.xNorm * 9.5 - t * 3.2) * Math.PI * 2);
-        const pulse = Math.sin((b.xNorm * 18 + b.phase * 2.4 + t * 4.1) * Math.PI * 2);
-        const rgb = shade(
-          colorAt(b.sample + shimmer * 0.012 + sweep * 0.018),
-          b.shade + shimmer * 0.075 + sweep * 0.065 + pulse * 0.035
-        ).join(",");
-        const alpha = clamp(b.alpha + shimmer * 0.055 + sweep * 0.04 + pulse * 0.03, 0.42, 1);
-        const w = b.w * (1 + sweep * 0.1 + pulse * 0.045) * SCALE;
-        const crest = clamp(0.12 + b.crest * 0.3 + Math.sin((b.phase * 3 + t * 0.9) * Math.PI * 2) * 0.06, 0.05, 0.5);
-        const glow = ctx.createLinearGradient(0, 0, 0, ROWS);
-        glow.addColorStop(0, `rgba(${rgb},${(alpha * 0.55).toFixed(3)})`);
-        glow.addColorStop(crest, `rgba(${rgb},${alpha.toFixed(3)})`);
-        glow.addColorStop(1, `rgba(${rgb},${(alpha * 0.7).toFixed(3)})`);
-        ctx.fillStyle = glow;
-        ctx.fillRect((b.x + b.w / 2) * SCALE - w / 2, 0, w, ROWS);
+      const data = image.data;
+      const centre = new Float32Array(CURTAINS.length);
+      const power = CURTAINS.map((cu, i) => cu.power * (1 - cu.fade[1] * 0.5 * (1 + Math.sin(TAU * (t * cu.fade[0] + i * 0.37)))));
+      const span = palette.hot - palette.cool;
+      let c0 = 0;
+      /* one ray per bar: its column is worked out once and copied across
+         the bar's width */
+      while (c0 < cols) {
+        const bi = colBar[c0];
+        let c1 = c0 + 1;
+        while (c1 < cols && colBar[c1] === bi) c1 += 1;
+        const xf = (c0 + c1) / 2 / cols;
+        const b = bars[bi];
+        const shimmer = Math.sin((b.phase + t * 1.65) * TAU);
+        const sweep = Math.cos((xf * 9.5 - t * 3.2) * TAU);
+        /* a ray's strength and reach: the bar's own, breathing */
+        const ray = clamp((b.alpha - 0.5) * 1.7 + 0.08 + shimmer * 0.1 + sweep * 0.06, 0.2, 1);
+        const reach = b.reach * (1 + shimmer * 0.12);
+        const lift = b.shade + shimmer * 0.05;
+        const calm = (0.14 + 0.86 * smooth(palette.calm[0], palette.calm[1], xf)) * ray;
+        const crestRow = crest[0] + (crest[1] - crest[0]) * xf;
+        const faint = 1 + (ray - 0.75) * 0.22;
+        const drift = (xf - 0.6) * 0.06;
+        for (let i = 0; i < CURTAINS.length; i++) {
+          const cu = CURTAINS[i];
+          centre[i] = crestRow - cu.lift * ROWS + cu.wave[0] * ROWS * Math.sin(TAU * (xf * cu.wave[1] + t * cu.wave[2] + i * 0.29));
+        }
+        for (let y = 0; y < ROWS; y++) {
+          const yf = y / (ROWS - 1);
+          let r = (skyTop[0] + (skyLow[0] - skyTop[0]) * yf) * faint;
+          let g = (skyTop[1] + (skyLow[1] - skyTop[1]) * yf) * faint;
+          let bl = (skyTop[2] + (skyLow[2] - skyTop[2]) * yf) * faint;
+          let light = 0;
+          let height = 0;
+          for (let i = 0; i < CURTAINS.length; i++) {
+            const cu = CURTAINS[i];
+            const d = y - centre[i];
+            const v = (d > 0 ? look(bell, d / (cu.edge * ROWS)) : look(decay, -d / (cu.rays * ROWS * reach))) * power[i];
+            if (v > light) height = d < 0 ? clamp(-d / (cu.rays * ROWS * 1.4), 0, 1) : 0;
+            light += v;
+          }
+          light = clamp(light * calm, 0, 1.6);
+          if (quiet) light *= 1 - 0.8 * quiet[y * cols + ((c0 + c1) >> 1)];
+          if (light > 0.004) {
+            /* hot at the curtains' lower edges, cooler up the rays */
+            const p = (clamp(palette.hot - span * height + drift, 0, 1) * (LUT - 1)) | 0;
+            /* past full strength the light runs paler, as a glow does */
+            const k = clamp((lift >= 0 ? lift * 0.6 : 0) + (light - 1) * 0.12, 0, 0.16);
+            const a = light < 1 ? light : 1;
+            const cr = (pal[p * 3] + (255 - pal[p * 3]) * k) * a;
+            const cg = (pal[p * 3 + 1] + (255 - pal[p * 3 + 1]) * k) * a;
+            const cb = (pal[p * 3 + 2] + (255 - pal[p * 3 + 2]) * k) * a;
+            /* screen: light adds without burning out */
+            r = 255 - ((255 - r) * (255 - cr)) / 255;
+            g = 255 - ((255 - g) * (255 - cg)) / 255;
+            bl = 255 - ((255 - bl) * (255 - cb)) / 255;
+          }
+          column[y * 3] = r;
+          column[y * 3 + 1] = g;
+          column[y * 3 + 2] = bl;
+        }
+        for (let c = c0; c < c1; c++) {
+          for (let y = 0; y < ROWS; y++) {
+            const o = (y * cols + c) * 4;
+            data[o] = column[y * 3];
+            data[o + 1] = column[y * 3 + 1];
+            data[o + 2] = column[y * 3 + 2];
+            data[o + 3] = 255;
+          }
+        }
+        c0 = c1;
       }
+      ctx.putImageData(image, 0, 0);
     };
 
     build();
@@ -1527,8 +1701,23 @@ function setupAurora() {
     host.classList.add("is-drawn");
     if (typeof ResizeObserver === "function") {
       new ResizeObserver(() => {
-        if (build()) draw(clock / 1000 / PERIOD);
+        build();
+        draw(clock / 1000 / PERIOD);
       }).observe(host);
+    }
+    /* the drawing and the fonts may arrive after the first frame; the
+       ridge and the lines of copy are measured again */
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        measureRidge();
+        draw(clock / 1000 / PERIOD);
+      });
+    }
+    if (ridgeImg && !ridgeImg.complete) {
+      ridgeImg.addEventListener("load", () => {
+        measureRidge();
+        draw(clock / 1000 / PERIOD);
+      });
     }
     if (still) return;
     if ("IntersectionObserver" in window) {
