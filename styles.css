@@ -2504,7 +2504,7 @@ main:focus {
   border: 1px solid rgba(240, 235, 233, 0.1) !important;
   border-radius: 50%;
   color: rgba(240, 235, 233, 0.7);
-  transition: background 240ms ease, color 240ms ease, transform 240ms ease;
+  transition: background 240ms ease, color 240ms ease, translate 240ms var(--ease-out);
 }
 
 .site-footer__social svg {
@@ -2512,10 +2512,12 @@ main:focus {
   height: 16px;
 }
 
+/* the LinkedIn badge, here and on Contact: a peach tint and the pills'
+   lift (`translate`, which the reduced-motion rule holds still) */
 .site-footer__social:hover {
   background: rgba(255, 168, 110, 0.16);
   color: var(--light);
-  transform: translateY(-2px);
+  translate: 0 var(--btn-lift);
   border-bottom: 1px solid rgba(240, 235, 233, 0.1) !important;
 }
 
@@ -3669,29 +3671,32 @@ a.contact-channels__value:focus-visible {
   text-decoration-color: rgba(255, 168, 110, 0.9);
 }
 
+/* the footer's LinkedIn badge (36px, a 16px mark, the peach tint and the
+   lift on hover), on a dark disc of its own over the photograph. It was a
+   32px badge that filled orange, and its lift was a transform the hero's
+   reveal holds, so it never moved. */
 .contact-social {
   display: grid;
   place-items: center;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   margin-top: clamp(34px, 6vh, 64px);
   border-radius: 50%;
   background: rgba(8, 11, 19, 0.72);
   border: 1px solid rgba(240, 235, 233, 0.16);
   color: var(--light);
-  transition: background 220ms ease, border-color 220ms ease, transform 220ms ease;
+  transition: background 240ms ease, border-color 240ms ease, translate 240ms var(--ease-out);
 }
 
 .contact-social svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 
 .contact-social:hover,
 .contact-social:focus-visible {
-  background: var(--orange);
-  border-color: transparent;
-  transform: translateY(-2px);
+  background: linear-gradient(rgba(255, 168, 110, 0.16), rgba(255, 168, 110, 0.16)), rgba(8, 11, 19, 0.72);
+  translate: 0 var(--btn-lift);
 }
 
 /* ---------- FORM BAND ---------- */
@@ -9853,9 +9858,12 @@ main {
   .nav-cta:hover,
   .aud-grow__btn:hover,
   .routes-strip__card:hover,
-  .routes-strip__card:focus-within,
-  .site-footer__social:hover {
+  .routes-strip__card:focus-within {
     transform: none;
+  }
+
+  .site-footer__social:hover {
+    translate: none;
   }
 
   .routes-strip__card:hover .routes-strip__link {
@@ -9913,9 +9921,10 @@ main {
     position: absolute;
   }
 
-  /* 16px links in the 84px bar, 22px apart */
+  /* 29px links (16px of words, 6px over and under) in the 84px bar,
+     22px apart */
   .top-nav__menu a::before {
-    inset: -14px -11px;
+    inset: -8px -11px;
   }
 
   /* an inset counts from inside the border: the 1px-bordered pill,
@@ -13403,8 +13412,8 @@ main {
   }
 
   .page--contact .contact-social svg {
-    width: 20px;
-    height: 20px;
+    width: 17px;
+    height: 17px;
   }
 
   .page--contact .contact-social:focus-visible {
@@ -13721,14 +13730,13 @@ main {
    screens that can hover; a finger gets the press state instead. */
 @media (max-width: 1023px) and (hover: none) {
   .page--contact .contact-social:hover {
-    transform: none;
+    translate: none;
     background: rgba(8, 11, 19, 0.72);
     border-color: rgba(240, 235, 233, 0.16);
   }
 
   .page--contact .contact-social:active {
-    background: var(--orange);
-    border-color: transparent;
+    background: linear-gradient(rgba(255, 168, 110, 0.16), rgba(255, 168, 110, 0.16)), rgba(8, 11, 19, 0.72);
   }
 
   /* the hover colours stick too: Submit would stay in its pressed shade
@@ -15114,7 +15122,10 @@ main {
   .btn:hover,
   .btn:focus-visible,
   .link-arrow:hover svg,
-  .link-arrow:focus-visible svg {
+  .link-arrow:focus-visible svg,
+  .site-footer__social:hover,
+  .contact-social:hover,
+  .contact-social:focus-visible {
     translate: none;
   }
 }
