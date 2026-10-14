@@ -2727,6 +2727,18 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     status.focus();
   }
 
+  /* the browser names the first field it stopped at; aria-invalid tells
+     assistive tech which fields still want something (every one the check
+     turned back), and clears as each is put right */
+  form.addEventListener("invalid", (event) => {
+    if (event.target !== trap) event.target.setAttribute("aria-invalid", "true");
+  }, true);
+
+  form.addEventListener("input", (event) => {
+    const field = event.target;
+    if (field.hasAttribute && field.hasAttribute("aria-invalid") && field.checkValidity()) field.removeAttribute("aria-invalid");
+  });
+
   function fields() {
     const data = new FormData(form);
     data.delete("company");

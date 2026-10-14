@@ -625,6 +625,12 @@ window.MOST_COPY_REVIEW = {
    "c": "ours",
    "s": "none (accessibility, WCAG 2.2.2: a way to stop motion that runs on its own; the client marks' button had the same words)",
    "a": "Przycisk 'Pause motion' w prawym górnym rogu hero (na telefonie sam znak pauzy) zatrzymuje cały ruch na stronie: światło i mgłę w hero, film z zorzą, pulsujące punkty na ścieżkach i przesuwające się logotypy klientów; strona zapamiętuje wybór. Wymaga go standard dostępności (WCAG 2.2.2). Czy akceptujecie napis i miejsce?"
+  },
+  {
+   "t": "Write to us at bemost@mostpartners.com.",
+   "c": "ours",
+   "s": "none (shown only without JavaScript, in place of the form: the form no longer has a mailto: action, which browsers flag as an insecure target)",
+   "a": "Bez JavaScriptu formularz nie może wysłać wiadomości, więc zamiast niego pokazujemy jedno zdanie: 'Write to us at bemost@mostpartners.com.' Czy akceptujecie to brzmienie?"
   }
  ],
  "expertise.html": [

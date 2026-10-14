@@ -2730,6 +2730,13 @@ main:focus {
   .hero-trail-point {
     animation: none !important;
   }
+
+  /* the glow follows the scroll through `translate`, which the transform
+     reset above leaves alone: it drifted with the page on desktop Home */
+  .hero-glow__sun,
+  .hero-glow__haze {
+    translate: none !important;
+  }
 }
 
 /* ============================================================
@@ -3736,12 +3743,58 @@ a.contact-channels__value:focus-visible {
   border-bottom-color: #c2410c;
 }
 
-/* the site's orange at half strength was 1.6:1 on the form band; this
-   darker orange is 4.4:1 */
+/* Focus is the field's own line, doubled to 2px in the form's rust
+   (5.4:1 on the band), as on a phone: the ring that stood 4px out around
+   the field crossed the label that now rises above it. The transparent
+   outline is what forced-colours modes draw instead. */
 .contact-form__field input:focus-visible,
 .contact-form__field textarea:focus-visible {
-  outline: 2px solid #c2410c;
+  outline: 2px solid transparent;
   outline-offset: 4px;
+  border-bottom-color: #a8380b;
+  box-shadow: 0 1px 0 0 #a8380b;
+}
+
+/* A placeholder is gone once something is typed, so it cannot be a field's
+   only visible label (WCAG 3.3.2). The field's own label, there for
+   assistive tech while the field is empty, rises into view over the value
+   when the field is focused or holds something, in the form's rust while
+   focused, and the placeholder steps aside. On a laptop it sits in the gap
+   above the line, so the form keeps its measures; a phone seats it inside
+   the field's taller top (CONTACT <=1023px). */
+.page--contact .contact-form__field {
+  position: relative;
+}
+
+.page--contact .contact-form__field label.sr-only {
+  top: -13px;
+  left: 0;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  color: rgba(28, 20, 25, 0.72);
+  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 0;
+  translate: 0 8px;
+  transition: opacity 180ms ease, translate 180ms ease, color 180ms ease;
+}
+
+.page--contact .contact-form__field:has(:is(input, textarea):focus, :is(input, textarea):not(:placeholder-shown)) label.sr-only {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.page--contact .contact-form__field:has(:is(input, textarea):focus) label.sr-only {
+  color: var(--ct-focus, #a8380b);
+}
+
+.page--contact .contact-form__field :is(input, textarea):focus::placeholder {
+  color: transparent;
 }
 
 .contact-form__submit {
@@ -7051,6 +7104,26 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   text-underline-offset: 2px;
 }
 
+/* Without script the form cannot send (it has no action: a mailto: one is
+   an insecure target), so it gives way to the address in plain words. */
+.contact-form__noscript {
+  margin: 0;
+  color: #1c1419;
+  font: 400 clamp(16px, 1.2vw, 19px) / 1.6 "Outfit", system-ui, sans-serif;
+}
+
+.contact-form__noscript a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (scripting: none) {
+  .contact-form {
+    display: none;
+  }
+}
+
 .contact-form__trap {
   position: absolute;
   width: 1px;
@@ -7748,6 +7821,27 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     opacity: 1;
     translate: none;
     transition: none;
+  }
+}
+
+/* Without script nothing rises in on any page: whatever waits for its
+   reveal ([data-reveal], .io-reveal, Our Team's members) stayed invisible
+   - About's middle, Contact's form title, the audience intros. It is
+   simply shown, as reduced motion shows it (Home's own rules above were
+   the first of these). [data-reveal] keeps its transform: some cards are
+   set off with one. */
+@media (scripting: none) {
+  [data-reveal] {
+    opacity: 1 !important;
+    translate: none !important;
+    transition: none !important;
+  }
+
+  .io-reveal,
+  .member {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
 /* === end CLIENT MARKS on Home === */
@@ -8625,6 +8719,53 @@ main {
     align-items: center;
     min-height: 44px;
     padding: 0 18px;
+  }
+}
+
+/* From 1024px the bar's wordmark and links, and Contact's address and
+   phone links, LinkedIn button and consent box, had no ring of their own:
+   the browser's took over (a thin blue one in Firefox and Safari, about
+   2:1 on the navy bar). They take the site's ring, as they do below
+   1024px and as every other control does - the hero's ink on the sunlit
+   skies while the bar is clear, the form's rust on the cream band. The
+   consent link keeps its tint, as on a phone: a ring around words on a
+   13px line would cross the lines either side. */
+@media (min-width: 1024px) {
+  .top-nav .wordmark:focus-visible,
+  .top-nav__menu a:focus-visible,
+  a.contact-channels__value:focus-visible,
+  .contact-social:focus-visible,
+  .contact-form__consent input:focus-visible {
+    outline: 2px solid var(--focus-ring, var(--orange));
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+
+  .contact-social:focus-visible {
+    outline-offset: 3px;
+    border-radius: 50%;
+  }
+
+  .contact-form__consent input:focus-visible {
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .page--founders .top-nav:not(.is-scrolled) :is(.wordmark, .top-nav__menu a):focus-visible {
+    outline-color: var(--fnd-ink);
+  }
+
+  .page--horizon .top-nav:not(.is-scrolled) :is(.wordmark, .top-nav__menu a):focus-visible {
+    outline-color: rgb(var(--hz-ink));
+  }
+
+  .contact-form__consent a:focus-visible {
+    outline: 2px solid transparent;
+    background: rgba(168, 56, 11, 0.14);
+    border-radius: 2px;
+    color: #a8380b;
+    text-decoration-color: #a8380b;
+    text-decoration-thickness: 2px;
   }
 }
 
@@ -13256,43 +13397,11 @@ main {
     }
   }
 
-  /* the label rides above the value once there is one */
+  /* the label rides above the value once there is one (the rules for
+     every width are with the form's), here inside the field's taller top */
   .page--contact .contact-form__field label.sr-only {
     top: 2px;
-    left: 0;
-    width: auto;
-    height: auto;
-    margin: 0;
-    overflow: visible;
-    clip: auto;
-    color: rgba(28, 20, 25, 0.72);
-    font: 500 var(--m-label) / 1.2 "Montserrat", system-ui, sans-serif;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    pointer-events: none;
-    opacity: 0;
-    translate: 0 8px;
-    transition: opacity 180ms ease, translate 180ms ease, color 180ms ease;
-  }
-
-  .page--contact .contact-form__field:has(:is(input, textarea):focus, :is(input, textarea):not(:placeholder-shown)) label.sr-only {
-    opacity: 1;
-    translate: 0 0;
-  }
-
-  .page--contact .contact-form__field:has(:is(input, textarea):focus) label.sr-only {
-    color: var(--ct-focus);
-  }
-
-  .page--contact .contact-form__field :is(input, textarea):focus::placeholder {
-    color: transparent;
-  }
-
-  /* Phone is the one optional field and its placeholder is where that is
-     said; the floated label carries the same words, so the hint is still
-     there while the field is focused or filled */
-  .page--contact .contact-form__field label[for="cf-phone"]::after {
-    content: " (optional)";
+    font-size: var(--m-label);
   }
 
   .page--contact .contact-form__field :is(input, textarea):focus,

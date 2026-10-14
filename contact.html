@@ -179,9 +179,15 @@
                these messages (Formspree, Resend, a Cloud Function - whatever the
                firm settles on). It is deliberately empty: while it is empty the
                form hands the message to the visitor's own mail client rather
-               than reporting a delivery that did not happen. -->
+               than reporting a delivery that did not happen. Script sends it
+               either way; the form has no action of its own (a mailto: action
+               is an insecure target), so without script it gives way to the
+               plain address below. Once the service is chosen, its https URL
+               can go in action as well. -->
+          <noscript>
+            <p class="contact-form__noscript">Write to us at <a href="mailto:bemost@mostpartners.com">bemost@mostpartners.com</a>.</p>
+          </noscript>
           <form class="contact-form" id="contact-form" data-reveal style="--reveal-delay: 120ms"
-                action="mailto:bemost@mostpartners.com" method="post" enctype="text/plain"
                 data-endpoint="" data-mailto="bemost@mostpartners.com">
             <p class="contact-form__field">
               <label class="sr-only" for="cf-name">Your Name</label>
@@ -192,7 +198,7 @@
               <input id="cf-email" type="email" name="email" placeholder="Email" required autocomplete="email" />
             </p>
             <p class="contact-form__field">
-              <label class="sr-only" for="cf-phone">Phone</label>
+              <label class="sr-only" for="cf-phone">Phone (optional)</label>
               <input id="cf-phone" type="tel" name="phone" placeholder="Phone (optional)" autocomplete="tel" />
             </p>
             <p class="contact-form__field">
