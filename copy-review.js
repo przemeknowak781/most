@@ -303,12 +303,6 @@ window.MOST_COPY_REVIEW = {
    "c": "wireframe",
    "s": "S5c:60; w dokumencie (l. 14) \"Commercial contracts and operations\"",
    "a": ""
-  },
-  {
-   "t": "Pause motion",
-   "c": "ours",
-   "s": "none (accessibility, WCAG 2.2.2: a way to stop motion that runs on its own; the client marks' button had the same words)",
-   "a": "Przycisk 'Pause motion' w prawym górnym rogu hero (na telefonie sam znak pauzy) zatrzymuje cały ruch na stronie: światło i mgłę w hero, film z zorzą, pulsujące punkty na ścieżkach i przesuwające się logotypy klientów; strona zapamiętuje wybór. Wymaga go standard dostępności (WCAG 2.2.2). Czy akceptujecie napis i miejsce?"
   }
  ],
  "about-us.html": [
@@ -575,12 +569,6 @@ window.MOST_COPY_REVIEW = {
    "c": "g1-edited",
    "s": "G1:117 + etykiety G1:120-141",
    "a": ""
-  },
-  {
-   "t": "Pause motion",
-   "c": "ours",
-   "s": "none (accessibility, WCAG 2.2.2: a way to stop motion that runs on its own; the client marks' button had the same words)",
-   "a": "Przycisk 'Pause motion' w prawym górnym rogu hero (na telefonie sam znak pauzy) zatrzymuje cały ruch na stronie: światło i mgłę w hero, film z zorzą, pulsujące punkty na ścieżkach i przesuwające się logotypy klientów; strona zapamiętuje wybór. Wymaga go standard dostępności (WCAG 2.2.2). Czy akceptujecie napis i miejsce?"
   }
  ],
  "contact.html": [
@@ -649,12 +637,6 @@ window.MOST_COPY_REVIEW = {
    "c": "ours",
    "s": "none. Połączone przez nas \"Start a conversation\" z wireframe'u (S5c l.76 / l.139, gdzie dalej jest inaczej: \"– we'll meet you at your next step\" / \"about your n",
    "a": ""
-  },
-  {
-   "t": "Pause motion",
-   "c": "ours",
-   "s": "none (accessibility, WCAG 2.2.2: a way to stop motion that runs on its own; the client marks' button had the same words)",
-   "a": "Przycisk 'Pause motion' w prawym górnym rogu hero (na telefonie sam znak pauzy) zatrzymuje cały ruch na stronie: światło i mgłę w hero, film z zorzą, pulsujące punkty na ścieżkach i przesuwające się logotypy klientów; strona zapamiętuje wybór. Wymaga go standard dostępności (WCAG 2.2.2). Czy akceptujecie napis i miejsce?"
   },
   {
    "t": "Write to us at bemost@mostpartners.com.",
@@ -777,12 +759,6 @@ window.MOST_COPY_REVIEW = {
    "c": "ours",
    "s": "none (robocze CTA ze spotkania 10.10: let's start, let's fund, let's hire, let's expand, let's create, let's exit; 'sign' przy Commercial Contracts i 'grow' przy Ongoing Legal Support dopisaliśmy sami)",
    "a": "Czy te osiem CTA przy obszarach może zostać do czasu Waszej listy? Kolejno: Incorporation – Let's start, Funding – Let's fund, Hiring – Let's hire, Contracts – Let's sign, IP – Let's create, Cross-Border – Let's expand, M&A – Let's exit, Ongoing Support – Let's grow. Każde prowadzi do Contact us; czytnik ekranu słyszy też obszar, np. 'Let's start – talk to us about company incorporation and structuring'."
-  },
-  {
-   "t": "Pause motion",
-   "c": "ours",
-   "s": "none (accessibility, WCAG 2.2.2: a way to stop motion that runs on its own; the client marks' button had the same words)",
-   "a": "Przycisk 'Pause motion' w prawym górnym rogu hero (na telefonie sam znak pauzy) zatrzymuje cały ruch na stronie: światło i mgłę w hero, film z zorzą, pulsujące punkty na ścieżkach i przesuwające się logotypy klientów; strona zapamiętuje wybór. Wymaga go standard dostępności (WCAG 2.2.2). Czy akceptujecie napis i miejsce?"
   }
  ],
  "our-team.html": [
@@ -827,12 +803,6 @@ window.MOST_COPY_REVIEW = {
    "c": "g1-edited",
    "s": "G1 \"Incentive Programs (ESOPs and VSOPs (virtual/phantom programs))\"; myślnik z wireframe'u",
    "a": "Pytanie 4 w pakiecie: myślnik (wireframe) czy nawias w nawiasie (dokument)?"
-  },
-  {
-   "t": "Pause motion",
-   "c": "ours",
-   "s": "none (accessibility, WCAG 2.2.2: a way to stop motion that runs on its own; the client marks' button had the same words)",
-   "a": "Przycisk 'Pause motion' w prawym górnym rogu hero (na telefonie sam znak pauzy) zatrzymuje cały ruch na stronie: światło i mgłę w hero, film z zorzą, pulsujące punkty na ścieżkach i przesuwające się logotypy klientów; strona zapamiętuje wybór. Wymaga go standard dostępności (WCAG 2.2.2). Czy akceptujecie napis i miejsce?"
   }
  ],
  "for-founders.html": [
@@ -951,12 +921,6 @@ window.MOST_COPY_REVIEW = {
    "c": "wireframe",
    "s": "S5c:91 (F1:21 without ', Poland')",
    "a": ""
-  },
-  {
-   "t": "Pause motion",
-   "c": "ours",
-   "s": "none (accessibility, WCAG 2.2.2: a way to stop motion that runs on its own; the client marks' button had the same words)",
-   "a": "Przycisk 'Pause motion' w prawym górnym rogu hero (na telefonie sam znak pauzy) zatrzymuje cały ruch na stronie: światło i mgłę w hero, film z zorzą, pulsujące punkty na ścieżkach i przesuwające się logotypy klientów; strona zapamiętuje wybór. Wymaga go standard dostępności (WCAG 2.2.2). Czy akceptujecie napis i miejsce?"
   }
  ],
  "for-investors.html": [
@@ -995,12 +959,6 @@ window.MOST_COPY_REVIEW = {
    "c": "wireframe",
    "s": "S5c:91 (F1:21 without ', Poland')",
    "a": ""
-  },
-  {
-   "t": "Pause motion",
-   "c": "ours",
-   "s": "none (accessibility, WCAG 2.2.2: a way to stop motion that runs on its own; the client marks' button had the same words)",
-   "a": "Przycisk 'Pause motion' w prawym górnym rogu hero (na telefonie sam znak pauzy) zatrzymuje cały ruch na stronie: światło i mgłę w hero, film z zorzą, pulsujące punkty na ścieżkach i przesuwające się logotypy klientów; strona zapamiętuje wybór. Wymaga go standard dostępności (WCAG 2.2.2). Czy akceptujecie napis i miejsce?"
   }
  ]
 };
