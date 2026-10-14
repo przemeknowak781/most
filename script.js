@@ -1214,11 +1214,11 @@ const PREVIEW_SWITCHES = {
 };
 
 /* the panel's words, in Polish as the client reviews in it: each switch's
-   name, then its choices, the shipped one first */
+   name as "page: section", then its choices, the shipped one first */
 const PREVIEW_PANEL = [
-  ["who", "Who We Are (Home)", [["", "ciemne"], ["ivory", "złamana biel"], ["grey", "szarość"], ["latte", "latte"]]],
-  ["titles", "Tytuły", [["", "obecne"], ["smaller", "mniejsze"]]],
-  ["expertise", "Our Expertise (Home)", [["", "obecne"], ["icons", "większe ikony"], ["tiles", "kafelki"], ["light", "jasna sekcja"]]],
+  ["who", "Home: Who We Are", [["", "ciemne"], ["ivory", "złamana biel"], ["grey", "szarość"], ["latte", "latte"]]],
+  ["titles", "Wszystkie strony: tytuły", [["", "obecne"], ["smaller", "mniejsze"]]],
+  ["expertise", "Home: Our Expertise", [["", "obecne"], ["icons", "większe ikony"], ["tiles", "kafelki"], ["light", "jasna sekcja"]]],
   ["scroll", "Our Team: zachęta do przewinięcia", [["", "bez"], ["peek", "portrety spod hero"], ["cue", "napis ze strzałką"]]],
   ["investors", "Investors: zdjęcia i kolor", [["", "obecne"], ["mist", "mgła, jasne niebo"], ["dusk", "zmierzch, błękit w fiolet"], ["facade", "zmierzch, fasada w How We Work"]]],
   ["graph", "Founders: Our Expertise jako mapa (prototyp)", [["", "obecne"], ["map", "mapa etapów"]]],

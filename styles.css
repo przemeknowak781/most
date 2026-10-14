@@ -15952,7 +15952,7 @@ main {
 
 .path-map__lede {
   max-width: var(--lead-measure);
-  margin: 20px 0 0;
+  margin: var(--head-lede-gap) 0 0;
   color: rgba(244, 236, 231, 0.84);
   font: 400 var(--fs-lead) / var(--lh-lead) "Outfit", system-ui, sans-serif;
 }
