@@ -81,6 +81,10 @@
      (16px each under 1024px, see the compact tokens) */
   --eyebrow-gap: 18px;
   --head-lede-gap: 20px;
+  /* a card's corner: the route cards, About's approach cards, the client
+     marks. Home's Three routes keep their 16px on purpose: an expanding
+     glass panel, not a card in a row */
+  --card-radius: 2px;
 
   /* ---------- BUTTONS AND LINKS (see DESIGN SYSTEM - buttons and links) ---------- */
   --btn-h: 46px;                                   /* 52px under 1024 (--m-pill-h) */
@@ -1493,6 +1497,7 @@ main:focus {
   padding: clamp(20px, 2.6vh, 30px) clamp(22px, 2.4vw, 32px) clamp(64px, 6vh, 80px);
   background: linear-gradient(180deg, rgba(240, 235, 233, 0.04), rgba(240, 235, 233, 0.01));
   border: 1px solid rgba(240, 235, 233, 0.1);
+  /* rounder than --card-radius on purpose, see there */
   border-radius: 16px;
   color: var(--light);
   transition: border-color 320ms ease, background 320ms ease;
@@ -6933,7 +6938,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   flex-direction: column;
   padding: clamp(26px, 2.4vw, 38px);
   border: 1px solid rgba(var(--aud-tint-rgb), 0.24);
-  border-radius: 2px;
+  border-radius: var(--card-radius);
   background: linear-gradient(155deg, rgba(var(--aud-tint-rgb), 0.11), transparent 62%);
   transition: border-color 280ms ease, background 280ms ease, transform 280ms var(--ease-out);
 }
@@ -7094,7 +7099,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   width: clamp(120px, 11vw, 168px);
   height: clamp(48px, 4.4vw, 62px);
   border: 1px dashed var(--light-28);
-  border-radius: 2px;
+  border-radius: var(--card-radius);
   /* placeholder marks until the logos land: their word at 4.5:1 and more,
      as on a phone (at 0.4 it was 3.4:1) */
   color: var(--light-60);
@@ -7748,7 +7753,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   min-height: clamp(150px, 12.5vw, 196px);
   padding: clamp(24px, 2.2vw, 36px);
   border: 1px solid rgba(var(--hx-tint), 0.24);
-  border-radius: 2px;
+  border-radius: var(--card-radius);
   background: linear-gradient(155deg, rgba(var(--hx-tint), 0.11), transparent 62%);
   text-align: left;
 }
@@ -12423,7 +12428,7 @@ main {
   position: relative;
   padding: calc(var(--ab-card-x) + 4px) var(--ab-card-x) var(--ab-card-x);
   border: 1px solid rgba(240, 235, 233, 0.1);
-  border-radius: 2px;
+  border-radius: var(--card-radius);
   background: linear-gradient(160deg, rgba(240, 235, 233, 0.05), rgba(240, 235, 233, 0.012) 70%);
 }
 
