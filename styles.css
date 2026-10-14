@@ -7121,10 +7121,15 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   animation-play-state: paused;
 }
 
+/* the site's quiet switch (this one, the heroes' Pause motion, the
+   Founders map's list switch): a 32px pill in small caps on desktop */
 .clients__pause {
-  display: block;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 32px;
   margin: clamp(18px, 2.4vh, 28px) auto 0;
-  padding: 7px 14px;
+  padding: 0 14px;
   border: 1px solid var(--light-28);
   border-radius: 999px;
   background: transparent;
@@ -7905,14 +7910,19 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   outline-offset: 3px;
 }
 
-/* a touch screen 1024px and up: the 27px button gets About's invisible
-   hit area, 45px tall (see "touch screens 1024px and up: hit areas") */
+/* a touch screen 1024px and up: the 32px switches - this one, the
+   heroes' Pause motion, the Founders map's list switch - get an invisible
+   hit area 44px tall or more (see "touch screens 1024px and up: hit
+   areas") */
 @media (min-width: 1024px) and (any-pointer: coarse) {
-  .page--home .clients__pause {
+  .page--home .clients__pause,
+  .path-map__view {
     position: relative;
   }
 
-  .page--home .clients__pause::after {
+  .page--home .clients__pause::after,
+  .path-map__view::after,
+  .motion-toggle::before {
     content: "";
     position: absolute;
     inset: -9px 0;
@@ -15962,13 +15972,14 @@ main {
   font: 400 var(--fs-lead) / var(--lh-lead) "Outfit", system-ui, sans-serif;
 }
 
-/* the marquee's Pause, as a 44px target: a quiet control, not a call to
-   action; pressed, its line takes the trail's orange */
+/* the site's quiet switch, as the marquee's and the heroes' Pause: a
+   32px pill, a control rather than a call to action (it was 44px, a size
+   of its own); pressed, its line takes the trail's orange */
 .path-map__view {
   justify-self: end;
-  min-height: 44px;
+  min-height: 32px;
   margin: 20px 0 0;
-  padding: 7px 18px;
+  padding: 0 14px;
   border: 1px solid var(--light-28);
   border-radius: 999px;
   background: transparent;
