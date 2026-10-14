@@ -1305,6 +1305,41 @@ main:focus {
   filter: drop-shadow(0 0 5px var(--trail-glow));
 }
 
+/* Like every section trail on the site, the bottom edge carries one
+   checkpoint, on a summit of its line: left = x/1200, top = y/160 of the
+   cut, as .has-trail--a/b place theirs. It shows as it comes on screen
+   (data-reveal) and then pulses like the others. */
+.audience-intro__edge-dot {
+  /* summit at (804, 93.3) */
+  left: 67%;
+  top: 58.3125%;
+}
+
+.audience-intro__edge-dot.is-visible::after {
+  animation: trail-point-pulse 3.4s ease-in-out infinite;
+}
+
+@media (max-width: 767px) {
+  .audience-intro__edge-dot {
+    /* the phone's line: summit at (1008, 70) */
+    left: 84%;
+    top: 43.75%;
+  }
+}
+
+@media (min-width: 1800px) {
+  .audience-intro__edge-dot {
+    /* the wide screen's line: summit at (804, 90.9) */
+    top: 56.8125%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audience-intro__edge-dot.is-visible::after {
+    animation: none;
+  }
+}
+
 /* A phone squeezes the whole 1200-unit edge into 390px, which would crowd
    the ridge's steps into a fuzz: it takes the same rise with the steps of a
    narrower stretch of the ridge, as broad on screen as How We Work's. */
