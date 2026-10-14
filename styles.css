@@ -307,17 +307,12 @@ a {
   }
 }
 
-/* 1181-1339px: the bar keeps the container's ends and its 14px links, but
+/* 1181-1279px: the bar keeps the container's ends and its 14px links, but
    the items close up (the primary pages 24px apart, the group's routes
    18px) so the whole bar fits inside its padding - it used to run up to
-   53px into the right end - and the break before the group stays about
-   twice the gap between two links or more. Under 1280px the bar's own
-   gaps (logo to pages, group to pill) close from 32px to 20px as well.
-   With the full spacing the row was wider than the space between the
-   container's ends at 1181-1215px and again at 1280-1319px, so "Contact
-   us" stood up to 25px past the edge every section's content and the
-   closing band's button end on. */
-@media (min-width: 1181px) and (max-width: 1339px) {
+   53px into the right end - and the break before the rule stays about
+   twice the gap between two links. */
+@media (min-width: 1181px) and (max-width: 1279px) {
   .top-nav .top-nav__menu--left {
     gap: 24px;
     margin-left: 28px;
@@ -327,12 +322,6 @@ a {
     gap: 18px;
     margin-right: 20px;
   }
-}
-
-@media (min-width: 1181px) and (max-width: 1279px) {
-  .top-nav {
-    gap: 20px;
-  }
 
   .top-nav .top-nav__lead {
     gap: 8px;
@@ -341,22 +330,16 @@ a {
 }
 
 /* 1024-1100px: every item of the bar is on it. The primary pages close up
-   (18px), the group's routes 16px, and the bar's ends give back what the
-   rule takes, so the break before the group stays about twice the gap
-   between two links - and the row fits between the bar's ends: at 1024px
-   it used to run 30px into the right one. */
+   (18px) and the bar's ends give back what the rule takes, so the break
+   before the group stays about twice the gap between two links. */
 @media (max-width: 1100px) {
   .top-nav .top-nav__menu--left {
     gap: 18px;
-    margin-left: 20px;
-  }
-
-  .top-nav .top-nav__menu--right {
-    gap: 16px;
+    margin-left: 24px;
   }
 
   .top-nav__menu--right {
-    margin-right: 14px;
+    margin-right: 16px;
   }
 
   .top-nav .top-nav__lead {
@@ -2622,15 +2605,12 @@ main:focus {
 
 /* ---------- RESPONSIVE ---------- */
 
-/* Under 1181px the bar is too full for the container's ends (it would need
-   14px between every item at 1024px): it keeps narrower ones, 41-47px
-   against the content's 66-76px - the one width band where the logo and
-   "Contact us" do not line up with the page. Its gap opens from 14px at
-   1100px to 22px at 1180px; at a fixed 22px the row ran up to 12px into
-   the right end at 1101-1119px. */
+/* Under 1181px the bar is too full for the container's ends: it keeps
+   narrower ones, 41-47px against the content's 66-76px - the one width
+   band where the logo and "Contact us" do not line up with the page. */
 @media (max-width: 1180px) {
   .top-nav {
-    gap: clamp(14px, 10vw - 96px, 22px);
+    gap: clamp(12px, 2vw, 22px);
     padding-inline: clamp(24px, 4vw, 56px);
   }
 
@@ -15180,7 +15160,7 @@ main {
      ends on - on every page, whatever else shares its column (the quiet
      second route, right-aligned under it). From 1181px, that is: under it
      the bar is too full for the container's ends and keeps narrower ones
-     (RESPONSIVE), so there its pill ends 25-30px further out. */
+     (RESPONSIVE), so there its pill ends 25-28px further out. */
   .aud-grow__inner {
     max-width: none;
     margin: 0;
