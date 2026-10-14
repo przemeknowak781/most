@@ -4712,9 +4712,10 @@ a.contact-channels__value:focus-visible {
    in the title's column, 18px over it as over every section title; the
    lede spans both rows and keeps its foot on the title's last line. Any
    height the lede has over the two goes to the first row (1fr), above the
-   eyebrow - with the eyebrow on a row of its own across the head and the
-   pair bottom-aligned, the taller lede pushed the title down, 44px off its
-   eyebrow at 1024px. */
+   eyebrow. With the eyebrow on a row of its own across the head and the
+   pair bottom-aligned, a lede taller than the title (a longer text, a
+   reader's own text spacing, the fallback font before the webfonts come)
+   pushed the title down off its eyebrow - 44px at 1024px. */
 @media (min-width: 1024px) {
   .ex-areas__head {
     grid-template-rows: 1fr auto;
@@ -14679,6 +14680,16 @@ main {
     margin: 0 0 24px;
     font: 500 var(--fs-h1) / var(--lh-h1) "Urbanist", system-ui, sans-serif;
     letter-spacing: var(--ls-heading);
+  }
+
+  /* A dash that ends a forced line hangs past the measure, so the line
+     keeps its words: Our Expertise's headline breaks after "Expansion –"
+     (the dash tied to its word, no line opening with one), and with the
+     dash counted that line outgrows the 912px measure at the 64px size of
+     a wide screen, which set the headline in four lines. */
+  .page-hero__hang {
+    display: inline-block;
+    margin-right: -0.8em;
   }
 
   .hero-tagline,
