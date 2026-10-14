@@ -4524,6 +4524,9 @@ a.contact-channels__value:focus-visible {
    right, from about 42% across as in Figma: the area's own drawing (the
    client's icon set, one line each), its title, its text and its list
    between hairlines. The heading and the lede sit on the same two columns.
+   Each area ends on a call to action to Contact us (client, 10.10), set
+   beside the drawing where its line ends, so the orange end of the thread
+   runs into it.
 
    One area is open at a time. A click or an arrow key opens another, and
    the drawings change as one thread: the open one winds back up along its
@@ -4554,6 +4557,16 @@ a.contact-channels__value:focus-visible {
      box is that much wider (see .ex-areas__art) and the line keeps the same
      size and weight */
   --ex-art-w: clamp(240px, 20.5vw, 320px);
+  /* ...and its drawn height: the svg fills that box on its 321 x 121 frame */
+  --ex-art-h: calc(var(--ex-art-w) * 121 / 296);
+  /* the air around the open area's words (client, 10.10: more air above
+     and below the text): drawing to title, title to text, text to list,
+     and above and below each row of the list - each of the first three
+     8px or more wider than it was (the track sets its own, see there) */
+  --ex-art-gap: clamp(26px, 3.2vh, 36px);
+  --ex-title-gap: 24px;
+  --ex-text-gap: clamp(48px, 6vh, 64px);
+  --ex-row-pad: 15px;
   /* where the stage pins on the track at the highest: just under the bar
      (script centres it in the space under the bar when there is room) */
   --ex-pin: calc(var(--nav-height) + clamp(8px, 1.6vh, 24px));
@@ -4709,7 +4722,7 @@ a.contact-channels__value:focus-visible {
    drawings running into the brand orange across its own width */
 .ex-areas__art {
   width: calc(var(--ex-art-w) * 321 / 296);
-  margin: 0 0 clamp(16px, 2.2vh, 24px);
+  margin: 0 0 var(--ex-art-gap);
 }
 
 .ex-areas__art svg {
@@ -4732,9 +4745,12 @@ a.contact-channels__value:focus-visible {
 }
 
 /* a link to an area (#area-panel-N) lands on the whole master-detail, the
-   drawing above the panel and the top of the rail in view */
+   drawing above the panel and the top of the rail in view. The panel holds
+   its call to action, which stands up beside the drawing (on the track a
+   closed area is still absolute, see below). */
 .ex-areas__panel {
-  scroll-margin-top: calc(var(--ex-art-w) * 121 / 296 + clamp(16px, 2.2vh, 24px));
+  position: relative;
+  scroll-margin-top: calc(var(--ex-art-h) + var(--ex-art-gap));
 }
 
 .ex-areas__panel:focus {
@@ -4749,7 +4765,7 @@ a.contact-channels__value:focus-visible {
 
 .ex-areas__panel > h3 {
   max-width: 16em;
-  margin: 0 0 16px;
+  margin: 0 0 var(--ex-title-gap);
   color: var(--light);
   font: 500 var(--fs-h3) / var(--lh-h3) "Urbanist", system-ui, sans-serif;
   letter-spacing: var(--ls-heading);
@@ -4758,10 +4774,30 @@ a.contact-channels__value:focus-visible {
 
 .ex-areas__panel > p {
   max-width: 34em;
-  margin: 0 0 clamp(32px, 5vh, 48px);
+  margin: 0 0 var(--ex-text-gap);
   color: var(--light-80);
   font: 400 var(--fs-body) / var(--lh-body) "Outfit", system-ui, sans-serif;
   text-wrap: pretty;
+}
+
+/* The area's call to action ("Let's start", "Let's fund"... - working
+   words until the client's list, all to Contact us), in the site's
+   .link-arrow and in orange: the third orange note after the open tab and
+   the drawing's end. It stands up in the drawing's row, 16px right of the
+   drawing, its 44px box centred on the point where the line ends and held
+   inside the row; each link carries that point (--cta-x: the drawing's
+   right edge, --cta-y: the line's last point, both as fractions of the
+   321 x 121 frame, read off the path). Out of flow, it changes neither the
+   panel's height (script measures it for the track) nor the drawing found
+   before the panel. It shares the panel's fade-in and waits for no line. */
+.ex-areas__cta {
+  --link-ink: var(--orange);
+  position: absolute;
+  z-index: 1;
+  top: calc(-1 * (var(--ex-art-h) + var(--ex-art-gap)) + clamp(0px, var(--cta-y) * var(--ex-art-h) - 22px, var(--ex-art-h) - 44px));
+  left: calc(var(--cta-x) * var(--ex-art-w) * 321 / 296 + 16px);
+  min-height: 44px;
+  white-space: nowrap;
 }
 
 .ex-areas__list {
@@ -4775,11 +4811,27 @@ a.contact-channels__value:focus-visible {
    audience pages set their expertise lists (.aud-expertise__list) - body,
    not the card size */
 .ex-areas__panel .ex-areas__list > li {
-  padding: 15px 0 15px 16px;
+  position: relative;
+  padding: var(--ex-row-pad) 0 var(--ex-row-pad) 16px;
   border-bottom: 1px solid var(--ex-line);
   color: rgba(240, 235, 233, 0.84);
   font: 400 var(--fs-body) / 1.5 "Outfit", system-ui, sans-serif;
   text-wrap: pretty;
+}
+
+/* the orange highlight of the site's lists (Our Team's expertise, the
+   audience pages' rails): a 5px dot in the gutter, level with the middle
+   of each item's first line (the row's padding, then half a 1.5 line) */
+.ex-areas__panel .ex-areas__list > li::before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  top: calc(var(--ex-row-pad) + 0.75em);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--orange);
+  translate: 0 -50%;
 }
 
 /* without script the areas follow one another, each under its drawing */
@@ -4863,13 +4915,42 @@ a.contact-channels__value:focus-visible {
   visibility: hidden;
 }
 
-.ex-areas.is-track .ex-areas__panel > p {
-  margin-bottom: clamp(20px, 5vh - 12px, 48px);
+/* On the track the longest area must still fit under the bar, so the
+   text and the list close up as they did, and each gap above and below
+   the words takes only the air the window can spare (--ex-air): none up to
+   a 910px window, 9px at 1000px, 17px at 1080px, 28px from 1190px. With
+   every area laid out, the tallest one left 4px to spare under a 900px
+   window at 1920px wide, 28px under 1000px and 65px under 1080px (a
+   narrower window spares more); the air takes 2.5 times its value, the
+   title only half of it so it stays with its own text. */
+.ex-areas.is-track {
+  --ex-air: clamp(0px, 10vh - 91px, 28px);
+  --ex-art-gap: calc(clamp(16px, 2.2vh, 24px) + var(--ex-air));
+  --ex-title-gap: calc(16px + var(--ex-air) / 2);
+  --ex-text-gap: calc(clamp(20px, 5vh - 12px, 48px) + var(--ex-air));
+  --ex-row-pad: clamp(6px, 3vh - 15px, 15px);
 }
 
-.ex-areas.is-track .ex-areas__panel .ex-areas__list > li {
-  padding-top: clamp(6px, 3vh - 15px, 15px);
-  padding-bottom: clamp(6px, 3vh - 15px, 15px);
+/* The stage pins under the bar but above the line the page keeps clear
+   for anything focused (the root's scroll-padding-top, 9vh lower), so a
+   call to action in the drawing's top row was scrolled down to that line
+   as it took focus - which walked the track to another area and closed
+   the very panel it is in (scroll-margin does not help: Chrome tests the
+   box itself against the line). While one has focus the page keeps only
+   the bar clear, which the pinned stage always is. */
+html:has(.ex-areas.is-track .ex-areas__cta:focus) {
+  scroll-padding-top: var(--nav-height);
+}
+
+/* Reached from below (Shift+Tab back out of How We Work), the call to
+   action is out of view above, and Chrome centres it in the window - but
+   the stage stops at its pin on the way, so the page went on past the
+   eighth area's place and closed its panel. For that scroll its box runs
+   on down until its centre is the window's centre with the stage pinned
+   (less its own 44px and 2 x 16px, so it stops just short of the pin),
+   and the page lands on the area's own place. */
+.ex-areas.is-track .ex-areas__cta {
+  scroll-margin-bottom: calc(var(--nav-height) + 100vh - 2 * var(--ex-pin) - 2 * clamp(0px, var(--cta-y) * var(--ex-art-h) - 22px, var(--ex-art-h) - 44px) - 76px);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -4994,10 +5075,10 @@ a.contact-channels__value:focus-visible {
 
   .ex-areas {
     --ex-art-w: clamp(197px, 30vw, 240px);
-  }
-
-  .ex-areas__art {
-    margin-bottom: 16px;
+    --ex-art-gap: 24px;
+    --ex-title-gap: 20px;
+    --ex-text-gap: 40px;
+    --ex-row-pad: 13px;
   }
 
   /* the drawing is shown smaller than its viewBox here, so its line is
@@ -5009,7 +5090,7 @@ a.contact-channels__value:focus-visible {
   /* here the strip (about 124px: four-line labels) and the drawing stand
      above the panel */
   .ex-areas__panel {
-    scroll-margin-top: calc(var(--ex-art-w) * 121 / 296 + 16px + 124px + clamp(28px, 7vw, 44px));
+    scroll-margin-top: calc(var(--ex-art-h) + var(--ex-art-gap) + 124px + clamp(28px, 7vw, 44px));
   }
 
   /* a phone on its side has no room for all three: the area's own title
@@ -5026,17 +5107,8 @@ a.contact-channels__value:focus-visible {
     }
   }
 
-  .ex-areas__panel > h3 {
-    margin-bottom: 12px;
-  }
-
   .ex-areas__panel > p {
     max-width: var(--m-measure);
-    margin-bottom: 32px;
-  }
-
-  .ex-areas__panel .ex-areas__list > li {
-    padding: 13px 0 13px 16px;
   }
 
   .ex-areas:not(.is-tabs) .ex-areas__panel + .ex-areas__art {
@@ -5056,6 +5128,21 @@ a.contact-channels__value:focus-visible {
 
   .page--expertise .ex-areas .has-trail__dot {
     left: 61.333%;
+  }
+}
+
+/* A phone has no room beside the drawing: the call to action stands in
+   flow under the text and above the list, on the left edge */
+@media (max-width: 559px) {
+  .ex-areas__panel > p {
+    margin-bottom: 12px;
+  }
+
+  .ex-areas__cta {
+    position: static;
+    display: flex;
+    width: fit-content;
+    margin: 0 0 32px;
   }
 }
 

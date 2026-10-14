@@ -711,6 +711,12 @@ window.MOST_COPY_REVIEW = {
    "c": "ours",
    "s": "none. To nasz opis złożony z hasła z wireframe'u (S5c l.46 \"Interconnected areas of support – grown with your business\") i skróconych przez nas nazw 8 obszarów ",
    "a": ""
+  },
+  {
+   "t": "Let's start / Let's fund / Let's hire / Let's sign / Let's create / Let's expand / Let's exit / Let's grow",
+   "c": "ours",
+   "s": "none (robocze CTA ze spotkania 10.10: let's start, let's fund, let's hire, let's expand, let's create, let's exit; 'sign' przy Commercial Contracts i 'grow' przy Ongoing Legal Support dopisaliśmy sami)",
+   "a": "Czy te osiem CTA przy obszarach może zostać do czasu Waszej listy? Kolejno: Incorporation – Let's start, Funding – Let's fund, Hiring – Let's hire, Contracts – Let's sign, IP – Let's create, Cross-Border – Let's expand, M&A – Let's exit, Ongoing Support – Let's grow. Każde prowadzi do Contact us; czytnik ekranu słyszy też obszar, np. 'Let's start – talk to us about company incorporation and structuring'."
   }
  ],
  "our-team.html": [
