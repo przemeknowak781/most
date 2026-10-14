@@ -15320,3 +15320,174 @@ main {
   }
 }
 /* === end OUR TEAM: SCROLL CUE === */
+
+/* ============================================================
+   INVESTORS: TINTED ARCHITECTURE - three previews (client, 10.10)
+   The client wants the Investors photographs lighter and mistier, as on
+   the site of an M&A adviser they like: a colour laid over the picture
+   at about half its strength instead of the dark frame (the night veil
+   of HORIZON SCENE), and more energy in the blue - blue that leans
+   violet, and an orange light as on Founders - so the page reads blue
+   but not cold. The photographs are the current ones until the new ones
+   come. Three ways, to choose from in the preview panel (script.js);
+   without one the page is as it ships.
+     ?investors=mist    a light, misty sky: the lattice greyed and lifted
+                        under a pale blue going lilac, Founders' warm
+                        light from the top right and a mist at the
+                        horizon; the hero's ink turns navy (--hz-ink), so
+                        the headline, the bar at rest, the phone's menu
+                        button and the focus rings follow it, as on
+                        Founders
+     ?investors=dusk    a mid sky: the lattice greyed and lowered under
+                        the blue going violet, an orange light low on
+                        the right over the ridge, the type cream
+     ?investors=facade  the dusk sky, and How We Work on the glass
+                        facade (band-investors) instead of the lattice
+   All three move the page's slate towards violet (#313e59 to #353b66:
+   the cream type on it 9.1:1, the orange marker 3.5:1, the trail line
+   5.2:1, as on the slate), and How We Work's photograph takes the
+   hero's tint at half in place of the luminosity texture, under the
+   same mask, so the trail and the points still stand on the plain
+   colour.
+   ============================================================ */
+.aud-work__photo--facade {
+  display: none;
+}
+
+/* the colour every variant lays over its photographs, at half */
+:root[data-investors] .page--investors {
+  --hz-field: #353b66;
+  --aud-ground-rgb: 53, 59, 102;
+  --inv-tint: linear-gradient(150deg, #34488f 0%, #444394 50%, #5a4196 100%);
+}
+
+/* the closing sky clears towards the walkers in the new colour */
+:root[data-investors] .page--investors .aud-grow {
+  --grow-sky-low: #3f4577;
+}
+
+/* ---------- How We Work ----------
+   The photograph is tinted, no longer a texture in the ground's colour:
+   greyed and lowered (the facade keeps a little of its own blue), the
+   tint at half over it, and the mask of fb-aud2 dissolving both before
+   the trail. The title holds 6.4:1 over the lattice and 3.9:1 over the
+   facade's brightest mullion. */
+:root[data-investors] .page--investors .aud-work__photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--inv-tint);
+  opacity: 0.5;
+}
+
+:root:is([data-investors="mist"], [data-investors="dusk"]) .page--investors .aud-work__photo img {
+  filter: grayscale(1) contrast(0.8) brightness(0.42);
+  mix-blend-mode: normal;
+  opacity: 1;
+}
+
+:root[data-investors="facade"] .page--investors .aud-work__photo:not(.aud-work__photo--facade) {
+  display: none;
+}
+
+:root[data-investors="facade"] .page--investors .aud-work__photo--facade {
+  display: block;
+}
+
+:root[data-investors="facade"] .page--investors .aud-work__photo--facade img {
+  filter: grayscale(0.2) contrast(0.9) brightness(0.8);
+  mix-blend-mode: normal;
+  opacity: 1;
+}
+
+/* below a laptop the photo is the title's band alone and the title
+   breaks over the bright mullions (3.35:1 at 768px): a step darker */
+@media (max-width: 1023px) {
+  :root[data-investors="facade"] .page--investors .aud-work__photo--facade img {
+    filter: grayscale(0.2) contrast(0.9) brightness(0.7);
+  }
+}
+
+/* ---------- the hero at dusk (dusk, facade) ----------
+   The lattice greyed and lowered, the tint over half of the picture
+   where the frame had been, and the night kept to a breath under the
+   bar; the orange light sits low on the right over the ridge, away from
+   the copy and the bar. On a phone the tagline crosses the lattice, so
+   it goes a step lower there. At the worst pixel under each: the tagline
+   4.6:1 on a phone and 5.6:1 from a tablet up, the eyebrow and the
+   headline 5.2:1, Learn more and the menu 6.8:1. */
+:root:is([data-investors="dusk"], [data-investors="facade"]) .page--investors .hz-photo {
+  background: #1b1f3a;
+}
+
+:root:is([data-investors="dusk"], [data-investors="facade"]) .page--investors .hz-photo img {
+  filter: grayscale(1) contrast(0.78) brightness(0.38);
+}
+
+@media (max-width: 767px) {
+  :root:is([data-investors="dusk"], [data-investors="facade"]) .page--investors .hz-photo img {
+    filter: grayscale(1) contrast(0.78) brightness(0.32);
+  }
+}
+
+:root:is([data-investors="dusk"], [data-investors="facade"]) .page--investors .hz-photo::before {
+  background: var(--inv-tint);
+  mix-blend-mode: normal;
+  opacity: 0.5;
+}
+
+:root:is([data-investors="dusk"], [data-investors="facade"]) .page--investors .hz-photo::after {
+  background:
+    radial-gradient(38% 46% at 86% 54%, rgba(255, 150, 100, 0.34), transparent 70%),
+    linear-gradient(180deg, rgba(18, 20, 40, 0.32) 0%, transparent 18%);
+}
+
+:root:is([data-investors="dusk"], [data-investors="facade"]) .page--investors .hero-content .eyebrow {
+  color: #ffc29a;
+}
+
+/* ---------- the hero in mist ----------
+   Built like Founders: a light sky and the navy ink on it. The lattice
+   greyed, flattened and lifted, a pale blue going lilac over half of it,
+   Founders' warm light from the top right and a mist at the horizon.
+   The ink drives the headline, the tagline, Learn more, the wordmark,
+   the menu, the phone's menu button and the focus rings at rest; the
+   scrolled bar keeps its cream (its .is-scrolled rules win), and so
+   does the menu dialog. The hero's spine turns navy with them. Navy
+   type is at its weakest over the darkest steel, so the lattice is
+   flattened and lifted a step further than first drawn (at contrast
+   0.5 and brightness 1.12 the tagline fell to 4.4:1): at the worst
+   pixel the tagline holds 4.7:1, the menu 4.9:1, the headline 4.9:1,
+   the wordmark 5.1:1, the eyebrow 5.3:1 and Learn more 6.4:1. */
+:root[data-investors="mist"] .page--investors {
+  --hz-ink: 20, 22, 31;
+  --hz-sky: #c6c8ea;
+  --spine-line: rgba(20, 22, 31, 0.5);
+  --spine-line-fade: rgba(20, 22, 31, 0.2);
+  --spine-dot-ring: inset 0 0 0 2px #14161f, 0 0 0 5px rgba(20, 22, 31, 0.12);
+}
+
+:root[data-investors="mist"] .page--investors .hz-photo {
+  background: #b9bde4;
+}
+
+:root[data-investors="mist"] .page--investors .hz-photo img {
+  filter: grayscale(1) contrast(0.45) brightness(1.18);
+}
+
+:root[data-investors="mist"] .page--investors .hz-photo::before {
+  background: linear-gradient(160deg, #a9b8ea 0%, #b0a9e0 55%, #c7aed8 100%);
+  mix-blend-mode: normal;
+  opacity: 0.5;
+}
+
+:root[data-investors="mist"] .page--investors .hz-photo::after {
+  background:
+    radial-gradient(118% 76% at 76% 4%, rgba(255, 176, 128, 0.42), transparent 60%),
+    linear-gradient(180deg, transparent 52%, rgba(236, 238, 250, 0.28) 86%);
+}
+
+:root[data-investors="mist"] .page--investors .hero-content .eyebrow {
+  color: #14161f;
+}
+/* === end INVESTORS: TINTED ARCHITECTURE === */

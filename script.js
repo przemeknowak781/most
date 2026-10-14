@@ -1079,8 +1079,10 @@ function setupPortraitProposal() {
    ?who=ivory|grey|latte shows Home's Who we are on a light ground,
    ?titles=smaller the titles a size smaller and (client, 10.10)
    ?expertise=icons|tiles|light Home's Our Expertise with larger drawings,
-   as tiles or on a light ground and ?scroll=peek|cue a cue to scroll on
-   Our Team's hero, each as a data attribute on
+   as tiles or on a light ground, ?scroll=peek|cue a cue to scroll on
+   Our Team's hero and ?investors=mist|dusk|facade the Investors
+   photographs under a tint of about half instead of the dark frame, in
+   blue going violet with an orange light, each as a data attribute on
    <html> the stylesheet answers. #who-latte, #titles-smaller and the like
    do the same where a preview host drops the query. Without one the page
    is as it ships. (The titles in capitals and the ridges drawn straight
@@ -1093,6 +1095,7 @@ const PREVIEW_SWITCHES = {
   titles: ["smaller"],
   expertise: ["icons", "tiles", "light"],
   scroll: ["peek", "cue"],
+  investors: ["mist", "dusk", "facade"],
 };
 
 /* the panel's words, in Polish as the client reviews in it: each switch's
@@ -1102,6 +1105,7 @@ const PREVIEW_PANEL = [
   ["titles", "Tytuły", [["", "obecne"], ["smaller", "mniejsze"]]],
   ["expertise", "Our Expertise (Home)", [["", "obecne"], ["icons", "większe ikony"], ["tiles", "kafelki"], ["light", "jasna sekcja"]]],
   ["scroll", "Our Team: zachęta do przewinięcia", [["", "bez"], ["peek", "portrety spod hero"], ["cue", "napis ze strzałką"]]],
+  ["investors", "Investors: zdjęcia i kolor", [["", "obecne"], ["mist", "mgła, jasne niebo"], ["dusk", "zmierzch, błękit w fiolet"], ["facade", "zmierzch, fasada w How We Work"]]],
 ];
 
 function setupPreviewSwitches() {
