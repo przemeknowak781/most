@@ -6934,10 +6934,10 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 }
 
 /* The row moves on its own for longer than five seconds, so it stops on
-   hover and focus, and a button stops it for good (WCAG 2.2.2). */
+   hover and focus, and its button stops it for good (WCAG 2.2.2): that
+   button is the site's motion switch (MOTION PAUSE, end of file). */
 .clients__viewport:hover .clients__track,
-.clients__viewport:focus-within .clients__track,
-.clients__viewport.is-paused .clients__track {
+.clients__viewport:focus-within .clients__track {
   animation-play-state: paused;
 }
 
@@ -16183,3 +16183,165 @@ main {
   }
 }
 /* === end PATH MAP === */
+
+/* ============================================================
+   MOTION PAUSE (WCAG 2.2.2)
+   Every loop that starts on its own and runs past five seconds stops when
+   the reader pauses motion (data-motion="paused" on <html>, set and
+   remembered by setupMotionPause in script.js; the aurora film rests in
+   script). Paused, not removed: each stays on the frame it had. The
+   one-off entrances (reveal-up, ex-areas-in) are not on the list, or a
+   page opened with motion paused would keep them at their first, empty
+   frame. A new loop joins this list.
+   The switch is a small pill in the hero's top right corner, under the
+   bar's last item, in the client marks' Pause motion voice on a ground
+   of the night so it reads over any sky; on a phone it is the pause sign
+   alone, under the menu button. Pressed, it shows the play sign and the
+   warm line the marks' button takes.
+   ============================================================ */
+:root[data-motion="paused"] :is(.hero-glow__sun, .hero-glow__haze, .hero-climbers-sun, .page-hero__sun, .page-hero__haze, .clients__track, .team-cue svg),
+:root[data-motion="paused"] :is(.hero-trail-point, .hz-trail__point, .member-trail__dot, .has-trail__dot, .path-map__dot, .exwork--terrain)::after {
+  animation-play-state: paused !important;
+}
+
+.motion-toggle {
+  position: absolute;
+  top: calc(var(--nav-height) + 14px);
+  right: var(--container-x);
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 0 14px 0 12px;
+  border: 1px solid var(--light-28);
+  border-radius: 999px;
+  background: rgba(12, 15, 26, 0.45);
+  color: var(--light-80);
+  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 220ms ease, color 220ms ease;
+}
+
+.motion-toggle svg {
+  flex: none;
+  width: 14px;
+  height: 14px;
+}
+
+.motion-toggle__pause {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+}
+
+.motion-toggle__play {
+  display: none;
+  fill: currentColor;
+}
+
+.motion-toggle[aria-pressed="true"] .motion-toggle__pause {
+  display: none;
+}
+
+.motion-toggle[aria-pressed="true"] .motion-toggle__play {
+  display: inline;
+}
+
+.motion-toggle:hover,
+.motion-toggle[aria-pressed="true"] {
+  border-color: rgba(255, 168, 110, 0.7);
+  color: var(--light);
+}
+
+.motion-toggle:focus-visible {
+  outline: 2px solid var(--focus-ring, var(--orange));
+  outline-offset: 3px;
+}
+
+/* The light skies (Founders, with the stage map previewed, and the
+   Investors mist preview) take the hero's ink on a pale ground instead, as
+   their buttons do; the ring follows the ink on every audience sky. */
+.page--founders .motion-toggle,
+:root[data-investors="mist"] .page--investors .motion-toggle {
+  color: #14161f;
+  background: rgba(255, 244, 236, 0.4);
+  border-color: rgba(20, 22, 31, 0.4);
+}
+
+:is(.page--founders, :root[data-investors="mist"] .page--investors) .motion-toggle:is(:hover, [aria-pressed="true"]) {
+  color: #14161f;
+  border-color: #14161f;
+}
+
+.page--founders .motion-toggle:focus-visible {
+  outline-color: var(--fnd-ink);
+}
+
+.page--horizon .motion-toggle:focus-visible {
+  outline-color: rgb(var(--hz-ink));
+}
+
+/* a phone: the pause sign alone, a 36px round button centred under the
+   44px menu button, its target grown to 44px (the label stays the
+   button's name) */
+@media (max-width: 767px) {
+  .motion-toggle {
+    top: calc(var(--nav-height) + 10px);
+    right: calc(var(--container-x) + 4px);
+    justify-content: center;
+    width: 36px;
+    min-height: 36px;
+    padding: 0;
+  }
+
+  .motion-toggle::before {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+  }
+
+  .motion-toggle__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* a phone on its side: the headline runs right up to the gutter under
+   the bar, so the switch is a size smaller and keeps to the gutter's
+   edge; Our Team holds its copy on the right there, so its switch takes
+   the left corner, over the open sky */
+@media (min-width: 560px) and (max-width: 767px) and (max-height: 500px) and (orientation: landscape) {
+  .motion-toggle {
+    right: var(--container-x);
+    width: 32px;
+    min-height: 32px;
+  }
+
+  .motion-toggle::before {
+    inset: -6px;
+  }
+}
+
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page--team .motion-toggle {
+    right: auto;
+    left: calc(var(--container-x) + 4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-toggle {
+    display: none;
+  }
+}
+/* === end MOTION PAUSE === */

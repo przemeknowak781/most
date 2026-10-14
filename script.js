@@ -1016,14 +1016,61 @@ function setupAudienceConnectors() {
   if (document.fonts) document.fonts.ready.then(scheduleAudienceConnectors);
 }
 
-function setupMarqueePause() {
-  const btn = document.querySelector("[data-marquee-pause]");
-  const row = document.querySelector(".clients__viewport");
-  if (!btn || !row) return;
-  btn.addEventListener("click", () => {
-    const paused = row.classList.toggle("is-paused");
-    btn.setAttribute("aria-pressed", String(paused));
-  });
+/* Motion that starts on its own and runs past five seconds needs a way to
+   stop it (WCAG 2.2.2): the heroes' breathing light and drifting haze, the
+   aurora film, the pulsing checkpoints on every trail, the client marks.
+   One switch stops all of it on every page and the site remembers it
+   (data-motion="paused" on <html>; the loops are listed in the stylesheet's
+   MOTION PAUSE, and the film rests as under reduced motion). The switch is
+   a "Pause motion" pill in the hero, added here so a page without script
+   never shows a button that cannot work, and only where something on the
+   page moves; the client marks' own Pause motion is the same switch. Under
+   reduced motion nothing loops and both are hidden. */
+const MOTION_KEY = "most-motion";
+
+function motionPaused() {
+  return root.dataset.motion === "paused";
+}
+
+function setupMotionPause() {
+  let remembered = null;
+  try {
+    remembered = window.localStorage.getItem(MOTION_KEY);
+  } catch (error) {
+    remembered = null;
+  }
+  if (remembered === "paused") root.dataset.motion = "paused";
+
+  const loops = ".hero-glow__sun, .hero-glow__haze, .hero-climbers-sun, .page-hero__sun, .page-hero__haze, .page-hero__film, .hero-trail-point, .hz-trail__point, .has-trail__dot, .member-trail__dot, .path-map, .exwork--terrain, .clients__track";
+  const hero = document.querySelector("main .hero, main .page-hero");
+  const moving = Array.from(document.querySelectorAll(loops)).some((el) => el.getClientRects().length);
+  if (hero && moving) {
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "motion-toggle";
+    toggle.dataset.motionToggle = "";
+    toggle.innerHTML =
+      '<svg viewBox="0 0 16 16" aria-hidden="true"><path class="motion-toggle__pause" d="M5.5 3.5v9M10.5 3.5v9" /><path class="motion-toggle__play" d="M5.5 3.2v9.6l7.4-4.8z" /></svg>' +
+      '<span class="motion-toggle__label">Pause motion</span>';
+    hero.appendChild(toggle);
+  }
+
+  const buttons = Array.from(document.querySelectorAll("[data-motion-toggle], [data-marquee-pause]"));
+  const show = () => buttons.forEach((btn) => btn.setAttribute("aria-pressed", String(motionPaused())));
+  show();
+  buttons.forEach((btn) => btn.addEventListener("click", () => {
+    const paused = !motionPaused();
+    if (paused) root.dataset.motion = "paused";
+    else delete root.dataset.motion;
+    try {
+      if (paused) window.localStorage.setItem(MOTION_KEY, "paused");
+      else window.localStorage.removeItem(MOTION_KEY);
+    } catch (error) {
+      /* private mode or blocked storage: the switch still holds on this page */
+    }
+    show();
+    document.dispatchEvent(new CustomEvent("most:motion"));
+  }));
 }
 
 function setupMemberReadmore() {
@@ -1374,8 +1421,9 @@ function setupParallax() {
    the page has loaded the film is fetched in the size the hero needs (the
    720p cut where its cover takes no more than 1400 device pixels across),
    fades in over the picture when it plays and rests while the hero is out
-   of the window or the tab hidden. Under reduced motion, with Save-Data on
-   or on a 2G link the picture stays. */
+   of the window or the tab hidden. Under reduced motion, with motion paused
+   (setupMotionPause), with Save-Data on or on a 2G link the picture
+   stays. */
 function setupAuroraFilm() {
   const films = Array.from(document.querySelectorAll(".page-hero__film[data-film]"));
   if (!films.length) return;
@@ -1406,7 +1454,7 @@ function setupAuroraFilm() {
     };
 
     const sync = () => {
-      if (!ready || still.matches || !inView || document.hidden) {
+      if (!ready || still.matches || motionPaused() || !inView || document.hidden) {
         if (loaded) film.pause();
         return;
       }
@@ -1422,6 +1470,7 @@ function setupAuroraFilm() {
       }).observe(hero);
     }
     document.addEventListener("visibilitychange", sync);
+    document.addEventListener("most:motion", sync);
     still.addEventListener("change", sync);
     if (!ready) {
       window.addEventListener("load", () => {
@@ -1443,8 +1492,9 @@ setupHeroTrail();
 setupAudienceTriptych();
 setupAudienceConnectors();
 setupMemberReadmore();
-setupMarqueePause();
 setupPreviewSwitches();
+/* after the previews, which can bring a moving part in (the stage map) */
+setupMotionPause();
 setupPortraitProposal();
 setupCopyReview();
 
