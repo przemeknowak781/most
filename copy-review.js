@@ -257,6 +257,12 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
+   "t": "Bracka 20, 00-028 Warsaw, Poland",
+   "c": "wireframe",
+   "s": "S5c:91 (F1:21 without ', Poland')",
+   "a": ""
+  },
+  {
    "t": "Start a conversation – we'll meet you at your next step.",
    "c": "wireframe",
    "s": "S5c:76",
@@ -313,9 +319,27 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
+   "t": "for founders",
+   "c": "wireframe",
+   "s": "S5c l.100/l.343 \"FOR FOUNDERS\"",
+   "a": ""
+  },
+  {
+   "t": "Or see the full scope of what we do",
+   "c": "ours",
+   "s": "none (as on Founders/Companies/Investors; R1:27)",
+   "a": "Czy akceptujecie dodatkowy link pod 'Contact us': 'Or see the full scope of what we do' (prowadzi do Our Expertise)?"
+  },
+  {
    "t": "Long-term partners in law and business.",
    "c": "g1-edited",
    "s": "G1:119 (fraza 'as long-term partners in law and business')",
+   "a": ""
+  },
+  {
+   "t": "Bracka 20, 00-028 Warsaw, Poland",
+   "c": "wireframe",
+   "s": "S5c:91 (F1:21 without ', Poland')",
    "a": ""
   },
   {
@@ -615,6 +639,12 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
+   "t": "Bracka 20, 00-028 Warsaw, Poland",
+   "c": "wireframe",
+   "s": "S5c:91 (F1:21 without ', Poland')",
+   "a": ""
+  },
+  {
    "t": "Start a conversation with MOST Partners – long-term partners in law and business.",
    "c": "ours",
    "s": "none. Połączone przez nas \"Start a conversation\" z wireframe'u (S5c l.76 / l.139, gdzie dalej jest inaczej: \"– we'll meet you at your next step\" / \"about your n",
@@ -731,6 +761,12 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
+   "t": "Bracka 20, 00-028 Warsaw, Poland",
+   "c": "wireframe",
+   "s": "S5c:91 (F1:21 without ', Poland')",
+   "a": ""
+  },
+  {
    "t": "Eight interconnected areas of legal support – incorporation and structuring, funding rounds, hiring, commercial contracts, IP and technology, cross-border expansion, M&A and exits, and ongoing support. Grown with your business.",
    "c": "ours",
    "s": "none. To nasz opis złożony z hasła z wireframe'u (S5c l.46 \"Interconnected areas of support – grown with your business\") i skróconych przez nas nazw 8 obszarów ",
@@ -772,6 +808,12 @@ window.MOST_COPY_REVIEW = {
    "t": "Long-term partners in law and business.",
    "c": "g1-edited",
    "s": "G1 l.6 \"...as long-term partners in law and business – helping them...\"; jako samodzielne hasło w S5c l.78",
+   "a": ""
+  },
+  {
+   "t": "Bracka 20, 00-028 Warsaw, Poland",
+   "c": "wireframe",
+   "s": "S5c:91 (F1:21 without ', Poland')",
    "a": ""
   },
   {
@@ -923,6 +965,12 @@ window.MOST_COPY_REVIEW = {
    "c": "ours",
    "s": "none (paraphrase of G1:8 'We structure, negotiate, and close deals...' + G1:90 'clarity, speed')",
    "a": "Potrzebujemy 1 zdania wprowadzenia pod 'What We Help You Achieve' dla Investors (albo zgody na usunięcie); nasza robocza propozycja jak na stronie."
+  },
+  {
+   "t": "Across Poland, the UK, the US, and other key markets.",
+   "c": "g1-edited",
+   "s": "G1:73 vs G1:104; F1:2; S5c:184",
+   "a": ""
   },
   {
    "t": "Want to Grow Together?",
