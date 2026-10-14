@@ -77,6 +77,10 @@
   --lead-measure: 700px;
   /* the vertical padding of a section band (108px at 900px tall) */
   --section-y: clamp(96px, 12vh, 136px);
+  /* a section head's two steps: eyebrow to title, title to its lede
+     (16px each under 1024px, see the compact tokens) */
+  --eyebrow-gap: 18px;
+  --head-lede-gap: 20px;
 
   /* ---------- BUTTONS AND LINKS (see DESIGN SYSTEM - buttons and links) ---------- */
   --btn-h: 46px;                                   /* 52px under 1024 (--m-pill-h) */
@@ -2993,7 +2997,8 @@ main:focus {
    ============================================================ */
 
 .team-editorial {
-  padding: clamp(86px, 11vh, 136px) var(--container-x) clamp(96px, 13vh, 160px);
+  /* the site's section rhythm on top, as on every band */
+  padding: var(--section-y) var(--container-x) clamp(96px, 13vh, 160px);
   position: relative;
   /* the warm glow rises from nothing at the top edge, where the hero's
      edge lays its navy over the section's first 24px, to its height
@@ -4370,8 +4375,9 @@ a.contact-channels__value:focus-visible {
    along its crest is the site's trail and the six steps are its checkpoints. */
 .exwork--terrain {
   /* the head on the container edge like the areas above and the routes
-     below it; the landscape under it is centred and bleeds on its own */
-  padding: clamp(80px, 10vh, 120px) var(--container-x) clamp(72px, 9vh, 110px);
+     below it, the site's section rhythm over it; the landscape under it is
+     centred and bleeds on its own */
+  padding: var(--section-y) var(--container-x) clamp(72px, 9vh, 110px);
   background: linear-gradient(180deg, #07090f 0%, #0c0f1b 35%, #1a1a28 62%, #221c26 100%);
   overflow: hidden;
   isolation: isolate;
@@ -4395,7 +4401,7 @@ a.contact-channels__value:focus-visible {
 }
 
 .exwork--terrain .exwork__title {
-  margin: 0 0 10px;
+  margin: 0 0 var(--head-lede-gap);
   color: var(--light);
 }
 
@@ -4722,11 +4728,37 @@ a.contact-channels__value:focus-visible {
 }
 
 /* The eyebrow the client asked for over every section title on the pages
-   left of the menu, in the site's "— label —" role. It takes a row of its
-   own across the head, so the title and the lede still share theirs and
-   the lede keeps its foot on the title's last line. */
+   left of the menu, in the site's "— label —" role. On desktop it stands
+   in the title's column, 18px over it as over every section title; the
+   lede spans both rows and keeps its foot on the title's last line. Any
+   height the lede has over the two goes to the first row (1fr), above the
+   eyebrow - with the eyebrow on a row of its own across the head and the
+   pair bottom-aligned, the taller lede pushed the title down, 44px off its
+   eyebrow at 1024px. */
+@media (min-width: 1024px) {
+  .ex-areas__head {
+    grid-template-rows: 1fr auto;
+  }
+
+  .ex-areas__eyebrow {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+  }
+
+  .ex-areas__title {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .ex-areas__lede {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    align-self: end;
+  }
+}
+
 .ex-areas__eyebrow {
-  grid-column: 1 / -1;
   margin: 0 0 18px;
   color: var(--eyebrow-color);
   font: 500 var(--fs-eyebrow) / var(--lh-eyebrow) "Montserrat", system-ui, sans-serif;
@@ -6377,7 +6409,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 /* ---------- What We Help You Achieve ---------- */
 :is(.page--founders, .page--companies, .page--investors) .aud-help__lede {
   max-width: var(--lead-measure);
-  margin: 20px 0 0;
+  margin: var(--head-lede-gap) 0 0;
   color: var(--aud-ink-soft);
   font: 400 var(--fs-lead) / var(--lh-lead) "Outfit", system-ui, sans-serif;
 }
@@ -6701,7 +6733,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 }
 
 :is(.page--founders, .page--companies, .page--investors) .aud-expertise__title {
-  margin-bottom: 20px;
+  margin-bottom: var(--head-lede-gap);
 }
 
 :is(.page--founders, .page--companies, .page--investors) .aud-expertise__copy p {
@@ -6975,7 +7007,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 
 .clients {
   position: relative;
-  padding: clamp(72px, 10vh, 120px) 0;
+  padding: var(--section-y) 0;
   background: var(--navy);
   overflow: hidden;
 }
@@ -6995,7 +7027,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 }
 
 .clients__title {
-  margin: 0 0 14px;
+  margin: 0 0 var(--head-lede-gap);
   color: var(--light);
   font: 500 clamp(26px, 3.2vw, 40px) / 1.1 "Urbanist", system-ui, sans-serif;
   letter-spacing: -0.01em;
@@ -7004,7 +7036,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 
 .clients__lede {
   margin: 0;
-  color: var(--light-60);
+  color: var(--light-80);
   font: 400 clamp(14px, 1vw, 16px) / 1.6 "Outfit", system-ui, sans-serif;
 }
 
@@ -7314,7 +7346,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 }
 
 .whoweare__title {
-  margin: 0 0 22px;
+  margin: 0 0 var(--head-lede-gap);
   color: var(--light);
   font: 500 clamp(30px, 3.8vw, 50px) / 1.08 "Urbanist", system-ui, sans-serif;
   letter-spacing: -0.01em;
@@ -7518,7 +7550,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 }
 
 .home-expertise__title {
-  margin: 0 0 22px;
+  margin: 0 0 var(--head-lede-gap);
   color: var(--light);
   font: 500 var(--fs-h2) / var(--lh-h2) "Urbanist", system-ui, sans-serif;
   letter-spacing: var(--ls-heading);
@@ -8589,6 +8621,8 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     --lh-h3: 1.25;
     --hero-top: var(--m-hero-top);
     --btn-h: var(--m-pill-h);
+    --eyebrow-gap: 16px;
+    --head-lede-gap: 16px;
   }
 
   /* an anchor lands just under the bar, not a screen further down */
@@ -9489,7 +9523,7 @@ main {
      phones the label folds into two even lines instead of leaving the
      closing dash alone under it */
   .routes-strip__eyebrow {
-    margin-bottom: 14px;
+    margin-bottom: var(--eyebrow-gap);
     font-size: var(--m-label);
     text-wrap: balance;
   }
@@ -10100,8 +10134,9 @@ main {
   }
 
   /* one tracked line of capitals: balanced, so the last word never sits
-     alone on a narrow phone */
+     alone on a narrow phone; 16px over the headline, as on every hero */
   .page--home .hero-content .eyebrow {
+    margin-bottom: var(--eyebrow-gap);
     font-size: var(--m-label);
     text-wrap: balance;
   }
@@ -10359,7 +10394,7 @@ main {
   }
 
   .audience-intro__eyebrow {
-    margin-bottom: 16px;
+    margin-bottom: var(--eyebrow-gap);
     font-size: var(--m-label);
   }
 
@@ -10798,15 +10833,16 @@ main {
      of 34-48px */
   .page--home .hero-tagline {
     max-width: 30em;
-    margin-top: 20px;
+    margin-top: 18px;
     font-size: var(--m-lede);
-    line-height: 1.5;
+    line-height: var(--lh-lead);
     text-wrap: balance;
   }
 
+  /* the tagline and the button keep every hero's steps (18px, 28px) */
   .page--home .primary-cta {
     min-height: var(--m-pill-h);
-    margin-top: 30px;
+    margin-top: 28px;
     padding: 0 22px 0 26px;
   }
 }
@@ -10981,12 +11017,12 @@ main {
   }
 
   .page--home .whoweare__eyebrow {
-    margin-bottom: 16px;
+    margin-bottom: var(--eyebrow-gap);
     font-size: var(--m-label);
   }
 
   .page--home .whoweare__title {
-    margin-bottom: 20px;
+    margin-bottom: var(--head-lede-gap);
     font-size: var(--m-h2);
     line-height: 1.12;
   }
@@ -11149,12 +11185,11 @@ main {
 
   /* Who we are's head at this size */
   .page--home .home-expertise__eyebrow {
-    margin-bottom: 16px;
+    margin-bottom: var(--eyebrow-gap);
   }
 
   .page--home .home-expertise__title {
-    margin-bottom: 20px;
-    letter-spacing: -0.01em;
+    margin-bottom: var(--head-lede-gap);
   }
 
   .page--home .home-expertise__lede {
@@ -11274,12 +11309,12 @@ main {
   }
 
   .page--home .clients__eyebrow {
-    margin-bottom: 14px;
+    margin-bottom: var(--eyebrow-gap);
     font-size: var(--m-label);
   }
 
   .page--home .clients__title {
-    margin-bottom: 12px;
+    margin-bottom: var(--head-lede-gap);
     font-size: var(--m-h2);
     line-height: var(--lh-h2);
     letter-spacing: var(--ls-heading);
@@ -11405,13 +11440,14 @@ main {
     margin: 0 0 8px;
   }
 
-  /* the eyebrows stand 14px over their titles on About at these widths */
+  /* the eyebrow and the lede stand 16px from the title, as every section
+     head's do at these widths (--eyebrow-gap, --head-lede-gap) */
   .page--expertise .exwork__eyebrow {
-    margin-bottom: 14px;
+    margin-bottom: var(--eyebrow-gap);
   }
 
   .page--expertise .exwork--terrain .exwork__title {
-    margin-bottom: 12px;
+    margin-bottom: var(--head-lede-gap);
     font-size: var(--m-h2);
     line-height: 1.12;
   }
@@ -11808,14 +11844,14 @@ main {
   }
 
   .page--about .clients__eyebrow {
-    margin-bottom: 14px;
+    margin-bottom: var(--eyebrow-gap);
     font-size: var(--m-label);
   }
 
   /* the carousel's title and lede take the H2 and lead every other
      chapter's head takes here (they kept the desktop clamp: 26px, 16px) */
   .page--about .clients__title {
-    margin-bottom: 12px;
+    margin-bottom: var(--head-lede-gap);
     font-size: var(--m-h2);
     line-height: var(--lh-h2);
     letter-spacing: var(--ls-heading);
@@ -12008,9 +12044,10 @@ main {
    the two photographs the wireframe asks for - not a break between them. */
 
 .page--about {
-  /* the section rhythm, and the trail at the top of a chapter (the same
-     clamp as .has-trail::before) with the pause under it */
-  --ab-pad: clamp(88px, 11vh, 128px);
+  /* the site's section rhythm (--section-y, as every band's), and the
+     trail at the top of a chapter (the same clamp as .has-trail::before)
+     with the pause under it */
+  --ab-pad: var(--section-y);
   --ab-trail-h: clamp(72px, 9vw, 120px);
   --ab-trail-gap: clamp(28px, 4.4vh, 48px);
   /* the chapters run edge to edge of the container, like the hero, the
@@ -12535,7 +12572,7 @@ main {
   }
 
   .ab-eyebrow {
-    margin-bottom: 14px;
+    margin-bottom: var(--eyebrow-gap);
   }
 
   /* perspective: one column, the diagram under the paragraphs */
@@ -13012,7 +13049,7 @@ main {
   }
 
   .page--team .team-editorial__eyebrow {
-    margin-bottom: 18px;
+    margin-bottom: var(--eyebrow-gap);
     font-size: var(--m-label);
   }
 
@@ -14221,7 +14258,7 @@ main {
      "cross- / border" */
   :is(.page--founders, .page--companies, .page--investors) .aud-help__lede {
     max-width: 46ch;
-    margin-top: 14px;
+    margin-top: var(--head-lede-gap);
     text-wrap: balance;
   }
 
@@ -14382,7 +14419,7 @@ main {
   }
 
   :is(.page--founders, .page--companies, .page--investors) .aud-expertise__title {
-    margin-bottom: 14px;
+    margin-bottom: var(--head-lede-gap);
   }
 
   :is(.page--founders, .page--companies, .page--investors) .aud-expertise__list-wrap {
@@ -14681,7 +14718,7 @@ main {
   .routes-strip__eyebrow,
   .team-editorial__eyebrow,
   .ascent__eyebrow {
-    margin-bottom: 18px;
+    margin-bottom: var(--eyebrow-gap);
     font: 500 var(--fs-eyebrow) / var(--lh-eyebrow) "Montserrat", system-ui, sans-serif;
     letter-spacing: var(--ls-eyebrow);
     text-transform: uppercase;
@@ -14766,6 +14803,15 @@ main {
     font-size: var(--fs-small);
     line-height: var(--lh-small);
   }
+}
+
+/* one heading tracking at every width: the H2 role's letter-spacing above
+   is set from 1024px, and three section titles kept an older -0.01em of
+   their own on a phone and a tablet */
+.whoweare__title,
+.home-expertise__title,
+.routes-strip__title {
+  letter-spacing: var(--ls-heading);
 }
 
 /* one eyebrow tracking and one colour at every width (the compact layer
