@@ -1026,6 +1026,29 @@ function setupAudienceConnectors() {
    never shows a button that cannot work, and only where something on the
    page moves; the client marks' own Pause motion is the same switch. Under
    reduced motion nothing loops and both are hidden. */
+/* The audience heroes pin their ridge to --scene-cross, worked out for the
+   copy as set. Wider text spacing or larger text (a reader's own settings)
+   makes the copy taller, so its foot is measured here - layout boxes, not
+   the reveal's transforms - and handed to the stylesheet, which keeps the
+   crossing clear of it (FOUNDERS SCENE). Below 1024px the hero is sized by
+   its copy anyway, so there is nothing to hand over. */
+function setupSceneClearance() {
+  const page = document.querySelector(".page--founders, .page--horizon");
+  const hero = page ? page.querySelector(".hero") : null;
+  const copy = hero ? hero.querySelector(".hero-content") : null;
+  if (!copy || !("ResizeObserver" in window)) return;
+  const measure = () => {
+    if (compactQuery.matches || copy.offsetParent !== hero) {
+      clearCssVar(page, "--scene-copy-foot");
+      return;
+    }
+    setCssVar(page, "--scene-copy-foot", `${Math.ceil(copy.offsetTop + copy.offsetHeight)}px`);
+  };
+  new ResizeObserver(measure).observe(copy);
+  onCompactChange(measure);
+  measure();
+}
+
 const MOTION_KEY = "most-motion";
 
 function motionPaused() {
@@ -1489,6 +1512,7 @@ setupSectionReveal();
 setupMobileMenu();
 setupPlaceholderLinks();
 setupHeroTrail();
+setupSceneClearance();
 setupAudienceTriptych();
 setupAudienceConnectors();
 setupMemberReadmore();

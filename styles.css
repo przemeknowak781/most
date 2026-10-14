@@ -2175,6 +2175,21 @@ main:focus {
   line-height: 1.04;
 }
 
+/* A folded column is just wide enough for "Companies" across its padding.
+   With a reader's wider letter spacing (WCAG 1.4.12) the card's edge cut it
+   to "Companie": the name may use the padding and, only where it would
+   still run past the card, break, so every letter stays in view. The
+   names are single words, so the measures above never wrapped them. (Up to
+   1180px the cards stack and have the room.) */
+@media (min-width: 1181px) {
+  .preview:not(.is-expanded) .preview__name,
+  .audience-intro__grid.has-no-active .preview:not(.is-expanded) .preview__name {
+    max-width: none;
+    margin-inline: calc(-1 * clamp(12px, 1.2vw, 18px));
+    overflow-wrap: anywhere;
+  }
+}
+
 .audience-intro__grid.has-no-active .preview:not(.is-expanded) .preview__num {
   font-size: 12px;
 }
@@ -5697,8 +5712,15 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   /* 67svh is the Figma ratio; the px+vw floor keeps the small left peak clear
      of the CTA on short, wide windows, where the art scales by width but the
      copy still has to fit the height; the cap stops the crossing falling out
-     of the hero entirely on a landscape phone. */
-  --scene-cross: min(calc(100svh - 36px), max(67svh, 560px + 7.74vw));
+     of the hero entirely on a landscape phone.
+     All of that assumes the copy as set. A reader who widens the text's
+     spacing (WCAG 1.4.12) or enlarges it makes the copy taller, and Learn
+     more landed on the ridge; so script measures the copy's foot
+     (--scene-copy-foot, setupSceneClearance) and the crossing never comes
+     up closer to it than the land's highest rise under the copy column
+     (0.035 of the art's width) plus 16px. As set, the crossing is lower
+     than that at every window size, so nothing moves. Horizon too. */
+  --scene-cross: max(calc(var(--scene-copy-foot, 0px) + 0.035 * 100vw + 16px), min(calc(100svh - 36px), max(67svh, 560px + 7.74vw)));
 }
 
 .page--founders .fnd-scene {
@@ -5856,7 +5878,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   /* Shared with .page--founders: the ridge scales by width, so the crossing
      has to carry a vw term or the copy and the skyline collide on wide,
      short windows. */
-  --scene-cross: min(calc(100svh - 36px), max(67svh, 560px + 7.74vw));
+  --scene-cross: max(calc(var(--scene-copy-foot, 0px) + 0.035 * 100vw + 16px), min(calc(100svh - 36px), max(67svh, 560px + 7.74vw)));
   /* the orange spine is the trail's warm line (with its glow, below) */
   --spine-line: var(--trail-line);
   --spine-line-fade: rgba(255, 168, 110, 0.5);
@@ -6120,7 +6142,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
    the ridge drops to keep clear of it. */
 @media (max-width: 1180px) {
   .page--horizon {
-    --scene-cross: min(calc(100svh - 36px), max(70svh, 585px + 7.74vw));
+    --scene-cross: max(calc(var(--scene-copy-foot, 0px) + 0.035 * 100vw + 16px), min(calc(100svh - 36px), max(70svh, 585px + 7.74vw)));
   }
 }
 
