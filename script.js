@@ -157,6 +157,9 @@ let trailDots = [];
 let trailLabels = [];
 let trailOverlayRaf = 0;
 let trailOverlaySettleTimer = 0;
+/* the hero's layout has settled once the window has loaded (the ridge
+   image) and the webfonts are in (the copy above it); see .is-placed */
+let trailSettled = false;
 
 function getTrailPoint(point) {
   return {
@@ -403,20 +406,22 @@ function positionTrailOverlay() {
   for (const p of labelPositions) {
     p.el.style.left = `${p.left}px`;
   }
-  /* .is-placed: below 1024px the stylesheet keeps the climbers hidden until
-     their first box is written, so the move from their default spot is
-     never painted (it counted as a layout shift on every load) */
+  /* .is-placed: the stylesheet keeps the climbers and their glow hidden
+     until their place has settled (trailSettled), so no move of theirs is
+     ever painted - from their default spot, or as the ridge image and the
+     webfonts arrive; each counted as a layout shift on every load (0.25 on
+     a desktop) */
   if (climberWrite) {
     climberWrite.el.style.width = `${climberWrite.width}px`;
     climberWrite.el.style.left = `${climberWrite.left}px`;
     climberWrite.el.style.top = `${climberWrite.top}px`;
-    climberWrite.el.classList.add("is-placed");
+    if (trailSettled) climberWrite.el.classList.add("is-placed");
   }
   if (sunWrite) {
     sunWrite.el.style.width = `${sunWrite.width}px`;
     sunWrite.el.style.left = `${sunWrite.left}px`;
     sunWrite.el.style.top = `${sunWrite.top}px`;
-    sunWrite.el.classList.add("is-placed");
+    if (trailSettled) sunWrite.el.classList.add("is-placed");
   }
 }
 
@@ -757,9 +762,14 @@ function setupAudienceTriptych() {
       if (toggle) toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
 
       /* a folded card's copy and link are invisible, so they leave the Tab
-         order and the accessibility tree with it */
+         order and the accessibility tree with it; if the scroll folds the
+         card the reader is in, their place moves to its own toggle rather
+         than falling back to the top of the page */
       const body = card.querySelector(".preview__body");
-      if (body) body.inert = !expanded;
+      if (body) {
+        if (!expanded && toggle && body.contains(document.activeElement)) toggle.focus({ preventScroll: true });
+        body.inert = !expanded;
+      }
 
       const label = toggle?.querySelector(".preview__toggle-label");
       if (label) label.textContent = expanded ? "show less" : "read more";
@@ -767,6 +777,37 @@ function setupAudienceTriptych() {
 
     scheduleAudienceConnectors();
     window.requestAnimationFrame(scheduleAudienceConnectors);
+    window.requestAnimationFrame(markScrolling);
+  }
+
+  /* An open card's list keeps to its row and scrolls when the reader's own
+     text spacing outgrows the card (the stylesheet). A box that scrolls has
+     to be reachable from the keyboard - Chromium lets one take focus,
+     Safari and Firefox do not - so while it really scrolls, and only then,
+     it joins the Tab order, named after its card. */
+  const lists = cards.map((card) => card.querySelector(".preview__list"));
+  function markScrolling() {
+    lists.forEach((list, idx) => {
+      if (!list) return;
+      const name = cards[idx].querySelector(".preview__name");
+      const scrolls = !compactMode && cards[idx].classList.contains("is-expanded") && list.scrollHeight > list.clientHeight + 1;
+      if (scrolls) {
+        list.tabIndex = 0;
+        if (name && name.id) list.setAttribute("aria-labelledby", name.id);
+      } else if (list.hasAttribute("tabindex")) {
+        list.removeAttribute("tabindex");
+        list.removeAttribute("aria-labelledby");
+      }
+    });
+  }
+
+  if ("ResizeObserver" in window) {
+    const watch = new ResizeObserver(() => markScrolling());
+    lists.forEach((list) => {
+      if (!list) return;
+      watch.observe(list);
+      Array.from(list.children).forEach((item) => watch.observe(item));
+    });
   }
 
   function measure() {
@@ -866,6 +907,7 @@ function setupAudienceTriptych() {
       if (compactMode) return;
       measure();
       scheduleAudienceConnectors();
+      markScrolling();
     });
     toggle.addEventListener("click", (e) => {
       e.preventDefault();
@@ -1336,7 +1378,7 @@ function markCopyReview(data) {
   });
   const legend = document.createElement("aside");
   legend.className = "copy-legend";
-  legend.setAttribute("aria-label", "Copy review legend");
+  legend.setAttribute("aria-label", "Legenda tekstów roboczych");
   legend.lang = "pl";
   /* the legend folds down to its title, so it never has to sit on the
      texts it is explaining */
@@ -1522,7 +1564,15 @@ setupMotionPause();
 setupPortraitProposal();
 setupCopyReview();
 
-window.addEventListener("load", () => scheduleTrailOverlay(true));
+window.addEventListener("load", () => {
+  scheduleTrailOverlay(true);
+  const settle = () => {
+    trailSettled = true;
+    scheduleTrailOverlay(true);
+  };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(settle, settle);
+  else settle();
+}, { once: true });
 
 /* Expertise "Our Areas": eight areas as tabs, one open at a time.
 
@@ -1798,6 +1848,11 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
   let holdTimer = 0;
   let frame = 0;
 
+  /* The scroll never moves focus on its own - except where it would lose
+     it: an area the reader is in (its panel, or anything in it) hides as
+     the page walks on, and focus would fall back to the top of the page.
+     It moves to the area that takes over instead, and a focused tab hands
+     on to the newly chosen one, so the roving tabindex stays in step. */
   const sync = () => {
     frame = 0;
     if (!track) return;
@@ -1807,7 +1862,14 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
       hold = -1;
       clearTimeout(holdTimer);
     }
-    select(areaAt(s));
+    const to = areaAt(s);
+    if (to === index) return;
+    const active = document.activeElement;
+    const inPanel = index >= 0 && panels[index].contains(active);
+    const onTab = tabs.includes(active);
+    select(to);
+    if (inPanel) panels[to].focus({ preventScroll: true });
+    else if (onTab) tabs[to].focus({ preventScroll: true });
   };
 
   const schedule = () => {
@@ -1901,8 +1963,8 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
 
   /* On the track, a tab or a panel reached with the keyboard is shown
      where the page stands: if focusing it scrolled the page to another
-     area's place, the page is put back on its own. The scroll never moves
-     focus; focus only moves the scroll. */
+     area's place, the page is put back on its own. Focus moves the scroll;
+     the scroll moves focus only where it would otherwise lose it (sync). */
   section.addEventListener("focusin", (e) => {
     if (!track || hold >= 0) return;
     let i = tabs.indexOf(e.target);

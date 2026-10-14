@@ -798,6 +798,18 @@ body.menu-open {
   display: block;
 }
 
+/* The script places the climbers and their glow on the ridge, and again as
+   the ridge image and the webfonts arrive. Until their place has settled
+   (.is-placed) they would paint at their default spot - the ridge's top
+   left corner, 160px wide - or where the unsettled hero put them, and each
+   move counted as a layout shift on every load (0.25 on a desktop). Hidden
+   until then, they simply appear where they stand. Without script they
+   are never placed, and stay hidden. */
+.page--home .hero-climbers:not(.is-placed),
+.page--home .hero-climbers-sun:not(.is-placed) {
+  visibility: hidden;
+}
+
 @keyframes hero-climbers-sun {
   0%, 100% {
     opacity: 0.34;
@@ -2081,6 +2093,13 @@ main:focus {
   padding-top: clamp(16px, 2vh, 24px);
   border-top-color: color-mix(in srgb, var(--accent) 42%, rgba(240, 235, 233, 0.12));
   transition-delay: 220ms;
+}
+
+/* while it scrolls, script puts the list in the Tab order: the site's ring */
+.preview.is-expanded .preview__list[tabindex]:focus-visible {
+  outline: 2px solid var(--focus-ring, var(--orange));
+  outline-offset: 4px;
+  border-radius: 4px;
 }
 
 .preview.is-expanded .preview__cta {
@@ -10080,14 +10099,6 @@ main {
     max-width: 50vw;
   }
 
-  /* The script places the climbers and their glow on the ridge. Until it
-     has (.is-placed), they would paint at their default spot - the ridge's
-     top left corner, 160px wide - and the move counted as a layout shift on
-     every load. Hidden until placed, they simply appear where they stand. */
-  .page--home .hero-climbers:not(.is-placed),
-  .page--home .hero-climbers-sun:not(.is-placed) {
-    visibility: hidden;
-  }
 
   .page--home .hero-stats {
     position: relative;
