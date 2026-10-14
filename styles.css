@@ -1036,6 +1036,15 @@ body.menu-open {
   text-shadow: 0 2px 12px rgba(5, 8, 15, 0.55), 0 1px 3px rgba(5, 8, 15, 0.45);
 }
 
+/* On a laptop the home tagline crosses the lit peaks at its end: at 0.8 it
+   fell to 3.9:1 there at 1024px, so up to 1439px it is set in full cream
+   (5:1); wider, the peaks fall away from it. */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .page--home .hero-tagline {
+    color: var(--light);
+  }
+}
+
 .primary-cta {
   gap: 14px;
   margin-top: 40px;
@@ -1437,6 +1446,10 @@ main:focus {
 .preview--companies { --accent: #AB8E82; }
 .preview--investors { --accent: #7391c4; } /* #5b7ab0 lightened: small text on it and in it reaches 4.5:1 */
 
+/* The 11px number measured 4.2:1 in that blue on the card; small type takes
+   a lighter step of it (5.3:1), the lines and the pill keep the accent. */
+.preview--investors { --accent-text: #8aa4d0; }
+
 .preview:hover,
 .preview.is-expanded {
   border-color: color-mix(in srgb, var(--accent) 60%, transparent);
@@ -1465,7 +1478,7 @@ main:focus {
 }
 
 .preview__num {
-  color: var(--accent);
+  color: var(--accent-text, var(--accent));
   font: 500 var(--fs-label) / 1 "Montserrat", system-ui, sans-serif;
   letter-spacing: var(--ls-label);
 }
@@ -1570,7 +1583,7 @@ main:focus {
 }
 
 .preview__cta:hover {
-  color: var(--accent);
+  color: var(--accent-text, var(--accent));
   border-color: var(--accent);
 }
 
@@ -5794,12 +5807,24 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   color: rgba(20, 22, 31, 0.84);
 }
 
+/* The routes and their label sit over the warm photograph's darker beams
+   (3.1:1 at 0.76), so the routes take the full ink and the label most of
+   it; the sky under the bar is lifted a breath as well (below). */
 .page--founders .top-nav .top-nav__menu--right a {
-  color: rgba(20, 22, 31, 0.76);
+  color: var(--fnd-ink);
 }
 
 .page--founders .top-nav .top-nav__lead {
-  color: rgba(20, 22, 31, 0.76);
+  color: rgba(20, 22, 31, 0.86);
+}
+
+/* Even the full ink measured 4.1:1 over "Investors" and the Contact pill,
+   where the beams cross the bar: a pale wash under the resting bar lifts
+   the ground there to 4.7:1 and more. The scrolled bar's navy covers it. */
+@media (min-width: 1024px) {
+  .page--founders .top-nav:not(.is-scrolled) {
+    background: linear-gradient(180deg, rgba(255, 226, 206, 0.26), rgba(255, 226, 206, 0.15) 55%, rgba(255, 226, 206, 0.05) 85%, transparent) border-box;
+  }
 }
 
 .page--founders .top-nav__menu a:hover,
@@ -6031,14 +6056,25 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   text-shadow: none;
 }
 
+/* The tagline and Learn more cross the lit steel, where cream on the bare
+   photograph fell to 2.1:1 in its brightest gaps (the 17px tagline and the
+   12px label are body-size text). The tagline takes the home hero's halo
+   and the pill a ground of the night, which hold them over 4.5:1 at every
+   width; a sky whose ink is dark (the Investors mist preview) turns both
+   off (--hz-halo, --hz-cta-ground). */
+.page--horizon {
+  --hz-halo: 0 2px 12px rgba(5, 8, 15, 0.55), 0 1px 3px rgba(5, 8, 15, 0.45);
+  --hz-cta-ground: rgba(12, 15, 26, 0.45);
+}
+
 .page--horizon .hero-tagline {
   color: rgb(var(--hz-ink));
-  text-shadow: none;
+  text-shadow: var(--hz-halo);
 }
 
 .page--horizon .primary-cta {
   color: rgb(var(--hz-ink));
-  background: transparent;
+  background: var(--hz-cta-ground);
   border-color: rgba(var(--hz-ink), 0.45);
   box-shadow: none;
 }
@@ -6085,6 +6121,28 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 @media (max-width: 1180px) {
   .page--horizon {
     --scene-cross: min(calc(100svh - 36px), max(70svh, 585px + 7.74vw));
+  }
+}
+
+/* Below a laptop the tagline runs the full width of the screen, halfway
+   down the hero, across the brightest of the photograph: even with its halo
+   the Investors one held 2.4:1 to 4.2:1 over the lattice, and the Companies
+   one 4.5:1 over the towers. The night stays deeper a little longer down
+   the sky (a step more on the lattice), so they hold 4.9:1 and 5.5:1 on a
+   phone and over 6.5:1 on a tablet; the light still opens over the ridge. */
+@media (max-width: 1023px) {
+  .page--companies .hz-photo::after {
+    background:
+      radial-gradient(60% 42% at 70% 74%, rgba(var(--hz-glow), var(--hz-glow-a)), transparent 70%),
+      linear-gradient(180deg, rgba(12, 15, 26, 0.84) 0%, rgba(12, 15, 26, 0.6) 26%, rgba(12, 15, 26, 0.42) 50%, rgba(12, 15, 26, 0.3) 66%, rgba(12, 15, 26, 0.1) 82%, rgba(12, 15, 26, 0.2) 100%),
+      linear-gradient(90deg, rgba(12, 15, 26, 0.55), rgba(12, 15, 26, 0.18) 44%, transparent 74%);
+  }
+
+  .page--investors .hz-photo::after {
+    background:
+      radial-gradient(60% 42% at 70% 74%, rgba(var(--hz-glow), var(--hz-glow-a)), transparent 70%),
+      linear-gradient(180deg, rgba(12, 15, 26, 0.84) 0%, rgba(12, 15, 26, 0.66) 26%, rgba(12, 15, 26, 0.52) 50%, rgba(12, 15, 26, 0.4) 66%, rgba(12, 15, 26, 0.12) 82%, rgba(12, 15, 26, 0.2) 100%),
+      linear-gradient(90deg, rgba(12, 15, 26, 0.55), rgba(12, 15, 26, 0.18) 44%, transparent 74%);
   }
 }
 
@@ -6711,6 +6769,10 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 .routes-strip__card--companies { --aud-tint-rgb: 171, 142, 130; }
 .routes-strip__card--investors { --aud-tint-rgb: 115, 145, 196; }
 
+/* ...and its 12px kicker takes a lighter step of the blue: 4.5:1 at 0.9 on
+   a phone was too close, the step holds 5.6:1 */
+.routes-strip__card--investors { --aud-kicker-rgb: 138, 164, 208; }
+
 .routes-strip__card:hover,
 .routes-strip__card:focus-within {
   border-color: rgba(var(--aud-tint-rgb), 0.46);
@@ -6720,7 +6782,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 
 .routes-strip__kicker {
   margin: 0 0 14px;
-  color: rgba(var(--aud-tint-rgb), 0.9);
+  color: rgba(var(--aud-kicker-rgb, var(--aud-tint-rgb)), 0.9);
   font: 500 var(--fs-label) / 1.2 "Montserrat", system-ui, sans-serif;
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
@@ -6858,7 +6920,9 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   height: clamp(48px, 4.4vw, 62px);
   border: 1px dashed var(--light-28);
   border-radius: 2px;
-  color: var(--light-40);
+  /* placeholder marks until the logos land: their word at 4.5:1 and more,
+     as on a phone (at 0.4 it was 3.4:1) */
+  color: var(--light-60);
   font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -14183,7 +14247,7 @@ main {
 
   :is(.page--companies, .page--investors) .primary-cta:hover:not(:focus-visible) {
     color: rgb(var(--hz-ink));
-    background: transparent;
+    background: var(--hz-cta-ground);
     border-color: rgba(var(--hz-ink), 0.45);
     transform: none;
   }
@@ -14862,6 +14926,29 @@ main {
   --link-ink: rgba(240, 235, 233, 0.78);
 }
 
+/* About's closing photograph is lit just where that second way out lands on
+   a phone or tablet (2.9:1 at 320px): there the link takes the full cream
+   and the hero's halo, and the night over the photograph reaches a little
+   further down, so it holds 6:1. */
+@media (max-width: 1023px) {
+  .page--about .aud-grow__alt {
+    --link-ink: var(--light);
+    text-shadow: 0 1px 3px rgba(5, 8, 15, 0.6), 0 2px 12px rgba(5, 8, 15, 0.5);
+  }
+
+  .page--about .aud-grow > .footer-ridge::before {
+    background: linear-gradient(180deg, var(--navy-deep) 0%, rgba(8, 11, 19, 0.7) 26%, rgba(8, 11, 19, 0.42) 52%, rgba(8, 11, 19, 0.14) 64%, transparent 72%);
+  }
+}
+
+/* Our Team's line under the question crosses the lit ridges of the same
+   photograph (4.5:1 at 1024px, 3.3:1 on a small phone): full cream with a
+   soft halo, 4.7:1 and more at every width. */
+.page--team .aud-grow__sub {
+  color: var(--light);
+  text-shadow: 0 1px 3px rgba(5, 8, 15, 0.6), 0 2px 12px rgba(5, 8, 15, 0.5);
+}
+
 @media (min-width: 1024px) {
   /* The band is on the page's grid, not centred in a 1080px box of its
      own: the question starts on the container edge with every section
@@ -15362,6 +15449,10 @@ main {
   --hz-field: #353b66;
   --aud-ground-rgb: 53, 59, 102;
   --inv-tint: linear-gradient(150deg, #34488f 0%, #444394 50%, #5a4196 100%);
+  /* the skies were measured without the shipped hero's halo and pill
+     ground (HORIZON SCENE), and the mist's navy ink cannot take them */
+  --hz-halo: none;
+  --hz-cta-ground: transparent;
 }
 
 /* the closing sky clears towards the walkers in the new colour */
