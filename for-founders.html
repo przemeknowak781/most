@@ -281,6 +281,155 @@
         </div>
       </section>
 
+      <!-- OUR EXPERTISE AS A MAP (?graph=map, a preview for the client, 10.10):
+           the road's eight stages as markers on the trail, in place of the
+           list above. The stages are many-to-many - in practice they overlap -
+           so each one names the stages it is connected with, and script draws
+           those links as arcs over the line, with the chosen stage in the
+           centre (script.js, "Path map"). The markup is the plain form: an
+           ordered list of the stages, each with its expertise and its
+           connected stages, which is what a phone, a narrow window and the
+           "Show as a list" button show. Hidden without the parameter; the
+           photograph is the hero's own, already in the cache. -->
+      <section class="path-map" id="path-map" aria-labelledby="path-map-title">
+        <div class="path-map__photo" aria-hidden="true"><img src="arch-edge-truss-1024.webp" srcset="arch-edge-truss-640.webp 640w, arch-edge-truss-1024.webp 1024w, arch-edge-truss.webp 2200w" sizes="100vw" width="2200" height="990" alt="" loading="lazy" decoding="async" /></div>
+        <header class="path-map__head">
+          <h2 class="path-map__title" id="path-map-title">Our Expertise</h2>
+          <p class="path-map__lede">Whether you are forming your first company, hiring talent, protecting IP, raising capital, acquiring a business, or building partnerships, we help build the legal foundations that support your&nbsp;strategy.</p>
+        </header>
+        <div class="path-map__stage">
+          <ol class="path-map__list">
+            <li class="path-map__item" id="stage-idea" data-links="company team ip">
+              <h3 class="path-map__name">Idea</h3>
+              <p class="path-map__copy">From day one, we help you set the right&nbsp;foundations.</p>
+              <p class="path-map__label">Areas of Expertise</p>
+              <ul class="path-map__areas">
+                <li><a class="link-arrow" href="expertise.html#area-panel-1"><span>Company Incorporation and Structuring</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg></a></li>
+                <li><a class="link-arrow" href="expertise.html#area-panel-5"><span>IP and Technology</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg></a></li>
+              </ul>
+              <p class="path-map__label">Connected stages</p>
+              <ul class="path-map__links">
+                <li><a href="#stage-company">Company</a></li>
+                <li><a href="#stage-team">Team</a></li>
+                <li><a href="#stage-ip">IP</a></li>
+              </ul>
+            </li>
+            <li class="path-map__item" id="stage-company" data-links="idea team funding contracts exit">
+              <h3 class="path-map__name">Company</h3>
+              <p class="path-map__copy">Company formation, founders' agreements, cap table&nbsp;planning</p>
+              <p class="path-map__label">Areas of Expertise</p>
+              <ul class="path-map__areas">
+                <li><a class="link-arrow" href="expertise.html#area-panel-1"><span>Company Incorporation and Structuring</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg></a></li>
+                <li><a class="link-arrow" href="expertise.html#area-panel-8"><span>Ongoing Legal Support</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg></a></li>
+              </ul>
+              <p class="path-map__label">Connected stages</p>
+              <ul class="path-map__links">
+                <li><a href="#stage-idea">Idea</a></li>
+                <li><a href="#stage-team">Team</a></li>
+                <li><a href="#stage-funding">Funding</a></li>
+                <li><a href="#stage-contracts">Contracts</a></li>
+                <li><a href="#stage-exit">Exit</a></li>
+              </ul>
+            </li>
+            <li class="path-map__item" id="stage-team" data-links="idea company ip expansion exit">
+              <h3 class="path-map__name">Team</h3>
+              <p class="path-map__copy">Hiring documentation, contractor agreements,&nbsp;ESOPs</p>
+              <p class="path-map__label">Areas of Expertise</p>
+              <ul class="path-map__areas">
+                <li><a class="link-arrow" href="expertise.html#area-panel-3"><span>Hiring and Talent</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg></a></li>
+              </ul>
+              <p class="path-map__label">Connected stages</p>
+              <ul class="path-map__links">
+                <li><a href="#stage-idea">Idea</a></li>
+                <li><a href="#stage-company">Company</a></li>
+                <li><a href="#stage-ip">IP</a></li>
+                <li><a href="#stage-expansion">Expansion</a></li>
+                <li><a href="#stage-exit">Exit</a></li>
+              </ul>
+            </li>
+            <li class="path-map__item" id="stage-funding" data-links="company contracts ip expansion exit">
+              <h3 class="path-map__name">Funding</h3>
+              <p class="path-map__copy">Funding rounds (pre-seed, seed, Series A, B, C and so&nbsp;on)</p>
+              <p class="path-map__label">Areas of Expertise</p>
+              <ul class="path-map__areas">
+                <li><a class="link-arrow" href="expertise.html#area-panel-2"><span>Funding and Investment Rounds</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg></a></li>
+              </ul>
+              <p class="path-map__label">Connected stages</p>
+              <ul class="path-map__links">
+                <li><a href="#stage-company">Company</a></li>
+                <li><a href="#stage-contracts">Contracts</a></li>
+                <li><a href="#stage-ip">IP</a></li>
+                <li><a href="#stage-expansion">Expansion</a></li>
+                <li><a href="#stage-exit">Exit</a></li>
+              </ul>
+            </li>
+            <li class="path-map__item" id="stage-contracts" data-links="company funding ip expansion">
+              <h3 class="path-map__name">Contracts</h3>
+              <p class="path-map__copy">Commercial contracts and customer/supplier&nbsp;agreements</p>
+              <p class="path-map__label">Areas of Expertise</p>
+              <ul class="path-map__areas">
+                <li><a class="link-arrow" href="expertise.html#area-panel-4"><span>Commercial Contracts and <span class="nowrap">Day-to-Day</span> Operations</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg></a></li>
+              </ul>
+              <p class="path-map__label">Connected stages</p>
+              <ul class="path-map__links">
+                <li><a href="#stage-company">Company</a></li>
+                <li><a href="#stage-funding">Funding</a></li>
+                <li><a href="#stage-ip">IP</a></li>
+                <li><a href="#stage-expansion">Expansion</a></li>
+              </ul>
+            </li>
+            <li class="path-map__item" id="stage-ip" data-links="idea team funding contracts exit">
+              <h3 class="path-map__name">IP</h3>
+              <p class="path-map__copy">IP strategy, licensing, technology&nbsp;agreements</p>
+              <p class="path-map__label">Areas of Expertise</p>
+              <ul class="path-map__areas">
+                <li><a class="link-arrow" href="expertise.html#area-panel-5"><span>IP and Technology</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg></a></li>
+              </ul>
+              <p class="path-map__label">Connected stages</p>
+              <ul class="path-map__links">
+                <li><a href="#stage-idea">Idea</a></li>
+                <li><a href="#stage-team">Team</a></li>
+                <li><a href="#stage-funding">Funding</a></li>
+                <li><a href="#stage-contracts">Contracts</a></li>
+                <li><a href="#stage-exit">Exit</a></li>
+              </ul>
+            </li>
+            <li class="path-map__item" id="stage-expansion" data-links="team funding contracts exit">
+              <h3 class="path-map__name">Expansion</h3>
+              <p class="path-map__copy">Cross-border expansion and&nbsp;subsidiaries</p>
+              <p class="path-map__label">Areas of Expertise</p>
+              <ul class="path-map__areas">
+                <li><a class="link-arrow" href="expertise.html#area-panel-6"><span><span class="nowrap">Cross-Border</span> Expansion</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg></a></li>
+              </ul>
+              <p class="path-map__label">Connected stages</p>
+              <ul class="path-map__links">
+                <li><a href="#stage-team">Team</a></li>
+                <li><a href="#stage-funding">Funding</a></li>
+                <li><a href="#stage-contracts">Contracts</a></li>
+                <li><a href="#stage-exit">Exit</a></li>
+              </ul>
+            </li>
+            <li class="path-map__item" id="stage-exit" data-links="company team funding ip expansion">
+              <h3 class="path-map__name">Exit</h3>
+              <p class="path-map__copy">M&amp;A, exits, and due diligence&nbsp;support</p>
+              <p class="path-map__label">Areas of Expertise</p>
+              <ul class="path-map__areas">
+                <li><a class="link-arrow" href="expertise.html#area-panel-7"><span>M&amp;A, Exits and Strategic Transactions</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg></a></li>
+              </ul>
+              <p class="path-map__label">Connected stages</p>
+              <ul class="path-map__links">
+                <li><a href="#stage-company">Company</a></li>
+                <li><a href="#stage-team">Team</a></li>
+                <li><a href="#stage-funding">Funding</a></li>
+                <li><a href="#stage-ip">IP</a></li>
+                <li><a href="#stage-expansion">Expansion</a></li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+        <a class="path-map__more link-arrow" href="expertise.html"><span>see the full scope of our expertise</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg></a>
+      </section>
+
       <!-- WANT TO GROW TOGETHER CTA — the page's terracotta sky over the navy ridge and its climbers -->
       <section class="aud-grow" aria-labelledby="aud-grow-title">
         <div class="aud-grow__inner">

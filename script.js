@@ -1080,22 +1080,25 @@ function setupPortraitProposal() {
    ?titles=smaller the titles a size smaller and (client, 10.10)
    ?expertise=icons|tiles|light Home's Our Expertise with larger drawings,
    as tiles or on a light ground, ?scroll=peek|cue a cue to scroll on
-   Our Team's hero and ?investors=mist|dusk|facade the Investors
+   Our Team's hero, ?investors=mist|dusk|facade the Investors
    photographs under a tint of about half instead of the dark frame, in
-   blue going violet with an orange light, each as a data attribute on
-   <html> the stylesheet answers. #who-latte, #titles-smaller and the like
-   do the same where a preview host drops the query. Without one the page
-   is as it ships. (The titles in capitals and the ridges drawn straight
-   were looked at and set aside, 7.10.) ?preview (or either of them)
-   brings up a panel that switches them in place; while it is up, the
-   links to the site's pages carry the choice and the panel, so the whole
-   site can be walked in an alternative. */
+   blue going violet with an orange light, and ?graph=map Founders' Our
+   Expertise as a map of the road's stages on the trail (client, 10.10),
+   each as a data attribute on <html> the stylesheet answers. #who-latte,
+   #titles-smaller and the like do the same where a preview host drops
+   the query. Without one the page is as it ships. (The titles in
+   capitals and the ridges drawn straight were looked at and set aside,
+   7.10.) ?preview (or either of them) brings up a panel that switches
+   them in place; while it is up, the links to the site's pages carry the
+   choice and the panel, so the whole site can be walked in an
+   alternative. */
 const PREVIEW_SWITCHES = {
   who: ["ivory", "grey", "latte"],
   titles: ["smaller"],
   expertise: ["icons", "tiles", "light"],
   scroll: ["peek", "cue"],
   investors: ["mist", "dusk", "facade"],
+  graph: ["map"],
 };
 
 /* the panel's words, in Polish as the client reviews in it: each switch's
@@ -1106,6 +1109,7 @@ const PREVIEW_PANEL = [
   ["expertise", "Our Expertise (Home)", [["", "obecne"], ["icons", "większe ikony"], ["tiles", "kafelki"], ["light", "jasna sekcja"]]],
   ["scroll", "Our Team: zachęta do przewinięcia", [["", "bez"], ["peek", "portrety spod hero"], ["cue", "napis ze strzałką"]]],
   ["investors", "Investors: zdjęcia i kolor", [["", "obecne"], ["mist", "mgła, jasne niebo"], ["dusk", "zmierzch, błękit w fiolet"], ["facade", "zmierzch, fasada w How We Work"]]],
+  ["graph", "Founders: Our Expertise jako mapa (prototyp)", [["", "obecne"], ["map", "mapa etapów"]]],
 ];
 
 function setupPreviewSwitches() {
@@ -1945,6 +1949,462 @@ window.addEventListener("load", () => scheduleTrailOverlay(true));
     setTimeout(() => {
       landing = -1;
     }, 600);
+  });
+})();
+
+/* Path map (?graph=map, a preview for the client, 10.10): a road's stages
+   as markers on the trail, the chosen one in the centre.
+
+   The markup is an ordered list of the stages, each naming the stages it
+   is connected with (data-links) - in practice they overlap, so the road
+   is a web rather than a line. Read as a list it needs nothing from here,
+   and it stays a list under 1024px, without script and while "Show as a
+   list" is pressed. On a desktop window this draws the map over it: the
+   site's warm line rising across the section, a marker on it for every
+   stage, the chosen stage in the middle and the others at fixed places
+   along the line in the road's order - those before it on the left, those
+   after it on the right, the last running on into the first, since a
+   founder's road loops - and an arc over the line from the chosen stage
+   to every stage it is connected with. Under it hangs that stage's card.
+   The markers are ARIA tabs and the cards their panels (a panel is a
+   wrapper inside the stage's <li>, which may not be a tabpanel itself;
+   the list stands down to role none while it is a map).
+
+   Choosing another stage (a click, an arrow key, the buttons at the ends
+   of the line or a link in the card) runs every marker along the line
+   until that stage stands in the centre. The line is rebuilt under them on
+   every frame with the hero trail's own rock (grainRoute), which fades to
+   nothing at each marker, so the line meets every marker wherever it is.
+   A marker that has to come round the loop fades out at one end and in at
+   the other rather than crossing the line. The arcs then draw themselves
+   to the new stage's neighbours. With reduced motion it all simply moves.
+
+   Nothing here follows or holds the scroll: no wheel, touch or key
+   listener on the window, nothing pinned and nothing scrolled into view,
+   so the page scrolls over the map as over any other section. The stages,
+   the photograph and the colours are the markup's and the page's, so any
+   page can carry one. */
+(() => {
+  const sections = Array.from(document.querySelectorAll(".path-map"));
+  if (!sections.length) return;
+  const SVG_NS = "http://www.w3.org/2000/svg";
+  const desktop = window.matchMedia("(min-width: 1024px)");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const GLIDE_MS = 600;
+  const DRAW_MS = 700;
+  /* a marker coming round the loop fades out over the first 40% of the
+     glide at the latest and in over the last 40% */
+  const FADE = 0.4;
+  /* the dot's centre below the top of its marker's box */
+  const DOT_Y = 14;
+  const EASE = "cubic-bezier(0.16, 1, 0.3, 1)";
+
+  /* the site's ease-out (--ease-out) for the frames script draws itself */
+  const easeOut = (x) => {
+    if (x <= 0) return 0;
+    if (x >= 1) return 1;
+    const bez = (t, a, b) => 3 * a * t * (1 - t) * (1 - t) + 3 * b * t * t * (1 - t) + t * t * t;
+    let lo = 0;
+    let hi = 1;
+    for (let i = 0; i < 22; i++) {
+      const mid = (lo + hi) / 2;
+      if (bez(mid, 0.16, 0.3) < x) lo = mid;
+      else hi = mid;
+    }
+    return bez((lo + hi) / 2, 1, 1);
+  };
+
+  const svgEl = (name, attrs = {}) => {
+    const el = document.createElementNS(SVG_NS, name);
+    Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, String(value)));
+    return el;
+  };
+
+  const onQuery = (query, fn) => {
+    if (query.addEventListener) query.addEventListener("change", fn);
+    else if (query.addListener) query.addListener(fn);
+  };
+
+  sections.forEach((section) => {
+    const head = section.querySelector(".path-map__head");
+    const stage = section.querySelector(".path-map__stage");
+    const list = stage ? stage.querySelector(".path-map__list") : null;
+    const items = list ? Array.from(list.children).filter((li) => li.classList.contains("path-map__item") && li.id) : [];
+    if (!head || !list || items.length < 3) return;
+
+    const n = items.length;
+    /* three before the centre and four after it, for eight */
+    const before = Math.floor((n - 1) / 2);
+    const after = n - 1 - before;
+    const stages = items.map((item) => {
+      const title = item.querySelector(".path-map__name");
+      const panel = document.createElement("div");
+      panel.className = "path-map__panel";
+      panel.id = `${item.id}-panel`;
+      panel.append(...item.childNodes);
+      item.appendChild(panel);
+      return {
+        item,
+        panel,
+        slug: item.id.replace(/^stage-/, ""),
+        name: title ? title.textContent.trim() : item.id,
+        links: (item.dataset.links || "").split(/\s+/).filter(Boolean),
+      };
+    });
+    const bySlug = new Map(stages.map((s, i) => [s.slug, i]));
+    stages.forEach((s) => {
+      s.linked = s.links.map((slug) => bySlug.get(slug)).filter((i) => i !== undefined);
+    });
+
+    /* ---------- the map, built once ---------- */
+    const map = document.createElement("div");
+    map.className = "path-map__map";
+
+    const web = svgEl("svg", { class: "path-map__web", "aria-hidden": "true", focusable: "false" });
+    /* the line fades in from the buttons at its ends (offsets set on layout) */
+    const fadeId = `${section.id || "path-map"}-fade`;
+    const fade = svgEl("linearGradient", { id: fadeId, class: "path-map__fade", gradientUnits: "userSpaceOnUse", x1: 0, y1: 0, x2: 1, y2: 0 });
+    const stops = [0, 0, 1, 1, 0, 0].map((opacity) => fade.appendChild(svgEl("stop", { offset: 0, "stop-opacity": opacity })));
+    const defs = svgEl("defs");
+    defs.appendChild(fade);
+    const line = svgEl("path", { class: "path-map__line", stroke: `url(#${fadeId})` });
+    const arcs = svgEl("g", { class: "path-map__arcs" });
+    const stem = svgEl("path", { class: "path-map__stem" });
+    web.append(defs, line, arcs, stem);
+
+    const stepButton = (dir, label, d) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `path-map__step path-map__step--${dir} btn`;
+      button.innerHTML = `<span class="sr-only"></span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="${d}" /></svg>`;
+      button.firstChild.textContent = label;
+      return button;
+    };
+    const prevButton = stepButton("prev", "Previous stage", "M15 10H5M9 6l-4 4 4 4");
+    const nextButton = stepButton("next", "Next stage", "M5 10h10M11 6l4 4-4 4");
+
+    const nodes = document.createElement("div");
+    nodes.className = "path-map__nodes";
+    nodes.setAttribute("role", "tablist");
+    nodes.setAttribute("aria-label", "Stages");
+    nodes.setAttribute("aria-orientation", "horizontal");
+    stages.forEach((s) => {
+      const tab = document.createElement("button");
+      tab.type = "button";
+      tab.className = "path-map__node";
+      tab.id = `stage-tab-${s.slug}`;
+      tab.setAttribute("role", "tab");
+      tab.setAttribute("aria-controls", s.panel.id);
+      tab.innerHTML = '<span class="path-map__dot" aria-hidden="true"></span><span class="path-map__node-name"></span>';
+      tab.lastChild.textContent = s.name;
+      nodes.appendChild(tab);
+      s.tab = tab;
+    });
+
+    const status = document.createElement("p");
+    status.className = "path-map__status sr-only";
+    status.setAttribute("aria-live", "polite");
+
+    map.append(web, prevButton, nodes, nextButton, status);
+    stage.insertBefore(map, list);
+
+    const view = document.createElement("button");
+    view.type = "button";
+    view.className = "path-map__view";
+    view.setAttribute("aria-pressed", "false");
+    view.textContent = "Show as a list";
+    head.appendChild(view);
+
+    /* ---------- geometry ----------
+       The line rises from yL at the left to yR at the right; the arcs have
+       --path-arcs above it. The centre stands at cx and the other stages a
+       step apart on either side, the step as wide as the window allows up
+       to 180px. A stage's slot is its place counted from the chosen one:
+       -3 to +4 for eight. */
+    let mapMode = false;
+    let current = -1;
+    const geo = { w: 0, h: 0, arcs: 0, cx: 0, step: 0, yL: 0, yR: 0 };
+    let xs = stages.map(() => 0);
+    let alpha = stages.map(() => 1);
+    /* while a marker is on its way out round the loop */
+    let away = stages.map(() => false);
+    let glide = 0;
+    let laidOut = 0;
+
+    const smoothY = (x) => geo.yL + ((geo.yR - geo.yL) * x) / (geo.w || 1);
+    const slotOf = (j, c) => ((((j - c + before) % n) + n) % n) - before;
+    const slotX = (k) => geo.cx + k * geo.step;
+
+    const measure = () => {
+      geo.w = map.clientWidth;
+      geo.h = map.clientHeight;
+      const style = getComputedStyle(section);
+      /* registered lengths (@property in the stylesheet), so they come
+         back in px; the map's own height is the fallback */
+      geo.arcs = parseFloat(style.getPropertyValue("--path-arcs")) || Math.max(120, geo.h - 96);
+      const rise = parseFloat(style.getPropertyValue("--path-rise")) || geo.arcs * 0.18;
+      geo.yL = geo.arcs + rise / 2;
+      geo.yR = geo.arcs - rise / 2;
+      geo.cx = geo.w / 2;
+      geo.step = Math.min(180, (geo.w / 2 - 110) / after);
+      setCssVar(map, "--path-step", `${geo.step.toFixed(1)}px`);
+      /* the line comes out of the buttons' edge and is whole 6% further on */
+      const edge = clamp((prevButton.offsetWidth || 46) / geo.w, 0, 0.2);
+      [0, edge, edge + 0.06, 1 - edge - 0.06, 1 - edge, 1].forEach((offset, i) => stops[i].setAttribute("offset", offset.toFixed(4)));
+      fade.setAttribute("x2", String(geo.w));
+    };
+
+    const placeButtons = () => {
+      [[prevButton, 22], [nextButton, geo.w - 22]].forEach(([button, x]) => {
+        const r = (button.offsetWidth || 46) / 2;
+        button.style.left = `${(x - r).toFixed(1)}px`;
+        button.style.top = `${(smoothY(x) - r).toFixed(1)}px`;
+      });
+      const yc = smoothY(geo.cx);
+      stem.setAttribute("d", `M${geo.cx.toFixed(1)} ${(yc + 40).toFixed(1)}V${geo.h}`);
+    };
+
+    /* one frame: every marker where xs says, on the line, and the line
+       rebuilt so that it meets them */
+    const draw = () => {
+      stages.forEach((s, j) => {
+        const x = xs[j];
+        s.tab.style.transform = `translate(${x.toFixed(2)}px, ${(smoothY(x) - DOT_Y).toFixed(2)}px)`;
+        s.tab.style.opacity = alpha[j] < 1 ? alpha[j].toFixed(3) : "";
+      });
+      const { w, yL, yR } = geo;
+      const route = grainRoute([[0, yL, w / 3, yL + (yR - yL) / 3, (2 * w) / 3, yL + (2 * (yR - yL)) / 3, w, yR]], 1, 1, xs, 0, 0.7);
+      line.setAttribute("d", routeD(route));
+    };
+
+    /* the arcs from the chosen stage to the ones it is connected with,
+       drawing themselves in unless told not to */
+    const drawArcs = (animate) => {
+      clearChildren(arcs);
+      const yc = smoothY(geo.cx);
+      stages[current].linked.forEach((j) => {
+        const xk = slotX(slotOf(j, current));
+        const yk = smoothY(xk);
+        const lift = clamp(0.32 * Math.abs(xk - geo.cx), 32, geo.arcs - 16);
+        const arc = svgEl("path", {
+          class: "path-map__arc",
+          d: `M${geo.cx.toFixed(1)} ${yc.toFixed(1)}Q${((geo.cx + xk) / 2).toFixed(1)} ${(Math.min(yc, yk) - lift).toFixed(1)} ${xk.toFixed(1)} ${yk.toFixed(1)}`,
+        });
+        arcs.appendChild(arc);
+        if (!animate || typeof arc.animate !== "function") return;
+        const len = Math.ceil(arc.getTotalLength());
+        arc.style.strokeDasharray = `${len}`;
+        arc.animate([{ strokeDashoffset: `${len}px` }, { strokeDashoffset: "0px" }], { duration: DRAW_MS, easing: EASE, fill: "backwards" });
+      });
+    };
+
+    const stop = () => {
+      if (glide) cancelAnimationFrame(glide);
+      glide = 0;
+    };
+
+    /* everything where it belongs, in this frame */
+    const settle = (animateArcs = false) => {
+      stop();
+      xs = stages.map((s, j) => slotX(slotOf(j, current)));
+      alpha = stages.map(() => 1);
+      away = stages.map(() => false);
+      draw();
+      drawArcs(animateArcs);
+    };
+
+    /* The chosen stage stood d slots from the centre: every marker runs d
+       slots along the line, from wherever it stands now (a glide can be
+       overtaken by the next one). One that would run off an end comes
+       round the loop instead: it fades out as it runs on past that end, as
+       into a tunnel, and fades in at its place coming on from the other
+       one, so it never crosses the line. One caught on its way out simply
+       goes. */
+    const run = (was) => {
+      stop();
+      clearChildren(arcs);
+      const shift = -slotOf(current, was) * geo.step;
+      const tunnel = 0.6 * geo.step;
+      const endL = slotX(-before);
+      const endR = slotX(after);
+      const lo = Math.max(endL - tunnel, 56);
+      const hi = Math.min(endR + tunnel, geo.w - 56);
+      const inside = (x) => clamp(1 - Math.max(endL - x, x - endR, 0) / tunnel, 0, 1);
+      const paths = stages.map((s, j) => {
+        const to = slotX(slotOf(j, current));
+        const loops = Math.abs(to - slotX(slotOf(j, was)) - shift) > geo.step / 2;
+        return { from: xs[j], to, wraps: loops || away[j], out: away[j], a0: alpha[j] };
+      });
+      const start = performance.now();
+      const frame = (now) => {
+        const t = clamp((now - start) / GLIDE_MS, 0, 1);
+        const e = easeOut(t);
+        paths.forEach((p, j) => {
+          if (!p.wraps) {
+            xs[j] = p.from + (p.to - p.from) * e;
+            alpha[j] = p.a0 + (1 - p.a0) * e;
+          } else if (t < 0.5) {
+            const x = p.out ? p.from : p.from + shift * e;
+            xs[j] = clamp(x, lo, hi);
+            alpha[j] = p.a0 * Math.max(0, Math.min(inside(x), 1 - t / FADE));
+          } else {
+            const x = p.to - shift * (1 - e);
+            xs[j] = clamp(x, lo, hi);
+            alpha[j] = Math.max(0, Math.min(inside(x), (t - (1 - FADE)) / FADE));
+          }
+          away[j] = p.wraps && t < 0.5;
+        });
+        draw();
+        if (t < 1) {
+          glide = requestAnimationFrame(frame);
+          return;
+        }
+        settle(true);
+      };
+      glide = requestAnimationFrame(frame);
+    };
+
+    /* ---------- choosing a stage ---------- */
+    const select = (i, source = "user") => {
+      i = ((i % n) + n) % n;
+      const was = current;
+      current = i;
+      const linked = stages[i].linked;
+      stages.forEach((s, j) => {
+        const on = j === i;
+        s.tab.setAttribute("aria-selected", String(on));
+        s.tab.tabIndex = on ? 0 : -1;
+        s.tab.classList.toggle("is-current", on);
+        s.tab.classList.toggle("is-linked", linked.includes(j));
+        /* odd slots hang their name a row lower, so neighbours never meet */
+        s.tab.classList.toggle("is-low", Math.abs(slotOf(j, i)) % 2 === 1);
+        s.item.classList.toggle("is-current", on);
+      });
+      prevButton.firstChild.textContent = `Previous stage: ${stages[(i - 1 + n) % n].name}`;
+      nextButton.firstChild.textContent = `Next stage: ${stages[(i + 1) % n].name}`;
+      if (source === "step" || source === "link") status.textContent = `${stages[i].name}, stage ${i + 1} of ${n}`;
+      /* the map already shows it, or is on its way there */
+      if (!mapMode || !geo.w || was === i) return;
+      if (was < 0 || source === "init" || reduceMotion.matches) settle();
+      else run(was);
+    };
+
+    /* ---------- map or list ---------- */
+    const layout = () => {
+      if (!mapMode) return;
+      measure();
+      laidOut = stage.clientWidth;
+      if (!geo.w) return;
+      placeButtons();
+      settle();
+    };
+
+    const setMode = () => {
+      const on = desktop.matches && view.getAttribute("aria-pressed") !== "true";
+      if (on === mapMode) return;
+      mapMode = on;
+      section.classList.toggle("is-map", on);
+      if (on) list.setAttribute("role", "none");
+      else list.removeAttribute("role");
+      stages.forEach((s) => {
+        if (on) {
+          s.item.setAttribute("role", "none");
+          s.panel.setAttribute("role", "tabpanel");
+          s.panel.setAttribute("aria-labelledby", s.tab.id);
+          s.panel.tabIndex = 0;
+        } else {
+          s.item.removeAttribute("role");
+          s.panel.removeAttribute("role");
+          s.panel.removeAttribute("aria-labelledby");
+          s.panel.removeAttribute("tabindex");
+        }
+      });
+      if (on) layout();
+      else stop();
+    };
+
+    /* ---------- input ---------- */
+    stages.forEach((s, j) => {
+      s.tab.addEventListener("click", () => select(j));
+      s.tab.addEventListener("keydown", (e) => {
+        let next;
+        switch (e.key) {
+          case "ArrowRight":
+            next = current + 1;
+            break;
+          case "ArrowLeft":
+            next = current - 1;
+            break;
+          case "Home":
+            next = 0;
+            break;
+          case "End":
+            next = n - 1;
+            break;
+          default:
+            return;
+        }
+        e.preventDefault();
+        select(next, "key");
+        stages[current].tab.focus({ preventScroll: true });
+      });
+    });
+    prevButton.addEventListener("click", () => select(current - 1, "step"));
+    nextButton.addEventListener("click", () => select(current + 1, "step"));
+
+    /* a connected stage in the card is chosen on the map, where the page
+       stands; as a list the link is an ordinary jump down the list */
+    list.addEventListener("click", (e) => {
+      const link = e.target.closest(".path-map__links a[href^='#']");
+      if (!link || !mapMode) return;
+      const j = bySlug.get(link.getAttribute("href").replace(/^#stage-/, ""));
+      if (j === undefined) return;
+      e.preventDefault();
+      select(j, "link");
+      stages[j].tab.focus({ preventScroll: true });
+    });
+
+    view.addEventListener("click", () => {
+      view.setAttribute("aria-pressed", String(view.getAttribute("aria-pressed") !== "true"));
+      setMode();
+    });
+
+    /* a link to #stage-funding opens the map on Funding; as a list the
+       browser's own jump does it */
+    const fromHash = () => {
+      let id = "";
+      try {
+        id = decodeURIComponent(location.hash.slice(1));
+      } catch {}
+      return items.findIndex((item) => item.id === id);
+    };
+    window.addEventListener("hashchange", () => {
+      const j = fromHash();
+      if (j >= 0) select(j, "link");
+    });
+
+    /* ---------- layout changes ----------
+       The stage is watched rather than the window: it also has a width
+       again when the variant is switched on in place from the panel. A
+       hidden section (0 wide) is left as it was, and so is a stage that
+       only grew taller (late fonts in the cards): the map follows the
+       width alone. */
+    let relayoutFrame = 0;
+    const relayout = () => {
+      if (relayoutFrame) return;
+      relayoutFrame = requestAnimationFrame(() => {
+        relayoutFrame = 0;
+        const w = stage.clientWidth;
+        if (w && w !== laidOut) layout();
+      });
+    };
+    onQuery(desktop, setMode);
+    if (typeof ResizeObserver === "function") new ResizeObserver(relayout).observe(stage);
+    else window.addEventListener("resize", relayout);
+
+    const start = fromHash();
+    select(start >= 0 ? start : 0, "init");
+    setMode();
   });
 })();
 

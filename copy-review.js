@@ -799,6 +799,36 @@ window.MOST_COPY_REVIEW = {
    "c": "wireframe",
    "s": "S5c:91 (F1:21 has 'Bracka 20, 00-028 Warsaw' without ', Poland')",
    "a": ""
+  },
+  {
+   "t": "Idea / Company / Team / Funding / Contracts / IP / Expansion / Exit",
+   "c": "ours",
+   "s": "none (etapy z planu po spotkaniu 10.10: pomysł, spółka, zespół, finansowanie, umowy, IP, ekspansja, wyjście)",
+   "a": "Czy etapy na mapie mogą się tak nazywać? Czytnik ekranu słyszy też 'Stages', 'Previous stage' / 'Next stage' i np. 'Funding, stage 4 of 8'."
+  },
+  {
+   "t": "From day one, we help you set the right foundations.",
+   "c": "g1-edited",
+   "s": "Wasze zdanie z wprowadzenia Founders, skrócone do pierwszej części",
+   "a": ""
+  },
+  {
+   "t": "Areas of Expertise",
+   "c": "ours",
+   "s": "none (etykieta jak w kartach Our Team)",
+   "a": "Czy na mapie nad obszarami może stać 'Areas of Expertise', jak w kartach zespołu?"
+  },
+  {
+   "t": "Connected stages",
+   "c": "ours",
+   "s": "none",
+   "a": "Czy pod etapem może stać 'Connected stages' (etapy powiązane)?"
+  },
+  {
+   "t": "Show as a list",
+   "c": "ours",
+   "s": "none (przełącznik mapa/lista)",
+   "a": "Czy przełącznik 'Show as a list' może tak brzmieć?"
   }
  ],
  "for-companies.html": [
