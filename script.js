@@ -1149,15 +1149,16 @@ function setupPortraitProposal() {
    ?investors=mist|dusk|facade the Investors photographs under a tint of
    about half instead of the dark frame, in blue going violet with an
    orange light, ?graph=map Founders' Our Expertise as a map of the
-   road's stages on the trail and ?rail=dots small dots on the audience
-   pages' Our Expertise rail - each as a data attribute on <html> the
-   stylesheet answers. #who-latte, #titles-smaller and the like do the
-   same where a preview host drops the query. Without one the page is as
-   it ships. (The titles in capitals and the ridges drawn straight were
-   looked at and set aside, 7.10.) ?preview (or either of them) brings up
-   a panel that switches them in place; while it is up, the links to the
-   site's pages carry the choice and the panel, so the whole site can be
-   walked in an alternative. */
+   road's stages on the trail, ?rail=dots small dots on the audience
+   pages' Our Expertise rail and ?arch=help architecture coming up out of
+   the ground behind their What We Help You Achieve - each as a data
+   attribute on <html> the stylesheet answers. #who-latte,
+   #titles-smaller and the like do the same where a preview host drops
+   the query. Without one the page is as it ships. (The titles in capitals
+   and the ridges drawn straight were looked at and set aside, 7.10.)
+   ?preview (or either of them) brings up a panel that switches them in
+   place; while it is up, the links to the site's pages carry the choice
+   and the panel, so the whole site can be walked in an alternative. */
 const PREVIEW_SWITCHES = {
   who: ["ivory", "grey", "latte"],
   titles: ["smaller"],
@@ -1166,6 +1167,7 @@ const PREVIEW_SWITCHES = {
   investors: ["mist", "dusk", "facade"],
   graph: ["map"],
   rail: ["dots"],
+  arch: ["help"],
 };
 
 /* the panel's words, in Polish as the client reviews in it: each switch's
@@ -1178,6 +1180,7 @@ const PREVIEW_PANEL = [
   ["investors", "Investors: zdjęcia i kolor", [["", "obecne"], ["mist", "mgła, jasne niebo"], ["dusk", "zmierzch, błękit w fiolet"], ["facade", "zmierzch, fasada w How We Work"]]],
   ["graph", "Founders: Our Expertise jako mapa (prototyp)", [["", "obecne"], ["map", "mapa etapów"]]],
   ["rail", "Founders, Companies, Investors: kropki przy Our Expertise", [["", "tylko na końcach"], ["dots", "małe przy każdym punkcie"]]],
+  ["arch", "Founders, Companies, Investors: What We Help You Achieve", [["", "obecne"], ["help", "architektura z tła"]]],
 ];
 
 function setupPreviewSwitches() {
