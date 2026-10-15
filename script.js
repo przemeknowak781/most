@@ -1143,8 +1143,8 @@ function setupPortraitProposal() {
 /* Alternatives for the client to look at, off by default (client, 6.10):
    ?who=ivory|grey|latte shows Home's Who we are on a light ground,
    ?titles=smaller the titles a size smaller and (client, 10.10)
-   ?expertise=icons|tiles|light Home's Our Expertise with larger drawings,
-   as tiles or on a light ground, ?scroll=peek|cue a cue to scroll on
+   ?expertise=icons|tiles|light|lighttiles Home's Our Expertise with larger
+   drawings, as tiles, on a light ground or as tiles on a light ground, ?scroll=peek|cue a cue to scroll on
    Our Team's hero, ?investors=mist|dusk|facade the Investors
    photographs under a tint of about half instead of the dark frame, in
    blue going violet with an orange light, and ?graph=map Founders' Our
@@ -1160,7 +1160,7 @@ function setupPortraitProposal() {
 const PREVIEW_SWITCHES = {
   who: ["ivory", "grey", "latte"],
   titles: ["smaller"],
-  expertise: ["icons", "tiles", "light"],
+  expertise: ["icons", "tiles", "light", "lighttiles"],
   scroll: ["peek", "cue"],
   investors: ["mist", "dusk", "facade"],
   graph: ["map"],
@@ -1171,7 +1171,7 @@ const PREVIEW_SWITCHES = {
 const PREVIEW_PANEL = [
   ["who", "Home: Who We Are", [["", "ciemne"], ["ivory", "złamana biel"], ["grey", "szarość"], ["latte", "latte"]]],
   ["titles", "Wszystkie strony: tytuły", [["", "obecne"], ["smaller", "mniejsze"]]],
-  ["expertise", "Home: Our Expertise", [["", "obecne"], ["icons", "większe ikony"], ["tiles", "kafelki"], ["light", "jasna sekcja"]]],
+  ["expertise", "Home: Our Expertise", [["", "obecne"], ["icons", "większe ikony"], ["tiles", "kafelki"], ["light", "jasna sekcja"], ["lighttiles", "jasne kafelki"]]],
   ["scroll", "Our Team: zachęta do przewinięcia", [["", "bez"], ["peek", "portrety spod hero"], ["cue", "napis ze strzałką"]]],
   ["investors", "Investors: zdjęcia i kolor", [["", "obecne"], ["mist", "mgła, jasne niebo"], ["dusk", "zmierzch, błękit w fiolet"], ["facade", "zmierzch, fasada w How We Work"]]],
   ["graph", "Founders: Our Expertise jako mapa (prototyp)", [["", "obecne"], ["map", "mapa etapów"]]],

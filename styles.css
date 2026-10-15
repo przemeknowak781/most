@@ -7657,9 +7657,10 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 /* === OUR EXPERTISE on Home: three previews ===
    The client (10.10) asked to see the six areas set three other ways,
    to choose from, without a scroll trap and with the copy at its size:
-   ?expertise=icons, ?expertise=tiles or ?expertise=light (#expertise-tiles
-   and the like where a preview host drops the query; the switch is in
-   script.js) set one of them. Without one the section ships as it is.
+   ?expertise=icons, ?expertise=tiles, ?expertise=light or
+   ?expertise=lighttiles (#expertise-tiles and the like where a preview
+   host drops the query; the switch is in script.js) set one of them.
+   Without one the section ships as it is.
      icons  the present layout, the drawings larger and their strokes
             heavier
      tiles  the six as tiles, as About's "Find the Route Built for Your
@@ -7673,7 +7674,14 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
             routes' torn edge coming down over it as dark land, the
             section fading at its foot into the navy-deep the client
             marks run on; the fade is eased in oklab so it does not muddy
-            midway */
+            midway
+     lighttiles  the tiles on the light ground, as the client put it at
+            the review: the light squares in Our Mission's and Our
+            Commitment's mood, the "Find the Route" cards' balance, and
+            the drawings only very faint behind the names, drawing
+            themselves there, never on the main plane (the two rules
+            above together, and the light ground's own tile tints
+            below) */
 
 /* ---------- icons ---------- */
 :root[data-expertise="icons"] .home-expertise {
@@ -7729,7 +7737,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 }
 
 /* ---------- tiles ---------- */
-:root[data-expertise="tiles"] .home-expertise__inner {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__inner {
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: none;
   grid-template-areas:
@@ -7738,18 +7746,18 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     "link";
 }
 
-:root[data-expertise="tiles"] .home-expertise__copy {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__copy {
   max-width: 40rem;
 }
 
-:root[data-expertise="tiles"] .home-expertise__list {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__list {
   justify-self: stretch;
   max-width: none;
   gap: clamp(16px, 1.8vw, 28px);
   margin-top: clamp(40px, 5.2vh, 64px);
 }
 
-:root[data-expertise="tiles"] .home-expertise__item {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__item {
   --hx-tint: 209, 126, 95;
   position: relative;
   isolation: isolate;
@@ -7763,85 +7771,86 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   text-align: left;
 }
 
-:root[data-expertise="tiles"] .home-expertise__item:nth-child(3n + 2) {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__item:nth-child(3n + 2) {
   --hx-tint: 171, 142, 130;
 }
 
-:root[data-expertise="tiles"] .home-expertise__item:nth-child(3n) {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__item:nth-child(3n) {
   --hx-tint: 115, 145, 196;
 }
 
 /* the drawing behind the name: more than the tile's height, its right
    and foot cut off by the edges, blurred, its strokes thickened so the
-   blur leaves a soft line rather than nothing */
-:root[data-expertise="tiles"] .home-expertise__art {
+   blur leaves a soft line rather than nothing, and very faint - the
+   client wants it "ultra transparent", behind, never in front */
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__art {
   position: absolute;
   z-index: -1;
   right: -12%;
   bottom: -26%;
   height: 112%;
-  opacity: 0.4;
+  opacity: 0.26;
   filter: blur(5px);
 }
 
-:root[data-expertise="tiles"] .home-expertise .ex-icon {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise .ex-icon {
   height: 100%;
 }
 
-:root[data-expertise="tiles"] .home-expertise .ex-icon path {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise .ex-icon path {
   stroke-width: 2.4;
 }
 
 /* the cards' name, in their type */
-:root[data-expertise="tiles"] .home-expertise__name {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__name {
   max-width: 11em;
   margin: 0;
   font: 500 clamp(20px, 1.7vw, 25px) / 1.15 "Urbanist", system-ui, sans-serif;
   letter-spacing: -0.01em;
 }
 
-:root[data-expertise="tiles"] .home-expertise__link {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__link {
   margin-top: clamp(28px, 4vh, 40px);
 }
 
 @media (max-width: 639px) {
-  :root[data-expertise="tiles"] .home-expertise__list {
+  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__list {
     gap: 12px;
     margin-top: 32px;
   }
 
-  :root[data-expertise="tiles"] .home-expertise__item {
+  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__item {
     min-height: 124px;
     padding: 18px 16px;
   }
 
-  :root[data-expertise="tiles"] .home-expertise__name {
+  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__name {
     font-size: 18px;
   }
 }
 
 @media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
-  :root[data-expertise="tiles"] .home-expertise__list {
+  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__list {
     gap: 12px;
     margin-top: 28px;
   }
 
-  :root[data-expertise="tiles"] .home-expertise__item {
+  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__item {
     min-height: 104px;
     padding: 16px;
   }
 
-  :root[data-expertise="tiles"] .home-expertise__name {
+  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__name {
     font-size: 17px;
   }
 
-  :root[data-expertise="tiles"] .home-expertise__link {
+  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__link {
     margin-top: 20px;
   }
 }
 
 /* ---------- light ---------- */
-:root[data-expertise="light"] .home-expertise {
+:root:is([data-expertise="light"], [data-expertise="lighttiles"]) .home-expertise {
   --hx-ink: #1c1419;
   --hx-ink-soft: rgba(28, 20, 25, 0.72);
   --eyebrow-color: #9e340a;
@@ -7864,30 +7873,45 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   color: var(--hx-ink);
 }
 
-:root[data-expertise="light"] :is(.home-expertise__title, .home-expertise__name) {
+:root:is([data-expertise="light"], [data-expertise="lighttiles"]) :is(.home-expertise__title, .home-expertise__name) {
   color: var(--hx-ink);
 }
 
-:root[data-expertise="light"] .home-expertise__lede {
+:root:is([data-expertise="light"], [data-expertise="lighttiles"]) .home-expertise__lede {
   color: var(--hx-ink-soft);
 }
 
-:root[data-expertise="light"] .home-expertise__link:focus-visible {
+:root:is([data-expertise="light"], [data-expertise="lighttiles"]) .home-expertise__link:focus-visible {
   outline-color: var(--focus-ring);
 }
 
 @media (max-width: 1023px) {
-  :root[data-expertise="light"] .home-expertise {
+  :root:is([data-expertise="light"], [data-expertise="lighttiles"]) .home-expertise {
     --hx-fade: clamp(160px, 40vw, 240px);
     --hx-foot: 32px;
   }
 }
 
 @media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
-  :root[data-expertise="light"] .home-expertise {
+  :root:is([data-expertise="light"], [data-expertise="lighttiles"]) .home-expertise {
     --hx-fade: 140px;
   }
 }
+/* ---------- lighttiles: the tiles on the light ground ----------
+   On the cream the cards keep their three tints, a step stronger so the
+   edges and the wash read on the light (the edge at 0.42, the wash at
+   0.16, both decoration); the drawings fainter still, as the gradient's
+   violet and orange stand out more on the light than on the night. */
+:root[data-expertise="lighttiles"] .home-expertise__item {
+  border-color: rgba(var(--hx-tint), 0.42);
+  background: linear-gradient(155deg, rgba(var(--hx-tint), 0.16), rgba(255, 255, 255, 0.35) 62%);
+}
+
+:root[data-expertise="lighttiles"] .home-expertise__art {
+  opacity: 0.2;
+  filter: blur(4px);
+}
+
 /* === end OUR EXPERTISE on Home: three previews === */
 
 /* === CLIENT MARKS on Home ===
