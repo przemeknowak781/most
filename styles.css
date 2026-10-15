@@ -621,6 +621,27 @@ body.menu-open {
   }
 }
 
+/* A low laptop (1280x720, 1366x768; the client, 10.10): 9vh is too little
+   there and the headline's lines still met the peaks, so the photo goes
+   16vh lower; its lit sky then comes up behind the tagline, so the navy
+   behind the copy is deeper and reaches lower (glyphs 5.3:1 and 4.6:1 at
+   1280x720 at worst, against 4.5:1 and 4.9:1 before). */
+@media (min-width: 1024px) and (max-height: 800px) {
+  .hero-bg {
+    transform: scaleX(-1)
+      translate3d(
+        6.5%,
+        calc(var(--scroll-y, 0px) * 0.2 + 16vh),
+        0
+      )
+      scale(calc(1.14 + var(--hero-progress, 0) * 0.025));
+  }
+
+  .hero-media::after {
+    background: radial-gradient(ellipse 52% 46% at 27% 50%, rgba(8, 12, 22, 0.66), rgba(8, 12, 22, 0.46) 50%, rgba(8, 12, 22, 0.14) 80%, transparent 100%);
+  }
+}
+
 /* Scrim over the photo: navy up top for nav/headline legibility, warm
    browns near the horizon. No multiply — warm tones never darken the
    photo; the vertical mask lets the ridges keep their natural light. */
