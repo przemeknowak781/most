@@ -6871,6 +6871,18 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   background: color-mix(in srgb, var(--aud-accent) 42%, var(--light));
 }
 
+/* Between the two (client, 10.10: once too many dots, now too few): a
+   preview, ?rail=dots (the switch in script.js), gives the points between
+   a small dot of their own again, three quarters of the rail's dot and
+   without the ends' halo, over the rail, so the ends still read as the
+   start and the finish. */
+:root[data-rail="dots"] :is(.page--founders, .page--companies, .page--investors) .aud-expertise__list li:not(:first-child):not(:last-child)::before {
+  content: "";
+  z-index: 1;
+  width: calc(var(--rail-dot) * 0.75);
+  height: calc(var(--rail-dot) * 0.75);
+}
+
 /* ===================================================================
    ROUTE SHORTCUTS
    The client's review asks for the same three-route shortcut on Our
