@@ -16,11 +16,13 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 TEX = [float(v) for v in re.search(r'const RIDGE_TEXTURE = "([^"]+)"', open(os.path.join(ROOT, 'script.js')).read()).group(1).split(',')]
 RIDGE_PX = 0.72
 
-# flatter than the plateau, a wider dip under the valley floor, a gentler
-# climb deep in the far slope
-ANCHORS = [(0, 388, -0.06), (150, 368, -0.06), (289, 362, -0.03), (450, 356, -0.04), (600, 352, 0.02),
-           (668, 356, 0.25), (760, 392, 0.45), (860, 446, 0.12), (930, 452, -0.05), (1020, 420, -0.5),
-           (1100, 372, -0.55), (1165, 334, -0.5), (1240, 296, -0.5), (1310, 262, -0.45), (1443, 196, -0.5)]
+# flatter than the plateau, then always up (the client, 10.10: the line
+# never goes down): over the valley it leaves the land and crosses the
+# ridge into the sky, as the Home trail does, and climbs on along the far
+# slope
+ANCHORS = [(0, 388, -0.06), (150, 368, -0.06), (289, 362, -0.03), (450, 356, -0.04), (600, 350, -0.05),
+           (668, 346, -0.07), (760, 338, -0.09), (860, 328, -0.11), (930, 320, -0.13), (1020, 306, -0.18),
+           (1100, 288, -0.25), (1165, 270, -0.3), (1240, 248, -0.32), (1310, 226, -0.32), (1443, 184, -0.32)]
 MARKS = [289, 668, 1165, 1310]
 
 
