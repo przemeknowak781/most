@@ -5,6 +5,12 @@
 window.MOST_COPY_REVIEW = {
  "index.html": [
   {
+   "t": "Let's start / Let's hire / Let's fund / Let's sign / Let's create / Let's expand",
+   "c": "ours",
+   "s": "none (te same robocze CTA co przy obszarach na Our Expertise, ze spotkania 10.10; tylko w podglądach ?expertise=tiles i ?expertise=lighttiles)",
+   "a": "Czy na kafelkach Our Expertise na Home mogą stać te same CTA co na stronie Expertise? Kolejno: Company setup – Let's start, Hiring – Let's hire, Fundraising – Let's fund, Contracts – Let's sign, IP – Let's create, Global expansion – Let's expand. Każde otwiera ten obszar na stronie Our Expertise; czy wolicie, żeby prowadziły od razu do Contact us, jak tam?"
+  },
+  {
    "t": "Partners in your most ambitious journey.",
    "c": "wireframe",
    "s": "S5c:9",

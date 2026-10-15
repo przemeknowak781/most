@@ -7846,6 +7846,38 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   margin-top: clamp(28px, 4vh, 40px);
 }
 
+/* Each card's call to action (the client, 10.10: as at Our Areas of
+   Expertise), the Expertise page's own words, in orange at the card's
+   foot; it opens that area there. Only the cards carry it: the plain
+   list and the icons keep the one link under the six (scoped to the
+   section, or .link-arrow, later in the sheet, would show it). */
+.home-expertise .home-expertise__cta {
+  display: none;
+}
+
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__cta {
+  --link-ink: var(--orange);
+  display: inline-flex;
+  min-height: 44px;
+  margin-top: auto;
+  padding-top: 12px;
+  white-space: nowrap;
+}
+
+:root[data-expertise="lighttiles"] .home-expertise__cta {
+  --link-ink: #9e340a;
+}
+
+/* two cards a row on the narrowest phones: at 320px "Let's expand" ran
+   20px past its card's edge, so there the words close up */
+@media (max-width: 374px) {
+  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__cta {
+    gap: 6px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+  }
+}
+
 @media (max-width: 639px) {
   :root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__list {
     gap: 12px;
