@@ -1081,16 +1081,6 @@ function setupSceneClearance() {
   measure();
 }
 
-function setupMarqueePause() {
-  const btn = document.querySelector("[data-marquee-pause]");
-  const row = document.querySelector(".clients__viewport");
-  if (!btn || !row) return;
-  btn.addEventListener("click", () => {
-    const paused = row.classList.toggle("is-paused");
-    btn.setAttribute("aria-pressed", String(paused));
-  });
-}
-
 function setupMemberReadmore() {
   const buttons = document.querySelectorAll("[data-readmore]");
   buttons.forEach((btn) => {
@@ -1516,7 +1506,6 @@ setupAudienceTriptych();
 setupAudienceConnectors();
 setupMemberReadmore();
 setupPreviewSwitches();
-setupMarqueePause();
 setupPortraitProposal();
 setupCopyReview();
 

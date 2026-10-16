@@ -7199,44 +7199,16 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   to { transform: translateX(-100%); }
 }
 
-/* The row moves on its own for longer than five seconds, so it stops on
-   hover and focus, and a button stops it for good (WCAG 2.2.2). */
+/* The row stops under the pointer and with the system's reduced motion
+   (below); its Pause button was taken out at the client's request (16.10). */
 .clients__viewport:hover .clients__track,
-.clients__viewport:focus-within .clients__track,
-.clients__viewport.is-paused .clients__track {
+.clients__viewport:focus-within .clients__track {
   animation-play-state: paused;
-}
-
-/* the site's quiet switch (this one and the Founders map's list
-   switch): a 32px pill in small caps on desktop */
-.clients__pause {
-  display: flex;
-  align-items: center;
-  width: fit-content;
-  min-height: 32px;
-  margin: clamp(18px, 2.4vh, 28px) auto 0;
-  padding: 0 14px;
-  border: 1px solid var(--light-28);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--light-80);
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: border-color 220ms ease, color 220ms ease;
-}
-
-.clients__pause:hover,
-.clients__pause[aria-pressed="true"] {
-  border-color: rgba(255, 168, 110, 0.7);
-  color: var(--light);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .clients__track { animation: none; }
   .clients__viewport { overflow-x: auto; }
-  .clients__pause { display: none; }
 }
 
 /* The team page's closing band now answers "where does this go?" by naming
@@ -8038,7 +8010,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
    foot of Home (6.10). The component is About's as it is; About keeps it
    unchanged. Home gives it its ground and restates the pieces About
    scopes to its own page: the compact sizes and the still row (see
-   "Client marks (<=1023px)"), the Pause button's ring and touch area.
+   "Client marks (<=1023px)").
    The ground is navy-deep from edge to edge, where About gives the row a
    band of navy of its own: Our Expertise ends on navy-deep and the closing
    band starts on it, so the three run on as one ground, with no seam. */
@@ -8046,22 +8018,14 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   background: var(--navy-deep);
 }
 
-/* the marquee's Pause control takes the site's focus ring at every width */
-.page--home .clients__pause:focus-visible {
-  outline: 2px solid var(--focus-ring, var(--orange));
-  outline-offset: 3px;
-}
-
-/* a touch screen 1024px and up: the 32px switches - this one and the
-   Founders map's list switch - get an invisible hit area 44px tall or
-   more (see "touch screens 1024px and up: hit areas") */
+/* a touch screen 1024px and up: the 32px switch - the Founders map's
+   list switch - gets an invisible hit area 44px tall or more (see "touch
+   screens 1024px and up: hit areas") */
 @media (min-width: 1024px) and (any-pointer: coarse) {
-  .page--home .clients__pause,
   .path-map__view {
     position: relative;
   }
 
-  .page--home .clients__pause::after,
   .path-map__view::after {
     content: "";
     position: absolute;
@@ -10085,7 +10049,6 @@ main {
   .aud-grow__alt,
   .page--home .whoweare__link,
   .page--about .photo-break__line,
-  .page--about .clients__pause,
   .page--team .member__readmore,
   .page--contact .contact-social,
   .page--audience .aud-expertise__more {
@@ -10102,7 +10065,6 @@ main {
   .page--home .whoweare__link::after,
   .page--home .preview__toggle::after,
   .page--about .photo-break__line::after,
-  .page--about .clients__pause::after,
   .page--expertise .ex-areas__nav [role="tab"]::after,
   .page--team .member__readmore::after,
   .page--contact .contact-social::after,
@@ -10149,10 +10111,6 @@ main {
   .page--home .whoweare__link::after,
   .page--about .ascent__paths a::before {
     inset: -12px -12px;
-  }
-
-  .page--about .clients__pause::after {
-    inset: -9px 0;
   }
 
   /* the area tabs are 20px rows 46px apart */
@@ -11476,8 +11434,7 @@ main {
 /* ---------- Client marks (<=1023px) ----------
    As About Us sets them: the row keeps moving at a phone's scale, the
    title and lede take the H2 and lead of the other heads here, the
-   logos are drawn at 0.8 of their size, and Pause is a real 44px
-   control. */
+   logos are drawn at 0.8 of their size. */
 @media (max-width: 1023px) {
   .page--home .clients {
     padding: var(--m-section) 0;
@@ -11517,13 +11474,6 @@ main {
 
   .page--home .clients__mark img {
     zoom: 0.8;
-  }
-
-  .page--home .clients__pause {
-    min-height: 44px;
-    margin-top: 24px;
-    padding: 0 22px;
-    font-size: var(--m-label);
   }
 }
 
@@ -12012,8 +11962,7 @@ main {
 }
 
 /* ---------- client marks ----------
-   The row keeps moving (the review liked it) at a phone's scale, and its
-   Pause button is a real 44px control. */
+   The row keeps moving (the review liked it) at a phone's scale. */
 @media (max-width: 1023px) {
   .page--about .clients {
     padding: var(--m-section) 0;
@@ -12055,13 +12004,6 @@ main {
 
   .page--about .clients__mark img {
     zoom: 0.8;
-  }
-
-  .page--about .clients__pause {
-    min-height: 44px;
-    margin-top: 24px;
-    padding: 0 22px;
-    font-size: var(--m-label);
   }
 }
 
@@ -12208,8 +12150,7 @@ main {
 /* ---------- focus: the site's orange ring on this page's own controls ---------- */
 @media (max-width: 1023px) {
   .page--about .page-hero .primary-cta:focus-visible,
-  .page--expertise .page-hero .primary-cta:focus-visible,
-  .page--about .clients__pause:focus-visible {
+  .page--expertise .page-hero .primary-cta:focus-visible {
     outline: 2px solid var(--orange);
     outline-offset: 3px;
   }
@@ -12711,12 +12652,6 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-/* the marquee's Pause control takes the site's focus ring at every width */
-.page--about .clients__pause:focus-visible {
-  outline: 2px solid var(--focus-ring, var(--orange));
-  outline-offset: 3px;
 }
 
 /* a small desktop: the left column is too narrow for the two paragraphs
@@ -16113,9 +16048,9 @@ main {
   font: 400 var(--fs-lead) / var(--lh-lead) "Outfit", system-ui, sans-serif;
 }
 
-/* the site's quiet switch, as the marquee's and the heroes' Pause: a
-   32px pill, a control rather than a call to action (it was 44px, a size
-   of its own); pressed, its line takes the trail's orange */
+/* the site's quiet switch: a 32px pill, a control rather than a call to
+   action (it was 44px, a size of its own); pressed, its line takes the
+   trail's orange */
 .path-map__view {
   justify-self: end;
   min-height: 32px;
