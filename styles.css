@@ -7161,8 +7161,8 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 .clients__track {
   display: flex;
   flex: 0 0 auto;
-  /* Never narrower than the row. Six placeholder marks make one copy about
-     1600px wide, so at 1920 and 2560 the loop ran out before the second copy
+  /* Never narrower than the row. The eight logos make one copy about
+     1900px wide at 1440, so at 1920 and 2560 the loop ran out before the second copy
      reached the right edge. A short set now spreads out evenly; a set wider
      than the screen is unaffected. */
   min-width: 100%;
@@ -7179,16 +7179,19 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   flex: 0 0 auto;
   display: grid;
   place-items: center;
-  width: clamp(120px, 11vw, 168px);
   height: clamp(48px, 4.4vw, 62px);
-  border: 1px dashed var(--light-28);
-  border-radius: var(--card-radius);
-  /* placeholder marks until the logos land: their word at 4.5:1 and more,
-     as on a phone (at 0.4 it was 3.4:1) */
-  color: var(--light-60);
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+}
+
+/* The clients' logos, white on clear, each at the size its markup gives
+   it: sized so that every mark covers about the same area (no taller than
+   46px, no wider than 180px), so a wide wordmark and a square symbol weigh
+   alike in the row. A touch under full white, so the row stays quieter
+   than the heads above it. */
+.clients__mark img {
+  display: block;
+  max-width: none;
+  height: auto;
+  opacity: 0.86;
 }
 
 @keyframes clients-marquee {
@@ -11473,7 +11476,7 @@ main {
 /* ---------- Client marks (<=1023px) ----------
    As About Us sets them: the row keeps moving at a phone's scale, the
    title and lede take the H2 and lead of the other heads here, the
-   placeholder marks' word holds 4.5:1, and Pause is a real 44px
+   logos are drawn at 0.8 of their size, and Pause is a real 44px
    control. */
 @media (max-width: 1023px) {
   .page--home .clients {
@@ -11509,10 +11512,11 @@ main {
   }
 
   .page--home .clients__mark {
-    width: 132px;
     height: 56px;
-    color: rgba(240, 235, 233, 0.6);
-    font-size: var(--m-label);
+  }
+
+  .page--home .clients__mark img {
+    zoom: 0.8;
   }
 
   .page--home .clients__pause {
@@ -12045,12 +12049,12 @@ main {
     padding-right: 28px;
   }
 
-  /* placeholder marks until the logos land: their word at 4.5:1 */
   .page--about .clients__mark {
-    width: 132px;
     height: 56px;
-    color: rgba(240, 235, 233, 0.6);
-    font-size: var(--m-label);
+  }
+
+  .page--about .clients__mark img {
+    zoom: 0.8;
   }
 
   .page--about .clients__pause {

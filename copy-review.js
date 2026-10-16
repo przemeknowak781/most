@@ -239,12 +239,6 @@ window.MOST_COPY_REVIEW = {
    "a": "Zdanie pod nagłówkiem karuzeli, jak na About Us; czy 'funds' i zakres rynków się zgadzają?"
   },
   {
-   "t": "Logo",
-   "c": "wireframe",
-   "s": "S5c:334-339 \"LOGO\" (×6 w karuzeli wireframe'u)",
-   "a": "Prosimy o logotypy klientów do karuzeli i potwierdzenie zgód na ich publikację."
-  },
-  {
    "t": "Want to Grow Together?",
    "c": "wireframe",
    "s": "S5c:73",
@@ -527,12 +521,6 @@ window.MOST_COPY_REVIEW = {
    "c": "ours",
    "s": "none",
    "a": "Potrzebujemy 1 zdania pod nagłówkiem karuzeli. Nasza propozycja jest taka jak na stronie; czy 'funds' i zakres rynków się zgadzają?"
-  },
-  {
-   "t": "Logo",
-   "c": "wireframe",
-   "s": "S5c:334-339 \"LOGO\" (×6 w karuzeli wireframe'u)",
-   "a": "Prosimy o logotypy klientów do karuzeli i potwierdzenie zgód na ich publikację."
   },
   {
    "t": "— ready for the next step —",
