@@ -1168,8 +1168,9 @@ function setupPortraitProposal() {
    pages' Our Expertise rail, ?arch=help architecture coming up out of
    the ground behind their What We Help You Achieve, ?nav=routes the
    three routes first in the menus, ?order=work Our Expertise's How We
-   Work above Our Areas and ?stats=rows|grid Home's hero figures on a
-   phone divided by dotted rules - each as a data
+   Work above Our Areas, ?stats=rows|grid Home's hero figures on a phone
+   divided by dotted rules and ?clients=center|right Who We Work With's
+   head centred or on the right - each as a data
    attribute on <html> the stylesheet answers. #who-latte,
    #titles-smaller and the like do the same where a preview host drops
    the query. Without one the page is as it ships. (The titles in capitals
@@ -1189,6 +1190,7 @@ const PREVIEW_SWITCHES = {
   nav: ["routes"],
   order: ["work"],
   stats: ["rows", "grid"],
+  clients: ["center", "right"],
 };
 
 /* The panel's words, in Polish as the client reviews in it. Each switch
@@ -1211,6 +1213,7 @@ const PREVIEW_PANEL = [
   ["stats", ["index"], "Liczby w hero (na telefonie)", [["", "obecne"], ["rows", "wiersze z linią"], ["grid", "siatka z liniami"]]],
   ["who", ["index"], "Who We Are", [["", "ciemne"], ["ivory", "złamana biel"], ["grey", "szarość"], ["latte", "latte"]]],
   ["expertise", ["index"], "Our Expertise", [["", "obecne"], ["icons", "większe ikony"], ["tiles", "kafelki"], ["light", "jasna sekcja"], ["lighttiles", "jasne kafelki"]]],
+  ["clients", ["index"], "Who We Work With: tekst", [["", "po lewej"], ["center", "na środku"], ["right", "po prawej"]]],
   ["scroll", ["our-team"], "Zachęta do przewinięcia w hero", [["", "bez"], ["peek", "portrety spod hero"], ["cue", "napis ze strzałką"]]],
   ["order", ["expertise"], "Kolejność sekcji", [["", "obszary, potem How We Work"], ["work", "najpierw How We Work"]]],
   ["investors", ["for-investors"], "Zdjęcia i kolor", [["", "obecne"], ["mist", "mgła, jasne niebo"], ["dusk", "zmierzch, błękit w fiolet"], ["facade", "zmierzch, fasada w How We Work"]]],

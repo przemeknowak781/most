@@ -8086,6 +8086,46 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   background: var(--navy-deep);
 }
 
+/* A preview, ?clients=center|right (the switch in script.js; the client,
+   18.10): the head of Who We Work With centred over the logos, or set to
+   the right as a counterweight to the left-set heads above it (from a
+   tablet up). Without the switch it stays on the left. */
+:root[data-clients="center"] .page--home .clients__head {
+  margin-inline: auto;
+  text-align: center;
+}
+
+:root[data-clients="right"] .page--home .clients__head {
+  margin-left: auto;
+  text-align: right;
+}
+
+:root[data-clients="center"] .page--home .clients__lede {
+  margin-inline: auto;
+}
+
+:root[data-clients="right"] .page--home .clients__lede {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+:root[data-clients] .page--home .clients__lede {
+  text-wrap: balance;
+}
+
+/* the counterweight is a wide screen's: on a phone the right-set head
+   reads as ragged, so it stays on the left there */
+@media (max-width: 767px) {
+  :root[data-clients="right"] .page--home .clients__head {
+    margin-left: 0;
+    text-align: left;
+  }
+
+  :root[data-clients="right"] .page--home .clients__lede {
+    margin-left: 0;
+  }
+}
+
 /* a touch screen 1024px and up: the 32px switch - the Founders map's
    list switch - gets an invisible hit area 44px tall or more (see "touch
    screens 1024px and up: hit areas") */
