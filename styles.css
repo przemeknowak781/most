@@ -2047,6 +2047,14 @@ main:focus {
   padding: clamp(18px, 2.6vh, 28px) clamp(12px, 1.2vw, 18px) clamp(58px, 6vh, 74px);
 }
 
+/* a folded card opens on a click anywhere on it (script.js), so the whole
+   card says so on a desktop */
+@media (min-width: 1024px) {
+  .audience-intro .preview:not(.is-expanded) {
+    cursor: pointer;
+  }
+}
+
 .preview__head {
   min-width: 0;
   flex: 0 0 auto;

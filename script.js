@@ -882,7 +882,11 @@ function setupAudienceTriptych() {
     const revealStart = sectionTop - vh * 0.08;
     updateBackdrop(clamp((scrollY - sectionTop) / sectionScrollable, 0, 1));
 
-    if (scrollY < revealStart) {
+    /* Founders opens as the section comes up, with its top still 70% of
+       the window down (the review, 16.10: the hero's "Choose your path"
+       landed on three empty cards, and a reader had to scroll on before
+       anything opened); the hand-over to the next card keeps its place. */
+    if (scrollY < sectionTop - vh * 0.7) {
       setActiveCard(-1);
       return;
     }
@@ -914,6 +918,19 @@ function setupAudienceTriptych() {
       if (compactMode) return;
       /* show less closes the card; read more opens it */
       chosen = card.classList.contains("is-expanded") ? -1 : cards.indexOf(card);
+      setActiveCard(chosen);
+    });
+    /* A folded card opens on a click anywhere on it, not only on its "+"
+       (the review, 16.10), so the reader moves between the three with one
+       click each. An open card ignores clicks on its copy - a stray click
+       or a text selection never folds it - and its link and toggle keep
+       their own jobs. The toggle stays the keyboard's control. */
+    card.addEventListener("click", (e) => {
+      if (compactMode || card.classList.contains("is-expanded")) return;
+      if (e.target.closest("a, button")) return;
+      const selection = window.getSelection && window.getSelection();
+      if (selection && !selection.isCollapsed) return;
+      chosen = cards.indexOf(card);
       setActiveCard(chosen);
     });
   });
