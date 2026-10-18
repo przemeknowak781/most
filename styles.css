@@ -7024,6 +7024,12 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   background:
     radial-gradient(820px 520px at 14% 540px, rgba(255, 97, 44, 0.07), transparent 68%),
     radial-gradient(760px 520px at 88% 100%, rgba(128, 135, 173, 0.09), transparent 70%);
+  /* the glows die away before the section's foot, so the strip runs into
+     the closing band's navy-deep without a line (the review, 16.10: on
+     Expertise and About the violet glow, centred on the edge, was cut in
+     half there, where Home's sections flow into the band) */
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
   pointer-events: none;
 }
 
@@ -14753,10 +14759,13 @@ main {
 }
 
 /* the band opens on the navy of the section above and clears to the lit
-   ridge: the copy sits on the darkest part of the sky */
+   ridge: the copy sits on the darkest part of the sky. The shade eases out
+   of the solid navy over its first quarter (the review, 16.10): straight
+   from 1 to 0.66 it turned a corner at the band's top that read as an edge
+   between the sections. Under the copy it is what it was. */
 .aud-grow > .footer-ridge::before {
   z-index: 1;
-  background: linear-gradient(180deg, var(--navy-deep) 0%, rgba(8, 11, 19, 0.66) 24%, rgba(8, 11, 19, 0.24) 50%, transparent 66%);
+  background: linear-gradient(180deg, var(--navy-deep) 0%, rgba(8, 11, 19, 0.97) 8%, rgba(8, 11, 19, 0.86) 16%, rgba(8, 11, 19, 0.66) 24%, rgba(8, 11, 19, 0.24) 50%, transparent 66%);
 }
 
 .aud-grow > .footer-ridge .footer-ridge__overlay {
@@ -15399,7 +15408,7 @@ main {
   }
 
   .page--about .aud-grow > .footer-ridge::before {
-    background: linear-gradient(180deg, var(--navy-deep) 0%, rgba(8, 11, 19, 0.7) 26%, rgba(8, 11, 19, 0.42) 52%, rgba(8, 11, 19, 0.14) 64%, transparent 72%);
+    background: linear-gradient(180deg, var(--navy-deep) 0%, rgba(8, 11, 19, 0.97) 8%, rgba(8, 11, 19, 0.86) 17%, rgba(8, 11, 19, 0.7) 26%, rgba(8, 11, 19, 0.42) 52%, rgba(8, 11, 19, 0.14) 64%, transparent 72%);
   }
 }
 
