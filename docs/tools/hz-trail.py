@@ -16,14 +16,15 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 TEX = [float(v) for v in re.search(r'const RIDGE_TEXTURE = "([^"]+)"', open(os.path.join(ROOT, 'script.js')).read()).group(1).split(',')]
 RIDGE_PX = 0.72
 
-# flatter than the plateau, then always up (the client, 10.10: the line
-# never goes down): over the valley it leaves the land and crosses the
-# ridge into the sky, as the Home trail does, and climbs on along the far
-# slope
-ANCHORS = [(0, 388, -0.06), (150, 368, -0.06), (289, 362, -0.03), (450, 356, -0.04), (600, 350, -0.05),
-           (668, 346, -0.07), (760, 338, -0.09), (860, 328, -0.11), (930, 320, -0.13), (1020, 306, -0.18),
-           (1100, 288, -0.25), (1165, 270, -0.3), (1240, 248, -0.32), (1310, 226, -0.32), (1443, 184, -0.32)]
-MARKS = [289, 668, 1165, 1310]
+# the skyline's rhythm, some way into the land (the client, 18.10: the
+# line that kept climbing straight over the valley was cut loose from the
+# scene - "not along the ridge, but in its rhythm, and no leap over the
+# hollow"): the skyline smoothed over about 300 units, 40 under it on the
+# plateau and the valley, sinking to 150 under the steep far peak so the
+# climb there is gentler than the rock's. Always at least 16 under the
+# skyline, so it never crosses into the photograph.
+ANCHORS = [(0, 396.4, -0.078), (90, 387.8, -0.116), (180, 377.4, -0.093), (270, 372.0, -0.056), (360, 362.8, -0.149), (450, 352.7, -0.01), (540, 358.0, 0.098), (630, 366.8, 0.123), (720, 389.4, 0.388), (810, 428.3, 0.415), (900, 451.0, 0.058), (990, 435.1, -0.389), (1080, 390.1, -0.589), (1170, 330.8, -0.653), (1260, 274.4, -0.6), (1350, 228.2, -0.421), (1440, 195.5, -0.327), (1443, 194.5, -0.324)]
+MARKS = [289, 640, 1120, 1300]
 
 
 def tex(u):
