@@ -356,6 +356,57 @@ a {
   color: var(--light);
 }
 
+/* ?nav=routes (a preview; script.js moves the groups in the markup): the
+   routes stand next to the wordmark and the pages go right, before
+   Contact. The two groups trade their margins, at each width as above. */
+:root[data-nav="routes"] .top-nav .top-nav__menu--right {
+  margin-left: clamp(28px, 4vw, 60px);
+  margin-right: 0;
+}
+
+:root[data-nav="routes"] .top-nav .top-nav__menu--left {
+  position: relative;
+  margin-left: auto;
+  margin-right: clamp(20px, 2.4vw, 32px);
+  padding-left: 14px;
+}
+
+/* where the bar is full the auto margin runs out, so the pages open with
+   a short upright rule, as "explore as" does under 1280px; it stands in
+   the group's padding and takes no gap of its own */
+:root[data-nav="routes"] .top-nav .top-nav__menu--left::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1px;
+  height: 14px;
+  margin-top: -7px;
+  background: var(--light);
+  opacity: 0.4;
+}
+
+@media (min-width: 1181px) and (max-width: 1279px) {
+  :root[data-nav="routes"] .top-nav .top-nav__menu--right {
+    margin-left: 28px;
+  }
+
+  :root[data-nav="routes"] .top-nav .top-nav__menu--left {
+    margin-right: 20px;
+  }
+}
+
+@media (max-width: 1100px) {
+  :root[data-nav="routes"] .top-nav .top-nav__menu--right {
+    margin-left: 16px;
+  }
+
+  :root[data-nav="routes"] .top-nav .top-nav__menu--left {
+    margin-right: 10px;
+    padding-left: 12px;
+  }
+}
+
 .mobile-menu__lead {
   display: block;
   margin: 18px 0 2px;
@@ -8854,6 +8905,9 @@ main {
     height: 38px;
   }
 
+  /* The menu and close buttons are their icon alone, in a 44px hit area
+     (the review, 16.10: the ring around them was one thing too many in a
+     busy bar); the pointer lights the icon in the trail's orange. */
   .icon-button,
   .close-button {
     display: grid;
@@ -8863,18 +8917,23 @@ main {
     margin: 0;
     padding: 0;
     color: var(--light);
-    background: rgba(240, 235, 233, 0.07);
-    border: 1px solid rgba(240, 235, 233, 0.16);
+    background: transparent;
+    border: 0;
     border-radius: 50%;
     cursor: pointer;
-    transition: background 200ms ease, border-color 200ms ease, color 200ms ease;
+    transition: color 200ms ease;
   }
 
-  .icon-button:hover,
   .icon-button:active,
-  .close-button:hover,
   .close-button:active {
-    background: rgba(240, 235, 233, 0.16);
+    color: #FFA86E;
+  }
+
+  @media (hover: hover) {
+    .icon-button:hover,
+    .close-button:hover {
+      color: #FFA86E;
+    }
   }
 
   .top-nav .wordmark:focus-visible,
@@ -8904,20 +8963,14 @@ main {
      dark on the sunlit founder and horizon skies, light everywhere else */
   .page--founders .top-nav .icon-button {
     color: var(--fnd-ink);
-    background: rgba(255, 255, 255, 0.16);
-    border-color: rgba(20, 22, 31, 0.3);
   }
 
   .page--horizon .top-nav .icon-button {
     color: rgb(var(--hz-ink));
-    background: rgba(255, 255, 255, 0.16);
-    border-color: rgba(var(--hz-ink), 0.3);
   }
 
   .top-nav.is-scrolled .icon-button {
     color: var(--light);
-    background: rgba(240, 235, 233, 0.07);
-    border-color: rgba(240, 235, 233, 0.16);
   }
 
   /* the tablet Contact pill wears the site's ring, not the browser's */
@@ -9118,8 +9171,10 @@ main {
     margin: clamp(12px, 4svh, 36px) 0 0;
   }
 
-  /* rows 8px apart (SPEC 4): the gap comes out of the row height, so the
-     pitch - and the rail's rhythm - is what it was */
+  /* rows 8px apart (SPEC 4). Every link of the sheet is one size (the
+     review, 16.10: the pages in 30-40px headline type outweighed the three
+     routes, though the routes are the site's main way in), and the two
+     groups stand further apart. */
   .mobile-menu__primary,
   .mobile-menu__audience {
     display: grid;
@@ -9138,8 +9193,8 @@ main {
     content: "";
     position: absolute;
     left: 5px;
-    top: 26px;
-    bottom: 26px;
+    top: 24px;
+    bottom: 24px;
     width: 1px;
     background: rgba(240, 235, 233, 0.14);
   }
@@ -9148,11 +9203,11 @@ main {
     position: relative;
     display: flex;
     align-items: center;
-    min-height: 52px;
+    min-height: 48px;
     padding: 4px 0 4px 30px;
     color: rgba(240, 235, 233, 0.84);
-    font: 500 clamp(30px, 8.6vw, 40px) / 1.1 "Urbanist", system-ui, sans-serif;
-    letter-spacing: -0.01em;
+    font: 400 21px / 1.2 "Outfit", system-ui, sans-serif;
+    letter-spacing: 0.01em;
     transition: color 200ms ease;
   }
 
@@ -9182,8 +9237,8 @@ main {
   }
 
   .mobile-menu__group {
-    margin-top: 22px;
-    padding-top: 18px;
+    margin-top: 36px;
+    padding-top: 28px;
     border-top: 1px solid rgba(240, 235, 233, 0.1);
   }
 
@@ -9191,7 +9246,7 @@ main {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin: 0 0 6px;
+    margin: 0 0 10px;
     color: rgba(240, 235, 233, 0.72);
     font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
     letter-spacing: 0.18em;
@@ -9223,9 +9278,9 @@ main {
     display: flex;
     align-items: center;
     gap: 14px;
-    min-height: 44px;
+    min-height: 48px;
     color: rgba(240, 235, 233, 0.8);
-    font: 400 19px / 1.2 "Outfit", system-ui, sans-serif;
+    font: 400 21px / 1.2 "Outfit", system-ui, sans-serif;
     letter-spacing: 0.01em;
     transition: color 200ms ease;
   }
@@ -9449,18 +9504,19 @@ main {
   }
 
   .mobile-menu__links .mobile-menu__primary a {
-    min-height: 68px;
+    min-height: 56px;
     padding-left: 36px;
-    font-size: 48px;
+    font-size: 24px;
   }
 
   .mobile-menu__primary::before {
-    top: 34px;
-    bottom: 34px;
+    top: 28px;
+    bottom: 28px;
   }
 
   .mobile-menu__links .mobile-menu__route {
-    font-size: 21px;
+    min-height: 56px;
+    font-size: 24px;
   }
 
   .mobile-menu__ridge img {
@@ -9475,7 +9531,7 @@ main {
 
   .mobile-menu__links .mobile-menu__primary a {
     min-height: 44px;
-    font-size: 30px;
+    font-size: 18px;
   }
 
   .mobile-menu__primary::before {
@@ -9488,7 +9544,8 @@ main {
   }
 
   .mobile-menu__links .mobile-menu__route {
-    font-size: 17px;
+    min-height: 44px;
+    font-size: 18px;
   }
 
   .mobile-menu__foot {
@@ -9519,7 +9576,7 @@ main {
 
   .mobile-menu__links .mobile-menu__primary a {
     min-height: 44px;
-    font-size: clamp(28px, 8.4vw, 34px);
+    font-size: 19px;
   }
 
   .mobile-menu__primary::before {
@@ -9528,12 +9585,13 @@ main {
   }
 
   .mobile-menu__group {
-    margin-top: 14px;
-    padding-top: 12px;
+    margin-top: 22px;
+    padding-top: 16px;
   }
 
   .mobile-menu__links .mobile-menu__route {
-    font-size: 18px;
+    min-height: 44px;
+    font-size: 19px;
   }
 
   .mobile-menu__foot {
@@ -9547,34 +9605,29 @@ main {
 }
 
 /* A screen that is shorter still - an SE-class phone once Safari's bars
-   are showing (about 320x460 or 375x550): the three routes share one row
-   under their lead, which gives back two rows and lets Contact, the mail
-   address and LinkedIn stay on the first screen. */
+   are showing (about 320x460 or 375x550): the rows close up a little more.
+   The three routes stay one under another (the review, 16.10: a menu's
+   links never share a row); where the sheet is still taller than the
+   screen, it scrolls. */
 @media (max-width: 767px) and (max-height: 600px) and (orientation: portrait),
   (max-width: 559px) and (orientation: landscape) {
-  .mobile-menu__links .mobile-menu__primary a {
-    font-size: clamp(26px, 8vw, 30px);
+  .mobile-menu__links .mobile-menu__primary a,
+  .mobile-menu__links .mobile-menu__route {
+    font-size: 18px;
+  }
+
+  .mobile-menu__primary,
+  .mobile-menu__audience {
+    row-gap: 4px;
   }
 
   .mobile-menu__group {
-    margin-top: 10px;
-    padding-top: 10px;
+    margin-top: 16px;
+    padding-top: 12px;
   }
 
   .mobile-menu__lead {
-    margin-bottom: 0;
-  }
-
-  .mobile-menu__audience {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 8px 12px;
-  }
-
-  .mobile-menu__links .mobile-menu__route {
-    gap: 8px;
-    font-size: 15px;
+    margin-bottom: 4px;
   }
 
   .mobile-menu__foot {
@@ -9583,6 +9636,52 @@ main {
 
   .mobile-menu__cta {
     min-height: 48px;
+  }
+}
+
+/* ?nav=routes in the phone's menu: the routes come first, and the rule
+   and the air between the groups move under them, so the pages' rail
+   keeps its own box. Side by side (a tablet, a phone on its side) the
+   routes take the left column and the upright rule moves to their right. */
+@media (max-width: 1023px) {
+  :root[data-nav="routes"] .mobile-menu__group {
+    margin: 0 0 36px;
+    padding: 0 0 28px;
+    border-top: 0;
+    border-bottom: 1px solid rgba(240, 235, 233, 0.1);
+  }
+}
+
+@media (max-width: 767px) and (max-height: 700px) and (orientation: portrait),
+  (max-width: 559px) and (orientation: landscape) {
+  :root[data-nav="routes"] .mobile-menu__group {
+    margin-bottom: 22px;
+    padding-bottom: 16px;
+  }
+}
+
+@media (max-width: 767px) and (max-height: 600px) and (orientation: portrait),
+  (max-width: 559px) and (orientation: landscape) {
+  :root[data-nav="routes"] .mobile-menu__group {
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px),
+  (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  :root[data-nav="routes"] .mobile-menu__group {
+    margin: 0;
+    padding: 14px 32px 0 0;
+    border-bottom: 0;
+    border-right: 1px solid rgba(240, 235, 233, 0.1);
+    border-left: 0;
+  }
+}
+
+@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  :root[data-nav="routes"] .mobile-menu__group {
+    padding-top: 0;
   }
 }
 

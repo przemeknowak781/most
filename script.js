@@ -1165,8 +1165,9 @@ function setupPortraitProposal() {
    about half instead of the dark frame, in blue going violet with an
    orange light, ?graph=map Founders' Our Expertise as a map of the
    road's stages on the trail, ?rail=dots small dots on the audience
-   pages' Our Expertise rail and ?arch=help architecture coming up out of
-   the ground behind their What We Help You Achieve - each as a data
+   pages' Our Expertise rail, ?arch=help architecture coming up out of
+   the ground behind their What We Help You Achieve and ?nav=routes the
+   three routes first in the menus - each as a data
    attribute on <html> the stylesheet answers. #who-latte,
    #titles-smaller and the like do the same where a preview host drops
    the query. Without one the page is as it ships. (The titles in capitals
@@ -1183,6 +1184,7 @@ const PREVIEW_SWITCHES = {
   graph: ["map"],
   rail: ["dots"],
   arch: ["help"],
+  nav: ["routes"],
 };
 
 /* the panel's words, in Polish as the client reviews in it: each switch's
@@ -1196,7 +1198,36 @@ const PREVIEW_PANEL = [
   ["graph", "Founders: Our Expertise jako mapa (prototyp)", [["", "obecne"], ["map", "mapa etapów"]]],
   ["rail", "Founders, Companies, Investors: kropki przy Our Expertise", [["", "tylko na końcach"], ["dots", "małe przy każdym punkcie"]]],
   ["arch", "Founders, Companies, Investors: What We Help You Achieve", [["", "obecne"], ["help", "architektura z tła"]]],
+  ["nav", "Wszystkie strony: kolejność w menu", [["", "strony, potem Explore as"], ["routes", "najpierw Explore as"]]],
 ];
+
+/* ?nav=routes (a preview, the review of 16.10): Founders, Companies and
+   Investors come first in the bar and in the phone's menu, before the
+   site's pages, as most readers take the first links they see. The groups
+   are moved in the markup, not only on screen, so the Tab order and a
+   screen reader follow what is shown; the panel's switch moves them back. */
+function setupNavOrder() {
+  const root = document.documentElement;
+  const apply = () => {
+    const routesFirst = root.dataset.nav === "routes";
+    document.querySelectorAll(".top-nav").forEach((bar) => {
+      const pages = bar.querySelector(".top-nav__menu--left");
+      const routes = bar.querySelector(".top-nav__menu--right");
+      if (!pages || !routes) return;
+      if (routesFirst) pages.before(routes);
+      else routes.before(pages);
+    });
+    document.querySelectorAll(".mobile-menu__links").forEach((links) => {
+      const pages = links.querySelector(".mobile-menu__primary");
+      const routes = links.querySelector(".mobile-menu__group");
+      if (!pages || !routes) return;
+      if (routesFirst) pages.before(routes);
+      else routes.before(pages);
+    });
+  };
+  apply();
+  new MutationObserver(apply).observe(root, { attributes: true, attributeFilter: ["data-nav"] });
+}
 
 function setupPreviewSwitches() {
   const root = document.documentElement;
@@ -1531,6 +1562,7 @@ setupAudienceTriptych();
 setupAudienceConnectors();
 setupMemberReadmore();
 setupPreviewSwitches();
+setupNavOrder();
 setupPortraitProposal();
 setupCopyReview();
 
