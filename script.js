@@ -1104,13 +1104,21 @@ function setupMemberReadmore() {
     const card = btn.closest(".member");
     if (!card) return;
     const label = btn.querySelector("span");
+    /* Opening or closing never moves what the reader is looking at (the
+       review, 16.10): the text sits centred beside the portrait, so a
+       longer bio grew upwards as well as down, and the page then scrolled
+       to the button. Now the first paragraph keeps its place on screen as
+       the rest opens under it, and on closing the button keeps its place,
+       so a reader at the end of a long bio is not thrown past it. */
+    const lead = card.querySelector(".member__bio");
     btn.addEventListener("click", () => {
+      const anchor = card.classList.contains("is-expanded") ? btn : lead || btn;
+      const before = anchor.getBoundingClientRect().top;
       const isExpanded = card.classList.toggle("is-expanded");
       btn.setAttribute("aria-expanded", String(isExpanded));
       if (label) label.textContent = isExpanded ? "Read less" : "Read more";
-      /* the paragraphs open above the button and push it down - keep it,
-         and its new label, on screen */
-      requestAnimationFrame(() => btn.scrollIntoView({ block: "nearest" }));
+      const shift = anchor.getBoundingClientRect().top - before;
+      if (Math.abs(shift) > 0.5) window.scrollTo({ top: window.scrollY + shift, behavior: "instant" });
     });
   });
 }
