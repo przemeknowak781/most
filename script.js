@@ -1166,8 +1166,9 @@ function setupPortraitProposal() {
    orange light, ?graph=map Founders' Our Expertise as a map of the
    road's stages on the trail, ?rail=dots small dots on the audience
    pages' Our Expertise rail, ?arch=help architecture coming up out of
-   the ground behind their What We Help You Achieve and ?nav=routes the
-   three routes first in the menus - each as a data
+   the ground behind their What We Help You Achieve, ?nav=routes the
+   three routes first in the menus and ?order=work Our Expertise's How We
+   Work above Our Areas - each as a data
    attribute on <html> the stylesheet answers. #who-latte,
    #titles-smaller and the like do the same where a preview host drops
    the query. Without one the page is as it ships. (The titles in capitals
@@ -1185,6 +1186,7 @@ const PREVIEW_SWITCHES = {
   rail: ["dots"],
   arch: ["help"],
   nav: ["routes"],
+  order: ["work"],
 };
 
 /* the panel's words, in Polish as the client reviews in it: each switch's
@@ -1199,6 +1201,7 @@ const PREVIEW_PANEL = [
   ["rail", "Founders, Companies, Investors: kropki przy Our Expertise", [["", "tylko na końcach"], ["dots", "małe przy każdym punkcie"]]],
   ["arch", "Founders, Companies, Investors: What We Help You Achieve", [["", "obecne"], ["help", "architektura z tła"]]],
   ["nav", "Wszystkie strony: kolejność w menu", [["", "strony, potem Explore as"], ["routes", "najpierw Explore as"]]],
+  ["order", "Our Expertise: kolejność sekcji", [["", "obszary, potem How We Work"], ["work", "najpierw How We Work"]]],
 ];
 
 /* ?nav=routes (a preview, the review of 16.10): Founders, Companies and
@@ -1227,6 +1230,25 @@ function setupNavOrder() {
   };
   apply();
   new MutationObserver(apply).observe(root, { attributes: true, attributeFilter: ["data-nav"] });
+}
+
+/* ?order=work (a preview, the review of 16.10): on Our Expertise, How We
+   Work comes before Our Areas, so a reader who stops in the long areas
+   list has already seen both. Moved in the markup, as the menus are; the
+   page then measures again (the areas' scroll track takes its place from
+   where it stands). */
+function setupExpertiseOrder() {
+  const root = document.documentElement;
+  const areas = document.querySelector(".ex-areas");
+  const work = document.querySelector(".exwork");
+  if (!areas || !work) return;
+  const apply = () => {
+    if (root.dataset.order === "work") areas.before(work);
+    else work.before(areas);
+    window.dispatchEvent(new Event("resize"));
+  };
+  if (root.dataset.order === "work") apply();
+  new MutationObserver(apply).observe(root, { attributes: true, attributeFilter: ["data-order"] });
 }
 
 function setupPreviewSwitches() {
@@ -1563,6 +1585,7 @@ setupAudienceConnectors();
 setupMemberReadmore();
 setupPreviewSwitches();
 setupNavOrder();
+setupExpertiseOrder();
 setupPortraitProposal();
 setupCopyReview();
 
