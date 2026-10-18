@@ -2543,18 +2543,6 @@ main:focus {
   overflow: hidden;
 }
 
-.site-footer::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background-image:
-    linear-gradient(rgba(240, 235, 233, 0.018) 1px, transparent 1px);
-  background-size: 100% 96px;
-  mask-image: linear-gradient(180deg, transparent, black 30%, black 80%, transparent);
-  pointer-events: none;
-}
-
 .site-footer__inner {
   position: relative;
   z-index: 1;
@@ -9955,9 +9943,10 @@ main {
     font-size: var(--m-label);
   }
 
-  /* 44px rows, 8px apart (SPEC 4) */
+  /* 40px rows, touching (the review, 16.10: the 44px rows 8px apart read
+     loose next to the reference footers); each link still fills its row */
   .site-footer__col ul {
-    gap: 8px;
+    gap: 0;
   }
 
   .site-footer__col li {
@@ -9966,13 +9955,13 @@ main {
 
   /* the address is text, not a link, but sits on the same rhythm */
   .site-footer__col li:not(:has(a)) {
-    padding-block: 11px;
+    padding-block: 9px;
   }
 
   .site-footer__col a {
     display: inline-flex;
     align-items: center;
-    min-height: 44px;
+    min-height: 40px;
     border-bottom: 0;
     overflow-wrap: anywhere;
   }
@@ -9987,7 +9976,21 @@ main {
     justify-content: center;
     width: 44px;
     height: 44px;
-    margin-top: 6px;
+  }
+
+  /* Contact: the LinkedIn badge stands at the right of the address and
+     the mail, level with the two (the review, 16.10, after the coming
+     soon page), rather than alone on a row under them */
+  .site-footer__col:last-child ul {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 16px;
+    align-items: center;
+  }
+
+  .site-footer__col:last-child li:has(.site-footer__social) {
+    grid-column: 2;
+    grid-row: 1 / span 2;
   }
 
   .site-footer__social svg {
