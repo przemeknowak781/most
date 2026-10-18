@@ -1158,8 +1158,9 @@ function setupPortraitProposal() {
 /* Alternatives for the client to look at, off by default (client, 6.10):
    ?who=ivory|grey|latte shows Home's Who we are on a light ground and
    ?titles=smaller the titles a size smaller; after the review of 10.10
-   ?expertise=icons|tiles|light|lighttiles Home's Our Expertise with larger
-   drawings, as tiles, on a light ground or as tiles on a light ground,
+   ?expertise=icons|tiles|light|lighttiles|colour Home's Our Expertise with
+   larger drawings, as tiles, on a light ground, as tiles on a light ground
+   or as tiles lit each in a colour of its own,
    ?scroll=peek|cue a cue to scroll on Our Team's hero,
    ?investors=mist|dusk|facade the Investors photographs under a tint of
    about half instead of the dark frame, in blue going violet with an
@@ -1181,7 +1182,7 @@ function setupPortraitProposal() {
 const PREVIEW_SWITCHES = {
   who: ["ivory", "grey", "latte"],
   titles: ["smaller"],
-  expertise: ["icons", "tiles", "light", "lighttiles"],
+  expertise: ["icons", "tiles", "light", "lighttiles", "colour"],
   scroll: ["peek", "cue"],
   investors: ["mist", "dusk", "facade"],
   graph: ["map"],
@@ -1212,7 +1213,7 @@ const AUDIENCE_PAGES = ["for-founders", "for-companies", "for-investors"];
 const PREVIEW_PANEL = [
   ["stats", ["index"], "Liczby w hero (na telefonie)", [["", "obecne"], ["rows", "wiersze z linią"], ["grid", "siatka z liniami"]]],
   ["who", ["index"], "Who We Are", [["", "ciemne"], ["ivory", "złamana biel"], ["grey", "szarość"], ["latte", "latte"]]],
-  ["expertise", ["index"], "Our Expertise", [["", "obecne"], ["icons", "większe ikony"], ["tiles", "kafelki"], ["light", "jasna sekcja"], ["lighttiles", "jasne kafelki"]]],
+  ["expertise", ["index"], "Our Expertise", [["", "obecne"], ["icons", "większe ikony"], ["tiles", "kafelki"], ["light", "jasna sekcja"], ["lighttiles", "jasne kafelki"], ["colour", "kolorowe kafelki"]]],
   ["clients", ["index"], "Who We Work With: tekst", [["", "po lewej"], ["center", "na środku"], ["right", "po prawej"]]],
   ["scroll", ["our-team"], "Zachęta do przewinięcia w hero", [["", "bez"], ["peek", "portrety spod hero"], ["cue", "napis ze strzałką"]]],
   ["order", ["expertise"], "Kolejność sekcji", [["", "obszary, potem How We Work"], ["work", "najpierw How We Work"]]],

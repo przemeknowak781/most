@@ -7783,8 +7783,9 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 /* === OUR EXPERTISE on Home: three previews ===
    The client (10.10) asked to see the six areas set three other ways,
    to choose from, without a scroll trap and with the copy at its size:
-   ?expertise=icons, ?expertise=tiles, ?expertise=light or
-   ?expertise=lighttiles (#expertise-tiles and the like where a preview
+   ?expertise=icons, ?expertise=tiles, ?expertise=light,
+   ?expertise=lighttiles or ?expertise=colour (#expertise-tiles and the
+   like where a preview
    host drops the query; the switch is in script.js) set one of them.
    Without one the section ships as it is.
      icons  the present layout, the drawings larger and their strokes
@@ -7807,6 +7808,9 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
             the drawings only very faint behind the names, drawing
             themselves there, never on the main plane (the two rules
             above together, and the light ground's own tile tints
+            below)
+     colour  the tiles lit like Three routes' cards on a muted light
+            ground, each in one of six soft colours (the client, 18.10;
             below) */
 
 /* ---------- icons ---------- */
@@ -7863,7 +7867,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 }
 
 /* ---------- tiles ---------- */
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__inner {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__inner {
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: none;
   grid-template-areas:
@@ -7872,18 +7876,18 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     "link";
 }
 
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__copy {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__copy {
   max-width: 40rem;
 }
 
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__list {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__list {
   justify-self: stretch;
   max-width: none;
   gap: clamp(16px, 1.8vw, 28px);
   margin-top: clamp(40px, 5.2vh, 64px);
 }
 
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__item {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__item {
   --hx-tint: 209, 126, 95;
   position: relative;
   isolation: isolate;
@@ -7897,11 +7901,11 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   text-align: left;
 }
 
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__item:nth-child(3n + 2) {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__item:nth-child(3n + 2) {
   --hx-tint: 171, 142, 130;
 }
 
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__item:nth-child(3n) {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__item:nth-child(3n) {
   --hx-tint: 115, 145, 196;
 }
 
@@ -7909,7 +7913,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
    and foot cut off by the edges, blurred, its strokes thickened so the
    blur leaves a soft line rather than nothing, and very faint - the
    client wants it "ultra transparent", behind, never in front */
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__art {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__art {
   position: absolute;
   z-index: -1;
   right: -12%;
@@ -7919,23 +7923,23 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   filter: blur(5px);
 }
 
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise .ex-icon {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise .ex-icon {
   height: 100%;
 }
 
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise .ex-icon path {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise .ex-icon path {
   stroke-width: 2.4;
 }
 
 /* the cards' name, in their type */
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__name {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__name {
   max-width: 11em;
   margin: 0;
   font: 500 clamp(20px, 1.7vw, 25px) / 1.15 "Urbanist", system-ui, sans-serif;
   letter-spacing: -0.01em;
 }
 
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__link {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__link {
   margin-top: clamp(28px, 4vh, 40px);
 }
 
@@ -7948,7 +7952,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   display: none;
 }
 
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__cta {
+:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__cta {
   --link-ink: var(--orange);
   display: inline-flex;
   min-height: 44px;
@@ -7964,7 +7968,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 /* two cards a row on the narrowest phones: at 320px "Let's expand" ran
    20px past its card's edge, so there the words close up */
 @media (max-width: 374px) {
-  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__cta {
+  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__cta {
     gap: 6px;
     font-size: 11px;
     letter-spacing: 0.06em;
@@ -7972,43 +7976,43 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 }
 
 @media (max-width: 639px) {
-  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__list {
+  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__list {
     gap: 12px;
     margin-top: 32px;
   }
 
-  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__item {
+  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__item {
     min-height: 124px;
     padding: 18px 16px;
   }
 
-  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__name {
+  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__name {
     font-size: 18px;
   }
 }
 
 @media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
-  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__list {
+  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__list {
     gap: 12px;
     margin-top: 28px;
   }
 
-  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__item {
+  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__item {
     min-height: 104px;
     padding: 16px;
   }
 
-  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__name {
+  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__name {
     font-size: 17px;
   }
 
-  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"]) .home-expertise__link {
+  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__link {
     margin-top: 20px;
   }
 }
 
 /* ---------- light ---------- */
-:root:is([data-expertise="light"], [data-expertise="lighttiles"]) .home-expertise {
+:root:is([data-expertise="light"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise {
   --hx-ink: #1c1419;
   --hx-ink-soft: rgba(28, 20, 25, 0.72);
   --eyebrow-color: #9e340a;
@@ -8020,8 +8024,8 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   --hx-foot: clamp(48px, 7vh, 88px);
   padding-bottom: calc(var(--hx-foot) + var(--hx-fade));
   background: linear-gradient(180deg,
-    var(--light) 0%,
-    var(--light) calc(100% - var(--hx-fade)),
+    var(--hx-ground, var(--light)) 0%,
+    var(--hx-ground, var(--light)) calc(100% - var(--hx-fade)),
     #e0dbda calc(100% - var(--hx-fade) * 0.85),
     #a6a4a6 calc(100% - var(--hx-fade) * 0.65),
     #707075 calc(100% - var(--hx-fade) * 0.5),
@@ -8031,27 +8035,27 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   color: var(--hx-ink);
 }
 
-:root:is([data-expertise="light"], [data-expertise="lighttiles"]) :is(.home-expertise__title, .home-expertise__name) {
+:root:is([data-expertise="light"], [data-expertise="lighttiles"], [data-expertise="colour"]) :is(.home-expertise__title, .home-expertise__name) {
   color: var(--hx-ink);
 }
 
-:root:is([data-expertise="light"], [data-expertise="lighttiles"]) .home-expertise__lede {
+:root:is([data-expertise="light"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__lede {
   color: var(--hx-ink-soft);
 }
 
-:root:is([data-expertise="light"], [data-expertise="lighttiles"]) .home-expertise__link:focus-visible {
+:root:is([data-expertise="light"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__link:focus-visible {
   outline-color: var(--focus-ring);
 }
 
 @media (max-width: 1023px) {
-  :root:is([data-expertise="light"], [data-expertise="lighttiles"]) .home-expertise {
+  :root:is([data-expertise="light"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise {
     --hx-fade: clamp(160px, 40vw, 240px);
     --hx-foot: 32px;
   }
 }
 
 @media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
-  :root:is([data-expertise="light"], [data-expertise="lighttiles"]) .home-expertise {
+  :root:is([data-expertise="light"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise {
     --hx-fade: 140px;
   }
 }
@@ -8068,6 +8072,99 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 :root[data-expertise="lighttiles"] .home-expertise__art {
   opacity: 0.2;
   filter: blur(4px);
+}
+
+/* ---------- colour: lit tiles on a muted light ground ----------
+   The client (18.10): the section light but toned down rather than white,
+   so the six can be tiles like Three routes' cards, each held in one
+   colour of its own - its light at the top, the dot on its edge, its
+   drawing (still drawing itself) and its call to action - six soft
+   colours in one key, the ground fading at its foot into the navy the
+   client marks run on (the light rules above; the tiles' layout too).
+   The inks the drawings and the links take are the colours deepened to
+   4.9:1 and more on the tile, its light included. */
+:root[data-expertise="colour"] .home-expertise {
+  --hx-ground: #e4ded9;
+}
+
+:root[data-expertise="colour"] .home-expertise__item {
+  --hx-tint: 209, 126, 95;
+  --hx-tile-ink: #94401f;
+  overflow: visible;
+  border-color: rgba(var(--hx-tint), 0.4);
+  background:
+    radial-gradient(90% 70% at 50% 0%, rgba(var(--hx-tint), 0.22), transparent 70%),
+    rgba(255, 255, 255, 0.45);
+  box-shadow: 0 18px 40px rgba(28, 20, 25, 0.06);
+  transition: transform 320ms var(--ease-out), border-color 240ms ease, box-shadow 320ms ease;
+}
+
+:root[data-expertise="colour"] .home-expertise__item:nth-child(2) {
+  --hx-tint: 196, 154, 92;
+  --hx-tile-ink: #7a5414;
+}
+
+:root[data-expertise="colour"] .home-expertise__item:nth-child(3) {
+  --hx-tint: 128, 160, 124;
+  --hx-tile-ink: #3f603c;
+}
+
+:root[data-expertise="colour"] .home-expertise__item:nth-child(4) {
+  --hx-tint: 115, 145, 196;
+  --hx-tile-ink: #365487;
+}
+
+:root[data-expertise="colour"] .home-expertise__item:nth-child(5) {
+  --hx-tint: 150, 132, 196;
+  --hx-tile-ink: #56458a;
+}
+
+:root[data-expertise="colour"] .home-expertise__item:nth-child(6) {
+  --hx-tint: 192, 128, 150;
+  --hx-tile-ink: #7d3f56;
+}
+
+/* the dot on the card's top edge, as the routes' markers stand on theirs */
+:root[data-expertise="colour"] .home-expertise__item::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  margin-left: -4.5px;
+  border-radius: 50%;
+  background: rgb(var(--hx-tint));
+  box-shadow: 0 0 0 4px rgba(var(--hx-tint), 0.2), 0 0 14px rgba(var(--hx-tint), 0.55);
+}
+
+/* the drawing on the card, over the name, in the card's ink */
+:root[data-expertise="colour"] .home-expertise__art {
+  position: relative;
+  z-index: auto;
+  right: auto;
+  bottom: auto;
+  height: clamp(48px, 4vw, 60px);
+  margin-bottom: clamp(16px, 1.6vw, 24px);
+  opacity: 1;
+  filter: none;
+}
+
+:root[data-expertise="colour"] .home-expertise .ex-icon path {
+  stroke: var(--hx-tile-ink);
+  stroke-width: 1.3;
+}
+
+:root[data-expertise="colour"] .home-expertise__cta {
+  --link-ink: var(--hx-tile-ink);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  :root[data-expertise="colour"] .home-expertise__item:hover {
+    transform: translateY(-3px);
+    border-color: rgba(var(--hx-tint), 0.62);
+    box-shadow: 0 22px 48px rgba(28, 20, 25, 0.1);
+  }
 }
 
 /* === end OUR EXPERTISE on Home: three previews === */
