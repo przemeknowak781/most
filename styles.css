@@ -6373,10 +6373,11 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 }
 
 /* The generated photographs (18.10: Companies' towers, Investors' atrium
-   built of blur) are lit where the copy stands - the sky between the towers,
-   the atrium's pale glass - so a soft shade of the night lies behind the
-   copy column, as behind Home's headline: the tagline keeps the contrast it
-   had over the old pictures, and the light stays open over the ridge. */
+   seen through fluted glass) are lit where the copy stands - the sky
+   between the towers, the atrium's pale glass - so a soft shade of the
+   night lies behind the copy column, as behind Home's headline: the
+   tagline keeps the contrast it had over the old pictures, and the light
+   stays open over the ridge. */
 :is(.page--companies, .page--investors) .hz-photo::after {
   background:
     radial-gradient(ellipse 56% 58% at 24% 40%, rgba(12, 15, 26, 0.52), rgba(12, 15, 26, 0.32) 55%, transparent 84%),
@@ -16527,11 +16528,11 @@ main {
   background: rgb(var(--path-ground));
 }
 
-/* The hero's photograph dissolved into light (the client, 18.10: the
-   sharp truss here and the sharp diagrid of How We Work right above it
-   stood one on the other and fought): a copy blurred down to soft bands
-   and glows, as the Investors backdrop is built, small because it is
-   blurred. It comes in only after a stretch of plain land under the seam
+/* The hero's photograph behind frosted fluted glass (the client, 18.10:
+   the sharp truss here and the sharp diagrid of How We Work right above it
+   stood one on the other and fought; a plain blur read as a smudge, so the
+   glass softens it, as on Investors): the truss breaks into warm upright
+   ribs of light. It comes in only after a stretch of plain land under the seam
    with How We Work, stands behind the title and is gone before the cards,
    so the line and its arcs run over the land. */
 .path-map__photo {
