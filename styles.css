@@ -8513,16 +8513,23 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
    dark card, bottom right: the heroes keep their stats and trail markers
    bottom left, and the copy legend takes the top right. script.js builds
    it only on a page opened with ?preview or with one of the alternatives
-   on; a choice applies in place and the panel folds down to its title. */
+   on; a choice applies in place. It opens folded, a small pill reading
+   "Zobacz warianty" with the number chosen; open, it is a card no taller
+   than the window whose list scrolls on its own, holding the switches of
+   the page in view and then those for every page (the review, 18.10:
+   open on every page, it covered the page and could not be scrolled). */
 .variant-panel {
   position: fixed;
   right: 16px;
   bottom: 16px;
   z-index: 9000;
-  width: min(300px, calc(100vw - 32px));
-  padding: 14px 16px;
-  border-radius: 10px;
-  background: rgba(10, 12, 20, 0.92);
+  display: flex;
+  flex-direction: column;
+  width: min(320px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+  border-radius: 12px;
+  background: rgba(10, 12, 20, 0.94);
   color: #f0ebe9;
   font: 400 12px / 1.45 "Outfit", system-ui, sans-serif;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
@@ -8530,50 +8537,115 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 
 .variant-panel.is-collapsed {
   width: auto;
+  border-radius: 999px;
 }
 
 .variant-panel__toggle {
   display: flex;
+  flex: none;
+  align-items: center;
   justify-content: space-between;
-  align-items: baseline;
   gap: 16px;
   width: 100%;
+  min-height: 44px;
   margin: 0;
-  padding: 0;
+  padding: 0 16px;
   border: 0;
+  border-bottom: 1px solid rgba(240, 235, 233, 0.12);
   background: none;
   color: inherit;
-  font: 500 12px / 1.45 "Outfit", system-ui, sans-serif;
+  font: 500 12px / 1.3 "Outfit", system-ui, sans-serif;
   letter-spacing: 0.04em;
   text-align: left;
   cursor: pointer;
 }
 
+.variant-panel.is-collapsed .variant-panel__toggle {
+  border-bottom: 0;
+}
+
+/* folded: an orange dot, the words and the count; open: "Zwiń" */
+.variant-panel__open {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.variant-panel__open::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff612c;
+}
+
+.variant-panel__count {
+  color: rgba(240, 235, 233, 0.7);
+}
+
+.variant-panel__close {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  color: rgba(240, 235, 233, 0.7);
+}
+
 .variant-panel__sign {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1;
+}
+
+.variant-panel:not(.is-collapsed) .variant-panel__open::before,
+.variant-panel.is-collapsed .variant-panel__close {
+  display: none;
+}
+
+.variant-panel__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 4px 16px 14px;
 }
 
 .variant-panel.is-collapsed .variant-panel__body {
   display: none;
 }
 
+.variant-panel__section {
+  margin: 14px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid rgba(240, 235, 233, 0.12);
+  color: #ffa86e;
+  font: 500 10px / 1.3 "Montserrat", system-ui, sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.variant-panel__section:first-child {
+  margin-top: 8px;
+  padding-top: 0;
+  border-top: 0;
+}
+
 .variant-panel__group {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: 12px;
+  margin-top: 10px;
 }
 
 .variant-panel__label {
   flex: 0 0 100%;
   margin: 0;
-  color: rgba(240, 235, 233, 0.6);
+  color: rgba(240, 235, 233, 0.7);
 }
 
 .variant-panel__choice {
-  min-height: 34px;
-  padding: 6px 12px;
+  min-height: 32px;
+  padding: 5px 12px;
   border: 1px solid rgba(240, 235, 233, 0.28);
   border-radius: 999px;
   background: none;
@@ -8599,11 +8671,12 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 }
 
 .variant-panel__toggle:focus-visible {
-  border-radius: 4px;
+  outline-offset: -2px;
+  border-radius: 999px;
 }
 
 .variant-panel__note {
-  margin: 12px 0 0;
+  margin: 14px 0 0;
   color: rgba(240, 235, 233, 0.6);
 }
 

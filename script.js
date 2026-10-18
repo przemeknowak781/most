@@ -1191,20 +1191,34 @@ const PREVIEW_SWITCHES = {
   stats: ["rows", "grid"],
 };
 
-/* the panel's words, in Polish as the client reviews in it: each switch's
-   name as "page: section", then its choices, the shipped one first */
+/* The panel's words, in Polish as the client reviews in it. Each switch
+   names the pages it changes ("all" for every page) and its section; the
+   panel lists only the current page's switches, in the order its sections
+   come down the page, then the ones for every page. Choices: the shipped
+   one first. */
+const PREVIEW_PAGES = {
+  index: "Strona główna",
+  "about-us": "About Us",
+  expertise: "Our Expertise",
+  "our-team": "Our Team",
+  contact: "Contact",
+  "for-founders": "Founders",
+  "for-companies": "Companies",
+  "for-investors": "Investors",
+};
+const AUDIENCE_PAGES = ["for-founders", "for-companies", "for-investors"];
 const PREVIEW_PANEL = [
-  ["who", "Home: Who We Are", [["", "ciemne"], ["ivory", "złamana biel"], ["grey", "szarość"], ["latte", "latte"]]],
-  ["titles", "Wszystkie strony: tytuły", [["", "obecne"], ["smaller", "mniejsze"]]],
-  ["expertise", "Home: Our Expertise", [["", "obecne"], ["icons", "większe ikony"], ["tiles", "kafelki"], ["light", "jasna sekcja"], ["lighttiles", "jasne kafelki"]]],
-  ["scroll", "Our Team: zachęta do przewinięcia", [["", "bez"], ["peek", "portrety spod hero"], ["cue", "napis ze strzałką"]]],
-  ["investors", "Investors: zdjęcia i kolor", [["", "obecne"], ["mist", "mgła, jasne niebo"], ["dusk", "zmierzch, błękit w fiolet"], ["facade", "zmierzch, fasada w How We Work"]]],
-  ["graph", "Founders: Our Expertise jako mapa (prototyp)", [["", "obecne"], ["map", "mapa etapów"]]],
-  ["rail", "Founders, Companies, Investors: kropki przy Our Expertise", [["", "tylko na końcach"], ["dots", "małe przy każdym punkcie"]]],
-  ["arch", "Founders, Companies, Investors: What We Help You Achieve", [["", "obecne"], ["help", "architektura z tła"]]],
-  ["nav", "Wszystkie strony: kolejność w menu", [["", "strony, potem Explore as"], ["routes", "najpierw Explore as"]]],
-  ["order", "Our Expertise: kolejność sekcji", [["", "obszary, potem How We Work"], ["work", "najpierw How We Work"]]],
-  ["stats", "Home: liczby w hero na telefonie", [["", "obecne"], ["rows", "wiersze z linią"], ["grid", "siatka z liniami"]]],
+  ["stats", ["index"], "Liczby w hero (na telefonie)", [["", "obecne"], ["rows", "wiersze z linią"], ["grid", "siatka z liniami"]]],
+  ["who", ["index"], "Who We Are", [["", "ciemne"], ["ivory", "złamana biel"], ["grey", "szarość"], ["latte", "latte"]]],
+  ["expertise", ["index"], "Our Expertise", [["", "obecne"], ["icons", "większe ikony"], ["tiles", "kafelki"], ["light", "jasna sekcja"], ["lighttiles", "jasne kafelki"]]],
+  ["scroll", ["our-team"], "Zachęta do przewinięcia w hero", [["", "bez"], ["peek", "portrety spod hero"], ["cue", "napis ze strzałką"]]],
+  ["order", ["expertise"], "Kolejność sekcji", [["", "obszary, potem How We Work"], ["work", "najpierw How We Work"]]],
+  ["investors", ["for-investors"], "Zdjęcia i kolor", [["", "obecne"], ["mist", "mgła, jasne niebo"], ["dusk", "zmierzch, błękit w fiolet"], ["facade", "zmierzch, fasada w How We Work"]]],
+  ["arch", AUDIENCE_PAGES, "What We Help You Achieve", [["", "obecne"], ["help", "architektura z tła"]]],
+  ["rail", AUDIENCE_PAGES, "Our Expertise: kropki przy punktach", [["", "tylko na końcach"], ["dots", "małe przy każdym punkcie"]]],
+  ["graph", ["for-founders"], "Our Expertise jako mapa (prototyp)", [["", "obecne"], ["map", "mapa etapów"]]],
+  ["nav", "all", "Kolejność w menu", [["", "strony, potem Explore as"], ["routes", "najpierw Explore as"]]],
+  ["titles", "all", "Tytuły", [["", "obecne"], ["smaller", "mniejsze"]]],
 ];
 
 /* ?nav=routes (a preview, the review of 16.10): Founders, Companies and
@@ -1284,28 +1298,46 @@ function setupPreviewSwitches() {
   };
   carry();
 
+  /* The panel shows the switches of the page in view and those for every
+     page; the others stay as chosen and travel with the links. */
+  const file = window.location.pathname.split("/").pop().replace(/\.html$/, "") || "index";
+  const pageName = PREVIEW_PAGES[file];
+  const own = PREVIEW_PANEL.filter(([, pages]) => pages !== "all" && (!pageName || pages.includes(file)));
+  const shared = PREVIEW_PANEL.filter(([, pages]) => pages === "all");
+  const group = ([name, , label, choices]) =>
+    `<div class="variant-panel__group" role="group" aria-labelledby="variant-panel-${name}">` +
+    `<p class="variant-panel__label" id="variant-panel-${name}">${label}</p>` +
+    choices.map(([value, text]) =>
+      `<button type="button" class="variant-panel__choice" data-name="${name}" data-value="${value}" aria-pressed="false">${text}</button>`
+    ).join("") +
+    "</div>";
+  const section = (title, list) => list.length
+    ? `<p class="variant-panel__section">${title}</p>` + list.map(group).join("")
+    : "";
+
   const panel = document.createElement("aside");
   panel.className = "variant-panel";
   panel.setAttribute("aria-label", "Warianty do porównania");
   panel.lang = "pl";
   panel.innerHTML =
-    '<button type="button" class="variant-panel__toggle" aria-expanded="true" aria-controls="variant-panel-body">' +
-    'Warianty do porównania<span class="variant-panel__sign" aria-hidden="true">–</span></button>' +
+    '<button type="button" class="variant-panel__toggle" aria-expanded="false" aria-controls="variant-panel-body">' +
+    '<span class="variant-panel__open">Zobacz warianty<span class="variant-panel__count"></span></span>' +
+    '<span class="variant-panel__close">Zwiń<span class="variant-panel__sign" aria-hidden="true">×</span></span></button>' +
     '<div class="variant-panel__body" id="variant-panel-body">' +
-    PREVIEW_PANEL.map(([name, label, choices]) =>
-      `<div class="variant-panel__group" role="group" aria-labelledby="variant-panel-${name}">` +
-      `<p class="variant-panel__label" id="variant-panel-${name}">${label}</p>` +
-      choices.map(([value, text]) =>
-        `<button type="button" class="variant-panel__choice" data-name="${name}" data-value="${value}" aria-pressed="false">${text}</button>`
-      ).join("") +
-      "</div>"
-    ).join("") +
-    '<p class="variant-panel__note">Wybór przechodzi na kolejne podstrony.</p>' +
+    section(pageName ? `Ta strona: ${pageName}` : "Ta strona", own) +
+    section("Wszystkie strony", shared) +
+    '<p class="variant-panel__note">Wybór przechodzi na kolejne podstrony. Warianty innych podstron pokazują się na nich.</p>' +
     "</div>";
   const choices = panel.querySelectorAll(".variant-panel__choice");
-  const mark = () => choices.forEach((button) => {
-    button.setAttribute("aria-pressed", String((root.dataset[button.dataset.name] || "") === button.dataset.value));
-  });
+  const count = panel.querySelector(".variant-panel__count");
+  const shown = own.concat(shared).map(([name]) => name);
+  const mark = () => {
+    choices.forEach((button) => {
+      button.setAttribute("aria-pressed", String((root.dataset[button.dataset.name] || "") === button.dataset.value));
+    });
+    const on = shown.filter((name) => root.dataset[name]).length;
+    count.textContent = on ? ` · wybrane: ${on}` : "";
+  };
   panel.addEventListener("click", (event) => {
     const button = event.target.closest(".variant-panel__choice");
     if (!button) return;
@@ -1319,26 +1351,22 @@ function setupPreviewSwitches() {
     window.dispatchEvent(new Event("resize"));
   });
 
-  /* it folds down to its title, as the copy review's legend does; folded
-     to begin with on a phone, and as the reader left it from page to page */
+  /* Folded to a small "see the variants" pill on every page it opens on,
+     so it never covers the page unasked (the review, 18.10: open, it hid
+     the page and did not scroll). Open, its list scrolls inside a card no
+     taller than the window; Esc or "Zwiń" folds it again. */
   const toggle = panel.querySelector(".variant-panel__toggle");
   const fold = (folded) => {
     panel.classList.toggle("is-collapsed", folded);
     toggle.setAttribute("aria-expanded", String(!folded));
-    toggle.querySelector(".variant-panel__sign").textContent = folded ? "+" : "–";
   };
-  toggle.addEventListener("click", () => {
-    const folded = !panel.classList.contains("is-collapsed");
-    fold(folded);
-    try {
-      sessionStorage.setItem("most-variant-panel", folded ? "folded" : "open");
-    } catch {}
+  toggle.addEventListener("click", () => fold(!panel.classList.contains("is-collapsed")));
+  panel.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || panel.classList.contains("is-collapsed")) return;
+    fold(true);
+    toggle.focus();
   });
-  let left = null;
-  try {
-    left = sessionStorage.getItem("most-variant-panel");
-  } catch {}
-  fold(left ? left === "folded" : !window.matchMedia("(min-width: 1024px)").matches);
+  fold(true);
   mark();
   document.body.appendChild(panel);
 }
