@@ -16390,18 +16390,21 @@ main {
   background: rgb(var(--path-ground));
 }
 
-/* The hero's own photograph (already in the cache) under a tint of about
-   half in the land's navy, as the Investors previews tint theirs. It comes
-   in from the seam with How We Work, stands behind the title and is gone
-   before the cards, so the line and its arcs run over the land. */
+/* The hero's photograph dissolved into light (the client, 18.10: the
+   sharp truss here and the sharp diagrid of How We Work right above it
+   stood one on the other and fought): a copy blurred down to soft bands
+   and glows, as the Investors backdrop is built, small because it is
+   blurred. It comes in only after a stretch of plain land under the seam
+   with How We Work, stands behind the title and is gone before the cards,
+   so the line and its arcs run over the land. */
 .path-map__photo {
   position: absolute;
   inset: 0;
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 14%, #000 30%, transparent 64%);
-  mask-image: linear-gradient(180deg, transparent 0, #000 14%, #000 30%, transparent 64%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, transparent 8%, #000 26%, #000 36%, transparent 66%);
+  mask-image: linear-gradient(180deg, transparent 0, transparent 8%, #000 26%, #000 36%, transparent 66%);
 }
 
 .path-map__photo img {
