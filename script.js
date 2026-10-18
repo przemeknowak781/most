@@ -1167,8 +1167,9 @@ function setupPortraitProposal() {
    road's stages on the trail, ?rail=dots small dots on the audience
    pages' Our Expertise rail, ?arch=help architecture coming up out of
    the ground behind their What We Help You Achieve, ?nav=routes the
-   three routes first in the menus and ?order=work Our Expertise's How We
-   Work above Our Areas - each as a data
+   three routes first in the menus, ?order=work Our Expertise's How We
+   Work above Our Areas and ?stats=rows|grid Home's hero figures on a
+   phone divided by dotted rules - each as a data
    attribute on <html> the stylesheet answers. #who-latte,
    #titles-smaller and the like do the same where a preview host drops
    the query. Without one the page is as it ships. (The titles in capitals
@@ -1187,6 +1188,7 @@ const PREVIEW_SWITCHES = {
   arch: ["help"],
   nav: ["routes"],
   order: ["work"],
+  stats: ["rows", "grid"],
 };
 
 /* the panel's words, in Polish as the client reviews in it: each switch's
@@ -1202,6 +1204,7 @@ const PREVIEW_PANEL = [
   ["arch", "Founders, Companies, Investors: What We Help You Achieve", [["", "obecne"], ["help", "architektura z tła"]]],
   ["nav", "Wszystkie strony: kolejność w menu", [["", "strony, potem Explore as"], ["routes", "najpierw Explore as"]]],
   ["order", "Our Expertise: kolejność sekcji", [["", "obszary, potem How We Work"], ["work", "najpierw How We Work"]]],
+  ["stats", "Home: liczby w hero na telefonie", [["", "obecne"], ["rows", "wiersze z linią"], ["grid", "siatka z liniami"]]],
 ];
 
 /* ?nav=routes (a preview, the review of 16.10): Founders, Companies and

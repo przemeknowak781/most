@@ -11179,6 +11179,153 @@ main {
   }
 }
 
+/* ---------- Home hero figures on a phone: two previews ----------
+   The review (16.10) found the four figures and their notes hard to read
+   on a phone and drew two layouts that divide them with the desktop's
+   dotted leader line (rgba(255, 168, 110, 0.42), 2px dashes 4px apart):
+   ?stats=rows sets each figure as a row - the figure and its label on the
+   left, the note beside them, all set left - under a dotted rule;
+   ?stats=grid keeps the two columns, centred, crossed by a dotted rule
+   down the middle and one between the rows (one column with rules under
+   375px, where two columns squeeze each note to seven lines). The switch
+   is in script.js; without it the figures are as they ship. */
+@media (max-width: 767px) {
+  :root[data-stats="rows"] .page--home .hero-stats {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0;
+  }
+
+  /* the four rows share their two columns, so the notes start on one line
+     down the list whatever each label's longest word */
+  @supports (grid-template-columns: subgrid) {
+    :root[data-stats="rows"] .page--home .hero-stats {
+      grid-template-columns: minmax(min-content, 0.85fr) minmax(0, 1.15fr);
+      column-gap: 20px;
+    }
+
+    :root[data-stats="rows"] .page--home .hero-stats > .hero-stat {
+      grid-column: 1 / -1;
+      grid-template-columns: subgrid;
+    }
+  }
+
+  :root[data-stats="rows"] .page--home .hero-stat {
+    position: relative;
+    display: grid;
+    grid-row: auto;
+    /* never narrower than its figure: if the web font fails, the wider
+       fallback still leaves "EU · US · UK" clear of its note */
+    grid-template-columns: minmax(min-content, 0.85fr) minmax(0, 1.15fr);
+    grid-template-rows: auto auto;
+    align-content: center;
+    align-items: start;
+    justify-items: start;
+    gap: 6px 20px;
+    padding: 22px 0;
+    text-align: left;
+  }
+
+  :root[data-stats="rows"] .page--home .hero-stat strong {
+    grid-area: 1 / 1;
+  }
+
+  :root[data-stats="rows"] .page--home .hero-stat span {
+    grid-area: 2 / 1;
+  }
+
+  :root[data-stats="rows"] .page--home .hero-stat__copy {
+    grid-area: 1 / 2 / 3 / 3;
+    align-self: center;
+    max-width: none;
+    margin: 0;
+    text-align: left;
+    text-wrap: pretty;
+  }
+
+  :root[data-stats="rows"] .page--home .hero-stat + .hero-stat::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: repeating-linear-gradient(90deg, rgba(255, 168, 110, 0.42) 0 2px, transparent 2px 6px);
+  }
+
+  :root[data-stats="grid"] .page--home .hero-stats {
+    gap: 48px 32px;
+  }
+
+  :root[data-stats="grid"] .page--home .hero-stat {
+    position: relative;
+  }
+
+  /* down the middle: from the first row's top to the last row's foot */
+  :root[data-stats="grid"] .page--home .hero-stat:nth-child(odd)::after {
+    content: "";
+    position: absolute;
+    top: -12px;
+    bottom: -24px;
+    right: -16px;
+    width: 1px;
+    background: repeating-linear-gradient(180deg, rgba(255, 168, 110, 0.42) 0 2px, transparent 2px 6px);
+  }
+
+  :root[data-stats="grid"] .page--home .hero-stat:nth-child(n + 3)::after {
+    top: -24px;
+    bottom: -12px;
+  }
+
+  /* between the rows, across both columns */
+  :root[data-stats="grid"] .page--home .hero-stat:nth-child(n + 3)::before {
+    content: "";
+    position: absolute;
+    top: -24px;
+    left: 0;
+    right: -16px;
+    height: 1px;
+    background: repeating-linear-gradient(90deg, rgba(255, 168, 110, 0.42) 0 2px, transparent 2px 6px);
+  }
+
+  :root[data-stats="grid"] .page--home .hero-stat:nth-child(4)::before {
+    left: -16px;
+    right: 0;
+  }
+}
+
+@media (max-width: 374px) {
+  /* "EU · US · UK" outgrows the left column: the note goes under its
+     figure, still set left */
+  :root[data-stats="rows"] .page--home .hero-stats,
+  :root[data-stats="rows"] .page--home .hero-stats > .hero-stat {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+  }
+
+  :root[data-stats="rows"] .page--home .hero-stat__copy {
+    grid-area: 3 / 1;
+    margin-top: 6px;
+  }
+
+  :root[data-stats="grid"] .page--home .hero-stats {
+    gap: 48px;
+  }
+
+  :root[data-stats="grid"] .page--home .hero-stat::after {
+    display: none;
+  }
+
+  :root[data-stats="grid"] .page--home .hero-stat:nth-child(n + 2)::before {
+    content: "";
+    position: absolute;
+    top: -24px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: repeating-linear-gradient(90deg, rgba(255, 168, 110, 0.42) 0 2px, transparent 2px 6px);
+  }
+}
+
 /* ---------- Three routes: room against the edges ---------- */
 @media (max-width: 1023px) {
   /* the route edge above falls to its low point at the left, right over
