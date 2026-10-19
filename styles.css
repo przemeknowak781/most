@@ -17296,126 +17296,134 @@ main {
 }
 /* === end PATH MAP === */
 
+/* The audience pages close on a sky of their own colour and carry no
+   photograph there (fb-aud2); the image is in their markup for the preview
+   below only, lazy and hidden, so it is never fetched as shipped. */
+:is(.page--founders, .page--companies, .page--investors) .aud-grow .footer-ridge__bg {
+  display: none;
+}
+
 /* ============================================================
-   ONE PALETTE - a preview (?palette=one, client 19.10: the pages'
-   colours still do not hang together)
-   The audit: Home, Our Team, Our Expertise, About Us and Contact stand on
-   one night - navy land, a navy sky warming to a sunset glow low over the
-   ridge, cream type, the orange route - while each audience page painted
-   itself whole in its Figma colour: Founders a terracotta sky and closing
-   band (23% of the page), Companies a mauve land, band and closing sky
-   (31%), Investors a slate one (32%), and Investors' photograph graded
-   blue. Here the three audience pages take Home's night: the land, How We
-   Work's band and the closing sky in the navy, the skies warming low to
-   the same glow, the photographs graded on Home's dusk; the audience
-   colour stays only where it names the route (Three routes' cards, the
-   accents). The cream sections, the orange and the type are as shipped.
+   LEADING COLOUR AS LIGHT - a preview (?palette=lead, client 19.10:
+   Founders, Companies and Investors keep a clear leading colour; what
+   jars is how they sit beside the other pages)
+   The audit: every other page stands on the navy land and carries its
+   colour as light - Home's sunset, Our Team's and Our Expertise's aurora,
+   About's copper photographs - and closes on the same dusk photograph of
+   the walkers. Founders already does so (navy land, terracotta sky).
+   Companies and Investors paint the land itself (mauve #5f545b, slate
+   #313e59), How We Work's band and the closing sky in flat colour, and
+   Companies has no one colour: mauve on its page and in Three routes'
+   glow, taupe (#ab8e82, a greyed Founders terracotta) on its cards and
+   in the menu.
+   Here the three take the site's construction and keep their colour:
+   the land is the navy; the colour is the light - the sky and the
+   photograph's grade in the hero, the top of How We Work's band behind
+   its title (dissolving into the navy before the points), and the grade
+   of the closing photograph, the same dusk walkers as every other page.
+   Companies' colour is the mauve everywhere: its cards, glow and menu
+   take #ac8a9e, the mauve at the terracotta's and the slate's lightness.
    ============================================================ */
-:root[data-palette="one"] {
-  --one-sky-high: #0c1221;
-  --one-sky: #262632;
-  --one-sky-low: #9a5c43;
-  --one-cream: #f0ebe9;
+:root[data-palette="lead"] .page--founders {
+  --lead-rgb: 209, 126, 95;
+  --lead-grade: 0.42;
 }
 
-/* Founders: the terracotta sky goes to the night, the type to cream */
-:root[data-palette="one"] .page--founders {
-  --fnd-sky-high: var(--one-sky-high);
-  --fnd-sky: var(--one-sky);
-  --fnd-sky-low: var(--one-sky-low);
-  --fnd-ink: var(--one-cream);
-}
-
-:root[data-palette="one"] .page--founders :is(.fnd-sky, .fnd-photo) {
-  background:
-    radial-gradient(70% 46% at 70% 96%, rgba(255, 150, 104, 0.34), transparent 70%),
-    linear-gradient(179deg, var(--fnd-sky-high) 0%, var(--fnd-sky) 46%, var(--fnd-sky-low) 100%);
-}
-
-:root[data-palette="one"] .page--founders .hero-content .eyebrow {
-  color: var(--orange-soft);
-}
-
-:root[data-palette="one"] .page--founders .hero-tagline {
-  color: rgba(240, 235, 233, 0.86);
-}
-
-:root[data-palette="one"] .page--founders :is(.primary-cta, .top-nav .nav-cta) {
-  border-color: rgba(240, 235, 233, 0.45);
-}
-
-:root[data-palette="one"] .page--founders .top-nav__menu a {
-  color: rgba(240, 235, 233, 0.84);
-}
-
-:root[data-palette="one"] .page--founders .top-nav .top-nav__lead {
-  color: rgba(240, 235, 233, 0.86);
-}
-
-@media (min-width: 1024px) {
-  :root[data-palette="one"] .page--founders .top-nav:not(.is-scrolled) {
-    background: transparent;
-  }
-}
-
-@media (max-width: 1023px) and (hover: none) {
-  :root[data-palette="one"] .page--founders .primary-cta:hover:not(:focus-visible) {
-    border-color: rgba(240, 235, 233, 0.45);
-  }
-}
-
-/* Companies and Investors: the navy land, Home's dusk on the photograph,
-   a warm glow over the ridge */
-:root[data-palette="one"] :is(.page--companies, .page--investors) {
+:root[data-palette="lead"] .page--companies {
+  --lead-rgb: 95, 84, 91;
+  --lead-light-rgb: 128, 106, 120;
+  --lead-grade: 0.8;
   --hz-field: #161822;
-  --hz-grade-top: #3a3452;
-  --hz-grade-low: #d27a58;
-  --hz-glow: 255, 150, 112;
+  --hz-grade-top: #3f3443;
+  --hz-grade-low: #a27f90;
+  --hz-glow: 172, 138, 158;
   --hz-glow-a: 0.3;
 }
 
-/* the fluted glass is the lightest of the photographs: a step down, to the
-   towers' weight */
-:root[data-palette="one"] .page--investors .hz-photo img {
-  filter: grayscale(0.55) contrast(1.12) brightness(0.8);
+:root[data-palette="lead"] .page--investors {
+  --lead-rgb: 49, 62, 89;
+  --lead-light-rgb: 76, 95, 132;
+  --lead-grade: 0.8;
+  --hz-field: #161822;
+  --hz-glow-a: 0.22;
 }
 
-/* How We Work stands on the navy on all three */
-:root[data-palette="one"] :is(.page--founders, .page--companies, .page--investors) {
+/* How We Work: the navy ground, the page's colour at the top behind the
+   title and the photograph's structure in it, gone before the points */
+:root[data-palette="lead"] :is(.page--companies, .page--investors) {
   --aud-ground-rgb: 22, 24, 34;
 }
 
-/* the closing sky: the same night warming to the glow behind the walkers */
-:root[data-palette="one"] :is(.page--founders, .page--companies, .page--investors) .aud-grow {
-  --grow-sky-top: var(--one-sky-high);
-  --grow-sky-mid: var(--one-sky);
-  --grow-sky-low: var(--one-sky-low);
-  --focus-ring: var(--one-cream);
+:root[data-palette="lead"] :is(.page--companies, .page--investors) .aud-work__photo {
+  background: linear-gradient(180deg, rgb(var(--lead-light-rgb)) 0%, rgb(var(--lead-rgb)) 26%, rgb(22, 24, 34) 46%);
 }
 
-:root[data-palette="one"] .page--founders .aud-grow__title {
-  color: var(--one-cream);
+/* the closing scene: the site's dusk photograph of the walkers, its veil,
+   and the page's colour laid over the photograph on the colour blend */
+:root[data-palette="lead"] :is(.page--founders, .page--companies, .page--investors) .aud-grow {
+  background: var(--navy-deep);
+  --focus-ring: var(--scene-cream);
 }
 
-/* Home's colour tiles stand on the site's one cream, the light sections'
-   ground everywhere else, and take the site's own colours: the three routes'
-   terracotta, taupe and slate, the sand of the Expertise sky, the peach
-   and the dusk violet of Who we are's glow - no green, no rose */
-:root[data-palette="one"][data-expertise="colour"] .home-expertise {
-  --hx-ground: var(--light);
+:root[data-palette="lead"] :is(.page--founders, .page--companies, .page--investors) .aud-grow .footer-ridge__bg {
+  display: block;
 }
 
-:root[data-palette="one"][data-expertise="colour"] .home-expertise__item:nth-child(3) {
-  --hx-tint: 171, 142, 130;
-  --hx-tile-ink: #6b5047;
+:root[data-palette="lead"] :is(.page--founders, .page--companies, .page--investors) .aud-grow > .footer-ridge::before {
+  content: "";
 }
 
-:root[data-palette="one"][data-expertise="colour"] .home-expertise__item:nth-child(5) {
-  --hx-tint: 128, 135, 173;
-  --hx-tile-ink: #474d78;
+:root[data-palette="lead"] :is(.page--founders, .page--companies, .page--investors) .aud-grow > .footer-ridge::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgb(var(--lead-rgb));
+  mix-blend-mode: color;
+  opacity: var(--lead-grade);
+  pointer-events: none;
 }
 
-:root[data-palette="one"][data-expertise="colour"] .home-expertise__item:nth-child(6) {
-  --hx-tint: 255, 168, 110;
-  --hx-tile-ink: #9e340a;
+:root[data-palette="lead"] .page--founders .aud-grow__title {
+  color: var(--scene-cream);
+}
+
+:root[data-palette="lead"] .page--founders .aud-grow__alt {
+  --link-ink: var(--scene-cream);
+}
+
+/* Companies in one colour: the mauve on Home's routes and in the menu */
+:root[data-palette="lead"] .audience-col--companies {
+  --col-accent: #ac8a9e;
+}
+
+:root[data-palette="lead"] .preview--companies {
+  --accent: #ac8a9e;
+}
+
+:root[data-palette="lead"] .routes-strip__card--companies {
+  --aud-tint-rgb: 172, 138, 158;
+}
+
+:root[data-palette="lead"] .mobile-menu__route--companies {
+  --route-tint: 172, 138, 158;
+}
+
+:root[data-palette="lead"] .audience-intro.is-audience-companies {
+  --audience-r: 172;
+  --audience-g: 138;
+  --audience-b: 158;
+}
+
+/* the second way out lands on the lit photograph on a phone or tablet, as
+   on About Us: the full cream with its halo and the night a little deeper */
+@media (max-width: 1023px) {
+  :root[data-palette="lead"] :is(.page--founders, .page--companies, .page--investors) .aud-grow__alt {
+    --link-ink: var(--light);
+    text-shadow: 0 1px 3px rgba(5, 8, 15, 0.6), 0 2px 12px rgba(5, 8, 15, 0.5);
+  }
+
+  :root[data-palette="lead"] :is(.page--founders, .page--companies, .page--investors) .aud-grow > .footer-ridge::before {
+    background: linear-gradient(180deg, var(--navy-deep) 0%, rgba(8, 11, 19, 0.97) 8%, rgba(8, 11, 19, 0.86) 17%, rgba(8, 11, 19, 0.7) 26%, rgba(8, 11, 19, 0.42) 52%, rgba(8, 11, 19, 0.14) 64%, transparent 72%);
+  }
 }

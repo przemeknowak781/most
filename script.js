@@ -1171,8 +1171,9 @@ function setupPortraitProposal() {
    three routes first in the menus, ?order=work Our Expertise's How We
    Work above Our Areas, ?stats=rows|grid Home's hero figures on a phone
    divided by dotted rules, ?clients=center|right Who We Work With's
-   head centred or on the right and ?palette=one the audience pages in
-   Home's night instead of their Figma colours - each as a data
+   head centred or on the right and ?palette=lead the audience pages
+   built as the rest of the site, their colour as light on the navy land -
+   each as a data
    attribute on <html> the stylesheet answers. #who-latte,
    #titles-smaller and the like do the same where a preview host drops
    the query. Without one the page is as it ships. (The titles in capitals
@@ -1193,7 +1194,7 @@ const PREVIEW_SWITCHES = {
   order: ["work"],
   stats: ["rows", "grid"],
   clients: ["center", "right"],
-  palette: ["one"],
+  palette: ["lead"],
 };
 
 /* The panel's words, in Polish as the client reviews in it. Each switch
@@ -1223,7 +1224,7 @@ const PREVIEW_PANEL = [
   ["arch", AUDIENCE_PAGES, "What We Help You Achieve", [["", "obecne"], ["help", "architektura z tła"]]],
   ["rail", AUDIENCE_PAGES, "Our Expertise: kropki przy punktach", [["", "tylko na końcach"], ["dots", "małe przy każdym punkcie"]]],
   ["graph", ["for-founders"], "Our Expertise jako mapa (prototyp)", [["", "obecne"], ["map", "mapa etapów"]]],
-  ["palette", "all", "Kolory podstron", [["", "obecne (z Figmy)"], ["one", "wspólna paleta"]]],
+  ["palette", "all", "Kolory podstron", [["", "obecne"], ["lead", "kolor wiodący jako światło"]]],
   ["nav", "all", "Kolejność w menu", [["", "strony, potem Explore as"], ["routes", "najpierw Explore as"]]],
   ["titles", "all", "Tytuły", [["", "obecne"], ["smaller", "mniejsze"]]],
 ];
