@@ -7733,9 +7733,71 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   outline-color: var(--focus-ring);
 }
 
-/* The edges. The top is straight, as the audience pages turn from dark to
-   cream. On a desktop the hero's stats notes hang under its foot into the
-   band, down to a few pixels over its end, and on the navy they ran on
+/* The top edge is the photograph's own (client, 19.10: a line that is not
+   straight, a cut-out true to the photo's structure). The band's navy comes
+   down into the facade between its members - two thin falling mullions
+   against the thick rising ones, the X's two beams down to its left corner,
+   and the dark right of the X along the beams' far edges - so the light
+   ground starts where the steel does (the cut's lines are the photo's
+   edges, docs/tools/who-cut.py). The cut is laid out as the photo is - its
+   box, cover as slice - and the photo shows right up to the edge, so the
+   two stay registered at every width. Both rise together by --who-lift,
+   just enough that the cuts' tips keep 20px off the copy: nothing on the
+   widest windows, up to 68px on a small laptop, more where the head spans
+   a tablet or a phone. */
+.whoweare__cut {
+  display: none;
+}
+
+:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare {
+  --who-lift: clamp(0px, (1720px - 100vw) * 0.13, 68px);
+}
+
+:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare__bg {
+  -webkit-mask-image: linear-gradient(180deg, #000 0, #000 calc(100% - var(--whoweare-fade)), rgba(0, 0, 0, 0.82) calc(100% - var(--whoweare-fade) * 0.62), rgba(0, 0, 0, 0.4) calc(100% - var(--whoweare-fade) * 0.3), transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0, #000 calc(100% - var(--whoweare-fade)), rgba(0, 0, 0, 0.82) calc(100% - var(--whoweare-fade) * 0.62), rgba(0, 0, 0, 0.4) calc(100% - var(--whoweare-fade) * 0.3), transparent 100%);
+}
+
+:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare__cut {
+  position: absolute;
+  z-index: 0;
+  top: calc(-1 * var(--whoweare-top));
+  right: calc(-1 * var(--container-x));
+  bottom: calc(-1 * var(--whoweare-gap));
+  left: calc(-1 * var(--container-x));
+  display: block;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare__cut svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: var(--whoweare-photo-h);
+  fill: var(--navy);
+}
+
+:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) :is(.whoweare__bg img, .whoweare__cut svg) {
+  transform: translateY(calc(-1 * var(--who-lift)));
+}
+
+@media (max-width: 1023px) {
+  :root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare {
+    --who-lift: 116px;
+  }
+}
+
+@media (max-width: 639px) {
+  :root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare {
+    --who-lift: 164px;
+  }
+}
+
+/* Above the edge: on a desktop the hero's stats notes hang under its foot
+   into the band, down to a few pixels over its end, and on the navy they ran on
    into the section; on a light ground the edge came right under their
    last line, so the band keeps a strip of its navy under them. (Below
    1024px the notes stand in the hero, well clear of it.) At the foot
