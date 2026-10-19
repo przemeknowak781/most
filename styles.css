@@ -17295,3 +17295,127 @@ main {
   }
 }
 /* === end PATH MAP === */
+
+/* ============================================================
+   ONE PALETTE - a preview (?palette=one, client 19.10: the pages'
+   colours still do not hang together)
+   The audit: Home, Our Team, Our Expertise, About Us and Contact stand on
+   one night - navy land, a navy sky warming to a sunset glow low over the
+   ridge, cream type, the orange route - while each audience page painted
+   itself whole in its Figma colour: Founders a terracotta sky and closing
+   band (23% of the page), Companies a mauve land, band and closing sky
+   (31%), Investors a slate one (32%), and Investors' photograph graded
+   blue. Here the three audience pages take Home's night: the land, How We
+   Work's band and the closing sky in the navy, the skies warming low to
+   the same glow, the photographs graded on Home's dusk; the audience
+   colour stays only where it names the route (Three routes' cards, the
+   accents). The cream sections, the orange and the type are as shipped.
+   ============================================================ */
+:root[data-palette="one"] {
+  --one-sky-high: #0c1221;
+  --one-sky: #262632;
+  --one-sky-low: #9a5c43;
+  --one-cream: #f0ebe9;
+}
+
+/* Founders: the terracotta sky goes to the night, the type to cream */
+:root[data-palette="one"] .page--founders {
+  --fnd-sky-high: var(--one-sky-high);
+  --fnd-sky: var(--one-sky);
+  --fnd-sky-low: var(--one-sky-low);
+  --fnd-ink: var(--one-cream);
+}
+
+:root[data-palette="one"] .page--founders :is(.fnd-sky, .fnd-photo) {
+  background:
+    radial-gradient(70% 46% at 70% 96%, rgba(255, 150, 104, 0.34), transparent 70%),
+    linear-gradient(179deg, var(--fnd-sky-high) 0%, var(--fnd-sky) 46%, var(--fnd-sky-low) 100%);
+}
+
+:root[data-palette="one"] .page--founders .hero-content .eyebrow {
+  color: var(--orange-soft);
+}
+
+:root[data-palette="one"] .page--founders .hero-tagline {
+  color: rgba(240, 235, 233, 0.86);
+}
+
+:root[data-palette="one"] .page--founders :is(.primary-cta, .top-nav .nav-cta) {
+  border-color: rgba(240, 235, 233, 0.45);
+}
+
+:root[data-palette="one"] .page--founders .top-nav__menu a {
+  color: rgba(240, 235, 233, 0.84);
+}
+
+:root[data-palette="one"] .page--founders .top-nav .top-nav__lead {
+  color: rgba(240, 235, 233, 0.86);
+}
+
+@media (min-width: 1024px) {
+  :root[data-palette="one"] .page--founders .top-nav:not(.is-scrolled) {
+    background: transparent;
+  }
+}
+
+@media (max-width: 1023px) and (hover: none) {
+  :root[data-palette="one"] .page--founders .primary-cta:hover:not(:focus-visible) {
+    border-color: rgba(240, 235, 233, 0.45);
+  }
+}
+
+/* Companies and Investors: the navy land, Home's dusk on the photograph,
+   a warm glow over the ridge */
+:root[data-palette="one"] :is(.page--companies, .page--investors) {
+  --hz-field: #161822;
+  --hz-grade-top: #3a3452;
+  --hz-grade-low: #d27a58;
+  --hz-glow: 255, 150, 112;
+  --hz-glow-a: 0.3;
+}
+
+/* the fluted glass is the lightest of the photographs: a step down, to the
+   towers' weight */
+:root[data-palette="one"] .page--investors .hz-photo img {
+  filter: grayscale(0.55) contrast(1.12) brightness(0.8);
+}
+
+/* How We Work stands on the navy on all three */
+:root[data-palette="one"] :is(.page--founders, .page--companies, .page--investors) {
+  --aud-ground-rgb: 22, 24, 34;
+}
+
+/* the closing sky: the same night warming to the glow behind the walkers */
+:root[data-palette="one"] :is(.page--founders, .page--companies, .page--investors) .aud-grow {
+  --grow-sky-top: var(--one-sky-high);
+  --grow-sky-mid: var(--one-sky);
+  --grow-sky-low: var(--one-sky-low);
+  --focus-ring: var(--one-cream);
+}
+
+:root[data-palette="one"] .page--founders .aud-grow__title {
+  color: var(--one-cream);
+}
+
+/* Home's colour tiles stand on the site's one cream, the light sections'
+   ground everywhere else, and take the site's own colours: the three routes'
+   terracotta, taupe and slate, the sand of the Expertise sky, the peach
+   and the dusk violet of Who we are's glow - no green, no rose */
+:root[data-palette="one"][data-expertise="colour"] .home-expertise {
+  --hx-ground: var(--light);
+}
+
+:root[data-palette="one"][data-expertise="colour"] .home-expertise__item:nth-child(3) {
+  --hx-tint: 171, 142, 130;
+  --hx-tile-ink: #6b5047;
+}
+
+:root[data-palette="one"][data-expertise="colour"] .home-expertise__item:nth-child(5) {
+  --hx-tint: 128, 135, 173;
+  --hx-tile-ink: #474d78;
+}
+
+:root[data-palette="one"][data-expertise="colour"] .home-expertise__item:nth-child(6) {
+  --hx-tint: 255, 168, 110;
+  --hx-tile-ink: #9e340a;
+}
