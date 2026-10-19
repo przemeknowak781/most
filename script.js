@@ -2175,9 +2175,10 @@ window.addEventListener("load", () => {
    the other rather than crossing the line. The arcs then draw themselves
    to the new stage's neighbours. With reduced motion it all simply moves.
 
-   Nothing here follows or holds the scroll: no wheel, touch or key
-   listener on the window, nothing pinned and nothing scrolled into view,
-   so the page scrolls over the map as over any other section. The stages,
+   Nothing here holds the scroll - the map only reads it, to draw itself
+   in as it arrives (below): no wheel, touch or key listener on the window,
+   nothing pinned and nothing scrolled into view, so the page scrolls over
+   the map as over any other section. The stages,
    the photograph and the colours are the markup's and the page's, so any
    page can carry one. */
 (() => {
@@ -2479,6 +2480,7 @@ window.addEventListener("load", () => {
       prevButton.firstChild.textContent = `Previous stage: ${stages[(i - 1 + n) % n].name}`;
       nextButton.firstChild.textContent = `Next stage: ${stages[(i + 1) % n].name}`;
       if (source === "step" || source === "link") status.textContent = `${stages[i].name}, stage ${i + 1} of ${n}`;
+      if (source !== "init") holdWhole();
       /* the map already shows it, or is on its way there */
       if (!mapMode || !geo.w || was === i) return;
       if (was < 0 || source === "init" || reduceMotion.matches) settle();
@@ -2493,6 +2495,7 @@ window.addEventListener("load", () => {
       if (!geo.w) return;
       placeButtons();
       settle();
+      readScroll();
     };
 
     const setMode = () => {
@@ -2517,6 +2520,7 @@ window.addEventListener("load", () => {
       });
       if (on) layout();
       else stop();
+      readScroll();
     };
 
     /* ---------- input ---------- */
@@ -2562,6 +2566,7 @@ window.addEventListener("load", () => {
 
     view.addEventListener("click", () => {
       view.setAttribute("aria-pressed", String(view.getAttribute("aria-pressed") !== "true"));
+      holdWhole();
       setMode();
     });
 
@@ -2578,6 +2583,64 @@ window.addEventListener("load", () => {
       const j = fromHash();
       if (j >= 0) select(j, "link");
     });
+
+    /* ---------- arriving with the scroll ----------
+       The client (19.10): the map should move as the page scrolls onto it.
+       From the line's entering the screen at its foot to its standing at
+       55% of the screen's height, the line draws itself in from the left,
+       each marker lighting as the line reaches it, the buttons at its ends
+       coming with it; once the line is whole the arcs grow from the chosen
+       stage and its card comes up. It follows the scroll both ways and only
+       reads it (a passive listener: nothing holds the page). Once the reader
+       does anything with the map - a stage, a button, a key, the list - the
+       map stays whole; with reduced motion it always is. */
+    let reveal = 1;
+    let whole = null;
+    let held = false;
+    let revealFrame = 0;
+
+    const setReveal = (r) => {
+      reveal = r;
+      setCssVar(stage, "--map-reveal", r.toFixed(3));
+      /* the line's front runs from 90px before the map to 90px past it */
+      const front = r * (geo.w + 180) - 90;
+      stages.forEach((s, j) => setCssVar(s.tab, "--node-in", clamp((front - xs[j]) / 90, 0, 1).toFixed(3)));
+      const isWhole = r >= 1;
+      if (isWhole === whole) return;
+      const was = whole;
+      whole = isWhole;
+      stage.classList.toggle("is-arriving", !isWhole);
+      /* the arcs draw themselves in when the line comes whole, not when the
+         page opens on a map already there */
+      if (isWhole && was === false && mapMode && current >= 0 && geo.w) drawArcs(!reduceMotion.matches);
+    };
+
+    function readScroll() {
+      revealFrame = 0;
+      if (!mapMode || held || reduceMotion.matches || !geo.w) {
+        setReveal(1);
+        return;
+      }
+      const vh = window.innerHeight || 1;
+      const lineY = map.getBoundingClientRect().top + smoothY(geo.cx);
+      const p = clamp((vh - lineY) / (vh * 0.45), 0, 1);
+      setReveal(p * p * (3 - 2 * p));
+    }
+
+    function holdWhole() {
+      held = true;
+      readScroll();
+    }
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!revealFrame) revealFrame = requestAnimationFrame(readScroll);
+      },
+      { passive: true },
+    );
+    map.addEventListener("focusin", holdWhole);
+    onQuery(reduceMotion, readScroll);
 
     /* ---------- layout changes ----------
        The stage is watched rather than the window: it also has a width

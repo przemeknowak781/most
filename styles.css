@@ -16954,6 +16954,45 @@ main {
   outline-offset: 4px;
 }
 
+/* ---------- arriving with the scroll ----------
+   While the map scrolls in (script: --map-reveal 0-1 on the stage, and
+   --node-in 0-1 on each marker as the line's front reaches it), the line
+   is drawn in from the left behind a soft front, each marker's dot grows
+   in and its name with it, the buttons come in at their ends of the line
+   and the card rises in over the last quarter. The arcs wait for the line
+   to be whole, then draw themselves (script). */
+.path-map__stage.is-arriving .path-map__web {
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(var(--map-reveal, 1) * (100% + 90px) - 90px), transparent calc(var(--map-reveal, 1) * (100% + 90px)));
+  mask-image: linear-gradient(90deg, #000 calc(var(--map-reveal, 1) * (100% + 90px) - 90px), transparent calc(var(--map-reveal, 1) * (100% + 90px)));
+}
+
+.path-map__stage.is-arriving .path-map__arcs {
+  opacity: 0;
+}
+
+.path-map__stage.is-arriving .path-map__node > *,
+.path-map__stage.is-arriving .path-map__node.is-low::before {
+  opacity: var(--node-in, 1);
+}
+
+.path-map__stage.is-arriving .path-map__dot {
+  scale: calc(0.35 + 0.65 * var(--node-in, 1));
+}
+
+.path-map__stage.is-arriving .path-map__step--prev {
+  opacity: clamp(0, var(--map-reveal, 1) * 5, 1);
+}
+
+.path-map__stage.is-arriving .path-map__step--next {
+  opacity: clamp(0, (var(--map-reveal, 1) - 0.8) * 5, 1);
+}
+
+.path-map__stage.is-arriving .path-map__list {
+  --card-in: clamp(0, (var(--map-reveal, 1) - 0.75) * 4, 1);
+  opacity: var(--card-in);
+  translate: 0 calc(16px - 16px * var(--card-in));
+}
+
 /* ---------- the card: the chosen stage under the centre marker ----------
    Every stage shares one cell, so the card keeps the tallest one's height
    and nothing below it moves when the stage changes. The name is the
