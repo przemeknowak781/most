@@ -2290,6 +2290,105 @@ main:focus {
   }
 }
 
+/* The open card is the screen's height less the bar, so on a shorter
+   window - a laptop at 125% or 150%, or a zoomed-in page - its list ran out
+   of room and scrolled inside the card. Step by step the window's height
+   takes it back: first the route drawing shrinks, then the spacing
+   tightens, then the drawing goes and the type sets a little closer; the
+   pill keeps the site's size. The list's own scroll stays only for a
+   reader's text spacing (above). */
+@media (min-width: 1024px) and (max-height: 860px) {
+  .preview.is-expanded .preview__route {
+    max-height: 64px;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 780px) {
+  .preview.is-expanded {
+    gap: 10px;
+    padding-top: 18px;
+    padding-bottom: 62px;
+  }
+
+  .preview.is-expanded .preview__route {
+    max-height: 44px;
+  }
+
+  .preview.is-expanded .preview__chart {
+    margin-bottom: 2px;
+    padding-bottom: 8px;
+  }
+
+  .preview.is-expanded .preview__body {
+    gap: 12px;
+  }
+
+  .preview.is-expanded .preview__list {
+    gap: 6px;
+    padding-top: 12px;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 710px) {
+  .preview.is-expanded .preview__chart {
+    display: none;
+  }
+
+  .preview.is-expanded .preview__copy {
+    line-height: 1.5;
+  }
+
+  .preview.is-expanded .preview__list li {
+    line-height: 1.42;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 620px) {
+  .preview.is-expanded {
+    padding-bottom: 54px;
+  }
+
+  .preview.is-expanded .preview__toggle {
+    bottom: 14px;
+  }
+
+  .preview.is-expanded .preview__name {
+    font-size: 24px;
+  }
+
+  .preview.is-expanded .preview__copy {
+    font-size: 13px;
+  }
+
+  .preview.is-expanded .preview__list li {
+    font-size: 12.5px;
+  }
+}
+
+/* the shortest windows (down to about 540px) give the cards some of the
+   air under them */
+@media (min-width: 1024px) and (max-height: 580px) {
+  .audience-intro__grid {
+    padding-bottom: 20px;
+  }
+
+  .preview.is-expanded .preview__name {
+    font-size: 22px;
+  }
+
+  .preview.is-expanded .preview__copy {
+    line-height: 1.45;
+  }
+
+  .preview.is-expanded .preview__body {
+    gap: 10px;
+  }
+
+  .preview.is-expanded .preview__list {
+    padding-top: 10px;
+  }
+}
+
 .preview:not(.is-expanded) .preview__chart {
   max-height: 0;
   margin: 0;
