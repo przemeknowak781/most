@@ -7507,15 +7507,19 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
      offset (--audience-cut-offset, 118-180px); the link to About Us stands
      that much, and some air, above the section's end */
   --whoweare-foot: calc(clamp(118px, 10vw, 180px) + clamp(56px, 8vh, 96px));
-  /* from the intro to the rail; the photo has faded out by its end */
+  /* from the intro to the rail */
   --whoweare-gap: clamp(48px, 7vh, 80px);
-  --whoweare-fade: calc(var(--whoweare-gap) + 96px);
+  /* the photo's layer runs on this far under the rail's top, so its fade
+     out has room to be slow: it starts behind the lede's last lines and
+     has ended by the first row's text */
+  --whoweare-tail: 72px;
+  --whoweare-fade: calc(var(--whoweare-gap) + var(--whoweare-tail) + 120px);
   /* The photo keeps the size and crop it had when it filled the whole band
      with the three notes under the intro: that band was about 1.45 times
      the intro's height on a desktop (1.85 on a phone, see compact). Blown
      down to the intro alone it would show its light building edges at
      the sides of the page. */
-  --whoweare-photo-h: 145%;
+  --whoweare-photo-k: 1.45;
   position: relative;
   /* over the hero's ridge, as the band is: on desktop the ridge hangs
      below the band's foot, and its drop shadow laid a soft dark line
@@ -7539,31 +7543,50 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 }
 
 /* The photo layer runs from the section's top edge to the rail, full
-   width. It rises out of the hero's navy land slowly, from nothing at the
-   section's top to full 240px under the eyebrow's line (a quicker fade
-   drew a line under the stats, a window again), and its last stretch
-   fades out into the ground (slowly behind the lede, all the way in the
-   gap) - no edge at either end. */
+   width, and on a little under it (--whoweare-tail). It rises out of the
+   hero's navy land slowly, from nothing at the section's top to full 240px
+   under the eyebrow's line (a quicker fade drew a line under the stats, a
+   window again), and fades out into the ground on one eased curve, no
+   corner in it: slowly from behind the lede's last lines, quickest in the
+   gap, slowly again to nothing under the rail's top. (The client, 19.10:
+   the two fades used to overlap on a desktop, and where they met the
+   photo stepped down at once from full to 82% - a straight edge across
+   the section above the rail.) The fade out starts where the fade in has
+   reached full, or lower. */
 .whoweare__bg {
+  --who-in: transparent 0, rgba(0, 0, 0, 0.1) calc(var(--whoweare-top) * 0.6), rgba(0, 0, 0, 0.4) calc(var(--whoweare-top) + 60px), rgba(0, 0, 0, 0.78) calc(var(--whoweare-top) + 150px), #000 calc(var(--whoweare-top) + 240px);
+  --who-out: max(var(--whoweare-top) + 240px, 100% - var(--whoweare-fade));
+  /* 1 - smoothstep, in eighths of the way from --who-out to the foot */
+  --who-fade-out:
+    #000 var(--who-out),
+    rgba(0, 0, 0, 0.957) calc(var(--who-out) + (100% - var(--who-out)) * 0.125),
+    rgba(0, 0, 0, 0.844) calc(var(--who-out) + (100% - var(--who-out)) * 0.25),
+    rgba(0, 0, 0, 0.684) calc(var(--who-out) + (100% - var(--who-out)) * 0.375),
+    rgba(0, 0, 0, 0.5) calc(var(--who-out) + (100% - var(--who-out)) * 0.5),
+    rgba(0, 0, 0, 0.316) calc(var(--who-out) + (100% - var(--who-out)) * 0.625),
+    rgba(0, 0, 0, 0.156) calc(var(--who-out) + (100% - var(--who-out)) * 0.75),
+    rgba(0, 0, 0, 0.043) calc(var(--who-out) + (100% - var(--who-out)) * 0.875),
+    transparent 100%;
   position: absolute;
   z-index: 0;
   top: calc(-1 * var(--whoweare-top));
   right: calc(-1 * var(--container-x));
-  bottom: calc(-1 * var(--whoweare-gap));
+  bottom: calc(-1 * (var(--whoweare-gap) + var(--whoweare-tail)));
   left: calc(-1 * var(--container-x));
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0, rgba(0, 0, 0, 0.1) calc(var(--whoweare-top) * 0.6), rgba(0, 0, 0, 0.4) calc(var(--whoweare-top) + 60px), rgba(0, 0, 0, 0.78) calc(var(--whoweare-top) + 150px), #000 calc(var(--whoweare-top) + 240px), #000 calc(100% - var(--whoweare-fade)), rgba(0, 0, 0, 0.82) calc(100% - var(--whoweare-fade) * 0.62), rgba(0, 0, 0, 0.4) calc(100% - var(--whoweare-fade) * 0.3), transparent 100%);
-  mask-image: linear-gradient(180deg, transparent 0, rgba(0, 0, 0, 0.1) calc(var(--whoweare-top) * 0.6), rgba(0, 0, 0, 0.4) calc(var(--whoweare-top) + 60px), rgba(0, 0, 0, 0.78) calc(var(--whoweare-top) + 150px), #000 calc(var(--whoweare-top) + 240px), #000 calc(100% - var(--whoweare-fade)), rgba(0, 0, 0, 0.82) calc(100% - var(--whoweare-fade) * 0.62), rgba(0, 0, 0, 0.4) calc(100% - var(--whoweare-fade) * 0.3), transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, var(--who-in), var(--who-fade-out));
+  mask-image: linear-gradient(180deg, var(--who-in), var(--who-fade-out));
 }
 
-/* the photo and its wash as they were, at the band's old size */
+/* the photo and its wash as they were, at the band's old size (the
+   layer less its tail) */
 .whoweare__bg img,
 .whoweare__wash {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: var(--whoweare-photo-h);
+  height: calc((100% - var(--whoweare-tail)) * var(--whoweare-photo-k));
 }
 
 /* A close-up of facade mullions, pre-toned to the navy ramp - no tower
@@ -7756,14 +7779,17 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 }
 
 :root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare {
+  /* the photo's layer ends at the rail, as the cut's box does: the rows'
+     dark type stands on the light ground alone */
+  --whoweare-tail: 0px;
   --who-drop: clamp(0px, (2020px - 100vw) * 0.2, 92px);
   --whoweare-air: calc(clamp(64px, 9vh, 112px) + var(--who-drop));
   --who-lift: calc(var(--who-drop) * 0.725);
 }
 
 :root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare__bg {
-  -webkit-mask-image: linear-gradient(180deg, #000 0, #000 calc(100% - var(--whoweare-fade)), rgba(0, 0, 0, 0.82) calc(100% - var(--whoweare-fade) * 0.62), rgba(0, 0, 0, 0.4) calc(100% - var(--whoweare-fade) * 0.3), transparent 100%);
-  mask-image: linear-gradient(180deg, #000 0, #000 calc(100% - var(--whoweare-fade)), rgba(0, 0, 0, 0.82) calc(100% - var(--whoweare-fade) * 0.62), rgba(0, 0, 0, 0.4) calc(100% - var(--whoweare-fade) * 0.3), transparent 100%);
+  --who-in: #000 0;
+  --who-out: calc(100% - var(--whoweare-fade));
 }
 
 :root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare__cut {
@@ -7784,7 +7810,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   left: 0;
   display: block;
   width: 100%;
-  height: var(--whoweare-photo-h);
+  height: calc(100% * var(--whoweare-photo-k));
   fill: var(--navy);
 }
 
@@ -8075,7 +8101,9 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   min-height: clamp(150px, 12.5vw, 196px);
   padding: clamp(24px, 2.2vw, 36px);
   border: 1px solid rgba(var(--hx-tint), 0.24);
-  border-radius: var(--card-radius);
+  /* Three routes' corner, the section above (the client, 19.10), not the
+     cards' 2px */
+  border-radius: 16px;
   background: linear-gradient(155deg, rgba(var(--hx-tint), 0.11), transparent 62%);
   text-align: left;
 }
@@ -8199,17 +8227,29 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   --focus-ring: #9e340a;
   /* the fade under the link, and a shorter foot over it than the dark
      section's: the fade is air enough */
-  --hx-fade: clamp(200px, 26vh, 300px);
+  --hx-fade: clamp(260px, 40vh, 420px);
   --hx-foot: clamp(48px, 7vh, 88px);
+  /* The ground's fall into navy-deep, in tenths of the fade: the two
+     colours mixed in oklab along a smoothstep, so it leaves the ground and
+     meets the navy with no corner at either end. The client (19.10): the
+     fade was shorter and its first stretch near flat, then steep - the
+     corner read as a grey band across the page. Worked out for the cream
+     (the colour tiles' ground has its own, below). */
+  --hx-dusk:
+    #e8e4e2 calc(100% - var(--hx-fade) * 0.9),
+    #d4d0d0 calc(100% - var(--hx-fade) * 0.8),
+    #b7b4b5 calc(100% - var(--hx-fade) * 0.7),
+    #949396 calc(100% - var(--hx-fade) * 0.6),
+    #707075 calc(100% - var(--hx-fade) * 0.5),
+    #4e4f55 calc(100% - var(--hx-fade) * 0.4),
+    #31333a calc(100% - var(--hx-fade) * 0.3),
+    #1b1d25 calc(100% - var(--hx-fade) * 0.2),
+    #0d1018 calc(100% - var(--hx-fade) * 0.1);
   padding-bottom: calc(var(--hx-foot) + var(--hx-fade));
   background: linear-gradient(180deg,
     var(--hx-ground, var(--light)) 0%,
     var(--hx-ground, var(--light)) calc(100% - var(--hx-fade)),
-    #e0dbda calc(100% - var(--hx-fade) * 0.85),
-    #a6a4a6 calc(100% - var(--hx-fade) * 0.65),
-    #707075 calc(100% - var(--hx-fade) * 0.5),
-    #3f4047 calc(100% - var(--hx-fade) * 0.35),
-    #12161d calc(100% - var(--hx-fade) * 0.15),
+    var(--hx-dusk),
     var(--navy-deep) 100%);
   color: var(--hx-ink);
 }
@@ -8228,14 +8268,14 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 
 @media (max-width: 1023px) {
   :root:is([data-expertise="light"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise {
-    --hx-fade: clamp(160px, 40vw, 240px);
+    --hx-fade: clamp(200px, 56vw, 320px);
     --hx-foot: 32px;
   }
 }
 
 @media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
   :root:is([data-expertise="light"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise {
-    --hx-fade: 140px;
+    --hx-fade: 180px;
   }
 }
 /* ---------- lighttiles: the tiles on the light ground ----------
@@ -8257,18 +8297,32 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
    The client (18.10): the section light but toned down rather than white,
    so the six can be tiles like Three routes' cards, each held in one
    colour of its own - its light at the top, the dot on its edge, its
-   drawing (still drawing itself) and its call to action - six soft
-   colours in one key, the ground fading at its foot into the navy the
-   client marks run on (the light rules above; the tiles' layout too).
-   The inks the drawings and the links take are the colours deepened to
-   4.9:1 and more on the tile, its light included. */
+   drawing (still drawing itself) and its call to action - the ground
+   fading at its foot into the navy the client marks run on (the light
+   rules above; the tiles' layout too).
+   The colours are the site's own (the client, 19.10: no green, violet or
+   rose - our navies, lattes and oranges): the brand orange, latte and
+   navy along the first row, the Investors slate, the Founders terracotta
+   and the trail's peach along the second. The inks the drawings and the
+   links take are the colours deepened to 4.5:1 and more on the tile, its
+   light included (5.7:1 and more where the links stand). */
 :root[data-expertise="colour"] .home-expertise {
   --hx-ground: #e4ded9;
+  --hx-dusk:
+    #ddd7d3 calc(100% - var(--hx-fade) * 0.9),
+    #c9c5c2 calc(100% - var(--hx-fade) * 0.8),
+    #aeaaa9 calc(100% - var(--hx-fade) * 0.7),
+    #8d8b8c calc(100% - var(--hx-fade) * 0.6),
+    #6b6a6e calc(100% - var(--hx-fade) * 0.5),
+    #4a4c51 calc(100% - var(--hx-fade) * 0.4),
+    #2f3138 calc(100% - var(--hx-fade) * 0.3),
+    #1a1c24 calc(100% - var(--hx-fade) * 0.2),
+    #0c1017 calc(100% - var(--hx-fade) * 0.1);
 }
 
 :root[data-expertise="colour"] .home-expertise__item {
-  --hx-tint: 209, 126, 95;
-  --hx-tile-ink: #94401f;
+  --hx-tint: 255, 97, 44;
+  --hx-tile-ink: #a3390e;
   overflow: visible;
   border-color: rgba(var(--hx-tint), 0.4);
   background:
@@ -8279,13 +8333,13 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 }
 
 :root[data-expertise="colour"] .home-expertise__item:nth-child(2) {
-  --hx-tint: 196, 154, 92;
-  --hx-tile-ink: #7a5414;
+  --hx-tint: 184, 146, 110;
+  --hx-tile-ink: #6e4e30;
 }
 
 :root[data-expertise="colour"] .home-expertise__item:nth-child(3) {
-  --hx-tint: 128, 160, 124;
-  --hx-tile-ink: #3f603c;
+  --hx-tint: 58, 72, 104;
+  --hx-tile-ink: #313e59;
 }
 
 :root[data-expertise="colour"] .home-expertise__item:nth-child(4) {
@@ -8294,13 +8348,13 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 }
 
 :root[data-expertise="colour"] .home-expertise__item:nth-child(5) {
-  --hx-tint: 150, 132, 196;
-  --hx-tile-ink: #56458a;
+  --hx-tint: 209, 126, 95;
+  --hx-tile-ink: #94401f;
 }
 
 :root[data-expertise="colour"] .home-expertise__item:nth-child(6) {
-  --hx-tint: 192, 128, 150;
-  --hx-tile-ink: #7d3f56;
+  --hx-tint: 255, 168, 110;
+  --hx-tile-ink: #8f4a16;
 }
 
 /* the dot on the card's top edge, as the routes' markers stand on theirs */
@@ -11852,7 +11906,7 @@ main {
     --whoweare-foot: calc(118px + var(--m-section));
     /* the notes stacked here, so the band the photo filled was taller
        beside the intro than on a desktop: it keeps that size */
-    --whoweare-photo-h: 185%;
+    --whoweare-photo-k: 1.85;
   }
 
   /* a phone on its side: the air follows the screen's height */
@@ -15358,10 +15412,14 @@ main {
    ridge: the copy sits on the darkest part of the sky. The shade eases out
    of the solid navy over its first quarter (the review, 16.10): straight
    from 1 to 0.66 it turned a corner at the band's top that read as an edge
-   between the sections. Under the copy it is what it was. */
+   between the sections. Since 19.10 it is one smooth curve all the way
+   (a cubic through 0.66 at a quarter and 0.24 at half, flat at both
+   ends), sampled every 6%: the corners at 8% and 16% are gone and it
+   settles into the ridge instead of stopping at 66%. Under the copy it
+   is what it was. */
 .aud-grow > .footer-ridge::before {
   z-index: 1;
-  background: linear-gradient(180deg, var(--navy-deep) 0%, rgba(8, 11, 19, 0.97) 8%, rgba(8, 11, 19, 0.86) 16%, rgba(8, 11, 19, 0.66) 24%, rgba(8, 11, 19, 0.24) 50%, transparent 66%);
+  background: linear-gradient(180deg, var(--navy-deep) 0%, rgba(8, 11, 19, 0.96) 6%, rgba(8, 11, 19, 0.88) 12%, rgba(8, 11, 19, 0.76) 18%, rgba(8, 11, 19, 0.66) 24%, rgba(8, 11, 19, 0.56) 30%, rgba(8, 11, 19, 0.46) 36%, rgba(8, 11, 19, 0.36) 42%, rgba(8, 11, 19, 0.27) 48%, rgba(8, 11, 19, 0.18) 54%, rgba(8, 11, 19, 0.09) 60%, rgba(8, 11, 19, 0.03) 66%, transparent 72%);
 }
 
 .aud-grow > .footer-ridge .footer-ridge__overlay {
