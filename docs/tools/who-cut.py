@@ -1,88 +1,126 @@
 # The top edge of Who we are on a light ground (?who=ivory|grey|latte): the
 # navy of the band above comes down into the facade photo (arch-band-facade,
-# 1800 x 900) between its members, so the section's edge is the photograph's
-# own structure. Four cuts, each between two edges of the photo:
+# 1800 x 900) through every cell of its structure along the top, so the
+# section's edge is the facade's own silhouette - the light members (the
+# building's edge and mullions, the pilasters, the diagrid, the X's beams)
+# rise into the navy between the cuts.
 #
-#   1, 2  a thin falling mullion and the thick rising one beside it, down to
-#         where they meet
-#   3     the X's falling beam (its outer, left edge) and the rising one (its
-#         left edge), down to the X's left corner
-#   4     right of the X: the rising beam's right edge and, under the
-#         crossing, the falling beam's upper edge, out to the photo's side
+#   1  the structure's edges: Sobel edges of the photo, thinned, and a Hough
+#      vote over angle and offset; each peak keeps the runs of edge it is
+#      made of (gaps under 40px, runs of 90px or more)
+#   2  the cells: the edges (2px wide, run 30px on at each end, and on out
+#      of the photo's top when they reach near it) cut the photo's upper
+#      part into cells; the floor of the left building, which the vote
+#      misses, is added (snapped to the photo, 24.6 degrees)
+#   3  the cuts: the cells that open on the photo's top and close above
+#      y = 470, less the narrow ones (under 38px across: those are members
+#      seen by both their edges - mullions, flanges, bars - and stay light);
+#      the deep corner cell of the left building, which would stand in the
+#      title, stays light; the dark right of the X is added (out to the
+#      photo's side, along the beams' far edges), and the X's rising member
+#      is kept whole and light; hairline gaps under 3px close
 #
-# Each edge starts as a rough line (the client's sketch, 19.10) and is
-# snapped to the photo: every angle within 6 degrees and every offset within
-# the search band is tried, the photo is averaged along the line, and the
-# sharpest step (an edge) or the darkest thin line (a mullion) wins.
-#
-#   python3 docs/tools/who-cut.py        prints the path's d
+#   python3 docs/tools/who-cut.py        prints the path's d (needs shapely)
 #
 # Paste it into the .whoweare__cut path in index.html. The cut and the
 # photo are laid out alike (object-fit: cover = preserveAspectRatio slice,
-# both lifted by --who-lift), so they stay registered at every width.
+# both moved by --who-lift), so they stay registered at every width.
+import json
 import os
 
 import numpy as np
 from PIL import Image
 from scipy import ndimage as nd
+from shapely.geometry import LineString, Polygon, box
+from shapely.ops import unary_union
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-L = np.asarray(Image.open(os.path.join(ROOT, 'arch-band-facade.webp')).convert('L')).astype(np.float32)
+L = np.asarray(Image.open(os.path.join(ROOT, 'arch-band-facade.webp')).convert('L')).astype(np.float32) / 255
 
-# name: rough start, rough end, what to look for, search band (photo px)
-EDGES = {
-    'cut1_left': ((655, 40), (712, 195), 'dark', 40),
-    'cut1_right': ((730, 200), (820, 75), 'edge', 40),
-    'cut2_left': ((955, 30), (1020, 200), 'dark', 40),
-    'cut2_right': ((1040, 200), (1150, 50), 'edge', 40),
-    'cut3_left': ((1189.0, 50.7), (1333.0, 302.5), 'edge', 7),
-    'cut3_right': ((1390, 340), (1580, 60), 'edge', 40),
-    'cut4_left': ((1650, 60), (1510, 270), 'edge', 40),
-    'cut4_low': ((1525, 300), (1700, 540), 'edge', 40),
-}
-TOP = -40     # above the photo, out of the section
-SIDE = 1900   # past the photo's right side
+# ---------- 1. the structure's straight edges ----------
+Ls = nd.gaussian_filter(L, 1.2)
+gx, gy = nd.sobel(Ls, 1), nd.sobel(Ls, 0)
+mag = np.hypot(gx, gy)
+ang = (np.degrees(np.arctan2(gy, gx)) + 180) % 180
+thin = np.zeros_like(mag)
+for a0, (dy, dx) in [(0, (0, 1)), (45, (1, 1)), (90, (1, 0)), (135, (1, -1))]:
+    sel = np.abs(((ang - a0 + 90) % 180) - 90) <= 22.5
+    peak = sel & (mag >= np.roll(mag, (dy, dx), (0, 1))) & (mag >= np.roll(mag, (-dy, -dx), (0, 1)))
+    thin[peak] = mag[peak]
+ys, xs = np.nonzero(thin > 0.12)
+thetas = np.radians(np.arange(0, 180, 0.25))
+diag = int(np.hypot(*L.shape)) + 1
+acc = np.zeros((len(thetas), 2 * diag), np.int32)
+for i, th in enumerate(thetas):
+    np.add.at(acc[i], np.round(xs * np.cos(th) + ys * np.sin(th)).astype(int) + diag, 1)
 
+segments = []
+for _ in range(80):
+    i, r = np.unravel_index(np.argmax(acc), acc.shape)
+    if acc[i, r] < 90:
+        break
+    th, rho = thetas[i], r - diag
+    n = np.array([np.cos(th), np.sin(th)])
+    u = np.array([-n[1], n[0]])
+    on = np.abs(xs * n[0] + ys * n[1] - rho) <= 1.5
+    t = np.sort(xs[on] * u[0] + ys[on] * u[1])
+    runs, start = [], None
+    for k, v in enumerate(t):
+        if start is None:
+            start = v
+        elif v - t[k - 1] > 40:
+            if t[k - 1] - start >= 90:
+                runs.append((start, t[k - 1]))
+            start = v
+    if start is not None and t[-1] - start >= 90:
+        runs.append((start, t[-1]))
+    for a, b in runs:
+        A, B = n * rho + u * (a - 30), n * rho + u * (b + 30)
+        # a member that comes near the photo's top runs on out of it
+        for P, Q in ((A, B), (B, A)):
+            if P[1] < 90 and P[1] < Q[1] and abs(u[1]) > 0.2:
+                d = (P - Q) / np.linalg.norm(P - Q)
+                P[:] = P + d * (-20 - P[1]) / d[1]
+        segments.append(LineString([tuple(A), tuple(B)]))
+    acc[max(0, i - 8):i + 9, max(0, r - 10):r + 11] = 0
 
-def snap(p0, p1, kind, dmax):
-    p0, p1 = np.array(p0, float), np.array(p1, float)
-    c, half = (p0 + p1) / 2, np.linalg.norm(p1 - p0) / 2
-    th0 = np.arctan2(*(p1 - p0)[::-1])
-    ts, ds = np.linspace(-half, half, 120), np.arange(-dmax, dmax + 0.5, 0.5)
-    best = None
-    for th in th0 + np.radians(np.arange(-6, 6.01, 0.2)):
-        u = np.array([np.cos(th), np.sin(th)])
-        n = np.array([-u[1], u[0]])
-        X = c[0] + ts[None, :] * u[0] + ds[:, None] * n[0]
-        Y = c[1] + ts[None, :] * u[1] + ds[:, None] * n[1]
-        P = nd.map_coordinates(L, [Y, X], order=1, mode='nearest').mean(1)
-        if kind == 'edge':
-            r = np.abs(np.gradient(P))
-        else:
-            r = nd.uniform_filter1d(P, 25) - P
-        i = int(np.argmax(r))
-        if best is None or r[i] > best[0]:
-            best = (r[i], c + ds[i] * n, u)
-    return best[1], best[2]
+# the left building's floor, which the vote misses
+floor = lambda x: (x, 209.1 + (x - 208.55) * 0.45735)
+segments.append(LineString([floor(20), floor(420)]))
 
+# ---------- 2. the cells ----------
+YMAX = 470
+edges = unary_union([s.buffer(1.0, cap_style=2) for s in segments])
+cells = box(-60, 0, 1860, YMAX).difference(edges)
 
-def meet(a, b):
-    (p, u), (q, v) = a, b
-    t = np.linalg.solve(np.array([u, -v]).T, q - p)
-    return p + u * t[0]
+# ---------- 3. the cuts ----------
+def across(p):
+    r = p.minimum_rotated_rectangle
+    cx, cy = r.exterior.coords.xy
+    return min(np.hypot(cx[k + 1] - cx[k], cy[k + 1] - cy[k]) for k in range(2))
 
+cuts = [p for p in cells.geoms
+        if p.bounds[1] <= 0.5 and p.bounds[3] < YMAX - 1 and p.area >= 1200 and across(p) >= 38
+        and not (p.centroid.x < 430 and p.bounds[3] > 250)]
 
-def at_y(e, y):
-    p, u = e
-    return p + u * (y - p[1]) / u[1]
+def line_at_y(pt, d, y):
+    return (pt[0] + d[0] * (y - pt[1]) / d[1], y)
 
+# the X: its rising member's left and right edges (snapped to the photo)
+RISE_L = ((1483.73, 199.2), (0.53228, -0.84657))
+RISE_R = ((1586.81, 169.2), (-0.52532, 0.8509))
+right_of_x = Polygon([(1716.0, -40.0), (1516.4, 283.2), (1900.0, 885.3), (1900.0, -40.0)])
+rising = Polygon([line_at_y(*RISE_L, -60), line_at_y(*RISE_R, -60), line_at_y(*RISE_R, 420), line_at_y(*RISE_L, 420)])
 
-def at_x(e, x):
-    p, u = e
-    return p + u * (x - p[0]) / u[0]
+navy = unary_union(cuts + [right_of_x]).difference(rising)
+navy = navy.buffer(1.6, join_style=2).buffer(-1.6, join_style=2).simplify(0.5)
 
+# up out of the photo's top, into the band
+parts = []
+for p in getattr(navy, 'geoms', [navy]):
+    top = [x for x, y in p.exterior.coords if y <= 0.6]
+    parts.append(unary_union([p, box(min(top), -40, max(top), 0.6)]) if top else p)
+navy = unary_union(parts)
 
-E = {k: snap(*v) for k, v in EDGES.items()}
-cuts = [[at_y(E[f'cut{i}_left'], TOP), meet(E[f'cut{i}_left'], E[f'cut{i}_right']), at_y(E[f'cut{i}_right'], TOP)] for i in (1, 2, 3)]
-cuts.append([at_y(E['cut4_left'], TOP), meet(E['cut4_left'], E['cut4_low']), at_x(E['cut4_low'], SIDE), np.array([SIDE, TOP])])
-print(' '.join('M' + ' L'.join(f'{x:.1f} {y:.1f}' for x, y in c) + ' Z' for c in cuts))
+print(' '.join('M' + ' L'.join(f'{x:.1f} {y:.1f}' for x, y in list(p.exterior.coords)[:-1]) + ' Z'
+               for p in getattr(navy, 'geoms', [navy])))

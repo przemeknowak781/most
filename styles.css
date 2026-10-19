@@ -7734,23 +7734,31 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 }
 
 /* The top edge is the photograph's own (client, 19.10: a line that is not
-   straight, a cut-out true to the photo's structure). The band's navy comes
-   down into the facade between its members - two thin falling mullions
-   against the thick rising ones, the X's two beams down to its left corner,
-   and the dark right of the X along the beams' far edges - so the light
-   ground starts where the steel does (the cut's lines are the photo's
-   edges, docs/tools/who-cut.py). The cut is laid out as the photo is - its
-   box, cover as slice - and the photo shows right up to the edge, so the
-   two stay registered at every width. Both rise together by --who-lift,
-   just enough that the cuts' tips keep 20px off the copy: nothing on the
-   widest windows, up to 68px on a small laptop, more where the head spans
-   a tablet or a phone. */
+   straight, a cut-out true to the photo's structure - and then, the same
+   day: more cuts, it still read as cut off). The band's navy comes down
+   into the facade through every cell of its structure along the top - the
+   left building's panes down to its first floor, the glass beside the
+   pilasters, the diagrid's triangles, the X above its crossing and the dark
+   right of it - so the light members rise into the navy and the section's
+   edge is the facade's own silhouette (the cells are the photo's own edges,
+   docs/tools/who-cut.py). The cut is laid out as the photo is - its box,
+   cover as slice - and the photo shows right up to the edge, so the two
+   stay registered at every width.
+   The cuts run deep, so the copy steps down under them (--who-drop: the
+   most on a laptop, where the title is widest under the diagrid, nothing on
+   the widest windows, more on a tablet and a phone) and keeps 22px or more
+   off the navy. The step would carry the photo down with the taller band
+   (by 0.725 of it, the box being 145% of the band and the photo centred in
+   it), so the photo and the cut rise by that much (--who-lift) and the
+   facade meets the edge where it did. */
 .whoweare__cut {
   display: none;
 }
 
 :root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare {
-  --who-lift: clamp(0px, (1720px - 100vw) * 0.13, 68px);
+  --who-drop: clamp(0px, (2020px - 100vw) * 0.2, 92px);
+  --whoweare-air: calc(clamp(64px, 9vh, 112px) + var(--who-drop));
+  --who-lift: calc(var(--who-drop) * 0.725);
 }
 
 :root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare__bg {
@@ -7786,13 +7794,22 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 
 @media (max-width: 1023px) {
   :root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare {
-    --who-lift: 116px;
+    --who-drop: 164px;
+    --whoweare-air: calc(clamp(56px, 13vw, 88px) + var(--who-drop));
   }
 }
 
 @media (max-width: 639px) {
   :root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare {
-    --who-lift: 164px;
+    --who-drop: 212px;
+  }
+}
+
+/* a phone on its side keeps its own short air over the step */
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  :root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare {
+    --who-drop: 148px;
+    --whoweare-air: calc(40px + var(--who-drop));
   }
 }
 
