@@ -1158,7 +1158,8 @@ function setupPortraitProposal() {
 /* Alternatives for the client to look at, off by default (client, 6.10):
    ?titles=smaller the titles a size smaller, ?hero=low Home's mountain
    photograph lower behind the headline, ?expertise=iconright the
-   drawing at the top right of Home's Our Expertise cards, ?scroll=peek|cue
+   drawing at the top right of Home's Our Expertise cards, ?excta=next|most
+   a call to action under them, ?scroll=peek|cue
    a cue to scroll on Our Team's hero, ?investors=mist|dusk|facade the
    Investors photographs under a tint of about half instead of the dark
    frame, in blue going violet with an orange light,
@@ -1189,6 +1190,7 @@ const PREVIEW_SWITCHES = {
   titles: ["smaller"],
   hero: ["low"],
   expertise: ["iconright"],
+  excta: ["next", "most"],
   scroll: ["peek", "cue"],
   investors: ["mist", "dusk", "facade"],
   companies: ["latte", "lattedark", "cool"],
@@ -1224,6 +1226,7 @@ const PREVIEW_PANEL = [
   ["hero", ["index"], "Hero: zdjęcie gór (od 1024 px)", [["", "obecne"], ["low", "niżej, więcej granatu za napisem"]]],
   ["stats", ["index"], "Liczby w hero (na telefonie)", [["", "obecne"], ["rows", "wiersze z linią"], ["grid", "siatka z liniami"]]],
   ["expertise", ["index"], "Our Expertise: ikona na karcie", [["", "nad nazwą"], ["iconright", "po prawej, obok nazwy"]]],
+  ["excta", ["index"], "Our Expertise: przycisk pod kartami", [["", "bez przycisku"], ["next", "What's your next move?"], ["most", "Making the most of your next move"]]],
   ["clients", ["index"], "Who We Work With: tekst", [["", "po lewej"], ["center", "na środku"], ["right", "po prawej"]]],
   ["scroll", ["our-team"], "Zachęta do przewinięcia w hero", [["", "bez"], ["peek", "portrety spod hero"], ["cue", "napis ze strzałką"]]],
   ["order", ["expertise"], "Kolejność sekcji", [["", "obszary, potem How We Work"], ["work", "najpierw How We Work"]]],

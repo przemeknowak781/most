@@ -2297,9 +2297,25 @@ main:focus {
    reader's text spacing (above). */
 @media (min-width: 1024px) and (max-height: 860px) {
   .preview.is-expanded .preview__route {
-    max-height: 64px;
+    max-height: 48px;
   }
 }
+
+/* the copy of 25.10 runs to two paragraphs in each card: the drawing
+   goes from 800px down (it went at 710px), and on a laptop narrower than
+   about 1380px the open card takes some of the title's width */
+@media (min-width: 1024px) and (max-height: 800px) {
+  .preview.is-expanded .preview__chart {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1380px) {
+  .audience-intro__grid {
+    --title-track: clamp(290px, 25vw, 430px);
+  }
+}
+
 
 @media (min-width: 1024px) and (max-height: 780px) {
   .preview.is-expanded {
@@ -2384,6 +2400,51 @@ main:focus {
 
   .preview.is-expanded .preview__list {
     padding-top: 10px;
+  }
+}
+
+/* short windows: the cards close up their spacing before the type gets
+   any smaller, and below 600px the copy steps to 12.5px, as the list */
+@media (min-width: 1024px) and (max-height: 660px) {
+  .preview.is-expanded {
+    gap: 8px;
+    padding-top: 14px;
+  }
+
+  .preview.is-expanded .preview__body {
+    gap: 10px;
+  }
+
+  .preview.is-expanded .preview__list {
+    gap: 4px;
+    padding-top: 10px;
+  }
+
+  .preview.is-expanded .preview__copy > p + p {
+    margin-top: 0.45em;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 600px) {
+  .preview.is-expanded .preview__copy {
+    font-size: 12.5px;
+    line-height: 1.42;
+  }
+
+  .preview.is-expanded .preview__list li {
+    line-height: 1.36;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1380px) and (max-height: 660px) {
+  .audience-intro__grid {
+    --closed-track: minmax(80px, 0.3fr);
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 560px) {
+  .preview.is-expanded .preview__list {
+    padding-top: 6px;
   }
 }
 
@@ -17176,3 +17237,72 @@ main {
   --hero-drop-low: 21vh;
 }
 /* === end ?hero === */
+
+/* === The copy of 25.10 (the client's review of the Home texts) ===
+   Some ledes and descriptions run to two paragraphs now: they keep their
+   element's type and stand a short step apart. */
+:is(.whoweare__lede, .ex-rail__copy, .preview__copy, .home-expertise__lede) > p {
+  margin: 0;
+}
+
+:is(.whoweare__lede, .ex-rail__copy, .home-expertise__lede) > p + p {
+  margin-top: 0.75em;
+}
+
+.preview__copy > p + p {
+  margin-top: 0.6em;
+}
+
+/* ?excta=next|most (a preview): a call to action under Our Expertise's
+   cards, in one of the two lines the review offers; it opens Contact */
+.home-expertise__next {
+  display: none;
+}
+
+:root:is([data-excta="next"], [data-excta="most"]) .home-expertise__next {
+  display: inline-flex;
+  gap: 12px;
+  margin-top: clamp(28px, 4vh, 44px);
+  padding-inline: 26px;
+}
+
+.home-expertise__next svg {
+  width: 16px;
+  height: 16px;
+}
+
+:root[data-excta="next"] .home-expertise__next-b,
+:root[data-excta="most"] .home-expertise__next-a {
+  display: none;
+}
+/* "Europe · US · UK" is wider than "EU · US · UK" was: under 1024px, where
+   the four stand in two or four narrow columns, the words take a smaller
+   size than the figures so they stay within their column */
+@media (max-width: 1023px) {
+  .page--home .hero-stat strong.hero-stat__word {
+    font-size: 21px;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Home's closing band: the title breaks between its two sentences where
+   it has the room, and on a narrow phone its long button wraps inside
+   the pill instead of running past it */
+@media (min-width: 480px) {
+  .aud-grow__line {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 479px) {
+  .page--home .aud-grow__btn {
+    max-width: 100%;
+    min-height: 52px;
+    padding-block: 10px;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.45;
+  }
+}
+
+/* === end the copy of 25.10 === */
