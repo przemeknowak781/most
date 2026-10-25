@@ -16908,3 +16908,106 @@ main {
     background: linear-gradient(180deg, var(--navy-deep) 0%, rgba(8, 11, 19, 0.97) 8%, rgba(8, 11, 19, 0.86) 17%, rgba(8, 11, 19, 0.7) 26%, rgba(8, 11, 19, 0.42) 52%, rgba(8, 11, 19, 0.14) 64%, transparent 72%);
   }
 }
+
+/* === ?companies=latte|lattedark|cool (a preview, the meeting of 25.10) ===
+   The Companies colour, to look at side by side. The review read the page
+   as a dark, stormy sky in a brown-orange that looked sepia, and asked for
+   a warm latte brown - perhaps darker than the sample - tried without the
+   orange: the sky graded in milky coffee (top) to latte (low) instead of
+   night-violet to terracotta, the shade over it a warm espresso and much
+   lighter at the top (no storm), only a faint cream light low on the right
+   in place of the orange glow, and the land, How We Work's ground and the
+   closing sky in the same brown. Built as Investors is (same photograph
+   treatment, scale and rhythm), its own colour.
+     latte      milk coffee: the land #5e4c40, the sky light and warm
+     lattedark  the same a step deeper: the land #4a3b32
+     cool       the cooler alternative: a greige, stone rather than coffee,
+                kept off the Investors slate (no blue in it) */
+:root[data-companies] .page--companies {
+  --hz-shade: 32, 24, 20;
+}
+
+:root[data-companies="latte"] .page--companies {
+  --hz-field: #5e4c40;
+  --aud-ground-rgb: 94, 76, 64;
+  --hz-grade-top: #6a5446;
+  --hz-grade-low: #c9ae93;
+  --hz-glow: 246, 232, 216;
+  --hz-glow-a: 0.16;
+  --hz-shade-a: 1;
+  --hz-copy-a: 0.7;
+}
+
+:root[data-companies="lattedark"] .page--companies {
+  --hz-field: #4a3b32;
+  --aud-ground-rgb: 74, 59, 50;
+  --hz-grade-top: #4c3c32;
+  --hz-grade-low: #a8896e;
+  --hz-glow: 240, 222, 202;
+  --hz-glow-a: 0.12;
+  --hz-shade-a: 1.25;
+  --hz-copy-a: 0.62;
+}
+
+:root[data-companies="cool"] .page--companies {
+  --hz-shade: 26, 25, 26;
+  --hz-field: #535052;
+  --aud-ground-rgb: 83, 80, 82;
+  --hz-grade-top: #4a4749;
+  --hz-grade-low: #b3aba4;
+  --hz-glow: 232, 230, 228;
+  --hz-glow-a: 0.12;
+  --hz-shade-a: 1.1;
+  --hz-copy-a: 0.68;
+}
+
+/* the colour blend takes the photograph's grey and gives it the coffee */
+:root[data-companies] .page--companies .hz-photo img {
+  filter: grayscale(0.85) contrast(1.06) brightness(0.98);
+}
+
+:root[data-companies] .page--companies .hz-photo::before {
+  opacity: 0.86;
+}
+
+/* the shade: espresso rather than navy, and light over the sky - the
+   copy keeps its own soft shadow, as on Home, deep enough that the
+   tagline holds 4.5:1 over the towers' lit glass */
+:root[data-companies] .page--companies .hz-photo::after {
+  background:
+    radial-gradient(ellipse 60% 62% at 24% 42%, rgba(var(--hz-shade), calc(var(--hz-copy-k, 1) * var(--hz-copy-a))), rgba(var(--hz-shade), calc(0.62 * var(--hz-copy-k, 1) * var(--hz-copy-a))) 55%, transparent 86%),
+    radial-gradient(60% 42% at 70% 74%, rgba(var(--hz-glow), var(--hz-glow-a)), transparent 70%),
+    linear-gradient(180deg, rgba(var(--hz-shade), calc(0.5 * var(--hz-shade-a))) 0%, rgba(var(--hz-shade), calc(0.32 * var(--hz-shade-a))) 26%, rgba(var(--hz-shade), calc(0.16 * var(--hz-shade-a))) 50%, rgba(var(--hz-shade), 0.06) 76%, rgba(var(--hz-shade), 0.14) 100%),
+    linear-gradient(90deg, rgba(var(--hz-shade), calc(0.42 * var(--hz-shade-a))), rgba(var(--hz-shade), 0.12) 44%, transparent 74%);
+}
+
+/* a narrow laptop: the headline and the tagline wrap wider over the
+   towers, so their shade is a step deeper */
+@media (min-width: 1024px) and (max-width: 1180px) {
+  :root[data-companies] .page--companies {
+    --hz-copy-k: 1.22;
+  }
+}
+
+@media (max-width: 1023px) {
+  :root[data-companies] .page--companies .hz-photo::after {
+    background:
+      radial-gradient(ellipse 95% 52% at 40% 38%, rgba(var(--hz-shade), var(--hz-copy-a)), rgba(var(--hz-shade), calc(0.62 * var(--hz-copy-a))) 55%, transparent 88%),
+      radial-gradient(60% 42% at 70% 74%, rgba(var(--hz-glow), var(--hz-glow-a)), transparent 70%),
+      linear-gradient(180deg, rgba(var(--hz-shade), calc(0.56 * var(--hz-shade-a))) 0%, rgba(var(--hz-shade), calc(0.4 * var(--hz-shade-a))) 26%, rgba(var(--hz-shade), calc(0.3 * var(--hz-shade-a))) 50%, rgba(var(--hz-shade), calc(0.2 * var(--hz-shade-a))) 66%, rgba(var(--hz-shade), 0.08) 82%, rgba(var(--hz-shade), 0.14) 100%),
+      linear-gradient(90deg, rgba(var(--hz-shade), calc(0.42 * var(--hz-shade-a))), rgba(var(--hz-shade), 0.12) 44%, transparent 74%);
+  }
+}
+
+:root[data-companies="latte"] .page--companies .aud-grow {
+  --grow-sky-low: #7d6656;
+}
+
+:root[data-companies="lattedark"] .page--companies .aud-grow {
+  --grow-sky-low: #66523f;
+}
+
+:root[data-companies="cool"] .page--companies .aud-grow {
+  --grow-sky-low: #6e6a69;
+}
+/* === end ?companies === */
