@@ -1167,8 +1167,8 @@ function setupPortraitProposal() {
    orange light, ?graph=map Founders' Our Expertise as a map of the
    road's stages on the trail, ?rail=dots small dots on the audience
    pages' Our Expertise rail, ?arch=help architecture coming up out of
-   the ground behind their What We Help You Achieve, ?nav=routes the
-   three routes first in the menus, ?order=work Our Expertise's How We
+   the ground behind their What We Help You Achieve, ?nav=colour the
+   routes' dots in the menu in each route's colour, ?order=work Our Expertise's How We
    Work above Our Areas, ?stats=rows|grid Home's hero figures on a phone
    divided by dotted rules, ?clients=center|right Who We Work With's
    head centred or on the right and ?palette=lead the audience pages
@@ -1190,7 +1190,7 @@ const PREVIEW_SWITCHES = {
   graph: ["map"],
   rail: ["dots"],
   arch: ["help"],
-  nav: ["routes"],
+  nav: ["colour"],
   order: ["work"],
   stats: ["rows", "grid"],
   clients: ["center", "right"],
@@ -1225,37 +1225,9 @@ const PREVIEW_PANEL = [
   ["rail", AUDIENCE_PAGES, "Our Expertise: kropki przy punktach", [["", "tylko na końcach"], ["dots", "małe przy każdym punkcie"]]],
   ["graph", ["for-founders"], "Our Expertise jako mapa (prototyp)", [["", "obecne"], ["map", "mapa etapów"]]],
   ["palette", "all", "Kolory podstron", [["", "obecne"], ["lead", "kolor wiodący jako światło"]]],
-  ["nav", "all", "Kolejność w menu", [["", "strony, potem Explore as"], ["routes", "najpierw Explore as"]]],
+  ["nav", "all", "Menu: kropka przy Founders / Companies / Investors", [["", "pomarańczowa"], ["colour", "w kolorze ścieżki"]]],
   ["titles", "all", "Tytuły", [["", "obecne"], ["smaller", "mniejsze"]]],
 ];
-
-/* ?nav=routes (a preview, the review of 16.10): Founders, Companies and
-   Investors come first in the bar and in the phone's menu, before the
-   site's pages, as most readers take the first links they see. The groups
-   are moved in the markup, not only on screen, so the Tab order and a
-   screen reader follow what is shown; the panel's switch moves them back. */
-function setupNavOrder() {
-  const root = document.documentElement;
-  const apply = () => {
-    const routesFirst = root.dataset.nav === "routes";
-    document.querySelectorAll(".top-nav").forEach((bar) => {
-      const pages = bar.querySelector(".top-nav__menu--left");
-      const routes = bar.querySelector(".top-nav__menu--right");
-      if (!pages || !routes) return;
-      if (routesFirst) pages.before(routes);
-      else routes.before(pages);
-    });
-    document.querySelectorAll(".mobile-menu__links").forEach((links) => {
-      const pages = links.querySelector(".mobile-menu__primary");
-      const routes = links.querySelector(".mobile-menu__group");
-      if (!pages || !routes) return;
-      if (routesFirst) pages.before(routes);
-      else routes.before(pages);
-    });
-  };
-  apply();
-  new MutationObserver(apply).observe(root, { attributes: true, attributeFilter: ["data-nav"] });
-}
 
 /* ?order=work (a preview, the review of 16.10): on Our Expertise, How We
    Work comes before Our Areas, so a reader who stops in the long areas
@@ -1623,7 +1595,6 @@ setupAudienceTriptych();
 setupAudienceConnectors();
 setupMemberReadmore();
 setupPreviewSwitches();
-setupNavOrder();
 setupExpertiseOrder();
 setupPortraitProposal();
 setupCopyReview();

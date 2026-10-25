@@ -294,9 +294,12 @@ a {
    runs out, so the break before "explore as" would be no wider than the
    gap between two primary links and the label would read as a fourth of
    them. There the hairline after the label goes, and a short upright rule
-   before it takes over its job - it opens the group. */
+   before it takes over its job - it opens the group. Only on the pages
+   that still carry the site's pages in the bar (About Us, Our Expertise
+   and Our Team, not launched): the launch pages have the routes alone
+   there (the meeting of 25.10), with the room for the hairline. */
 @media (max-width: 1279px) {
-  .top-nav .top-nav__lead::before {
+  .top-nav:has(.top-nav__menu--left) .top-nav__lead::before {
     content: "";
     flex: none;
     width: 1px;
@@ -306,7 +309,7 @@ a {
     opacity: 0.5;
   }
 
-  .top-nav .top-nav__lead::after {
+  .top-nav:has(.top-nav__menu--left) .top-nav__lead::after {
     display: none;
   }
 }
@@ -356,55 +359,47 @@ a {
   color: var(--light);
 }
 
-/* ?nav=routes (a preview; script.js moves the groups in the markup): the
-   routes stand next to the wordmark and the pages go right, before
-   Contact. The two groups trade their margins, at each width as above. */
-:root[data-nav="routes"] .top-nav .top-nav__menu--right {
-  margin-left: clamp(28px, 4vw, 60px);
-  margin-right: 0;
+/* ?nav=colour (a preview, the meeting of 25.10): each route's dot, on
+   hover and on its own page, in the route's colour - the colours of the
+   routes' cards and of the phone menu's dots - rather than orange for all
+   three, a touch larger and lit. (While the panel is up the links are
+   written out whole, with the preview's query, hence *=.) On Founders' light sky, before the
+   bar turns navy, the three take their deep inks, as its type does: the
+   terracotta dot would vanish into the terracotta sky. */
+:root[data-nav="colour"] .top-nav .top-nav__menu--right a {
+  --route-dot: 209, 126, 95;
 }
 
-:root[data-nav="routes"] .top-nav .top-nav__menu--left {
-  position: relative;
-  margin-left: auto;
-  margin-right: clamp(20px, 2.4vw, 32px);
-  padding-left: 14px;
+:root[data-nav="colour"] .top-nav .top-nav__menu--right a[href*="for-companies.html"] {
+  --route-dot: 171, 142, 130;
 }
 
-/* where the bar is full the auto margin runs out, so the pages open with
-   a short upright rule, as "explore as" does under 1280px; it stands in
-   the group's padding and takes no gap of its own */
-:root[data-nav="routes"] .top-nav .top-nav__menu--left::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 1px;
-  height: 14px;
-  margin-top: -7px;
-  background: var(--light);
-  opacity: 0.4;
+:root[data-nav="colour"][data-palette="lead"] .top-nav .top-nav__menu--right a[href*="for-companies.html"] {
+  --route-dot: 172, 138, 158;
 }
 
-@media (min-width: 1181px) and (max-width: 1279px) {
-  :root[data-nav="routes"] .top-nav .top-nav__menu--right {
-    margin-left: 28px;
-  }
-
-  :root[data-nav="routes"] .top-nav .top-nav__menu--left {
-    margin-right: 20px;
-  }
+:root[data-nav="colour"] .top-nav .top-nav__menu--right a[href*="for-investors.html"] {
+  --route-dot: 115, 145, 196;
 }
 
-@media (max-width: 1100px) {
-  :root[data-nav="routes"] .top-nav .top-nav__menu--right {
-    margin-left: 16px;
-  }
+:root[data-nav="colour"] .page--founders .top-nav:not(.is-scrolled) .top-nav__menu--right a {
+  --route-dot: 163, 57, 14;
+}
 
-  :root[data-nav="routes"] .top-nav .top-nav__menu--left {
-    margin-right: 10px;
-    padding-left: 12px;
-  }
+:root[data-nav="colour"] .page--founders .top-nav:not(.is-scrolled) .top-nav__menu--right a[href*="for-companies.html"] {
+  --route-dot: 110, 84, 76;
+}
+
+:root[data-nav="colour"] .page--founders .top-nav:not(.is-scrolled) .top-nav__menu--right a[href*="for-investors.html"] {
+  --route-dot: 54, 84, 135;
+}
+
+:root[data-nav="colour"] .top-nav .top-nav__menu--right a::after {
+  bottom: -3px;
+  width: 6px;
+  height: 6px;
+  background: rgb(var(--route-dot));
+  box-shadow: 0 0 0 3px rgba(var(--route-dot), 0.22), 0 0 10px rgba(var(--route-dot), 0.6);
 }
 
 .mobile-menu__lead {
@@ -9694,6 +9689,15 @@ main {
     border-top: 1px solid rgba(240, 235, 233, 0.1);
   }
 
+  /* the launch pages' menu: the routes alone, no pages list above them
+     (the meeting of 25.10), so no rule or air to part them from it */
+  .mobile-menu__group:first-child {
+    grid-column: 1 / -1;
+    margin-top: 0;
+    padding: 0;
+    border: 0;
+  }
+
   .mobile-menu__lead {
     display: flex;
     align-items: center;
@@ -10088,52 +10092,6 @@ main {
 
   .mobile-menu__cta {
     min-height: 48px;
-  }
-}
-
-/* ?nav=routes in the phone's menu: the routes come first, and the rule
-   and the air between the groups move under them, so the pages' rail
-   keeps its own box. Side by side (a tablet, a phone on its side) the
-   routes take the left column and the upright rule moves to their right. */
-@media (max-width: 1023px) {
-  :root[data-nav="routes"] .mobile-menu__group {
-    margin: 0 0 36px;
-    padding: 0 0 28px;
-    border-top: 0;
-    border-bottom: 1px solid rgba(240, 235, 233, 0.1);
-  }
-}
-
-@media (max-width: 767px) and (max-height: 700px) and (orientation: portrait),
-  (max-width: 559px) and (orientation: landscape) {
-  :root[data-nav="routes"] .mobile-menu__group {
-    margin-bottom: 22px;
-    padding-bottom: 16px;
-  }
-}
-
-@media (max-width: 767px) and (max-height: 600px) and (orientation: portrait),
-  (max-width: 559px) and (orientation: landscape) {
-  :root[data-nav="routes"] .mobile-menu__group {
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1023px),
-  (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
-  :root[data-nav="routes"] .mobile-menu__group {
-    margin: 0;
-    padding: 14px 32px 0 0;
-    border-bottom: 0;
-    border-right: 1px solid rgba(240, 235, 233, 0.1);
-    border-left: 0;
-  }
-}
-
-@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
-  :root[data-nav="routes"] .mobile-menu__group {
-    padding-top: 0;
   }
 }
 
@@ -10539,6 +10497,29 @@ main {
   .site-footer__brand,
   .site-footer__col:last-child {
     grid-column: 1 / -1;
+  }
+}
+
+/* The launch pages' footer (the meeting of 25.10): About Us, Our Expertise
+   and Our Team are not launched, so the Pages column goes. On a desktop
+   Explore as and Contact keep their places at the right and the brand
+   takes the room; on a tablet the two share the row under the brand; on
+   a phone they stack. */
+.site-footer__top.site-footer__top--routes {
+  grid-template-columns: minmax(0, 2.5fr) repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 1023px) {
+  .site-footer__top.site-footer__top--routes {
+    grid-template-columns: minmax(0, 1fr) minmax(max-content, 1.35fr);
+  }
+}
+
+@media (max-width: 599px) and (orientation: portrait),
+  (max-width: 599px) and (min-height: 501px),
+  (max-width: 559px) {
+  .site-footer__top.site-footer__top--routes {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
