@@ -1162,7 +1162,9 @@ function setupPortraitProposal() {
    Investors photographs under a tint of about half instead of the dark
    frame, in blue going violet with an orange light,
    ?companies=latte|lattedark|cool the Companies page in a latte brown
-   without the orange, a darker latte or a cooler greige, ?graph=map Founders'
+   without the orange, a darker latte or a cooler greige, ?hww=columns
+   How We Work on Companies and Investors on a facade's vertical
+   divisions, ?graph=map Founders'
    Our Expertise as a map of the road's stages on the trail, ?rail=dots
    small dots on the audience pages' Our Expertise rail, ?arch=help
    architecture coming up out of the ground behind their What We Help You
@@ -1187,6 +1189,7 @@ const PREVIEW_SWITCHES = {
   scroll: ["peek", "cue"],
   investors: ["mist", "dusk", "facade"],
   companies: ["latte", "lattedark", "cool"],
+  hww: ["columns"],
   graph: ["map"],
   rail: ["dots"],
   arch: ["help"],
@@ -1220,6 +1223,7 @@ const PREVIEW_PANEL = [
   ["scroll", ["our-team"], "Zachęta do przewinięcia w hero", [["", "bez"], ["peek", "portrety spod hero"], ["cue", "napis ze strzałką"]]],
   ["order", ["expertise"], "Kolejność sekcji", [["", "obszary, potem How We Work"], ["work", "najpierw How We Work"]]],
   ["companies", ["for-companies"], "Kolor Companies", [["", "obecny"], ["latte", "latte, bez pomarańczu"], ["lattedark", "ciemniejsze latte"], ["cool", "chłodniejszy (greige)"]]],
+  ["hww", ["for-companies", "for-investors"], "How We Work: tło", [["", "obecne"], ["columns", "fasada z pionowymi podziałami"]]],
   ["investors", ["for-investors"], "Zdjęcia i kolor", [["", "obecne"], ["mist", "mgła, jasne niebo"], ["dusk", "zmierzch, błękit w fiolet"], ["facade", "zmierzch, fasada w How We Work"]]],
   ["arch", AUDIENCE_PAGES, "What We Help You Achieve", [["", "obecne"], ["help", "architektura z tła"]]],
   ["rail", AUDIENCE_PAGES, "Our Expertise: kropki przy punktach", [["", "tylko na końcach"], ["dots", "małe przy każdym punkcie"]]],

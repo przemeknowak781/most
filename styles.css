@@ -17011,3 +17011,53 @@ main {
   --grow-sky-low: #6e6a69;
 }
 /* === end ?companies === */
+
+/* === ?hww=columns (a preview, the meeting of 25.10) ===
+   How We Work on Investors read too quiet - one slate band after the lit
+   hero. This shows it on the facade with vertical divisions proposed
+   earlier (Investors: the glass facade's mullions, band-investors;
+   Companies: the concrete facade's fins, band-companies), with as much
+   presence as the hero has: the photograph greyed and coloured by the
+   hero's own grade (--hz-grade-*, so it follows ?companies too), strong
+   behind the title and fading through the points into the page's ground,
+   so neither band reads saturated next to a washed-out one. Founders
+   keeps its own section. */
+:root[data-hww="columns"] :is(.page--companies, .page--investors) .aud-work__photo:not(.aud-work__photo--facade) {
+  display: none;
+}
+
+:root[data-hww="columns"] :is(.page--companies, .page--investors) .aud-work__photo--facade {
+  display: block;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 30%, rgba(0, 0, 0, 0.6) 52%, rgba(0, 0, 0, 0.28) 76%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 30%, rgba(0, 0, 0, 0.6) 52%, rgba(0, 0, 0, 0.28) 76%, transparent 100%);
+}
+
+:root[data-hww="columns"] :is(.page--companies, .page--investors) .aud-work__photo--facade img {
+  filter: grayscale(1) contrast(1.08) brightness(0.62);
+  mix-blend-mode: normal;
+  opacity: 1;
+}
+
+:root[data-hww="columns"] :is(.page--companies, .page--investors) .aud-work__photo--facade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, var(--hz-grade-top) 0%, var(--hz-grade-low) 100%);
+  mix-blend-mode: color;
+  opacity: 0.8;
+}
+
+/* the title's band a touch deeper on the left, where the title stands */
+:root[data-hww="columns"] :is(.page--companies, .page--investors) .aud-work__photo--facade picture::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(var(--aud-ground-rgb), 0.55), rgba(var(--aud-ground-rgb), 0.15) 50%, transparent 80%);
+}
+
+:root[data-hww="columns"] :is(.page--companies, .page--investors) .aud-work__photo--facade picture {
+  position: absolute;
+  inset: 0;
+}
+/* === end ?hww === */
