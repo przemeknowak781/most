@@ -1156,35 +1156,32 @@ function setupPortraitProposal() {
 }
 
 /* Alternatives for the client to look at, off by default (client, 6.10):
-   ?who=ivory|grey|latte shows Home's Who we are on a light ground and
-   ?titles=smaller the titles a size smaller; after the review of 10.10
-   ?expertise=icons|tiles|light|lighttiles|colour Home's Our Expertise with
-   larger drawings, as tiles, on a light ground, as tiles on a light ground
-   or as tiles lit each in a colour of its own,
-   ?scroll=peek|cue a cue to scroll on Our Team's hero,
-   ?investors=mist|dusk|facade the Investors photographs under a tint of
-   about half instead of the dark frame, in blue going violet with an
-   orange light, ?graph=map Founders' Our Expertise as a map of the
-   road's stages on the trail, ?rail=dots small dots on the audience
-   pages' Our Expertise rail, ?arch=help architecture coming up out of
-   the ground behind their What We Help You Achieve, ?nav=colour the
-   routes' dots in the menu in each route's colour, ?order=work Our Expertise's How We
-   Work above Our Areas, ?stats=rows|grid Home's hero figures on a phone
-   divided by dotted rules, ?clients=center|right Who We Work With's
-   head centred or on the right and ?palette=lead the audience pages
-   built as the rest of the site, their colour as light on the navy land -
-   each as a data
-   attribute on <html> the stylesheet answers. #who-latte,
-   #titles-smaller and the like do the same where a preview host drops
-   the query. Without one the page is as it ships. (The titles in capitals
-   and the ridges drawn straight were looked at and set aside, 7.10.)
+   ?titles=smaller the titles a size smaller, ?expertise=iconright the
+   drawing at the top right of Home's Our Expertise cards, ?scroll=peek|cue
+   a cue to scroll on Our Team's hero, ?investors=mist|dusk|facade the
+   Investors photographs under a tint of about half instead of the dark
+   frame, in blue going violet with an orange light, ?graph=map Founders'
+   Our Expertise as a map of the road's stages on the trail, ?rail=dots
+   small dots on the audience pages' Our Expertise rail, ?arch=help
+   architecture coming up out of the ground behind their What We Help You
+   Achieve, ?nav=colour the routes' dots in the menu in each route's
+   colour, ?order=work Our Expertise's How We Work above Our Areas,
+   ?stats=rows|grid Home's hero figures on a phone divided by dotted
+   rules, ?clients=center|right Who We Work With's head centred or on the
+   right and ?palette=lead the audience pages built as the rest of the
+   site, their colour as light on the navy land - each as a data
+   attribute on <html> the stylesheet answers. #titles-smaller and the
+   like do the same where a preview host drops the query. Without one the
+   page is as it ships. (The titles in capitals and the ridges drawn
+   straight were looked at and set aside, 7.10; Who we are on a light
+   ground and Our Expertise's larger drawings, tiles and light grounds,
+   25.10, the homepage staying dark.)
    ?preview (or either of them) brings up a panel that switches them in
    place; while it is up, the links to the site's pages carry the choice
    and the panel, so the whole site can be walked in an alternative. */
 const PREVIEW_SWITCHES = {
-  who: ["ivory", "grey", "latte"],
   titles: ["smaller"],
-  expertise: ["icons", "tiles", "light", "lighttiles", "colour"],
+  expertise: ["iconright"],
   scroll: ["peek", "cue"],
   investors: ["mist", "dusk", "facade"],
   graph: ["map"],
@@ -1215,8 +1212,7 @@ const PREVIEW_PAGES = {
 const AUDIENCE_PAGES = ["for-founders", "for-companies", "for-investors"];
 const PREVIEW_PANEL = [
   ["stats", ["index"], "Liczby w hero (na telefonie)", [["", "obecne"], ["rows", "wiersze z linią"], ["grid", "siatka z liniami"]]],
-  ["who", ["index"], "Who We Are", [["", "ciemne"], ["ivory", "złamana biel"], ["grey", "szarość"], ["latte", "latte"]]],
-  ["expertise", ["index"], "Our Expertise", [["", "obecne"], ["icons", "większe ikony"], ["tiles", "kafelki"], ["light", "jasna sekcja"], ["lighttiles", "jasne kafelki"], ["colour", "kolorowe kafelki"]]],
+  ["expertise", ["index"], "Our Expertise: ikona na karcie", [["", "nad nazwą"], ["iconright", "po prawej, obok nazwy"]]],
   ["clients", ["index"], "Who We Work With: tekst", [["", "po lewej"], ["center", "na środku"], ["right", "po prawej"]]],
   ["scroll", ["our-team"], "Zachęta do przewinięcia w hero", [["", "bez"], ["peek", "portrety spod hero"], ["cue", "napis ze strzałką"]]],
   ["order", ["expertise"], "Kolejność sekcji", [["", "obszary, potem How We Work"], ["work", "najpierw How We Work"]]],

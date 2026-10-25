@@ -213,12 +213,6 @@
             <img src="arch-band-facade.webp" width="1800" height="900" alt="" loading="lazy" decoding="async" />
             <div class="whoweare__wash"></div>
           </div>
-          <!-- on a light ground only: the band's navy cut down into the photo
-               through every cell of its structure along the top
-               (docs/tools/who-cut.py) -->
-          <div class="whoweare__cut" aria-hidden="true">
-            <svg viewBox="0 0 1800 900" preserveAspectRatio="xMidYMid slice" focusable="false"><path d="M130.5 0.6 L130.6 0.6 L133.6 32.9 L226.8 75.9 L216.1 0.0 L216.1 -40.0 L130.5 -40.0 L130.5 0.0 Z M511.9 0.6 L512.0 0.6 L546.2 130.5 L620.5 0.6 L620.8 0.6 L620.8 0.0 L620.8 -40.0 L511.9 -40.0 L511.9 0.0 Z M41.0 0.6 L41.1 0.6 L46.0 114.4 L143.1 158.6 L131.7 34.3 L57.3 0.0 L57.3 -40.0 L41.0 -40.0 L41.0 0.0 Z M432.5 33.4 L466.4 186.4 L504.3 203.9 L518.4 179.1 L474.6 0.0 L474.6 -40.0 L450.6 -40.0 L450.6 0.0 Z M666.2 37.5 L726.2 222.2 L854.1 0.6 L854.5 0.6 L854.5 0.0 L854.5 -40.0 L687.6 -40.0 L687.6 0.0 Z M930.7 18.1 L1021.7 229.9 L1155.0 3.5 L1152.7 0.0 L1152.7 -40.0 L942.0 -40.0 L942.0 0.0 Z M740.9 244.7 L756.8 295.4 L906.1 54.2 L923.0 25.1 L911.8 0.0 L911.8 -40.0 L882.2 -40.0 L882.2 0.0 Z M1306.2 154.1 L1308.4 152.8 L1378.3 281.5 L1401.7 322.8 L1471.0 218.0 L1464.9 208.5 L1526.8 107.5 L1525.3 106.6 L1557.7 57.2 L1592.3 0.6 L1592.7 0.6 L1592.7 0.0 L1592.7 -40.0 L1267.2 -40.0 L1267.2 0.0 L1242.5 41.5 Z M1900.0 0.6 L1900.0 -40.0 L1716.0 -40.0 L1516.4 283.2 L1900.0 885.3 Z" /></svg>
-          </div>
           <header class="whoweare__head" data-reveal>
             <p class="whoweare__eyebrow">&mdash; who we are &mdash;</p>
             <h2 class="whoweare__title" id="whoweare-title">
@@ -438,6 +432,11 @@
            comes after the six in the reading order and stands under the lede
            on a desktop (see the stylesheet). -->
       <section class="home-expertise" id="expertise" aria-labelledby="home-expertise-title">
+        <!-- the Track Record chapter's architecture (About Us): concrete fins,
+             toned into the navy above and below -->
+        <div class="home-expertise__bg" aria-hidden="true">
+          <img src="about-break-fins.webp" srcset="about-break-fins-640.webp 640w, about-break-fins-1024.webp 1024w, about-break-fins.webp 1920w" sizes="(min-width: 1024px) 100vw, 200vw" width="1920" height="823" alt="" loading="lazy" decoding="async" />
+        </div>
         <div class="home-expertise__inner">
           <div class="home-expertise__copy">
             <p class="home-expertise__eyebrow">&mdash; what we do &mdash;</p>
@@ -458,6 +457,7 @@
                 </svg>
               </span>
               <span class="home-expertise__name">Company setup and structuring</span>
+              <span class="home-expertise__desc">Locally and internationally&nbsp;– ready to scale and raise&nbsp;capital.</span>
               <a class="home-expertise__cta link-arrow" href="contact.html">
                 <span>Let's start</span><span class="sr-only"> – contact us about company setup and structuring</span>
                 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg>
@@ -477,6 +477,7 @@
                 </svg>
               </span>
               <span class="home-expertise__name">Hiring and incentive programs</span>
+              <span class="home-expertise__desc">Hiring, equity plans and contractors&nbsp;– the right team, with&nbsp;confidence.</span>
               <a class="home-expertise__cta link-arrow" href="contact.html">
                 <span>Let's hire</span><span class="sr-only"> – contact us about hiring and incentive programs</span>
                 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg>
@@ -496,6 +497,7 @@
                 </svg>
               </span>
               <span class="home-expertise__name">Fundraising, VC and&nbsp;M&amp;A</span>
+              <span class="home-expertise__desc">From term sheet to closing, and buy- and sell-side&nbsp;deals.</span>
               <a class="home-expertise__cta link-arrow" href="contact.html">
                 <span>Let's fund</span><span class="sr-only"> – contact us about fundraising, VC and M&amp;A</span>
                 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg>
@@ -515,6 +517,7 @@
                 </svg>
               </span>
               <span class="home-expertise__name">Commercial contracts and operations</span>
+              <span class="home-expertise__desc">Contracts that support your product, platform and&nbsp;operations.</span>
               <a class="home-expertise__cta link-arrow" href="contact.html">
                 <span>Let's sign</span><span class="sr-only"> – contact us about commercial contracts and operations</span>
                 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg>
@@ -534,6 +537,7 @@
                 </svg>
               </span>
               <span class="home-expertise__name">IP protection</span>
+              <span class="home-expertise__desc">Ownership, licensing, confidentiality and open-source&nbsp;risk.</span>
               <a class="home-expertise__cta link-arrow" href="contact.html">
                 <span>Let's create</span><span class="sr-only"> – contact us about IP protection</span>
                 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg>
@@ -553,6 +557,7 @@
                 </svg>
               </span>
               <span class="home-expertise__name">Global expansion</span>
+              <span class="home-expertise__desc">Foreign entities, global contracts and&nbsp;compliance.</span>
               <a class="home-expertise__cta link-arrow" href="contact.html">
                 <span>Let's expand</span><span class="sr-only"> – contact us about global expansion</span>
                 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 13.5 13.5 6.5M7.5 6.5h6v6" /></svg>

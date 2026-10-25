@@ -7,8 +7,44 @@ window.MOST_COPY_REVIEW = {
   {
    "t": "Let's start / Let's hire / Let's fund / Let's sign / Let's create / Let's expand",
    "c": "ours",
-   "s": "none (te same robocze CTA co przy obszarach na Our Expertise, ze spotkania 10.10; tylko w podglądach ?expertise=tiles i ?expertise=lighttiles)",
-   "a": "Czy na kafelkach Our Expertise na Home mogą stać te same CTA co na stronie Expertise? Kolejno: Company setup – Let's start, Hiring – Let's hire, Fundraising – Let's fund, Contracts – Let's sign, IP – Let's create, Global expansion – Let's expand. Każde otwiera ten obszar na stronie Our Expertise; czy wolicie, żeby prowadziły od razu do Contact us, jak tam?"
+   "s": "none (te same robocze CTA co przy obszarach na Our Expertise, ze spotkania 10.10)",
+   "a": "Spotkanie 25.10: CTA zostają; prowadzą do formularza kontaktowego (strona Our Expertise nie wchodzi na start). Kolejno: Company setup – Let's start, Hiring – Let's hire, Fundraising – Let's fund, Contracts – Let's sign, IP – Let's create, Global expansion – Let's expand. Czy brzmienie zostaje?"
+  },
+  {
+   "t": "Locally and internationally – ready to scale and raise capital.",
+   "c": "g1-edited",
+   "s": "Our Expertise, Company Incorporation and Structuring: \"We help set up and structure businesses – locally and internationally – so you are ready to scale and raise capital.\"",
+   "a": "Krótki opis na karcie Our Expertise na Home (spotkanie 25.10: kilka słów lub jedno proste zdanie). Skrócone z Waszego tekstu na stronie Our Expertise – czy może tak zostać?"
+  },
+  {
+   "t": "Hiring, equity plans and contractors – the right team, with confidence.",
+   "c": "g1-edited",
+   "s": "Our Expertise, Hiring and Talent: \"We cover the legal side of hiring, equity plans, and working with contractors – so you can build the right team with confidence.\"",
+   "a": ""
+  },
+  {
+   "t": "From term sheet to closing, and buy- and sell-side deals.",
+   "c": "g1-edited",
+   "s": "Our Expertise, Funding and Investment Rounds (\"from term sheets to closing\") i M&A, Exits (\"We support buy- and sell-side deals\")",
+   "a": ""
+  },
+  {
+   "t": "Contracts that support your product, platform and operations.",
+   "c": "g1-edited",
+   "s": "Our Expertise, Commercial Contracts: \"...we draft and negotiate contracts that support your product, platform, and business operations.\"",
+   "a": ""
+  },
+  {
+   "t": "Ownership, licensing, confidentiality and open-source risk.",
+   "c": "g1-edited",
+   "s": "Our Expertise, IP and Technology: \"covering IP ownership, licensing, confidentiality, and open-source risk.\"",
+   "a": ""
+  },
+  {
+   "t": "Foreign entities, global contracts and compliance.",
+   "c": "g1-edited",
+   "s": "Our Expertise, Cross-Border Expansion: \"helping structure foreign entities, review global contracts, and manage compliance.\"",
+   "a": ""
   },
   {
    "t": "Partners in your most ambitious journey.",

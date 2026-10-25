@@ -7664,204 +7664,22 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 }
 /* === end WHO WE ARE === */
 
-/* === WHO WE ARE on a light ground: three previews ===
-   The client (6.10) feared the page reads too dark and asked to see Who
-   we are in lighter colours - off-white, a delicate grey or latte - as
-   alternatives to look at, not as a change: the page ships dark, and
-   ?who=ivory, ?who=grey or ?who=latte (#who-ivory and the like where a
-   preview host drops the query; the switch is in script.js) set the
-   section on one of three grounds. Only colours and tones change: the
-   intro, the rail and the link keep their places at every width.
-     ivory  the site's cream (--light), the ground of the audience pages'
-            light sections
-     grey   a cool pale grey, from the navy's side of the palette
-     latte  a warm milky coffee, from the photographs' side
-   The type takes the ink of the audience pages' cream sections: titles
-   in #1c1419 (15.3, 14.5 and 13.0:1 on ivory, grey and latte), the lede
-   and the rows' copy in its softer 72% (6.6, 6.4 and 6.1:1), the link in
-   the ink. The labels - the eyebrow and the rows' numbers - take a rust
-   a shade deeper than the one the cream contact form rings its fields
-   with (#a8380b): the peach and the orange of the dark grounds fall to
-   1.6-2.9:1 here, #9e340a holds 4.7:1 or better, over the facade's fade
-   under the eyebrow too. */
-:root[data-who="ivory"] {
-  --who-ground: #f0ebe9;
-}
 
-:root[data-who="grey"] {
-  --who-ground: #e6e6ea;
-}
-
-:root[data-who="latte"] {
-  --who-ground: #e7d9c7;
-}
-
-:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare {
-  --who-ink: #1c1419;
-  --who-ink-soft: rgba(28, 20, 25, 0.72);
-  --who-rust: #9e340a;
-  --eyebrow-color: var(--who-rust);
-  --link-ink: var(--who-ink);
-  --focus-ring: var(--who-rust);
-  /* the rail's markers sit flat on the light, in their ring alone: the
-     halo and the aura that light them on the dark blur them here */
-  --marker-shadow: 0 0 0 calc(var(--marker-size) * 0.33) var(--marker-ring);
-  background: var(--who-ground);
-  color: var(--who-ink);
-}
-
-/* The facade stays, as on the dark page (client, 7.10: the architecture
-   exactly as before, only the colours broken): the same photograph in
-   the same place, rising and fading as it does there, toned for the
-   light. Taken as it is, the navy-toned photo and its wash made a dark
-   window on the light ground, a light strip over it and the head's dark
-   type on the dark. Turned to its negative in grey and multiplied into
-   the ground - the layer, not the photo, so the blend reaches past the
-   fades - the mullions draw in a pale grey and the glass is the ground
-   itself: no band, no edge. At 34% the lede keeps 4.6:1 and the title
-   8.5:1 over their darkest mullions; the wash is the dark page's alone. */
-:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare__bg {
-  mix-blend-mode: multiply;
-}
-
-:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare__bg img {
-  filter: grayscale(1) invert(1) brightness(1.15) contrast(0.85);
-  opacity: 0.34;
-}
-
-:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare__wash {
-  display: none;
-}
-
-:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) :is(.whoweare__title, .ex-rail__name) {
-  color: var(--who-ink);
-}
-
-:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) :is(.whoweare__lede, .ex-rail__copy) {
-  color: var(--who-ink-soft);
-}
-
-/* the spine: the same hairline, in the ink, fading out under the last row */
-:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare .ex-rail::before {
-  background: linear-gradient(180deg, rgba(28, 20, 25, 0.18), rgba(28, 20, 25, 0.18) 82%, transparent);
-}
-
-/* under 1024px the link is ringed in the site's orange, 2.9:1 on ivory */
-:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare__link:focus-visible {
-  outline-color: var(--focus-ring);
-}
-
-/* The top edge is the photograph's own (client, 19.10: a line that is not
-   straight, a cut-out true to the photo's structure - and then, the same
-   day: more cuts, it still read as cut off). The band's navy comes down
-   into the facade through every cell of its structure along the top - the
-   left building's panes down to its first floor, the glass beside the
-   pilasters, the diagrid's triangles, the X above its crossing and the dark
-   right of it - so the light members rise into the navy and the section's
-   edge is the facade's own silhouette (the cells are the photo's own edges,
-   docs/tools/who-cut.py). The cut is laid out as the photo is - its box,
-   cover as slice - and the photo shows right up to the edge, so the two
-   stay registered at every width.
-   The cuts run deep, so the copy steps down under them (--who-drop: the
-   most on a laptop, where the title is widest under the diagrid, nothing on
-   the widest windows, more on a tablet and a phone) and keeps 22px or more
-   off the navy. The step would carry the photo down with the taller band
-   (by 0.725 of it, the box being 145% of the band and the photo centred in
-   it), so the photo and the cut rise by that much (--who-lift) and the
-   facade meets the edge where it did. */
-.whoweare__cut {
-  display: none;
-}
-
-:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare {
-  /* the photo's layer ends at the rail, as the cut's box does: the rows'
-     dark type stands on the light ground alone */
-  --whoweare-tail: 0px;
-  --who-drop: clamp(0px, (2020px - 100vw) * 0.2, 92px);
-  --whoweare-air: calc(clamp(64px, 9vh, 112px) + var(--who-drop));
-  --who-lift: calc(var(--who-drop) * 0.725);
-}
-
-:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare__bg {
-  --who-in: #000 0;
-  --who-out: calc(100% - var(--whoweare-fade));
-}
-
-:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare__cut {
-  position: absolute;
-  z-index: 0;
-  top: calc(-1 * var(--whoweare-top));
-  right: calc(-1 * var(--container-x));
-  bottom: calc(-1 * var(--whoweare-gap));
-  left: calc(-1 * var(--container-x));
-  display: block;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare__cut svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  width: 100%;
-  height: calc(100% * var(--whoweare-photo-k));
-  fill: var(--navy);
-}
-
-:root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) :is(.whoweare__bg img, .whoweare__cut svg) {
-  transform: translateY(calc(-1 * var(--who-lift)));
-}
-
-@media (max-width: 1023px) {
-  :root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare {
-    --who-drop: 164px;
-    --whoweare-air: calc(clamp(56px, 13vw, 88px) + var(--who-drop));
-  }
-}
-
-@media (max-width: 639px) {
-  :root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare {
-    --who-drop: 212px;
-  }
-}
-
-/* a phone on its side keeps its own short air over the step */
-@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
-  :root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .whoweare {
-    --who-drop: 148px;
-    --whoweare-air: calc(40px + var(--who-drop));
-  }
-}
-
-/* Above the edge: on a desktop the hero's stats notes hang under its foot
-   into the band, down to a few pixels over its end, and on the navy they ran on
-   into the section; on a light ground the edge came right under their
-   last line, so the band keeps a strip of its navy under them. (Below
-   1024px the notes stand in the hero, well clear of it.) At the foot
-   Three routes' torn edge comes in over the ground as it did: its dark
-   land rises into the light as the hero's ridge does against its sky,
-   the route line on the crest, the connector dots on the line. */
-@media (min-width: 1024px) {
-  :root:is([data-who="ivory"], [data-who="grey"], [data-who="latte"]) .ridge-edge {
-    --edge-notes: calc(96px + clamp(28px, 4vh, 44px));
-  }
-}
-/* === end WHO WE ARE on a light ground === */
-
-/* === OUR EXPERTISE on Home, in one view ===
-   Back on Home after Three routes (client, 30.09), as one view: the
-   section is a screen or less. Laid out now as the other sections are
-   (client, 6.10): the title on one side - the eyebrow, a large white
-   title in Who we are's style, the client's line as its lede and the way
-   to the full page under it - and the six areas on the other, two rows of
-   three, each name directly under its drawing - as the audience pages
-   set their Our Expertise, the copy in a third of the width and the list
-   across the rest.
+/* === OUR EXPERTISE on Home ===
+   The meeting of 25.10: the section stays dark and shows the six areas as
+   cards - rounded and softly lit, as the routes' cards (Three routes, and
+   About's "Find the Route"), but all six in one light, the site's warm
+   one, never the three routes' colours: an area is not Founders' or
+   Investors' own. Each card: its drawing small and half see-through (not
+   blurred), the name, a few words on it (the Expertise page's own lines,
+   shortened) and its call to action, which opens Contact; the whole card
+   is the link's target. Behind them About's Track Record treatment: the
+   concrete fins, toned into the navy above and below. (The earlier
+   previews - larger drawings, tiles, the light section and the coloured
+   tiles - were set aside at that meeting.)
    It starts under Three routes' torn bottom edge, as Who we are did (one
-   cut depth up, so its ground fills to the edge's rim), on the navy the
-   Figma sets the drawings on, deepening to navy-deep, where the client
-   marks carry on. */
+   cut depth up, so its ground fills to the edge's rim), on navy deepening
+   to navy-deep, where the client marks carry on. */
 .home-expertise {
   --hx-under: var(--audience-cut-depth);
   /* the torn edge's line runs about 1.5 cut depths under the section's
@@ -7869,32 +7687,60 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
      under the line's lowest dip, and as far under it as Who we are's
      eyebrow stands under the hero's band */
   --hx-air: clamp(64px, 9vh, 112px);
-  /* the drawings' height: the Figma's 64px at 1440 */
-  --hx-icon: clamp(52px, 4.45vw, 64px);
+  /* the drawings: small (the meeting of 25.10) */
+  --hx-icon: clamp(36px, 2.9vw, 44px);
+  --hx-pad: clamp(24px, 2.2vw, 34px);
+  /* the cards' light: the trail's peach, the one warm light for all six */
+  --hx-light: 255, 168, 110;
   position: relative;
+  isolation: isolate;
   margin-top: calc(-1 * var(--hx-under));
   padding: calc(var(--hx-under) * 1.5 + var(--hx-air)) var(--container-x) clamp(88px, 12vh, 140px);
-  background: linear-gradient(180deg, var(--navy) 0%, var(--navy) 50%, var(--navy-deep) 100%);
+  background: linear-gradient(180deg, var(--navy) 0%, var(--navy) 46%, var(--navy-deep) 100%);
   color: var(--light);
 }
 
-/* The link follows the six in the markup - the lede ends "supporting our
-   clients in:" and the areas answer it - and on the grid it stands in the
-   copy's column, under the lede. */
+/* Track Record's fins (About Us), from under the torn edge: hung from
+   their top, as there, and gone before the ledge the photograph has 57%
+   down; a veil of the section's own navy over them, warmer on the right,
+   so they read as rhythm behind the cards, not as a picture */
+.home-expertise__bg {
+  position: absolute;
+  inset: var(--hx-under) 0 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.home-expertise__bg img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0;
+  /* the copper of the photograph a step quieter than on About, where the
+     figures stand on it: here six cards do */
+  filter: saturate(0.6);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 20%, #000 36%, transparent 56%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 20%, #000 36%, transparent 56%);
+}
+
+.home-expertise__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(55% 46% at 84% 34%, rgba(255, 97, 44, 0.07), transparent 70%),
+    linear-gradient(180deg, rgba(22, 24, 34, 0.95) 0%, rgba(20, 22, 32, 0.86) 26%, rgba(16, 19, 28, 0.84) 50%, rgba(10, 13, 22, 0.92) 78%, transparent 100%);
+}
+
+/* the head over the six, as Three routes' and About's heads stand */
 .home-expertise__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-  grid-template-rows: auto 1fr;
-  grid-template-areas:
-    "copy list"
-    "link list";
-  align-items: start;
-  column-gap: clamp(32px, 3.4vw, 56px);
+  position: relative;
 }
 
 .home-expertise__copy {
-  grid-area: copy;
-  max-width: 34rem;
+  max-width: 40rem;
 }
 
 /* Who we are's eyebrow, title and lede: the type scale's roles */
@@ -7921,56 +7767,116 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   text-wrap: pretty;
 }
 
-.home-expertise__link {
-  grid-area: link;
-  justify-self: start;
-  margin-top: 28px;
-}
-
-/* three to a row, each drawing centred over its name; past 1920 the two
-   columns' width would leave the six far apart, and the rows keep to the
-   1040px the one row had */
 .home-expertise__list {
-  grid-area: list;
-  justify-self: start;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  width: 100%;
-  max-width: 1040px;
-  gap: clamp(36px, 5.6vh, 56px) clamp(16px, 2vw, 32px);
-  margin: 0;
+  gap: clamp(16px, 1.8vw, 28px);
+  margin: clamp(40px, 5.2vh, 64px) 0 0;
   padding: 0;
   list-style: none;
 }
 
+/* the card: Three routes' glass (16px corner, a hairline, a faint light
+   fill) with the warm light coming in at its top left */
 .home-expertise__item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-areas:
+    "art"
+    "name"
+    "desc"
+    "cta";
+  min-height: clamp(220px, 17vw, 264px);
+  padding: var(--hx-pad);
+  border: 1px solid rgba(240, 235, 233, 0.1);
+  border-radius: 16px;
+  background:
+    radial-gradient(110% 80% at 0% 0%, rgba(var(--hx-light), 0.1), transparent 62%),
+    linear-gradient(180deg, rgba(240, 235, 233, 0.045), rgba(240, 235, 233, 0.012));
+  box-shadow: inset 0 1px 0 rgba(240, 235, 233, 0.05);
+  transition: border-color 280ms ease, background-color 280ms ease, transform 280ms var(--ease-out);
 }
 
-/* the drawing's box, a little taller than the drawing for the strokes
-   that run to its edge; the name hangs right under it */
+.home-expertise__item:hover,
+.home-expertise__item:focus-within {
+  border-color: rgba(var(--hx-light), 0.32);
+  background-color: rgba(var(--hx-light), 0.035);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .home-expertise__item:hover {
+    transform: translateY(-3px);
+  }
+}
+
+/* the drawing: small, its strokes as drawn, half see-through */
 .home-expertise__art {
+  grid-area: art;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  height: calc(var(--hx-icon) + 16px);
+  align-items: flex-start;
+  height: var(--hx-icon);
+  margin-bottom: clamp(18px, 1.8vw, 24px);
+  opacity: 0.6;
 }
 
 .home-expertise .ex-icon {
-  height: var(--hx-icon);
+  height: 100%;
 }
 
-/* two short lines at most, balanced, as the Figma's 144px columns set
-   them: a caption under its drawing rather than a line across the cell */
 .home-expertise__name {
-  max-width: 11em;
-  margin-top: 8px;
+  grid-area: name;
+  max-width: 12em;
   color: var(--light);
-  font: 400 16px / 1.3 "Outfit", system-ui, sans-serif;
+  font: 500 clamp(20px, 1.6vw, 24px) / 1.15 "Urbanist", system-ui, sans-serif;
+  letter-spacing: -0.01em;
   text-wrap: balance;
+}
+
+.home-expertise__desc {
+  grid-area: desc;
+  max-width: 24em;
+  margin-top: 10px;
+  color: var(--light-60);
+  font: 400 15px / 1.55 "Outfit", system-ui, sans-serif;
+  text-wrap: pretty;
+}
+
+/* the call to action, in the words of the Expertise page, in orange; it
+   opens Contact, and the whole card is its target */
+.home-expertise__cta {
+  grid-area: cta;
+  --link-ink: var(--orange);
+  justify-self: start;
+  display: inline-flex;
+  min-height: 44px;
+  margin-top: clamp(14px, 1.6vw, 20px);
+  white-space: nowrap;
+}
+
+.home-expertise__cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+}
+
+/* ?expertise=iconright (a preview, the meeting of 25.10): the drawing at
+   the card's top right, level with the name */
+:root[data-expertise="iconright"] .home-expertise__item {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "name art"
+    "desc desc"
+    "cta cta";
+  column-gap: 16px;
+}
+
+:root[data-expertise="iconright"] .home-expertise__art {
+  justify-content: flex-end;
+  margin: 0;
 }
 
 /* the six draw as one, each drawing a beat after the one before it: row
@@ -7978,424 +7884,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 [data-draw-group] .ex-icon.is-drawing path {
   transition-delay: var(--draw-delay, 0ms);
 }
-/* === end OUR EXPERTISE === */
-
-/* === OUR EXPERTISE on Home: three previews ===
-   The client (10.10) asked to see the six areas set three other ways,
-   to choose from, without a scroll trap and with the copy at its size:
-   ?expertise=icons, ?expertise=tiles, ?expertise=light,
-   ?expertise=lighttiles or ?expertise=colour (#expertise-tiles and the
-   like where a preview
-   host drops the query; the switch is in script.js) set one of them.
-   Without one the section ships as it is.
-     icons  the present layout, the drawings larger and their strokes
-            heavier
-     tiles  the six as tiles, as About's "Find the Route Built for Your
-            Stage" cards (.routes-strip): side by side, unnumbered, each
-            name over its drawing enlarged, blurred and cut off by the
-            tile's edge, in a corner; the tiles take the cards' three
-            tints, warm, taupe and blue, along each row
-     light  the section on the site's cream, the type in the ink of the
-            light sections (as the light Who we are previews: title and
-            names 15.3:1, lede 6.6:1, the eyebrow in rust 6.0:1), Three
-            routes' torn edge coming down over it as dark land, the
-            section fading at its foot into the navy-deep the client
-            marks run on; the fade is eased in oklab so it does not muddy
-            midway
-     lighttiles  the tiles on the light ground, as the client put it at
-            the review: the light squares in Our Mission's and Our
-            Commitment's mood, the "Find the Route" cards' balance, and
-            the drawings only very faint behind the names, drawing
-            themselves there, never on the main plane (the two rules
-            above together, and the light ground's own tile tints
-            below)
-     colour  the tiles lit like Three routes' cards on a muted light
-            ground, each in one of six soft colours (the client, 18.10;
-            below) */
-
-/* ---------- icons ---------- */
-:root[data-expertise="icons"] .home-expertise {
-  --hx-icon: clamp(76px, 6.6vw, 96px);
-}
-
-:root[data-expertise="icons"] .home-expertise .ex-icon path {
-  stroke-width: 1.6;
-}
-
-:root[data-expertise="icons"] .home-expertise__list {
-  row-gap: clamp(44px, 6.4vh, 68px);
-}
-
-:root[data-expertise="icons"] .home-expertise__name {
-  margin-top: 12px;
-  font-size: 17px;
-}
-
-@media (max-width: 1023px) {
-  :root[data-expertise="icons"] .home-expertise {
-    --hx-icon: 72px;
-  }
-}
-
-@media (max-width: 639px) {
-  :root[data-expertise="icons"] .home-expertise {
-    --hx-icon: 62px;
-  }
-
-  :root[data-expertise="icons"] .home-expertise__list {
-    row-gap: 32px;
-  }
-
-  :root[data-expertise="icons"] .home-expertise__name {
-    font-size: 15px;
-  }
-}
-
-@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
-  :root[data-expertise="icons"] .home-expertise {
-    --hx-icon: 52px;
-  }
-
-  :root[data-expertise="icons"] .home-expertise__list {
-    row-gap: 22px;
-  }
-
-  :root[data-expertise="icons"] .home-expertise__name {
-    margin-top: 6px;
-    font-size: 14px;
-  }
-}
-
-/* ---------- tiles ---------- */
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__inner {
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: none;
-  grid-template-areas:
-    "copy"
-    "list"
-    "link";
-}
-
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__copy {
-  max-width: 40rem;
-}
-
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__list {
-  justify-self: stretch;
-  max-width: none;
-  gap: clamp(16px, 1.8vw, 28px);
-  margin-top: clamp(40px, 5.2vh, 64px);
-}
-
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__item {
-  --hx-tint: 209, 126, 95;
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  align-items: flex-start;
-  min-height: clamp(150px, 12.5vw, 196px);
-  padding: clamp(24px, 2.2vw, 36px);
-  border: 1px solid rgba(var(--hx-tint), 0.24);
-  /* Three routes' corner, the section above (the client, 19.10), not the
-     cards' 2px */
-  border-radius: 16px;
-  background: linear-gradient(155deg, rgba(var(--hx-tint), 0.11), transparent 62%);
-  text-align: left;
-}
-
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__item:nth-child(3n + 2) {
-  --hx-tint: 171, 142, 130;
-}
-
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__item:nth-child(3n) {
-  --hx-tint: 115, 145, 196;
-}
-
-/* the drawing behind the name: more than the tile's height, its right
-   and foot cut off by the edges, blurred, its strokes thickened so the
-   blur leaves a soft line rather than nothing, and very faint - the
-   client wants it "ultra transparent", behind, never in front */
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__art {
-  position: absolute;
-  z-index: -1;
-  right: -12%;
-  bottom: -26%;
-  height: 112%;
-  opacity: 0.26;
-  filter: blur(5px);
-}
-
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise .ex-icon {
-  height: 100%;
-}
-
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise .ex-icon path {
-  stroke-width: 2.4;
-}
-
-/* the cards' name, in their type */
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__name {
-  max-width: 11em;
-  margin: 0;
-  font: 500 clamp(20px, 1.7vw, 25px) / 1.15 "Urbanist", system-ui, sans-serif;
-  letter-spacing: -0.01em;
-}
-
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__link {
-  margin-top: clamp(28px, 4vh, 40px);
-}
-
-/* Each card's call to action (the client, 10.10: as at Our Areas of
-   Expertise), the Expertise page's own words, in orange at the card's
-   foot; it opens that area there. Only the cards carry it: the plain
-   list and the icons keep the one link under the six (scoped to the
-   section, or .link-arrow, later in the sheet, would show it). */
-.home-expertise .home-expertise__cta {
-  display: none;
-}
-
-:root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__cta {
-  --link-ink: var(--orange);
-  display: inline-flex;
-  min-height: 44px;
-  margin-top: auto;
-  padding-top: 12px;
-  white-space: nowrap;
-}
-
-:root[data-expertise="lighttiles"] .home-expertise__cta {
-  --link-ink: #9e340a;
-}
-
-/* two cards a row on the narrowest phones: at 320px "Let's expand" ran
-   20px past its card's edge, so there the words close up */
-@media (max-width: 374px) {
-  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__cta {
-    gap: 6px;
-    font-size: 11px;
-    letter-spacing: 0.06em;
-  }
-}
-
-@media (max-width: 639px) {
-  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__list {
-    gap: 12px;
-    margin-top: 32px;
-  }
-
-  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__item {
-    min-height: 124px;
-    padding: 18px 16px;
-  }
-
-  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__name {
-    font-size: 18px;
-  }
-}
-
-@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
-  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__list {
-    gap: 12px;
-    margin-top: 28px;
-  }
-
-  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__item {
-    min-height: 104px;
-    padding: 16px;
-  }
-
-  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__name {
-    font-size: 17px;
-  }
-
-  :root:is([data-expertise="tiles"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__link {
-    margin-top: 20px;
-  }
-}
-
-/* ---------- light ---------- */
-:root:is([data-expertise="light"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise {
-  --hx-ink: #1c1419;
-  --hx-ink-soft: rgba(28, 20, 25, 0.72);
-  --eyebrow-color: #9e340a;
-  --link-ink: var(--hx-ink);
-  --focus-ring: #9e340a;
-  /* the fade under the link, and a shorter foot over it than the dark
-     section's: the fade is air enough */
-  --hx-fade: clamp(260px, 40vh, 420px);
-  --hx-foot: clamp(48px, 7vh, 88px);
-  /* The ground's fall into navy-deep, in tenths of the fade: the two
-     colours mixed in oklab along a smoothstep, so it leaves the ground and
-     meets the navy with no corner at either end. The client (19.10): the
-     fade was shorter and its first stretch near flat, then steep - the
-     corner read as a grey band across the page. Worked out for the cream
-     (the colour tiles' ground has its own, below). */
-  --hx-dusk:
-    #e8e4e2 calc(100% - var(--hx-fade) * 0.9),
-    #d4d0d0 calc(100% - var(--hx-fade) * 0.8),
-    #b7b4b5 calc(100% - var(--hx-fade) * 0.7),
-    #949396 calc(100% - var(--hx-fade) * 0.6),
-    #707075 calc(100% - var(--hx-fade) * 0.5),
-    #4e4f55 calc(100% - var(--hx-fade) * 0.4),
-    #31333a calc(100% - var(--hx-fade) * 0.3),
-    #1b1d25 calc(100% - var(--hx-fade) * 0.2),
-    #0d1018 calc(100% - var(--hx-fade) * 0.1);
-  padding-bottom: calc(var(--hx-foot) + var(--hx-fade));
-  background: linear-gradient(180deg,
-    var(--hx-ground, var(--light)) 0%,
-    var(--hx-ground, var(--light)) calc(100% - var(--hx-fade)),
-    var(--hx-dusk),
-    var(--navy-deep) 100%);
-  color: var(--hx-ink);
-}
-
-:root:is([data-expertise="light"], [data-expertise="lighttiles"], [data-expertise="colour"]) :is(.home-expertise__title, .home-expertise__name) {
-  color: var(--hx-ink);
-}
-
-:root:is([data-expertise="light"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__lede {
-  color: var(--hx-ink-soft);
-}
-
-:root:is([data-expertise="light"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise__link:focus-visible {
-  outline-color: var(--focus-ring);
-}
-
-@media (max-width: 1023px) {
-  :root:is([data-expertise="light"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise {
-    --hx-fade: clamp(200px, 56vw, 320px);
-    --hx-foot: 32px;
-  }
-}
-
-@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
-  :root:is([data-expertise="light"], [data-expertise="lighttiles"], [data-expertise="colour"]) .home-expertise {
-    --hx-fade: 180px;
-  }
-}
-/* ---------- lighttiles: the tiles on the light ground ----------
-   On the cream the cards keep their three tints, a step stronger so the
-   edges and the wash read on the light (the edge at 0.42, the wash at
-   0.16, both decoration); the drawings fainter still, as the gradient's
-   violet and orange stand out more on the light than on the night. */
-:root[data-expertise="lighttiles"] .home-expertise__item {
-  border-color: rgba(var(--hx-tint), 0.42);
-  background: linear-gradient(155deg, rgba(var(--hx-tint), 0.16), rgba(255, 255, 255, 0.35) 62%);
-}
-
-:root[data-expertise="lighttiles"] .home-expertise__art {
-  opacity: 0.2;
-  filter: blur(4px);
-}
-
-/* ---------- colour: lit tiles on a muted light ground ----------
-   The client (18.10): the section light but toned down rather than white,
-   so the six can be tiles like Three routes' cards, each held in one
-   colour of its own - its light at the top, the dot on its edge, its
-   drawing (still drawing itself) and its call to action - the ground
-   fading at its foot into the navy the client marks run on (the light
-   rules above; the tiles' layout too).
-   The colours are the site's own (the client, 19.10: no green, violet or
-   rose - our navies, lattes and oranges): the brand orange, latte and
-   navy along the first row, the Investors slate, the Founders terracotta
-   and the trail's peach along the second. The inks the drawings and the
-   links take are the colours deepened to 4.5:1 and more on the tile, its
-   light included (5.7:1 and more where the links stand). */
-:root[data-expertise="colour"] .home-expertise {
-  --hx-ground: #e4ded9;
-  --hx-dusk:
-    #ddd7d3 calc(100% - var(--hx-fade) * 0.9),
-    #c9c5c2 calc(100% - var(--hx-fade) * 0.8),
-    #aeaaa9 calc(100% - var(--hx-fade) * 0.7),
-    #8d8b8c calc(100% - var(--hx-fade) * 0.6),
-    #6b6a6e calc(100% - var(--hx-fade) * 0.5),
-    #4a4c51 calc(100% - var(--hx-fade) * 0.4),
-    #2f3138 calc(100% - var(--hx-fade) * 0.3),
-    #1a1c24 calc(100% - var(--hx-fade) * 0.2),
-    #0c1017 calc(100% - var(--hx-fade) * 0.1);
-}
-
-:root[data-expertise="colour"] .home-expertise__item {
-  --hx-tint: 255, 97, 44;
-  --hx-tile-ink: #a3390e;
-  overflow: visible;
-  border-color: rgba(var(--hx-tint), 0.4);
-  background:
-    radial-gradient(90% 70% at 50% 0%, rgba(var(--hx-tint), 0.22), transparent 70%),
-    rgba(255, 255, 255, 0.45);
-  box-shadow: 0 18px 40px rgba(28, 20, 25, 0.06);
-  transition: transform 320ms var(--ease-out), border-color 240ms ease, box-shadow 320ms ease;
-}
-
-:root[data-expertise="colour"] .home-expertise__item:nth-child(2) {
-  --hx-tint: 184, 146, 110;
-  --hx-tile-ink: #6e4e30;
-}
-
-:root[data-expertise="colour"] .home-expertise__item:nth-child(3) {
-  --hx-tint: 58, 72, 104;
-  --hx-tile-ink: #313e59;
-}
-
-:root[data-expertise="colour"] .home-expertise__item:nth-child(4) {
-  --hx-tint: 115, 145, 196;
-  --hx-tile-ink: #365487;
-}
-
-:root[data-expertise="colour"] .home-expertise__item:nth-child(5) {
-  --hx-tint: 209, 126, 95;
-  --hx-tile-ink: #94401f;
-}
-
-:root[data-expertise="colour"] .home-expertise__item:nth-child(6) {
-  --hx-tint: 255, 168, 110;
-  --hx-tile-ink: #8f4a16;
-}
-
-/* the dot on the card's top edge, as the routes' markers stand on theirs */
-:root[data-expertise="colour"] .home-expertise__item::before {
-  content: "";
-  position: absolute;
-  top: -5px;
-  left: 50%;
-  width: 9px;
-  height: 9px;
-  margin-left: -4.5px;
-  border-radius: 50%;
-  background: rgb(var(--hx-tint));
-  box-shadow: 0 0 0 4px rgba(var(--hx-tint), 0.2), 0 0 14px rgba(var(--hx-tint), 0.55);
-}
-
-/* the drawing on the card, over the name, in the card's ink */
-:root[data-expertise="colour"] .home-expertise__art {
-  position: relative;
-  z-index: auto;
-  right: auto;
-  bottom: auto;
-  height: clamp(48px, 4vw, 60px);
-  margin-bottom: clamp(16px, 1.6vw, 24px);
-  opacity: 1;
-  filter: none;
-}
-
-:root[data-expertise="colour"] .home-expertise .ex-icon path {
-  stroke: var(--hx-tile-ink);
-  stroke-width: 1.3;
-}
-
-:root[data-expertise="colour"] .home-expertise__cta {
-  --link-ink: var(--hx-tile-ink);
-}
-
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  :root[data-expertise="colour"] .home-expertise__item:hover {
-    transform: translateY(-3px);
-    border-color: rgba(var(--hx-tint), 0.62);
-    box-shadow: 0 22px 48px rgba(28, 20, 25, 0.1);
-  }
-}
-
-/* === end OUR EXPERTISE on Home: three previews === */
+/* === end OUR EXPERTISE on Home === */
 
 /* === CLIENT MARKS on Home ===
    About Us' carousel (CLIENT MARKS, above) closes Home as well: with
@@ -12044,37 +11533,19 @@ main {
 }
 
 /* ---------- Our Expertise (<=1023px) ----------
-   Stacked, in the markup's order: the title block, the six under it -
-   three to a row on a tablet, two on a phone, each name under its
-   drawing - and the link closing the section on the container edge. A
-   phone on its side keeps the desktop's two columns (below). The torn
-   edge above is a phone's 130px cut. */
+   The head, then the cards: two to a row on a tablet and on a phone on its
+   side, one on a phone held upright, where each card lays the drawing at
+   its top right, level with the name, to stay short. The torn edge above
+   is a phone's 130px cut. */
 @media (max-width: 1023px) {
   .page--home .home-expertise {
     --hx-air: clamp(40px, 9vw, 64px);
+    --hx-pad: 22px;
     padding-bottom: var(--m-section);
   }
 
-  .page--home .home-expertise__inner {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: none;
-    grid-template-areas:
-      "copy"
-      "list"
-      "link";
-  }
-
-  .page--home .home-expertise__copy {
-    max-width: 40rem;
-  }
-
-  /* Who we are's head at this size */
   .page--home .home-expertise__eyebrow {
     margin-bottom: var(--eyebrow-gap);
-  }
-
-  .page--home .home-expertise__title {
-    margin-bottom: var(--head-lede-gap);
   }
 
   .page--home .home-expertise__lede {
@@ -12082,99 +11553,53 @@ main {
   }
 
   .page--home .home-expertise__list {
-    gap: 32px 16px;
-    margin-top: 40px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 36px;
   }
 
-  /* a 48px target, as Who we are's link */
-  .page--home .home-expertise__link {
-    min-height: 48px;
-    margin-top: 28px;
+  .page--home .home-expertise__item {
+    min-height: 0;
   }
 
-  .page--home .home-expertise__link:focus-visible {
-    outline: 2px solid var(--orange);
-    outline-offset: 4px;
-    border-radius: 4px;
+  .page--home .home-expertise__name {
+    font-size: 20px;
+  }
+
+  .page--home .home-expertise__desc {
+    font-size: 15px;
   }
 }
 
-/* a phone: two to a row, three rows, a little closer together, so the
-   section from the torn edge down is still one screen at 390x844 */
 @media (max-width: 639px) {
   .page--home .home-expertise {
-    --hx-icon: 52px;
+    --hx-icon: 34px;
   }
 
   .page--home .home-expertise__list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px 12px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
     margin-top: 32px;
   }
 
-  .page--home .home-expertise__name {
-    font-size: 15px;
-  }
-
-  .page--home .home-expertise__link {
-    margin-top: 24px;
-  }
-}
-
-/* A phone on its side has the width for the desktop's two columns and not
-   the height for the stack: the title block and the link on the left, the
-   six on the right in their two rows of three, the drawings smaller, so
-   the section from its eyebrow down is one screen. */
-@media (min-width: 560px) and (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
-  .page--home .home-expertise {
-    --hx-icon: 40px;
-  }
-
-  .page--home .home-expertise__inner {
-    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-    grid-template-rows: auto 1fr;
+  .page--home .home-expertise__item {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto auto;
     grid-template-areas:
-      "copy list"
-      "link list";
-    column-gap: 32px;
+      "name art"
+      "desc desc"
+      "cta cta";
+    column-gap: 16px;
+    padding: 20px 20px 10px;
   }
 
-  .page--home .home-expertise__title {
-    margin-bottom: 14px;
+  .page--home .home-expertise__art {
+    justify-content: flex-end;
+    margin: 0;
   }
 
-  .page--home .home-expertise__lede {
-    font-size: 16px;
-  }
-
-  .page--home .home-expertise__list {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px 12px;
-    margin-top: 0;
-  }
-
-  .page--home .home-expertise__name {
-    margin-top: 6px;
-    font-size: 14px;
-  }
-
-  /* On the narrower of these (under about 680px) the column is narrower
-     than the link: set inline, its arrow follows the last word onto the
-     second line, as the audience pages' long link does, and a padded line
-     keeps the 44px target. */
-  .page--home .home-expertise__link {
-    display: inline-block;
-    min-height: 0;
-    margin-top: 0;
-    padding: 13px 0;
-    line-height: 1.5;
-    text-wrap: balance;
-  }
-
-  .page--home .home-expertise__link svg {
-    display: inline-block;
-    margin-left: 10px;
-    vertical-align: -3px;
+  .page--home .home-expertise__cta {
+    margin-top: 8px;
   }
 }
 

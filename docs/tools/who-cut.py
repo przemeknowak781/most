@@ -25,6 +25,9 @@
 # Paste it into the .whoweare__cut path in index.html. The cut and the
 # photo are laid out alike (object-fit: cover = preserveAspectRatio slice,
 # both moved by --who-lift), so they stay registered at every width.
+#
+# Set aside on 25.10 with the light previews (the homepage stays dark): the
+# markup and the styles it fed are in the history, as of commit 3849fc6.
 import json
 import os
 
