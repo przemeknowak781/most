@@ -982,6 +982,7 @@ body.menu-open {
 
 .hero-trail-point::after,
 .page--horizon .hz-trail__point::after,
+.page--founders .hz-trail__point::after,
 .member-trail__dot::after,
 .has-trail__dot::after,
 .path-map__dot::after {
@@ -999,6 +1000,7 @@ body.menu-open {
 
 .hero-trail-point::after,
 .page--horizon .hz-trail__point::after,
+.page--founders .hz-trail__point::after,
 .member-trail.is-visible .member-trail__dot::after,
 .has-trail.is-visible .has-trail__dot::after,
 .path-map__node[aria-selected="true"] .path-map__dot::after {
@@ -1008,6 +1010,7 @@ body.menu-open {
 @media (prefers-reduced-motion: reduce) {
   .hero-trail-point::after,
   .page--horizon .hz-trail__point::after,
+  .page--founders .hz-trail__point::after,
   .member-trail__dot::after,
   .has-trail__dot::after,
   .path-map__node[aria-selected="true"] .path-map__dot::after {
@@ -6102,6 +6105,20 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   fill: currentColor;
 }
 
+/* The founder's route (the meeting of 25.10) shares the ridge's box, so it
+   stays on the terrain at every width; it is drawn in screen coordinates,
+   so it is not mirrored. Over the land, under the copy. */
+.page--founders .fnd-trail {
+  position: absolute;
+  left: var(--fnd-art-x);
+  top: calc(var(--scene-cross) - 0.24047 * var(--fnd-art-w));
+  z-index: -1;
+  width: var(--fnd-art-w);
+  height: auto;
+  aspect-ratio: 1443 / 658;
+  pointer-events: none;
+}
+
 .page--founders .scene-ground {
   top: calc(var(--scene-cross) + 0.21553 * var(--fnd-art-w) - 1px);
 }
@@ -6341,7 +6358,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   z-index: -1;
 }
 
-.page--horizon .hz-trail__svg {
+:is(.page--horizon, .page--founders) .hz-trail__svg {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -6349,7 +6366,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   overflow: visible;
 }
 
-.page--horizon .hz-trail__path {
+:is(.page--horizon, .page--founders) .hz-trail__path {
   fill: none;
   stroke: var(--trail-line);
   stroke-width: var(--trail-width);
@@ -6359,7 +6376,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   vector-effect: non-scaling-stroke;
 }
 
-.page--horizon .hz-trail__point {
+:is(.page--horizon, .page--founders) .hz-trail__point {
   position: absolute;
   left: var(--x);
   top: var(--y);
@@ -6372,7 +6389,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .page--horizon .hz-trail__point {
+  :is(.page--horizon, .page--founders) .hz-trail__point {
     animation: none;
   }
 }
@@ -14307,7 +14324,7 @@ main {
   }
 
   /* the artwork stands on the hero's foot, its right edge on the screen's */
-  .page--founders .fnd-ridge,
+  .page--founders :is(.fnd-ridge, .fnd-trail),
   :is(.page--companies, .page--investors) :is(.hz-massif, .hz-ridge, .hz-trail) {
     top: auto;
     right: 0;
@@ -14429,7 +14446,7 @@ main {
 
   /* the valley floor --aud-valley-m above the hero's foot; the rest of the
      art's solid foot is clipped by the hero and carried on by the intro */
-  .page--founders .fnd-ridge,
+  .page--founders :is(.fnd-ridge, .fnd-trail),
   :is(.page--companies, .page--investors) :is(.hz-massif, .hz-ridge, .hz-trail) {
     bottom: calc(var(--aud-valley-m) - 0.16009 * var(--aud-art-w));
   }
