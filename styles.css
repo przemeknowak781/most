@@ -67,7 +67,7 @@
   --ls-eyebrow: 0.24em;
   --lh-eyebrow: 1.2;
   --eyebrow-color: rgba(255, 168, 110, 0.92);
-  --fs-label: 11px;                                /* small caps labels: stat labels, */
+  --fs-label: 12px;                                /* small caps labels: stat labels, (12px since 25.10: 11px read 8px at a 75% zoom) */
   --ls-label: 0.24em;                              /* roles, kickers, column titles */
   --ls-stat: 0.16em;                               /* the figures' labels (Home hero, About) */
   /* hero header blocks: where the eyebrow starts under the bar, how wide the
@@ -255,7 +255,7 @@ a {
   gap: 10px;
   /* 4.5:1 on the sunset heroes and on the scrolled bar - it is small text */
   color: rgba(240, 235, 233, 0.78);
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
+  font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   white-space: nowrap;
@@ -647,7 +647,7 @@ body.menu-open {
     transform: scaleX(-1)
       translate3d(
         6.5%,
-        calc(var(--scroll-y, 0px) * 0.2 + 9vh),
+        calc(var(--scroll-y, 0px) * 0.2 + var(--hero-drop, 9vh)),
         0
       )
       scale(calc(1.14 + var(--hero-progress, 0) * 0.025));
@@ -677,7 +677,7 @@ body.menu-open {
     transform: scaleX(-1)
       translate3d(
         6.5%,
-        calc(var(--scroll-y, 0px) * 0.2 + 16vh),
+        calc(var(--scroll-y, 0px) * 0.2 + var(--hero-drop-low, 16vh)),
         0
       )
       scale(calc(1.14 + var(--hero-progress, 0) * 0.025));
@@ -1696,7 +1696,7 @@ main:focus {
   align-items: center;
   gap: 10px;
   color: var(--light);
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
+  font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   text-decoration: none;
@@ -8564,6 +8564,44 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 .variant-panel__note {
   margin: 14px 0 0;
   color: rgba(240, 235, 233, 0.6);
+}
+
+/* the review block: the screen this view is on, and the link to it */
+.variant-panel__env {
+  margin: 10px 0 0;
+  color: rgba(240, 235, 233, 0.78);
+}
+
+.variant-panel__copy {
+  min-height: 36px;
+  margin-top: 10px;
+  padding: 6px 14px;
+  border: 1px solid #ff612c;
+  border-radius: 999px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.variant-panel__copy:hover {
+  background: rgba(255, 97, 44, 0.16);
+}
+
+.variant-panel__copy:focus-visible {
+  outline: 2px solid #ff612c;
+  outline-offset: 3px;
+}
+
+.variant-panel__copied {
+  margin: 8px 0 0;
+  color: rgba(240, 235, 233, 0.7);
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+}
+
+.variant-panel__copied:empty {
+  display: none;
 }
 
 /* ============ TITLE PREVIEW (?titles=smaller) ============
@@ -16259,7 +16297,7 @@ main {
   border-radius: 999px;
   background: transparent;
   color: var(--light-80);
-  font: 500 11px / 1.2 "Montserrat", system-ui, sans-serif;
+  font: 500 12px / 1.2 "Montserrat", system-ui, sans-serif;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   white-space: nowrap;
@@ -17127,3 +17165,14 @@ main {
   background: color-mix(in oklab, var(--grow-sky-low) 36%, #161822);
 }
 /* === end ?footer === */
+
+/* === ?hero=low (a preview, the meeting of 25.10) ===
+   Optional, not for the launch: the photograph behind Home's headline a
+   little lower again, for more navy behind "Your Legal Partner for
+   Growth" - the picture only, the foreground ridge and its climbers stay
+   where they are. From 1024px, as the rule it extends. */
+:root[data-hero="low"] {
+  --hero-drop: 15vh;
+  --hero-drop-low: 21vh;
+}
+/* === end ?hero === */

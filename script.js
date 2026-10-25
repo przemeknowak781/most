@@ -1156,7 +1156,8 @@ function setupPortraitProposal() {
 }
 
 /* Alternatives for the client to look at, off by default (client, 6.10):
-   ?titles=smaller the titles a size smaller, ?expertise=iconright the
+   ?titles=smaller the titles a size smaller, ?hero=low Home's mountain
+   photograph lower behind the headline, ?expertise=iconright the
    drawing at the top right of Home's Our Expertise cards, ?scroll=peek|cue
    a cue to scroll on Our Team's hero, ?investors=mist|dusk|facade the
    Investors photographs under a tint of about half instead of the dark
@@ -1186,6 +1187,7 @@ function setupPortraitProposal() {
    and the panel, so the whole site can be walked in an alternative. */
 const PREVIEW_SWITCHES = {
   titles: ["smaller"],
+  hero: ["low"],
   expertise: ["iconright"],
   scroll: ["peek", "cue"],
   investors: ["mist", "dusk", "facade"],
@@ -1219,6 +1221,7 @@ const PREVIEW_PAGES = {
 };
 const AUDIENCE_PAGES = ["for-founders", "for-companies", "for-investors"];
 const PREVIEW_PANEL = [
+  ["hero", ["index"], "Hero: zdjęcie gór (od 1024 px)", [["", "obecne"], ["low", "niżej, więcej granatu za napisem"]]],
   ["stats", ["index"], "Liczby w hero (na telefonie)", [["", "obecne"], ["rows", "wiersze z linią"], ["grid", "siatka z liniami"]]],
   ["expertise", ["index"], "Our Expertise: ikona na karcie", [["", "nad nazwą"], ["iconright", "po prawej, obok nazwy"]]],
   ["clients", ["index"], "Who We Work With: tekst", [["", "po lewej"], ["center", "na środku"], ["right", "po prawej"]]],
@@ -1314,6 +1317,10 @@ function setupPreviewSwitches() {
     section(pageName ? `Ta strona: ${pageName}` : "Ta strona", own) +
     section("Wszystkie strony", shared) +
     '<p class="variant-panel__note">Wybór przechodzi na kolejne podstrony. Warianty innych podstron pokazują się na nich.</p>' +
+    '<p class="variant-panel__section">Do recenzji</p>' +
+    '<p class="variant-panel__env"></p>' +
+    '<button type="button" class="variant-panel__copy">Kopiuj link do tego widoku</button>' +
+    '<p class="variant-panel__copied" role="status"></p>' +
     "</div>";
   const choices = panel.querySelectorAll(".variant-panel__choice");
   const count = panel.querySelector(".variant-panel__count");
@@ -1325,6 +1332,47 @@ function setupPreviewSwitches() {
     const on = shown.filter((name) => root.dataset[name]).length;
     count.textContent = on ? ` · wybrane: ${on}` : "";
   };
+  /* For the review (the meeting of 25.10: the same page looked different
+     on each screen - one browser was at 75% - and the chosen variants
+     could not be told from the recording): the window the page is laid
+     out in, the screen's scale and, where the browser lets it be read
+     (Chrome, Edge), its zoom; and a button that copies the link to this
+     very view, with the chosen variants named and these settings, to
+     paste into a message. */
+  const env = panel.querySelector(".variant-panel__env");
+  const copied = panel.querySelector(".variant-panel__copied");
+  const zoom = () => {
+    const ratio = window.outerWidth / window.innerWidth;
+    return ratio > 0.3 && ratio < 3 && Math.abs(ratio - 1) > 0.05 ? Math.round(ratio * 20) * 5 : null;
+  };
+  const settings = () => {
+    const scale = String(Math.round(window.devicePixelRatio * 100) / 100).replace(".", ",");
+    const z = zoom();
+    return `okno ${window.innerWidth}×${window.innerHeight} px, skala ekranu ${scale}` +
+      (z ? `, zoom przeglądarki ok. ${z}%` : "");
+  };
+  const showSettings = () => {
+    env.textContent = `Ten widok: ${settings()}. Przed porównaniem: zoom przeglądarki 100% (Ctrl lub Cmd + 0).`;
+  };
+  showSettings();
+  window.addEventListener("resize", showSettings);
+  panel.querySelector(".variant-panel__copy").addEventListener("click", async () => {
+    const names = chosen().map((name) => {
+      const row = PREVIEW_PANEL.find(([n]) => n === name);
+      const pick = row && row[3].find(([value]) => value === root.dataset[name]);
+      return row && pick ? `${row[2]} – ${pick[1]}` : `${name}=${root.dataset[name]}`;
+    });
+    const text = withChoice(new URL(window.location.href)).href +
+      `\nWarianty: ${names.length ? names.join("; ") : "bez wariantów (strona jak opublikowana)"}` +
+      `\nUstawienia: ${settings()}`;
+    try {
+      await navigator.clipboard.writeText(text);
+      copied.textContent = "Skopiowano: link, warianty i ustawienia ekranu.";
+    } catch (error) {
+      copied.textContent = text;
+    }
+  });
+
   panel.addEventListener("click", (event) => {
     const button = event.target.closest(".variant-panel__choice");
     if (!button) return;
