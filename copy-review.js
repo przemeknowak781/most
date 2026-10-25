@@ -263,16 +263,10 @@ window.MOST_COPY_REVIEW = {
    "a": ""
   },
   {
-   "t": "Teams we have helped build, scale, and back.",
-   "c": "ours",
-   "s": "none (jak na About Us; zastępuje S5c:333 'Those we have helped build, scale, and invest across markets.')",
-   "a": "Karuzela klientów na dole Home (jak na About Us): nagłówek 'Teams We Have Helped Build, Scale, and Back.'. Akceptujecie?"
-  },
-  {
    "t": "Founders, growing companies, and funds across Europe, the US, and the UK.",
    "c": "ours",
    "s": "none (jak na About Us)",
-   "a": "Zdanie pod nagłówkiem karuzeli, jak na About Us; czy 'funds' i zakres rynków się zgadzają?"
+   "a": "Spotkanie 25.10: nagłówek sekcji to teraz 'What Matters Most' (ustalony). To zdanie pod nim jest nasze i czeka na nowe brzmienie sekcji od Basi (sekcja ma trafić do dokumentu z tekstami)."
   },
   {
    "t": "Want to Grow Together?",
