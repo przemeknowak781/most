@@ -1164,7 +1164,8 @@ function setupPortraitProposal() {
    ?companies=latte|lattedark|cool the Companies page in a latte brown
    without the orange, a darker latte or a cooler greige, ?hww=columns
    How We Work on Companies and Investors on a facade's vertical
-   divisions, ?graph=map Founders'
+   divisions, ?footer=up|layers the closing band's photograph lower behind
+   the walkers' ridge or mountain layers behind it, ?graph=map Founders'
    Our Expertise as a map of the road's stages on the trail, ?rail=dots
    small dots on the audience pages' Our Expertise rail, ?arch=help
    architecture coming up out of the ground behind their What We Help You
@@ -1190,6 +1191,7 @@ const PREVIEW_SWITCHES = {
   investors: ["mist", "dusk", "facade"],
   companies: ["latte", "lattedark", "cool"],
   hww: ["columns"],
+  footer: ["up", "layers"],
   graph: ["map"],
   rail: ["dots"],
   arch: ["help"],
@@ -1230,6 +1232,7 @@ const PREVIEW_PANEL = [
   ["graph", ["for-founders"], "Our Expertise jako mapa (prototyp)", [["", "obecne"], ["map", "mapa etapów"]]],
   ["palette", "all", "Kolory podstron", [["", "obecne"], ["lead", "kolor wiodący jako światło"]]],
   ["nav", "all", "Menu: kropka przy Founders / Companies / Investors", [["", "pomarańczowa"], ["colour", "w kolorze ścieżki"]]],
+  ["footer", "all", "Pas „Want to Grow Together?”: góry", [["", "obecne"], ["up", "pierwszy plan wyżej (pas ze zdjęciem)"], ["layers", "warstwy gór (strony odbiorców)"]]],
   ["titles", "all", "Tytuły", [["", "obecne"], ["smaller", "mniejsze"]]],
 ];
 

@@ -17061,3 +17061,69 @@ main {
   inset: 0;
 }
 /* === end ?hww === */
+
+/* === ?footer=up|layers (previews, the meeting of 25.10) ===
+   The closing band's mountains. The team liked a reference with quiet
+   mountain layers that add depth - restrained, not too realistic, in each
+   page's colours - and, for the photograph, asked to bring the foreground
+   up so it hides the photograph's first row of mountains and keeps the
+   layers behind it.
+     up      where the band is the photograph (Home, and the audience pages
+             with ?palette=lead): the photograph sits lower behind the
+             walkers' ridge, so its nearest range goes under the ridge and
+             the farther ones stay
+     layers  where the band is the page's flat sky (the audience pages):
+             three ranges behind the ridge, farther ones higher and paler -
+             the sky's low colour mixed into the land's navy, more of it
+             the farther the range (docs/tools/grow-layers.py) */
+:root[data-footer="up"] .aud-grow > .footer-ridge .footer-ridge__bg {
+  object-position: 50% calc(100% + 5.2vw);
+}
+
+.grow-layers {
+  display: none;
+}
+
+:root[data-footer="layers"]:not([data-palette="lead"]) :is(.page--founders, .page--companies, .page--investors) .grow-layers {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  display: block;
+  aspect-ratio: 1440 / 437;
+  pointer-events: none;
+}
+
+/* under 1024px the ridge art grows past the screen's edges (see the
+   compact footer): the ranges take its size and place */
+@media (max-width: 1023px) {
+  :root[data-footer="layers"]:not([data-palette="lead"]) :is(.page--founders, .page--companies, .page--investors) .grow-layers {
+    right: auto;
+    left: min(0%, 50% - var(--ridge-art, 100%) * 0.37);
+    width: var(--ridge-art, 100%);
+  }
+}
+
+.grow-layers span {
+  position: absolute;
+  inset: 0;
+  -webkit-mask: var(--layer) bottom / 100% 100% no-repeat;
+  mask: var(--layer) bottom / 100% 100% no-repeat;
+}
+
+.grow-layers__far {
+  --layer: url("grow-layer-far.svg");
+  background: color-mix(in oklab, var(--grow-sky-low) 74%, #161822);
+}
+
+.grow-layers__mid {
+  --layer: url("grow-layer-mid.svg");
+  background: color-mix(in oklab, var(--grow-sky-low) 55%, #161822);
+}
+
+.grow-layers__near {
+  --layer: url("grow-layer-near.svg");
+  background: color-mix(in oklab, var(--grow-sky-low) 36%, #161822);
+}
+/* === end ?footer === */
