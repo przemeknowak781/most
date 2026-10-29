@@ -1160,11 +1160,7 @@ function setupPortraitProposal() {
    photograph lower behind the headline, ?expertise=iconright the
    drawing at the top right of Home's Our Expertise cards, ?excta=next|most
    a call to action under them, ?scroll=peek|cue
-   a cue to scroll on Our Team's hero, ?investors=mist|dusk|facade the
-   Investors photographs under a tint of about half instead of the dark
-   frame, in blue going violet with an orange light,
-   ?companies=latte|lattedark|cool the Companies page in a latte brown
-   without the orange, a darker latte or a cooler greige, ?hww=columns
+   a cue to scroll on Our Team's hero, ?hww=columns
    How We Work on Companies and Investors on a facade's vertical
    divisions, ?footer=up|layers the closing band's photograph lower behind
    the walkers' ridge or mountain layers behind it, ?graph=map Founders'
@@ -1182,7 +1178,8 @@ function setupPortraitProposal() {
    page is as it ships. (The titles in capitals and the ridges drawn
    straight were looked at and set aside, 7.10; Who we are on a light
    ground and Our Expertise's larger drawings, tiles and light grounds,
-   25.10, the homepage staying dark.)
+   25.10, the homepage staying dark; the Investors tints and the
+   Companies colours, 29.10, when both pages took their lit reliefs.)
    ?preview (or either of them) brings up a panel that switches them in
    place; while it is up, the links to the site's pages carry the choice
    and the panel, so the whole site can be walked in an alternative. */
@@ -1192,8 +1189,6 @@ const PREVIEW_SWITCHES = {
   expertise: ["iconright"],
   excta: ["next", "most"],
   scroll: ["peek", "cue"],
-  investors: ["mist", "dusk", "facade"],
-  companies: ["latte", "lattedark", "cool", "fins", "facets"],
   hww: ["columns"],
   footer: ["up", "layers"],
   graph: ["map"],
@@ -1230,9 +1225,7 @@ const PREVIEW_PANEL = [
   ["clients", ["index"], "Who We Work With: tekst", [["", "po lewej"], ["center", "na środku"], ["right", "po prawej"]]],
   ["scroll", ["our-team"], "Zachęta do przewinięcia w hero", [["", "bez"], ["peek", "portrety spod hero"], ["cue", "napis ze strzałką"]]],
   ["order", ["expertise"], "Kolejność sekcji", [["", "obszary, potem How We Work"], ["work", "najpierw How We Work"]]],
-  ["companies", ["for-companies"], "Kolor Companies", [["", "obecny"], ["latte", "latte, bez pomarańczu"], ["lattedark", "ciemniejsze latte"], ["cool", "chłodniejszy (greige)"], ["fins", "lamele w świetle zachodu"], ["facets", "fasety w świetle zachodu"]]],
   ["hww", ["for-companies", "for-investors"], "How We Work: tło", [["", "obecne"], ["columns", "fasada z pionowymi podziałami"]]],
-  ["investors", ["for-investors"], "Zdjęcia i kolor", [["", "obecne"], ["mist", "mgła, jasne niebo"], ["dusk", "zmierzch, błękit w fiolet"], ["facade", "zmierzch, fasada w How We Work"]]],
   ["arch", AUDIENCE_PAGES, "What We Help You Achieve", [["", "obecne"], ["help", "architektura z tła"]]],
   ["rail", AUDIENCE_PAGES, "Our Expertise: kropki przy punktach", [["", "tylko na końcach"], ["dots", "małe przy każdym punkcie"]]],
   ["graph", ["for-founders"], "Our Expertise jako mapa (prototyp)", [["", "obecne"], ["map", "mapa etapów"]]],
