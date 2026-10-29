@@ -16915,11 +16915,34 @@ main {
   --lead-rgb: 95, 84, 91;
   --lead-light-rgb: 128, 106, 120;
   --lead-grade: 0.8;
-  --hz-field: #161822;
-  --hz-grade-top: #3f3443;
-  --hz-grade-low: #a27f90;
-  --hz-glow: 172, 138, 158;
-  --hz-glow-a: 0.3;
+}
+
+/* Companies after the team's reference of 29.10 (the glass dome over the
+   mauve land, Figma 2795:1083): the land keeps its mauve, and the glass is
+   a cool slate, near-neutral, with the evening caught in it as a little
+   copper low in the middle - no pink light over it. How We Work stays on
+   the mauve too, as the page's own (the navy ground below is for
+   Investors). */
+:root[data-palette="lead"] .page--companies {
+  --hz-field: #5f545b;
+  --hz-grade-top: #302f3b;
+  --hz-grade-low: #78626b;
+  --hz-glow: 200, 120, 88;
+  --hz-glow-a: 0.16;
+}
+
+/* softer than the night of the other skies: the reference's glass is a
+   mid slate all the way up, the frames a little darker than the panes */
+:root[data-palette="lead"] .page--companies .hz-photo img {
+  filter: grayscale(1) contrast(1.04) brightness(0.5);
+}
+
+:root[data-palette="lead"] .page--companies .hz-photo::after {
+  background:
+    radial-gradient(ellipse 56% 58% at 24% 40%, rgba(30, 29, 37, 0.38), rgba(30, 29, 37, 0.22) 55%, transparent 84%),
+    radial-gradient(60% 42% at 62% 76%, rgba(var(--hz-glow), var(--hz-glow-a)), transparent 70%),
+    radial-gradient(ellipse 50% 60% at 78% 40%, rgba(20, 21, 28, 0.4), transparent 80%),
+    linear-gradient(180deg, rgba(30, 29, 37, 0.34) 0%, rgba(30, 29, 37, 0.18) 40%, rgba(30, 29, 37, 0.12) 100%);
 }
 
 :root[data-palette="lead"] .page--investors {
@@ -16932,11 +16955,11 @@ main {
 
 /* How We Work: the navy ground, the page's colour at the top behind the
    title and the photograph's structure in it, gone before the points */
-:root[data-palette="lead"] :is(.page--companies, .page--investors) {
+:root[data-palette="lead"] .page--investors {
   --aud-ground-rgb: 22, 24, 34;
 }
 
-:root[data-palette="lead"] :is(.page--companies, .page--investors) .aud-work__photo {
+:root[data-palette="lead"] .page--investors .aud-work__photo {
   background: linear-gradient(180deg, rgb(var(--lead-light-rgb)) 0%, rgb(var(--lead-rgb)) 26%, rgb(22, 24, 34) 46%);
 }
 
