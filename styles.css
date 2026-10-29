@@ -6544,9 +6544,11 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   }
 }
 
-/* The generated photographs (18.10: Companies' towers, Investors' atrium
-   seen through fluted glass) are lit where the copy stands - the sky
-   between the towers, the atrium's pale glass - so a soft shade of the
+/* The architecture (Investors: the atrium seen through fluted glass, a
+   generated photograph of 18.10; Companies: since 29.10 a pattern of glass
+   panels at the old towers' angles, docs/tools/companies-grid.py) is lit
+   where the copy stands - the atrium's pale glass, the pattern's bright
+   middle - so a soft shade of the
    night lies behind the copy column, as behind Home's headline: the
    tagline keeps the contrast it had over the old pictures, and the light
    stays open over the ridge. */
@@ -6561,7 +6563,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 /* Below a laptop the tagline runs the full width of the screen, halfway
    down the hero, across the brightest of the photograph: even with its halo
    the Investors one held 2.4:1 to 4.2:1 over the lattice, and the Companies
-   one 4.5:1 over the towers. The night stays deeper a little longer down
+   one 4.5:1 over the towers (the photograph before the pattern). The night stays deeper a little longer down
    the sky (a step more on the lattice), so they hold 4.9:1 and 5.5:1 on a
    phone and over 6.5:1 on a tablet; the light still opens over the ridge. */
 @media (max-width: 1023px) {
@@ -14498,7 +14500,7 @@ main {
 }
 
 /* A phone held upright sees the middle half of the architecture photo, so
-   it loads just that part (investors-atrium-crop / companies-towers-crop, the
+   it loads just that part (investors-atrium-crop / companies-grid-crop, the
    <source> in the markup, cut about the middle): the page's largest image
    at a third fewer bytes. The box is the sky itself here and the crop
    covers it from the middle, which draws it exactly where the full
@@ -17071,7 +17073,7 @@ main {
 
 /* the shade: espresso rather than navy, and light over the sky - the
    copy keeps its own soft shadow, as on Home, deep enough that the
-   tagline holds 4.5:1 over the towers' lit glass */
+   tagline holds 4.5:1 over the lit glass */
 :root[data-companies] .page--companies .hz-photo::after {
   background:
     radial-gradient(ellipse 60% 62% at 24% 42%, rgba(var(--hz-shade), calc(var(--hz-copy-k, 1) * var(--hz-copy-a))), rgba(var(--hz-shade), calc(0.62 * var(--hz-copy-k, 1) * var(--hz-copy-a))) 55%, transparent 86%),
@@ -17081,7 +17083,7 @@ main {
 }
 
 /* a narrow laptop: the headline and the tagline wrap wider over the
-   towers, so their shade is a step deeper */
+   glass, so their shade is a step deeper */
 @media (min-width: 1024px) and (max-width: 1180px) {
   :root[data-companies] .page--companies {
     --hz-copy-k: 1.22;
@@ -17172,9 +17174,10 @@ main {
              walkers' ridge, so its nearest range goes under the ridge and
              the farther ones stay
      layers  where the band is the page's flat sky (the audience pages):
-             three ranges behind the ridge, farther ones higher and paler -
-             the sky's low colour mixed into the land's navy, more of it
-             the farther the range (docs/tools/grow-layers.py) */
+             four ranges in haze behind the ridge, after the team's
+             reference of 29.10 - sharp, broken crests, the farther ones
+             higher, each a shade of the sky and fading into mist towards
+             its foot (docs/tools/grow-layers.py) */
 :root[data-footer="up"] .aud-grow > .footer-ridge .footer-ridge__bg {
   object-position: 50% calc(100% + 5.2vw);
 }
@@ -17204,6 +17207,23 @@ main {
   }
 }
 
+/* each range a shade of the sky, deeper the nearer it is: barely darker
+   than the terracotta on Founders, as in the reference, and a few steps
+   more on the darker mauve and slate skies so the ranges still read */
+.grow-layers {
+  --grow-range-1: color-mix(in oklab, var(--grow-sky-mid) 95%, #161822);
+  --grow-range-2: color-mix(in oklab, var(--grow-sky-mid) 92%, #161822);
+  --grow-range-3: color-mix(in oklab, var(--grow-sky-mid) 89%, #161822);
+  --grow-range-4: color-mix(in oklab, var(--grow-sky-mid) 86%, #161822);
+}
+
+:is(.page--companies, .page--investors) .grow-layers {
+  --grow-range-1: color-mix(in oklab, var(--grow-sky-low) 86%, #0c0e15);
+  --grow-range-2: color-mix(in oklab, var(--grow-sky-low) 77%, #0c0e15);
+  --grow-range-3: color-mix(in oklab, var(--grow-sky-low) 68%, #0c0e15);
+  --grow-range-4: color-mix(in oklab, var(--grow-sky-low) 59%, #0c0e15);
+}
+
 .grow-layers span {
   position: absolute;
   inset: 0;
@@ -17211,19 +17231,24 @@ main {
   mask: var(--layer) bottom / 100% 100% no-repeat;
 }
 
-.grow-layers__far {
-  --layer: url("grow-layer-far.svg");
-  background: color-mix(in oklab, var(--grow-sky-low) 74%, #161822);
+.grow-layers span:nth-child(1) {
+  --layer: url("grow-layer-1.svg");
+  background: var(--grow-range-1);
 }
 
-.grow-layers__mid {
-  --layer: url("grow-layer-mid.svg");
-  background: color-mix(in oklab, var(--grow-sky-low) 55%, #161822);
+.grow-layers span:nth-child(2) {
+  --layer: url("grow-layer-2.svg");
+  background: var(--grow-range-2);
 }
 
-.grow-layers__near {
-  --layer: url("grow-layer-near.svg");
-  background: color-mix(in oklab, var(--grow-sky-low) 36%, #161822);
+.grow-layers span:nth-child(3) {
+  --layer: url("grow-layer-3.svg");
+  background: var(--grow-range-3);
+}
+
+.grow-layers span:nth-child(4) {
+  --layer: url("grow-layer-4.svg");
+  background: var(--grow-range-4);
 }
 /* === end ?footer === */
 
