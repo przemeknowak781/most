@@ -117,12 +117,8 @@
               <source media="(max-width: 480px) and (max-aspect-ratio: 3/4)" srcset="companies-grid-crop.webp" width="992" height="1371" />
               <img src="companies-grid.webp" srcset="companies-grid-640.webp 640w, companies-grid-1024.webp 1024w, companies-grid.webp 1920w" sizes="(min-width: 1024px) 1920px, (orientation: portrait) 1000px, 100vw" width="1920" height="1371" alt="" fetchpriority="high" decoding="async" />
             </picture>
-            <!-- the same grid in colour, its orange caught in the glass itself:
-                 shown only by ?companies=glass (styles.css) -->
-            <picture class="hz-photo__glass">
-              <source media="(max-width: 480px) and (max-aspect-ratio: 3/4)" srcset="companies-glass-crop.webp" width="992" height="1371" />
-              <img src="companies-glass.webp" srcset="companies-glass-640.webp 640w, companies-glass-1024.webp 1024w, companies-glass.webp 1920w" sizes="(min-width: 1024px) 1920px, (orientation: portrait) 1000px, 100vw" width="1920" height="1371" alt="" loading="lazy" decoding="async" />
-            </picture>
+            <!-- the lit reliefs, painted only by ?companies=fins|facets (styles.css) -->
+            <div class="hz-photo__alt"></div>
           </div>
           <div class="hero-noise" aria-hidden="true"></div>
           <div class="scene-ground" aria-hidden="true"></div>
@@ -261,14 +257,9 @@
             <img src="band-companies.webp" srcset="band-companies-640.webp 640w, band-companies-1024.webp 1024w, band-companies.webp 1920w" sizes="(min-width: 1024px) 1920px, 196vw" width="1920" height="688" alt="" loading="lazy" decoding="async" />
           </picture>
         </div>
-        <!-- How We Work's part of the glass grid in colour, shown only by
-             ?companies=glass (styles.css) -->
-        <div class="aud-work__photo aud-work__photo--glass" aria-hidden="true">
-          <picture>
-            <source media="(max-width: 480px) and (max-aspect-ratio: 3/4)" srcset="companies-glass-band-crop.webp" width="992" height="1371" />
-            <img src="companies-glass-band.webp" srcset="companies-glass-band-640.webp 640w, companies-glass-band-1024.webp 1024w, companies-glass-band.webp 1920w" sizes="(min-width: 1024px) 1920px, (orientation: portrait) 1000px, 100vw" width="1920" height="1371" alt="" loading="lazy" decoding="async" />
-          </picture>
-        </div>
+        <!-- How We Work's part of the lit reliefs, painted only by
+             ?companies=fins|facets (styles.css) -->
+        <div class="aud-work__photo aud-work__photo--alt" aria-hidden="true"></div>
         <header class="aud-work__head">
           <h2 class="aud-work__title" id="aud-work-title">How We Work with Companies</h2>
         </header>
