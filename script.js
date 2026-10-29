@@ -1160,7 +1160,8 @@ function setupPortraitProposal() {
    photograph lower behind the headline, ?expertise=iconright the
    drawing at the top right of Home's Our Expertise cards, ?excta=next|most
    a call to action under them, ?scroll=peek|cue
-   a cue to scroll on Our Team's hero, ?hww=columns
+   a cue to scroll on Our Team's hero, ?founders=fins Companies' fins
+   looming in Founders' sky in place of the truss, ?hww=columns
    How We Work on Companies and Investors on a facade's vertical
    divisions, ?footer=up|layers the closing band's photograph lower behind
    the walkers' ridge or mountain layers behind it, ?graph=map Founders'
@@ -1189,6 +1190,7 @@ const PREVIEW_SWITCHES = {
   expertise: ["iconright"],
   excta: ["next", "most"],
   scroll: ["peek", "cue"],
+  founders: ["fins"],
   hww: ["columns"],
   footer: ["up", "layers"],
   graph: ["map"],
@@ -1225,6 +1227,7 @@ const PREVIEW_PANEL = [
   ["clients", ["index"], "Who We Work With: tekst", [["", "po lewej"], ["center", "na środku"], ["right", "po prawej"]]],
   ["scroll", ["our-team"], "Zachęta do przewinięcia w hero", [["", "bez"], ["peek", "portrety spod hero"], ["cue", "napis ze strzałką"]]],
   ["order", ["expertise"], "Kolejność sekcji", [["", "obszary, potem How We Work"], ["work", "najpierw How We Work"]]],
+  ["founders", ["for-founders"], "Hero: architektura w niebie", [["", "fragment kratownicy"], ["fins", "lamele majaczące w tle"]]],
   ["hww", ["for-companies", "for-investors"], "How We Work: tło", [["", "obecne"], ["columns", "fasada z pionowymi podziałami"]]],
   ["arch", AUDIENCE_PAGES, "What We Help You Achieve", [["", "obecne"], ["help", "architektura z tła"]]],
   ["rail", AUDIENCE_PAGES, "Our Expertise: kropki przy punktach", [["", "tylko na końcach"], ["dots", "małe przy każdym punkcie"]]],

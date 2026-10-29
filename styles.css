@@ -16910,6 +16910,51 @@ main {
 }
 /* === end ?footer === */
 
+/* === ?founders=fins (a preview, 29.10) ===
+   Founders with the fins of Companies (and the flutes of Investors) in
+   place of the truss fragment: the same relief as light and shade alone
+   (founders-fins, docs/tools/hz-relief.py), laid over the terracotta on
+   the soft-light blend, faintly, so the fins loom in the sky - clearest
+   at the top right, gone before the copy and towards the ridge. The
+   colour stays the sky's own. A CSS background, so only the preview
+   downloads it. */
+:root[data-founders="fins"] .page--founders .fnd-photo img {
+  display: none;
+}
+
+:root[data-founders="fins"] .page--founders .fnd-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("founders-fins.webp") 50% 40% / cover no-repeat;
+  mix-blend-mode: soft-light;
+  opacity: 0.7;
+  -webkit-mask-image: radial-gradient(95% 120% at 88% 0%, #000 22%, rgba(0, 0, 0, 0.5) 52%, transparent 82%);
+  mask-image: radial-gradient(95% 120% at 88% 0%, #000 22%, rgba(0, 0, 0, 0.5) 52%, transparent 82%);
+}
+
+@media (max-width: 1023px) {
+  :root[data-founders="fins"] .page--founders .fnd-photo::after {
+    background-image: url("founders-fins-1024.webp");
+  }
+}
+
+/* on a phone the copy fills the width: the fins keep to the top */
+@media (max-width: 767px) {
+  :root[data-founders="fins"] .page--founders .fnd-photo::after {
+    opacity: 0.55;
+    -webkit-mask-image: radial-gradient(110% 60% at 80% 0%, #000 20%, transparent 80%);
+    mask-image: radial-gradient(110% 60% at 80% 0%, #000 20%, transparent 80%);
+  }
+}
+
+@media (max-width: 480px) and (max-aspect-ratio: 3/4) {
+  :root[data-founders="fins"] .page--founders .fnd-photo::after {
+    background-image: url("founders-fins-crop.webp");
+  }
+}
+/* === end ?founders === */
+
 /* === ?hero=low (a preview, the meeting of 25.10) ===
    Optional, not for the launch: the photograph behind Home's headline a
    little lower again, for more navy behind "Your Legal Partner for
