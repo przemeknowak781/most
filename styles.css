@@ -17134,6 +17134,69 @@ main {
 :root[data-companies="cool"] .page--companies .aud-grow {
   --grow-sky-low: #6e6a69;
 }
+/* glass: the background's own colour (29.10) - the same grid of glass in
+   colour (docs/tools/companies-grid.py), its orange caught in the panes
+   themselves: the evening down the cylinder's right shoulder, along the
+   right field and at the hero's foot, pane by pane, and a few lit
+   windows. So no grade and no glow over it: only the shade that keeps
+   the copy legible. The land in the reference's mauve, and How We Work
+   takes its part of the grid as it is. */
+.hz-photo__glass,
+.aud-work__photo--glass {
+  display: none;
+}
+
+:root[data-companies="glass"] .page--companies {
+  --hz-field: #5f545b;
+  --aud-ground-rgb: 95, 84, 91;
+  --hz-shade: 24, 24, 31;
+}
+
+:root[data-companies="glass"] .page--companies .hz-photo > picture:not(.hz-photo__glass) {
+  display: none;
+}
+
+:root[data-companies="glass"] .page--companies .hz-photo__glass {
+  display: inline;
+}
+
+:root[data-companies="glass"] .page--companies .hz-photo img {
+  filter: none;
+}
+
+:root[data-companies="glass"] .page--companies .hz-photo::before {
+  content: none;
+}
+
+:root[data-companies="glass"] .page--companies .hz-photo::after {
+  background:
+    radial-gradient(ellipse 56% 58% at 24% 40%, rgba(var(--hz-shade), 0.42), rgba(var(--hz-shade), 0.26) 55%, transparent 84%),
+    linear-gradient(180deg, rgba(var(--hz-shade), 0.4) 0%, rgba(var(--hz-shade), 0.22) 26%, rgba(var(--hz-shade), 0.08) 50%, transparent 76%, rgba(var(--hz-shade), 0.1) 100%),
+    linear-gradient(90deg, rgba(var(--hz-shade), 0.3), rgba(var(--hz-shade), 0.08) 44%, transparent 74%);
+}
+
+@media (max-width: 1023px) {
+  :root[data-companies="glass"] .page--companies .hz-photo::after {
+    background:
+      radial-gradient(ellipse 95% 52% at 40% 38%, rgba(var(--hz-shade), 0.46), rgba(var(--hz-shade), 0.28) 55%, transparent 88%),
+      linear-gradient(180deg, rgba(var(--hz-shade), 0.44) 0%, rgba(var(--hz-shade), 0.3) 26%, rgba(var(--hz-shade), 0.18) 50%, rgba(var(--hz-shade), 0.08) 70%, transparent 82%, rgba(var(--hz-shade), 0.1) 100%),
+      linear-gradient(90deg, rgba(var(--hz-shade), 0.3), rgba(var(--hz-shade), 0.08) 44%, transparent 74%);
+  }
+}
+
+:root[data-companies="glass"] .page--companies .aud-work__photo:not(.aud-work__photo--facade, .aud-work__photo--glass) {
+  display: none;
+}
+
+:root[data-companies="glass"] .page--companies .aud-work__photo--glass {
+  display: block;
+}
+
+:root[data-companies="glass"] .page--companies .aud-work__photo--glass img {
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: 1;
+}
 /* === end ?companies === */
 
 /* === ?hww=columns (a preview, the meeting of 25.10) ===

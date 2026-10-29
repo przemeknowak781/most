@@ -14,9 +14,17 @@
 # lies on the grid (no polygons), so the panes meet without gaps and the
 # lines are smooth at any angle.
 #
+# A second set (?companies=glass, 29.10) is the same grid in colour, with
+# the orange in the picture itself rather than laid over it: dark frames
+# on slate glass, and the evening sky caught in some of the panes - down
+# the cylinder's right shoulder, along the right field low in the hero and
+# at the hero's foot - each pane taking it a little differently, as tilted
+# glass does, and a few windows lit inside.
+#
 #   python3 docs/tools/companies-grid.py <out dir>
-#     companies-grid{,-1024,-640,-crop}.webp       the hero
-#     companies-grid-band{,-1024,-640,-crop}.webp  How We Work
+#     companies-grid{,-1024,-640,-crop}.webp        the hero
+#     companies-grid-band{,-1024,-640,-crop}.webp   How We Work
+#     companies-glass{,-band}{,-1024,-640,-crop}.webp   the same in colour
 import os, sys
 
 import numpy as np
@@ -114,12 +122,60 @@ frame = np.maximum(edge(u, np.where(mid, 2.0, 2.4)) * np.where(mid, 0.93, 1.0), 
 lum = base + frame * (60 + 0.25 * base)
 out = Image.fromarray(np.clip(lum, 0, 255).astype(np.uint8))
 
+
+# --- the colour set: the glass in its own evening light ---
+def hash01(salt):
+    """A second, third... number per pane, from the same grid numbers."""
+    h = np.sin(cu * 12.9898 + cv * 78.233 + field * 37.719 + salt) * 43758.5453
+    return h - np.floor(h)
+
+
+def blob(px, py, cx, cy, sx, sy, angle=0.0):
+    """A soft ellipse, 1 at its centre, turned by angle (radians)."""
+    c, s_ = np.cos(angle), np.sin(angle)
+    dx, dy = px - cx, py - cy
+    a, b = dx * c + dy * s_, -dx * s_ + dy * c
+    return np.exp(-(a / sx) ** 2 - (b / sy) ** 2)
+
+
+def smooth(e0, e1, t):
+    t = np.clip((t - e0) / (e1 - e0), 0, 1)
+    return t * t * (3 - 2 * t)
+
+
+# each pane sees the sky from a slightly different angle: it samples the
+# evening a little off its own place, so the light breaks pane by pane
+take, jx, jy, lamp = hash01(1.3), hash01(2.7), hash01(4.1), hash01(5.9)
+px, py = x + (jx - 0.5) * 60, y + (jy - 0.5) * 60
+pdepth = np.clip((py - VY) / (H - VY), 0.05, None)
+across = (px - VX) / (SEAM * pdepth)                 # -1..1 over the cylinder
+evening = 1 - np.prod([
+    1 - 0.95 * np.exp(-((across - 0.42) / 0.2) ** 2) * smooth(150, 1250, py) * (1 - 0.35 * smooth(1500, 2700, py)),
+    1 - 0.85 * blob(px, py, 1520, 1060, 420, 150, 0.68),   # along the right field's floors
+    1 - 0.55 * blob(px, py, 760, 1260, 230, 150, -0.5),     # low by the left seam
+    1 - 0.55 * blob(px, py, 1240, 1620, 460, 200, 0.3),     # the band's top
+], axis=0)
+warm = smooth(0.12, 0.85, evening * (0.7 + 0.5 * take))
+
+t = np.clip((light(x, y) - 30) / 170, 0, 1) * shade
+lift = 0.92 + 0.12 * (v - np.floor(v))               # each pane a touch lighter at its head
+glass = (np.array([24, 26, 34]) + np.array([76, 72, 80]) * t[..., None]) * lift[..., None]
+ember = np.array([150, 80, 56]) + np.array([92, 72, 40]) * warm[..., None]
+pane = glass * (1 - 0.9 * warm[..., None]) + ember * (0.9 * warm[..., None])
+# a few windows lit inside the cylinder, none high up behind the copy
+lit = ((lamp > 0.99) & mid & (y > 800) & (calm > 0.8))[..., None] * 0.45
+pane = pane * (1 - lit) + np.array([232, 168, 108]) * lit
+dark = (frame * 0.85)[..., None]
+colour = pane * (1 - dark) + np.array([16, 17, 23]) * dark
+glass_out = Image.fromarray(np.clip(colour, 0, 255).astype(np.uint8), 'RGB')
+
 dst = sys.argv[1] if len(sys.argv) > 1 else '.'
-for name, box in (('companies-grid', (0, 0, W, H // 2)), ('companies-grid-band', (0, H // 2, W, H))):
-    part = out.crop(box).convert('RGB')
-    part.save(os.path.join(dst, f'{name}.webp'), 'WEBP', quality=74, method=6)
-    for w in (1024, 640):
-        part.resize((w, round(w * part.height / part.width)), Image.LANCZOS).save(
-            os.path.join(dst, f'{name}-{w}.webp'), 'WEBP', quality=74, method=6)
-    part.crop((464, 0, 1456, part.height)).save(os.path.join(dst, f'{name}-crop.webp'), 'WEBP', quality=74, method=6)
-    print(name, os.path.getsize(os.path.join(dst, f'{name}.webp')), 'B')
+for stem, img in (('companies-grid', out), ('companies-glass', glass_out)):
+    for name, box in ((stem, (0, 0, W, H // 2)), (f'{stem}-band', (0, H // 2, W, H))):
+        part = img.crop(box).convert('RGB')
+        part.save(os.path.join(dst, f'{name}.webp'), 'WEBP', quality=74, method=6)
+        for w in (1024, 640):
+            part.resize((w, round(w * part.height / part.width)), Image.LANCZOS).save(
+                os.path.join(dst, f'{name}-{w}.webp'), 'WEBP', quality=74, method=6)
+        part.crop((464, 0, 1456, part.height)).save(os.path.join(dst, f'{name}-crop.webp'), 'WEBP', quality=74, method=6)
+        print(name, os.path.getsize(os.path.join(dst, f'{name}.webp')), 'B')
