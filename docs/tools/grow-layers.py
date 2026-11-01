@@ -1,102 +1,128 @@
-# The mountain ranges behind the closing band's ridge (?footer=layers), as
-# in the team's reference of 29.10: four ranges in haze, the farther ones
-# higher, each with sharp peaks and a broken crest, and each fading into
-# mist towards its foot, where the next range rises in front of it. Drawn
-# in the overlay's own box (footer.svg, 1440 x 437, bottom-aligned with it)
-# so they show where the walkers' ridge dips and hide behind it elsewhere.
-# Peaks keep below the band's title and button (y 100 under them, in these
-# units; the title's foot is at 54-72 from 1024px up).
+# The mountain ranges behind the closing band's ridge on the audience pages
+# (shipped since 31.10; ?mountains=none hides them), after the team's
+# reference of 29.10: three ranges in haze - a far one with a sharp peak in
+# the middle and a high massif to the right of it, a lower hill on the left
+# and a long low ridge in front - each one flat in colour along its crest and
+# paling into mist towards its foot, where the next one stands out against
+# it. The ridgelines are traced from the reference itself (its edges where
+# the tone steps darker, simplified to a pixel or two), so the slopes run
+# long and straight to sharp tops with the small breaks of real rock, rather
+# than rounded humps. They are in the reference's pixels (1750 wide, the
+# massif's top at y 295).
 #
-#   python3 docs/tools/grow-layers.py      writes grow-layer-1..4.svg
+# Drawn in the overlay's own box (footer.svg, 1440 x 437, bottom-aligned
+# with it). The reference has far more sky over its walkers than the band
+# has over ours, so the ranges come in at two thirds of its size, both ways
+# (the slopes keep its angles), with the massif's top at y 50: it rises in
+# the band's open middle, between the title's last word and the button
+# (from 1024px the title ends by x 670 and the button starts at x 1089, both
+# down to y 75). Past the massif the reference's slope falls more steeply
+# here, to clear the button, and the ranges run on to the box's right edge
+# low behind the walkers' ridge. Where the reference's own ranges hide one
+# another the line is carried on with a little midpoint displacement.
+#
+#   python3 docs/tools/grow-layers.py      writes grow-layer-1..3.svg
 #
 # Each file is a white silhouette used as a mask (styles.css paints it in
-# the page's colours): opaque along the crest and thinning to a trace
-# below it, so the mist is the sky showing through. One set serves every
-# page.
-import math, os, random
+# the page's colours): opaque along the crest and thinning towards its foot,
+# so the mist is the sky showing through. One set serves every page.
+import os, random
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 W, H = 1440, 437
+SCALE, TOP = 0.67, 50          # the reference at two thirds; its y 295 here
 
-
-def fractal(seed, n, rough=0.62):
-    """Midpoint displacement on n + 1 points, scaled to -1..1."""
-    rnd = random.Random(seed)
-    size = 1
-    while size < n:
-        size *= 2
-    v = [0.0] * (size + 1)
-    v[0], v[size] = rnd.uniform(-1, 1), rnd.uniform(-1, 1)
-    step, amp = size, 1.0
-    while step > 1:
-        half = step // 2
-        for i in range(half, size, step):
-            v[i] = (v[i - half] + v[i + half]) / 2 + rnd.uniform(-amp, amp)
-        step, amp = half, amp * rough
-    v = v[:n + 1]
-    lo, hi = min(v), max(v)
-    return [2 * (x - lo) / (hi - lo) - 1 for x in v]
-
-
-def crest(peaks, base, grain, seed):
-    """Upper outline: the highest of the peaks at each x, on a gentle base,
-    with a broken edge. A peak is (x, top, reach left, reach right, shape):
-    shape 1 is a sharp tip on concave flanks, more is rounder. Each peak
-    gets two or three lower shoulders on its flanks, so no slope is a
-    clean curve."""
-    rnd = random.Random(seed)
-    big = fractal(seed, W, 0.55)
-    small = fractal(seed + 1, W, 0.74)
-    shaped = []
-    for cx, top, wl, wr, q in peaks:
-        shaped.append((cx, base - top, wl, wr, q))
-        for _ in range(rnd.choice((2, 3))):
-            side = rnd.choice((-1, 1))
-            reach = wl if side < 0 else wr
-            shaped.append((cx + side * rnd.uniform(0.35, 0.85) * reach,
-                           (base - top) * rnd.uniform(0.42, 0.72),
-                           reach * rnd.uniform(0.28, 0.45), reach * rnd.uniform(0.28, 0.45), 1.0))
-    pts = []
-    for x in range(W + 1):
-        lift = 0.0
-        for cx, h, wl, wr, q in shaped:
-            d = abs(x - cx) / (wl if x < cx else wr)
-            lift = max(lift, h * math.exp(-d ** q))
-        y = base - lift + grain * (0.5 * big[x] + 0.5 * small[x])
-        pts.append(y)
-    return pts
-
-
-# x, top, reach left, reach right, shape - placed after the reference: a
-# peak at the left edge, one in the middle and a long massif on the right
-# in the far range; lower ranges in front; one pointed peak right of the
-# middle in the third range. The haze runs from the range's crest down to
-# where it is gone (y from - to).
-LAYERS = [
-    # (name, peaks, base, grain, seed, haze from - to)
-    ('1', [(40, 100, 150, 170, 1.0), (330, 146, 120, 120, 1.1), (590, 150, 140, 130, 1.1),
-           (815, 84, 180, 220, 0.95), (1125, 100, 130, 250, 0.95), (1290, 108, 100, 150, 1.0),
-           (1420, 96, 130, 160, 1.0)],
-     196, 4.5, 11, (96, 200)),
-    ('2', [(140, 150, 120, 120, 1.05), (350, 160, 110, 120, 1.1), (560, 168, 120, 110, 1.15),
-           (720, 160, 100, 130, 1.1), (1020, 150, 130, 120, 1.05), (1240, 142, 120, 150, 1.0)],
-     222, 3.4, 23, (142, 232)),
-    ('3', [(240, 186, 120, 130, 1.2), (470, 192, 110, 120, 1.2), (660, 190, 100, 90, 1.2),
-           (890, 146, 160, 180, 0.95), (1190, 178, 130, 150, 1.15)],
-     246, 2.8, 37, (150, 262)),
-    ('4', [(420, 226, 90, 110, 1.25), (600, 232, 120, 100, 1.25), (770, 222, 100, 90, 1.2),
-           (990, 218, 110, 120, 1.2), (1170, 210, 100, 120, 1.2)],
-     272, 2.2, 53, (208, 292)),
+FAR = [
+    (0, 395), (25, 382), (43, 377), (44, 374), (51, 371), (60, 370),
+    (88, 386), (100, 396), (116, 403), (155, 427), (166, 430), (681, 460),
+    (684, 462), (701, 460), (706, 457), (764, 462), (775, 454), (776, 467),
+    (780, 467), (781, 465), (792, 465), (797, 459), (811, 457), (815, 452),
+    (848, 442), (851, 438), (861, 435), (886, 419), (901, 417), (917, 406),
+    (922, 406), (938, 397), (964, 378), (972, 379), (979, 382), (980, 385),
+    (1016, 398), (1032, 396), (1056, 405), (1092, 414), (1102, 414),
+    (1105, 410), (1124, 411), (1127, 409), (1149, 413), (1173, 395),
+    (1192, 397), (1196, 394), (1215, 392), (1217, 395), (1225, 396),
+    (1244, 387), (1260, 375), (1268, 373), (1275, 366), (1293, 358),
+    (1327, 367), (1334, 364), (1355, 367), (1386, 365), (1395, 361),
+    (1416, 361), (1420, 357), (1428, 358), (1460, 334), (1479, 333),
+    (1492, 323), (1506, 321), (1541, 296), (1548, 294), (1558, 301),
+    (1568, 302), (1588, 314), (1594, 314), (1616, 329), (1624, 328),
+    (1638, 331), (1650, 327), (1662, 327), (1731, 357), (1749, 358),
+]
+HILL = [
+    (166, 430), (189, 427), (193, 422), (197, 422), (206, 414), (219, 408),
+    (232, 411), (238, 417), (248, 417), (279, 430), (288, 430), (290, 433),
+    (296, 433), (297, 430), (316, 430), (323, 426), (342, 427), (355, 422),
+    (356, 425), (362, 425), (367, 430), (374, 430),
+]
+FRONT = [
+    (56, 465), (72, 468), (75, 465), (90, 465), (94, 462), (110, 462),
+    (115, 459), (165, 457), (173, 460), (247, 467), (258, 470), (259, 473),
+    (268, 472), (272, 475), (282, 475), (307, 483), (329, 484), (338, 489),
+    (357, 486), (373, 493), (388, 490), (430, 495), (437, 494), (439, 491),
+    (471, 492), (476, 486), (532, 491), (565, 476), (583, 489), (587, 489),
+    (591, 494), (602, 494), (603, 492), (636, 494), (661, 484), (728, 489),
+    (734, 484), (755, 484), (758, 481), (885, 481), (889, 484), (912, 483),
+    (935, 486), (936, 489), (938, 486), (941, 489), (949, 488), (958, 492),
+    (973, 493), (987, 489), (993, 484), (999, 484), (1026, 469), (1031, 469),
+    (1040, 460), (1056, 461), (1076, 454), (1077, 457), (1085, 456),
+    (1090, 461), (1117, 457), (1152, 475), (1155, 479), (1212, 493),
+    (1230, 502), (1241, 502), (1242, 505), (1260, 510), (1266, 515),
+    (1307, 524), (1312, 522), (1339, 524), (1373, 522), (1378, 523),
+    (1381, 529), (1405, 534),
 ]
 
-for name, peaks, base, grain, seed, (h0, h1) in LAYERS:
-    ys = crest(peaks, base, grain, seed)
-    d = 'M0 437 L' + ' L'.join(f'{x} {ys[x]:.1f}' for x in range(0, W + 1, 2)) + f' L{W} 437Z'
+
+def rough(pts, seed):
+    """Break any run longer than 24 units with a little midpoint
+    displacement, so that no stretch of slope is ruled."""
+    rnd = random.Random(seed)
+    out = [pts[0]]
+    for a, b in zip(pts, pts[1:]):
+        seg = [a, b]
+        while max(q[0] - p[0] for p, q in zip(seg, seg[1:])) > 24:
+            nxt = [seg[0]]
+            for p, q in zip(seg, seg[1:]):
+                if q[0] - p[0] > 24:
+                    amp = (q[0] - p[0]) * 0.035
+                    nxt.append(((p[0] + q[0]) / 2, (p[1] + q[1]) / 2 + rnd.uniform(-amp, amp)))
+                nxt.append(q)
+            seg = nxt
+        out += seg[1:]
+    return out
+
+
+# the far range falls more steeply past the massif's top (x 1545), to clear
+# the button; the hill and the front ridge run on where the reference hides
+# them
+FAR = [(x, y if x <= 1545 else 295 + (y - 295) * 2.2) for x, y in FAR]
+HILL = [(96, 468), (130, 452)] + HILL + [(420, 442), (470, 452), (520, 466), (570, 486), (640, 530)]
+FRONT = [(0, 455)] + FRONT + [(1480, 548), (1600, 566), (1750, 580)]
+
+# past the reference's right edge, in this box: (share of the way to x 1440,
+# rise or fall from the last point)
+RUN_ON = {'1': [(0.3, 6), (0.55, -4), (0.8, 8), (1.0, 4)], '2': [(1.0, 60)], '3': [(0.4, 14), (1.0, 34)]}
+
+# name, ridgeline, seed, mist (y where it starts, y where it is thickest,
+# the opacity left there)
+LAYERS = [
+    ('1', FAR, 11, (TOP, TOP + 160, 0.22)),
+    ('2', HILL, 23, (TOP + 70, TOP + 175, 0.28)),
+    ('3', FRONT, 37, (TOP + 105, TOP + 200, 0.3)),
+]
+
+for name, pts, seed, (g0, g1, gend) in LAYERS:
+    p = [(x * SCALE, TOP + (y - 295) * SCALE) for x, y in rough(pts, seed)]
+    if p[0][0] > 0:
+        p = [(0, p[0][1] + 40)] + p
+    if p[-1][0] < W:
+        x0, y0 = p[-1]
+        p += rough([(x0, y0)] + [(x0 + (W - x0) * f, y0 + dy) for f, dy in RUN_ON[name]], seed + 1)[1:]
+    d = f'M0 {H} L' + ' L'.join(f'{x:.1f} {y:.1f}' for x, y in p) + f' L{W} {H}Z'
     svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" preserveAspectRatio="none">'
-           f'<linearGradient id="m" gradientUnits="userSpaceOnUse" x1="0" y1="{h0}" x2="0" y2="{h1}">'
-           '<stop offset="0" stop-color="#fff"/><stop offset=".3" stop-color="#fff" stop-opacity=".78"/>'
-           '<stop offset=".65" stop-color="#fff" stop-opacity=".3"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>'
+           f'<linearGradient id="m" gradientUnits="userSpaceOnUse" x1="0" y1="{g0:.0f}" x2="0" y2="{g1:.0f}">'
+           f'<stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="{gend}"/>'
            '</linearGradient>'
            f'<path d="{d}" fill="url(#m)"/></svg>\n')
     open(os.path.join(ROOT, f'grow-layer-{name}.svg'), 'w').write(svg)
-    print(name, 'crest', round(min(ys)), '-', round(max(ys)), len(svg), 'B')
+    print(name, 'crest', round(min(y for _, y in p)), '-', round(max(y for _, y in p)), len(svg), 'B')

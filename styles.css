@@ -16440,12 +16440,13 @@ main {
    restrained, not too realistic, in each page's colours - and, for the
    photograph, asked to bring the foreground up so it hides the
    photograph's first row of mountains and keeps the layers behind it.
-     the audience pages, where the band is the page's flat sky: four
-     ranges in haze behind the walkers' ridge, after the team's reference
-     of 29.10 - sharp, broken crests, the farther ones higher, each a shade
-     of the sky and fading into mist towards its foot
-     (docs/tools/grow-layers.py). Shipped since 31.10; ?mountains=none
-     shows the band without them, as it was.
+     the audience pages, where the band is the page's flat sky: three
+     ranges in haze behind the walkers' ridge, their ridgelines traced
+     from the team's reference of 29.10 - long straight slopes to sharp
+     tops, a high massif in the band's open middle - each a shade of the
+     sky, flat along its crest and paling into mist towards its foot
+     (docs/tools/grow-layers.py). Shipped since 31.10, redrawn after the
+     reference on 1.11; ?mountains=none shows the band without them.
      ?footer=up, where the band is the photograph (Home, and the audience
      pages with ?palette=lead): the photograph sits lower behind the
      walkers' ridge, so its nearest range goes under the ridge and the
@@ -16479,21 +16480,20 @@ main {
   }
 }
 
-/* each range a shade of the sky, deeper the nearer it is: barely darker
-   than the terracotta on Founders, as in the reference, and a few steps
-   more on the darker mauve and slate skies so the ranges still read */
+/* each range a shade of the sky, a step deeper the nearer it is: barely
+   darker than the terracotta on Founders, as in the reference, where the
+   ranges part by their mist more than by their tone, and a few steps more
+   on the darker mauve and slate skies so the ranges still read */
 .grow-layers {
   --grow-range-1: color-mix(in oklab, var(--grow-sky-mid) 95%, #161822);
-  --grow-range-2: color-mix(in oklab, var(--grow-sky-mid) 92%, #161822);
-  --grow-range-3: color-mix(in oklab, var(--grow-sky-mid) 89%, #161822);
-  --grow-range-4: color-mix(in oklab, var(--grow-sky-mid) 86%, #161822);
+  --grow-range-2: color-mix(in oklab, var(--grow-sky-mid) 93%, #161822);
+  --grow-range-3: color-mix(in oklab, var(--grow-sky-mid) 91%, #161822);
 }
 
 :is(.page--companies, .page--investors) .grow-layers {
-  --grow-range-1: color-mix(in oklab, var(--grow-sky-low) 86%, #0c0e15);
-  --grow-range-2: color-mix(in oklab, var(--grow-sky-low) 77%, #0c0e15);
-  --grow-range-3: color-mix(in oklab, var(--grow-sky-low) 68%, #0c0e15);
-  --grow-range-4: color-mix(in oklab, var(--grow-sky-low) 59%, #0c0e15);
+  --grow-range-1: color-mix(in oklab, var(--grow-sky-mid) 88%, #0c0e15);
+  --grow-range-2: color-mix(in oklab, var(--grow-sky-mid) 85%, #0c0e15);
+  --grow-range-3: color-mix(in oklab, var(--grow-sky-mid) 82%, #0c0e15);
 }
 
 .grow-layers span {
@@ -16518,10 +16518,6 @@ main {
   background: var(--grow-range-3);
 }
 
-.grow-layers span:nth-child(4) {
-  --layer: url("grow-layer-4.svg");
-  background: var(--grow-range-4);
-}
 /* === end closing band mountains === */
 
 /* === ?founders=fins (a preview, 29.10) ===
