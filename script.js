@@ -1167,9 +1167,10 @@ function setupPortraitProposal() {
    divisions, ?footer=up the closing band's photograph lower behind
    the walkers' ridge, ?mountains=drawn|none the audience pages' closing
    band with the drawn ranges behind the ridge (shipped 31.10-5.11, before
-   the team's own skies) or with neither, ?graph=rail Founders'
-   Our Expertise as the list on the rail, as it was before the growth
-   curve (31.10; the map of the road's stages, 10.10, was set aside then),
+   the team's own skies) or with neither, ?graph=rail the audience
+   pages' Our Expertise as the list on the rail, as it was before Founders'
+   growth curve (31.10), Investors' ridge and Companies' hub (5.11; the map
+   of the road's stages, 10.10, was set aside on 31.10),
    ?rail=dots
    small dots on the audience pages' Our Expertise rail, ?arch=help
    architecture coming up out of the ground behind their What We Help You
@@ -1237,7 +1238,7 @@ const PREVIEW_PANEL = [
   ["hww", ["for-companies", "for-investors"], "How We Work: tło", [["", "obecne"], ["columns", "fasada z pionowymi podziałami"]]],
   ["arch", AUDIENCE_PAGES, "What We Help You Achieve", [["", "obecne"], ["help", "architektura z tła"]]],
   ["rail", AUDIENCE_PAGES, "Our Expertise: kropki przy punktach", [["", "tylko na końcach"], ["dots", "małe przy każdym punkcie"]]],
-  ["graph", ["for-founders"], "Our Expertise: wykres", [["", "krzywa wzrostu"], ["rail", "lista z linią (jak było)"]]],
+  ["graph", AUDIENCE_PAGES, "Our Expertise: wykres", [["", "wykres (Founders krzywa, Companies węzeł, Investors grzbiet)"], ["rail", "lista z linią (jak było)"]]],
   ["mountains", AUDIENCE_PAGES, "Pas „Want to Grow Together?”: góry w tle", [["", "tła od Was (zdjęcia)"], ["drawn", "rysowane pasma"], ["none", "bez gór"]]],
   ["palette", "all", "Kolory podstron", [["", "obecne"], ["lead", "kolor wiodący jako światło"]]],
   ["nav", "all", "Menu: kropka przy Founders / Companies / Investors", [["", "pomarańczowa"], ["colour", "w kolorze ścieżki"]]],
@@ -1534,6 +1535,161 @@ function markCopyReview(data) {
   if (document.fonts) document.fonts.ready.then(placeLegend);
 }
 
+/* Expertise hub (Companies, 5.11, after the team's reference): from 1024px
+   the nine areas stand on a ring round a core, each with a line to it, and
+   the core tells the chosen one's detail. Built from the list in the markup
+   (each item's .aud-hub__name is its circle's words, its .aud-hub__more the
+   detail), which stays what a phone, ?graph=rail and a page without script
+   show. While the section is in view the hub shows the areas in turn, one
+   every 4.5s; pointing at one, focusing or clicking it chooses it and stops
+   the round, and from then on the core is a polite live region. With
+   reduced motion it does not go round. The lines are measured in pixels,
+   so the arrows keep their shape whatever the hub's proportions. */
+function setupExpertiseHub() {
+  const wrap = document.querySelector(".aud-hub-wrap");
+  if (!wrap) return;
+  const items = Array.from(wrap.querySelectorAll(".aud-expertise__list > li"));
+  if (!items.length) return;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const SVG_NS = "http://www.w3.org/2000/svg";
+  const STEP = 360 / items.length;
+
+  const hub = document.createElement("div");
+  hub.className = "aud-hub";
+  const links = document.createElementNS(SVG_NS, "svg");
+  links.setAttribute("class", "aud-hub__links");
+  links.setAttribute("aria-hidden", "true");
+  links.innerHTML =
+    '<defs><marker id="aud-hub-arrow" class="aud-hub__arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1.5 L9 5 L0 8.5 Z" /></marker>' +
+    '<marker id="aud-hub-arrow-on" class="aud-hub__arrow aud-hub__arrow--on" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1.5 L9 5 L0 8.5 Z" /></marker></defs>';
+  const core = document.createElement("div");
+  core.className = "aud-hub__core";
+  core.setAttribute("aria-live", "off");
+  const coreName = document.createElement("p");
+  coreName.className = "aud-hub__core-name";
+  const coreMore = document.createElement("p");
+  coreMore.className = "aud-hub__core-more";
+  core.append(coreName, coreMore);
+  hub.append(links, core);
+
+  const nodes = items.map((li, i) => {
+    const nameEl = li.querySelector(".aud-hub__name");
+    const moreEl = li.querySelector(".aud-hub__more");
+    const name = (nameEl || li).textContent.replace(/\s+/g, " ").trim();
+    let more = moreEl ? moreEl.textContent.replace(/\s+/g, " ").replace(/^[\s,–-]+/, "").trim() : "";
+    if (more) more = more[0].toUpperCase() + more.slice(1) + (/[.!?]$/.test(more) ? "" : ".");
+    // clockwise from just right of the top, as the reference has them
+    const angle = ((-70 + i * STEP) * Math.PI) / 180;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "aud-hub__node";
+    button.textContent = name;
+    button.setAttribute("aria-pressed", "false");
+    button.style.setProperty("--i", i);
+    button.style.setProperty("--x", `${(50 + 40 * Math.cos(angle)).toFixed(2)}%`);
+    button.style.setProperty("--y", `${(50 + 39 * Math.sin(angle)).toFixed(2)}%`);
+    const line = document.createElementNS(SVG_NS, "line");
+    line.setAttribute("class", "aud-hub__link");
+    line.setAttribute("pathLength", "1");
+    line.setAttribute("marker-end", "url(#aud-hub-arrow)");
+    line.style.setProperty("--i", i);
+    links.appendChild(line);
+    hub.appendChild(button);
+    return { name, more, button, line };
+  });
+  wrap.appendChild(hub);
+
+  // each line from its circle's rim to the core's, with a little air
+  function layout() {
+    const box = hub.getBoundingClientRect();
+    if (!box.width) return;
+    links.setAttribute("viewBox", `0 0 ${box.width.toFixed(1)} ${box.height.toFixed(1)}`);
+    const c = core.getBoundingClientRect();
+    const cx = c.left + c.width / 2 - box.left;
+    const cy = c.top + c.height / 2 - box.top;
+    // past the core's halo (12px), so the arrows show
+    const rc = c.width / 2 + 22;
+    nodes.forEach(({ button, line }) => {
+      const r = button.getBoundingClientRect();
+      const nx = r.left + r.width / 2 - box.left;
+      const ny = r.top + r.height / 2 - box.top;
+      const dx = cx - nx;
+      const dy = cy - ny;
+      const d = Math.hypot(dx, dy) || 1;
+      const rn = r.width / 2 + 8;
+      line.setAttribute("x1", (nx + (dx / d) * rn).toFixed(1));
+      line.setAttribute("y1", (ny + (dy / d) * rn).toFixed(1));
+      line.setAttribute("x2", (cx - (dx / d) * rc).toFixed(1));
+      line.setAttribute("y2", (cy - (dy / d) * rc).toFixed(1));
+    });
+  }
+
+  let active = -1;
+  let manual = false;
+  let inView = false;
+  let timer = 0;
+
+  function select(i) {
+    if (i === active) return;
+    active = i;
+    nodes.forEach((n, k) => {
+      const on = k === i;
+      n.button.setAttribute("aria-pressed", String(on));
+      n.line.classList.toggle("is-active", on);
+      n.line.setAttribute("marker-end", on ? "url(#aud-hub-arrow-on)" : "url(#aud-hub-arrow)");
+    });
+    coreName.textContent = nodes[i].name;
+    coreMore.textContent = nodes[i].more;
+    coreMore.hidden = !nodes[i].more;
+    core.classList.remove("is-fresh");
+    void core.offsetWidth;
+    core.classList.add("is-fresh");
+  }
+
+  function stop() {
+    window.clearInterval(timer);
+    timer = 0;
+  }
+
+  function start() {
+    if (manual || reducedMotion || timer || !inView || compactQuery.matches) return;
+    timer = window.setInterval(() => select((active + 1) % nodes.length), 4500);
+  }
+
+  nodes.forEach(({ button }, i) => {
+    const choose = () => {
+      manual = true;
+      core.setAttribute("aria-live", "polite");
+      stop();
+      select(i);
+    };
+    button.addEventListener("mouseenter", choose);
+    button.addEventListener("focus", choose);
+    button.addEventListener("click", choose);
+  });
+
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          inView = entry.isIntersecting;
+          if (inView) start();
+          else stop();
+        });
+      },
+      { threshold: 0.35 }
+    ).observe(hub);
+  }
+  document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
+  onCompactChange(() => (compactQuery.matches ? stop() : start()));
+
+  if (typeof ResizeObserver === "function") new ResizeObserver(layout).observe(hub);
+  else window.addEventListener("resize", layout);
+  if (document.fonts) document.fonts.ready.then(layout);
+  select(0);
+  layout();
+}
+
 function setupParallax() {
   const images = Array.from(document.querySelectorAll(".photo-break img, .aud-bleed img, .aud-work__photo img"));
   if (!images.length) return;
@@ -1657,6 +1813,7 @@ setupAudienceConnectors();
 setupMemberReadmore();
 setupPreviewSwitches();
 setupExpertiseOrder();
+setupExpertiseHub();
 setupPortraitProposal();
 setupCopyReview();
 

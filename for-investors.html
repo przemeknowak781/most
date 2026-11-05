@@ -297,15 +297,45 @@
               We are here to guide, structure, and enable what comes next, with advice grounded in experience across jurisdictions, markets, and stages of&nbsp;growth.
             </p>
           </div>
-          <div class="aud-expertise__list-wrap">
+          <!-- Our Expertise as a ridge (5.11, after the team's reference): the
+               seven areas as summits of a range that rises to the right, one
+               deal after another, each area's words over its summit. Cubic
+               segments run flat through the valleys, which stand on the rules
+               between the columns, and steep into the summits, which stand at
+               the columns' centres at their heights (--y). Under the ridge
+               the page is the closing band's sky, so the range runs on into
+               the footer, as Founders' curve does; the line runs on to the
+               window's edges. Under 1024px, and with ?graph=rail, it is the
+               list on the rail (styles.css). -->
+          <div class="aud-expertise__list-wrap aud-curve aud-curve--ridge" style="--curve-end: 0.7" data-reveal>
+            <svg class="aud-curve__chart" viewBox="0 0 700 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <defs>
+                <mask id="aud-curve-sky" maskUnits="userSpaceOnUse" x="0" y="-10" width="700" height="120">
+                  <rect x="0" y="-10" width="700" height="120" fill="#fff" />
+                  <path d="M0 104 L0 100 C22.5 100 39 67.16 50 54 C61 64.3 77.5 90 100 90 C122.5 90 139 78.58 150 74 C161 79.72 177.5 94 200 94 C222.5 94 239 51.16 250 34 C261 48.01 277.5 83 300 83 C322.5 83 339 63.72 350 56 C361 64.29 377.5 85 400 85 C422.5 85 439 38.59 450 20 C461 35.44 477.5 74 500 74 C522.5 74 539 51.15 550 42 C561 49.44 577.5 68 600 68 C622.5 68 639 19.45 650 0 C661 8.58 677.5 30 700 30 L704 30 L704 104 Z" fill="#000" />
+                </mask>
+              </defs>
+              <g mask="url(#aud-curve-sky)">
+                <rect class="aud-curve__band" x="0" y="0" width="100" height="100" />
+                <rect class="aud-curve__band" x="100" y="0" width="100" height="100" />
+                <rect class="aud-curve__band" x="200" y="0" width="100" height="100" />
+                <rect class="aud-curve__band" x="300" y="0" width="100" height="100" />
+                <rect class="aud-curve__band" x="400" y="0" width="100" height="100" />
+                <rect class="aud-curve__band" x="500" y="0" width="100" height="100" />
+                <rect class="aud-curve__band" x="600" y="0" width="100" height="100" />
+                <path class="aud-curve__rules" d="M100 0 V100 M200 0 V100 M300 0 V100 M400 0 V100 M500 0 V100 M600 0 V100" />
+              </g>
+              <path class="aud-curve__area" d="M0 104 L0 100 C22.5 100 39 67.16 50 54 C61 64.3 77.5 90 100 90 C122.5 90 139 78.58 150 74 C161 79.72 177.5 94 200 94 C222.5 94 239 51.16 250 34 C261 48.01 277.5 83 300 83 C322.5 83 339 63.72 350 56 C361 64.29 377.5 85 400 85 C422.5 85 439 38.59 450 20 C461 35.44 477.5 74 500 74 C522.5 74 539 51.15 550 42 C561 49.44 577.5 68 600 68 C622.5 68 639 19.45 650 0 C661 8.58 677.5 30 700 30 L704 30 L704 104 Z" />
+              <path class="aud-curve__line" d="M0 100 C22.5 100 39 67.16 50 54 C61 64.3 77.5 90 100 90 C122.5 90 139 78.58 150 74 C161 79.72 177.5 94 200 94 C222.5 94 239 51.16 250 34 C261 48.01 277.5 83 300 83 C322.5 83 339 63.72 350 56 C361 64.29 377.5 85 400 85 C422.5 85 439 38.59 450 20 C461 35.44 477.5 74 500 74 C522.5 74 539 51.15 550 42 C561 49.44 577.5 68 600 68 C622.5 68 639 19.45 650 0 C661 8.58 677.5 30 700 30" />
+            </svg>
             <ol class="aud-expertise__list">
-              <li>Deal structuring, term sheets, and&nbsp;negotiation</li>
-              <li>Convertible instruments, SAFEs, venture debt, and equity rounds (from pre-Seed to Seed and Series A/B/C and&nbsp;beyond)</li>
-              <li>Shareholders' agreements, governance frameworks, and investor&nbsp;rights</li>
-              <li>Due diligence, risk assessment, and investment readiness&nbsp;reviews</li>
-              <li>Follow-ons, secondaries, and&nbsp;recapitalisations</li>
-              <li>Cross-border transactions and multi-jurisdictional&nbsp;coordination</li>
-              <li>Exits, SPAs, and post-closing&nbsp;matters</li>
+              <li style="--i: 0; --y: 0.46"><span class="aud-curve__label"><span class="aud-curve__num">01</span> <span class="aud-curve__text">Deal structuring, term sheets, and negotiation</span></span></li>
+              <li style="--i: 1; --y: 0.26"><span class="aud-curve__label"><span class="aud-curve__num">02</span> <span class="aud-curve__text">Convertible instruments, SAFEs, venture debt, and equity rounds (from <span class="nowrap">pre-Seed</span> to Seed and Series A/B/C and beyond)</span></span></li>
+              <li style="--i: 2; --y: 0.66"><span class="aud-curve__label"><span class="aud-curve__num">03</span> <span class="aud-curve__text">Shareholders' agreements, governance frameworks, and investor rights</span></span></li>
+              <li style="--i: 3; --y: 0.44"><span class="aud-curve__label"><span class="aud-curve__num">04</span> <span class="aud-curve__text">Due diligence, risk assessment, and investment readiness reviews</span></span></li>
+              <li style="--i: 4; --y: 0.8"><span class="aud-curve__label"><span class="aud-curve__num">05</span> <span class="aud-curve__text">Follow-ons, secondaries, and recapitalisations</span></span></li>
+              <li style="--i: 5; --y: 0.58"><span class="aud-curve__label"><span class="aud-curve__num">06</span> <span class="aud-curve__text">Cross-border transactions and multi-jurisdictional coordination</span></span></li>
+              <li style="--i: 6; --y: 1"><span class="aud-curve__label"><span class="aud-curve__num">07</span> <span class="aud-curve__text">Exits, SPAs, and post-closing matters</span></span></li>
             </ol>
           </div>
         </div>

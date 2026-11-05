@@ -7130,7 +7130,10 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   height: calc(var(--rail-dot) * 0.75);
 }
 
-/* === Founders: Our Expertise as a growth curve (the review of 31.10) ===
+/* === Founders and Investors: Our Expertise as a chart (31.10, 5.11) ===
+   Founders' growth curve came first; Investors' ridge (5.11) is the same
+   chart with a range of summits for its line - see for-investors.html.
+   Founders: Our Expertise as a growth curve (the review of 31.10).
    In place of the rail, the seven areas as points on an S-curve - the road
    of a company that starts from nothing and grows - after the team's
    reference: the first point on the base line, the last at the top, and
@@ -7152,6 +7155,15 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
    chart, under a mask of the cream above the curve, so they stop at the
    line. From 1024px; under it, and with ?graph=rail, the list keeps the
    rail. */
+/* the sky under the line: the closing band's, at its top */
+.page--founders {
+  --curve-sky: var(--fnd-sky-high);
+}
+
+.page--investors {
+  --curve-sky: var(--hz-field);
+}
+
 @property --curve-band {
   syntax: "<number>";
   inherits: false;
@@ -7170,12 +7182,12 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 
 /* the words keep no fixed spaces, so that they fit the curve's narrow
    columns; the last line is kept from standing alone this way instead */
-.page--founders .aud-curve .aud-expertise__list li {
+:is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li {
   text-wrap: pretty;
 }
 
 @media (min-width: 1024px) {
-  :root:not([data-graph="rail"]) .page--founders .aud-expertise__copy {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--companies, .page--investors) .aud-expertise__copy {
     display: grid;
     grid-column: 1 / -1;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -7183,25 +7195,29 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     max-width: none;
   }
 
-  :root:not([data-graph="rail"]) .page--founders .aud-expertise__copy > p {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--companies, .page--investors) .aud-expertise__copy > p {
     grid-column: 2 / -1;
     max-width: 38rem;
   }
 
   /* the section ends at the curve's foot, over the band below so the
      line's lower half shows on it */
-  :root:not([data-graph="rail"]) .page--founders .aud-expertise {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-expertise {
     z-index: 1;
     padding-bottom: 0;
   }
 
-  :root:not([data-graph="rail"]) .page--founders .aud-curve {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve {
     --curve-plot: clamp(240px, 21vw, 330px);
     /* from a point up to its words: clear of the curve where it climbs
        most steeply across the column (an eighth of the plot) */
     --curve-lead: calc(var(--curve-plot) * 0.12 + 16px);
     /* room over the plot for the top points' words */
     --curve-head: clamp(140px, 10vw, 150px);
+    --curve-cols: 7;
+    /* where the line meets the column's right edge, as a share of the
+       plot's height: the run-on to the window's edge keeps that height */
+    --curve-end: 1;
     grid-column: 1 / -1;
     margin-top: clamp(24px, 3vw, 48px);
     padding: var(--curve-head) 0 0;
@@ -7209,30 +7225,30 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 
   /* past the column, out to the window's edges: the top at the right,
      with the band's sky under it, and the foot at the left */
-  :root:not([data-graph="rail"]) .page--founders .aud-curve::before,
-  :root:not([data-graph="rail"]) .page--founders .aud-curve::after {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve::before,
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve::after {
     content: "";
     position: absolute;
     width: var(--aud-section-x);
     pointer-events: none;
   }
 
-  :root:not([data-graph="rail"]) .page--founders .aud-curve::before {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve::before {
     bottom: -3px;
     left: calc(100% - 1px);
-    height: calc(var(--curve-plot) + 4px);
+    height: calc(var(--curve-plot) * var(--curve-end) + 4px);
     border-top: 2px solid var(--aud-accent);
-    background: var(--fnd-sky-high);
+    background: var(--curve-sky);
   }
 
-  :root:not([data-graph="rail"]) .page--founders .aud-curve::after {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve::after {
     right: 100%;
     bottom: -1px;
     height: 2px;
     background: var(--aud-accent);
   }
 
-  :root:not([data-graph="rail"]) .page--founders .aud-curve__chart {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve__chart {
     position: absolute;
     right: 0;
     bottom: 0;
@@ -7246,7 +7262,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   /* run a few units past the box's right and lower edges, under the
      run-on and over the band, so that no seam of cream shows */
   .aud-curve__area {
-    fill: var(--fnd-sky-high);
+    fill: var(--curve-sky);
   }
 
   .aud-curve__rules {
@@ -7284,7 +7300,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     vector-effect: non-scaling-stroke;
   }
 
-  :root:not([data-graph="rail"]) .page--founders .aud-curve .aud-expertise__list {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list {
     position: relative;
     z-index: 1;
     display: block;
@@ -7293,27 +7309,27 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 
   /* a column: the plot's height under the head's (its band and rule are
      in the chart) */
-  :root:not([data-graph="rail"]) .page--founders .aud-curve .aud-expertise__list li {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li {
     --curve-band: 0;
     position: absolute;
     top: calc(-1 * var(--curve-head));
     bottom: 0;
-    left: calc(var(--i) * 100% / 7);
-    width: calc(100% / 7);
+    left: calc(var(--i) * 100% / var(--curve-cols));
+    width: calc(100% / var(--curve-cols));
     max-width: none;
     padding: 0;
     background: none;
     transition: --curve-band 360ms ease;
   }
 
-  :root:not([data-graph="rail"]) .page--founders .aud-curve .aud-expertise__list:not(:hover) li:first-child,
-  :root:not([data-graph="rail"]) .page--founders .aud-curve .aud-expertise__list li:hover {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list:not(:hover) li:first-child,
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li:hover {
     --curve-band: 1;
   }
 
   /* the point, on the curve: ringed in the cream so the line passes under
      it, and haloed in the lit column */
-  :root:not([data-graph="rail"]) .page--founders .aud-curve .aud-expertise__list li::before {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li::before {
     content: "";
     top: auto;
     bottom: calc(var(--curve-plot) * var(--y));
@@ -7329,13 +7345,13 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     transform: translate(-50%, 50%);
   }
 
-  :root:not([data-graph="rail"]) .page--founders .aud-curve .aud-expertise__list li::after {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li::after {
     content: none;
   }
 
   /* the words over the point, the number over the words, and a dotted lead
      down to the point */
-  :root:not([data-graph="rail"]) .page--founders .aud-curve__label {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve__label {
     position: absolute;
     right: clamp(6px, 0.7vw, 12px);
     bottom: calc(var(--curve-plot) * var(--y) + var(--curve-lead));
@@ -7351,7 +7367,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     transition: color 360ms ease;
   }
 
-  :root:not([data-graph="rail"]) .page--founders .aud-curve__label::after {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve__label::after {
     content: "";
     position: absolute;
     top: calc(100% + 8px);
@@ -7361,7 +7377,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     background: repeating-linear-gradient(180deg, rgba(var(--aud-accent-rgb), 0.7) 0 2px, transparent 2px 5px);
   }
 
-  :root:not([data-graph="rail"]) .page--founders .aud-curve__num {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve__num {
     display: block;
     color: var(--aud-ink-soft);
     font: 500 12px / 1 "Montserrat", system-ui, sans-serif;
@@ -7369,13 +7385,13 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     transition: color 360ms ease;
   }
 
-  :root:not([data-graph="rail"]) .page--founders .aud-curve .aud-expertise__list:not(:hover) li:first-child .aud-curve__label,
-  :root:not([data-graph="rail"]) .page--founders .aud-curve .aud-expertise__list li:hover .aud-curve__label {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list:not(:hover) li:first-child .aud-curve__label,
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li:hover .aud-curve__label {
     color: var(--aud-ink);
   }
 
-  :root:not([data-graph="rail"]) .page--founders .aud-curve .aud-expertise__list:not(:hover) li:first-child .aud-curve__num,
-  :root:not([data-graph="rail"]) .page--founders .aud-curve .aud-expertise__list li:hover .aud-curve__num {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list:not(:hover) li:first-child .aud-curve__num,
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li:hover .aud-curve__num {
     color: #b3401a;
   }
 }
@@ -7383,26 +7399,26 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 /* the drawing-in: the chart uncovered from the left over 1.8s, each point
    and its words a moment after the line passes their column */
 @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
-  :root:not([data-graph="rail"]) .page--founders .aud-curve__chart {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve__chart {
     clip-path: inset(0 100% 0 0);
     transition: clip-path 1800ms cubic-bezier(0.4, 0, 0.3, 1);
   }
 
-  :root:not([data-graph="rail"]) .page--founders .aud-curve.is-visible .aud-curve__chart {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve.is-visible .aud-curve__chart {
     clip-path: inset(-12px -8px -12px 0);
   }
 
-  :root:not([data-graph="rail"]) .page--founders .aud-curve::before {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve::before {
     clip-path: inset(-2px 100% 0 0);
     transition: clip-path 400ms linear 1700ms;
   }
 
-  :root:not([data-graph="rail"]) .page--founders .aud-curve.is-visible::before {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve.is-visible::before {
     clip-path: inset(-2px 0 0 0);
   }
 
-  :root:not([data-graph="rail"]) .page--founders .aud-curve .aud-expertise__list li::before,
-  :root:not([data-graph="rail"]) .page--founders .aud-curve__label {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li::before,
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve__label {
     opacity: 0;
     transition:
       opacity 500ms ease calc(240ms + var(--i) * 230ms),
@@ -7410,12 +7426,207 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
       box-shadow 360ms ease;
   }
 
-  :root:not([data-graph="rail"]) .page--founders .aud-curve.is-visible .aud-expertise__list li::before,
-  :root:not([data-graph="rail"]) .page--founders .aud-curve.is-visible .aud-curve__label {
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve.is-visible .aud-expertise__list li::before,
+  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve.is-visible .aud-curve__label {
     opacity: 1;
   }
 }
-/* === end Founders growth curve === */
+/* === end Founders and Investors charts === */
+
+/* === Companies: Our Expertise as a hub (5.11, after the team's reference) ===
+   The nine areas as circles on a ring round a core: the business at the
+   centre and the work that keeps it running round it, each with a line in
+   to it. The core tells the chosen area's detail; the hub shows them in
+   turn while it is in view, and pointing at a circle, focusing or clicking
+   it chooses it (script.js, "Expertise hub", which builds the hub from the
+   list). The chosen circle is the lit one: white, ringed in the accent,
+   its line drawn full. On arrival the core comes up first, then the
+   circles round the ring with their lines drawing in to it. The head stands
+   over it on one row, as on Founders and Investors. From 1024px; under it,
+   with ?graph=rail and without script, the list keeps the rail. */
+.aud-hub {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  :root:not([data-graph="rail"]) .page--companies .aud-hub-wrap {
+    --hub-core: clamp(280px, 23vw, 340px);
+    --hub-node: clamp(124px, 10.4vw, 152px);
+    grid-column: 1 / -1;
+    margin-top: clamp(16px, 2vw, 32px);
+    padding-left: 0;
+  }
+
+  :root:not([data-graph="rail"]) .page--companies .aud-hub-wrap .aud-expertise__list {
+    display: none;
+  }
+
+  :root:not([data-graph="rail"]) .page--companies .aud-hub {
+    position: relative;
+    display: block;
+    height: clamp(600px, 50vw, 740px);
+  }
+
+  .aud-hub__links {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .aud-hub__link {
+    stroke: rgba(var(--aud-accent-rgb), 0.3);
+    stroke-width: 1.2;
+    transition: stroke 360ms ease;
+  }
+
+  .aud-hub__link.is-active {
+    stroke: var(--aud-accent);
+    stroke-width: 1.6;
+  }
+
+  .aud-hub__arrow path {
+    fill: rgba(var(--aud-accent-rgb), 0.45);
+  }
+
+  .aud-hub__arrow--on path {
+    fill: var(--aud-accent);
+  }
+
+  .aud-hub__core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    width: var(--hub-core);
+    aspect-ratio: 1;
+    padding: 0 clamp(30px, 3vw, 46px);
+    border: 1px solid rgba(var(--aud-accent-rgb), 0.38);
+    border-radius: 50%;
+    background: #fff;
+    box-shadow:
+      0 0 0 12px rgba(var(--aud-accent-rgb), 0.06),
+      0 28px 70px rgba(28, 20, 25, 0.08);
+    text-align: center;
+    translate: -50% -50%;
+  }
+
+  .aud-hub__core p {
+    margin: 0;
+  }
+
+  .aud-hub__core-name {
+    color: var(--aud-ink);
+    font: 500 clamp(22px, 1.8vw, 27px) / 1.15 "Urbanist", system-ui, sans-serif;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+  }
+
+  .aud-hub__core-more {
+    color: var(--aud-ink-soft);
+    font: 400 clamp(13.5px, 0.98vw, 15px) / 1.5 "Outfit", system-ui, sans-serif;
+    text-wrap: balance;
+  }
+
+  .aud-hub__core.is-fresh p {
+    animation: aud-hub-fresh 520ms var(--ease-out) both;
+  }
+
+  .aud-hub__core.is-fresh .aud-hub__core-more {
+    animation-delay: 80ms;
+  }
+
+  @keyframes aud-hub-fresh {
+    from {
+      opacity: 0;
+      translate: 0 8px;
+    }
+  }
+
+  .aud-hub__node {
+    position: absolute;
+    top: var(--y);
+    left: var(--x);
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: var(--hub-node);
+    aspect-ratio: 1;
+    padding: 0 clamp(14px, 1.3vw, 20px);
+    border: 1px solid rgba(28, 20, 25, 0.12);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    color: rgba(28, 20, 25, 0.7);
+    font: 400 clamp(13px, 0.95vw, 14.5px) / 1.35 "Outfit", system-ui, sans-serif;
+    text-align: center;
+    text-wrap: balance;
+    cursor: pointer;
+    translate: -50% -50%;
+    transition: border-color 300ms ease, background-color 300ms ease, color 300ms ease, box-shadow 360ms ease;
+  }
+
+  .aud-hub__node:hover {
+    border-color: rgba(var(--aud-accent-rgb), 0.55);
+    color: var(--aud-ink);
+  }
+
+  .aud-hub__node:focus-visible {
+    outline: 2px solid #b3401a;
+    outline-offset: 4px;
+  }
+
+  .aud-hub__node[aria-pressed="true"] {
+    border: 1.5px solid var(--aud-accent);
+    background: #fff;
+    color: var(--aud-ink);
+    box-shadow: 0 0 0 9px rgba(var(--aud-accent-rgb), 0.1);
+  }
+}
+
+/* the arrival: the core, then the circles round the ring, each line
+   drawing in to the core as its circle comes */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  :root:not([data-graph="rail"]) .page--companies .aud-hub__core,
+  :root:not([data-graph="rail"]) .page--companies .aud-hub__node {
+    opacity: 0;
+    scale: 0.86;
+    transition:
+      opacity 520ms var(--ease-out) var(--hub-delay, 0ms),
+      scale 620ms var(--ease-out) var(--hub-delay, 0ms),
+      border-color 300ms ease,
+      background-color 300ms ease,
+      color 300ms ease,
+      box-shadow 360ms ease;
+  }
+
+  :root:not([data-graph="rail"]) .page--companies .aud-hub__node {
+    --hub-delay: calc(260ms + var(--i) * 110ms);
+  }
+
+  :root:not([data-graph="rail"]) .page--companies .aud-hub__link {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 700ms var(--ease-out) calc(420ms + var(--i) * 110ms), stroke 360ms ease;
+  }
+
+  :root:not([data-graph="rail"]) .page--companies .aud-hub-wrap.is-visible .aud-hub__core,
+  :root:not([data-graph="rail"]) .page--companies .aud-hub-wrap.is-visible .aud-hub__node {
+    opacity: 1;
+    scale: 1;
+  }
+
+  :root:not([data-graph="rail"]) .page--companies .aud-hub-wrap.is-visible .aud-hub__link {
+    stroke-dashoffset: 0;
+  }
+}
+/* === end Companies hub === */
 
 /* ===================================================================
    ROUTE SHORTCUTS
@@ -16624,13 +16835,14 @@ main {
   --grow-sky-drop: 0.009;
 }
 
-/* where the growth curve's area runs into the band (Founders, from
-   1024px), the band opens in that area's terracotta and eases into the
-   picture over its first 160px, so no edge shows where the two meet */
+/* where the expertise chart's area runs into the band (Founders and
+   Investors, from 1024px), the band opens in that area's colour and eases
+   into the picture over its first 160px, so no edge shows where the two
+   meet */
 @media (min-width: 1024px) {
-  :root:not([data-palette="lead"], [data-mountains], [data-graph="rail"]) .page--founders .grow-sky {
+  :root:not([data-palette="lead"], [data-mountains], [data-graph="rail"]) :is(.page--founders, .page--investors) .grow-sky {
     background:
-      linear-gradient(180deg, var(--fnd-sky-high) 0, rgb(220 138 103 / 0) 160px),
+      linear-gradient(180deg, var(--curve-sky) 0, transparent 160px),
       var(--grow-sky-image) 50% 100% / 100% auto no-repeat,
       var(--grow-sky-fill);
   }
