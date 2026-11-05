@@ -7236,6 +7236,9 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve::before {
     bottom: -3px;
     left: calc(100% - 1px);
+    /* a little past the window edge (the root clips x): the gutter alone
+       stopped a pixel short and left a cream hairline at the right edge */
+    width: calc(var(--aud-section-x) + 8px);
     height: calc(var(--curve-plot) * var(--curve-end) + 4px);
     border-top: 2px solid var(--aud-accent);
     background: var(--curve-sky);
