@@ -17,9 +17,13 @@
 #                      (?founders=fins, a preview)
 #
 # One tall frame, 1920 x 2742: the top half is the hero, the bottom half
-# How We Work.
+# How We Work. On Companies How We Work has a light of its own (5.11, the
+# team found the cool band "a little sad"): the same fins in a warm, low
+# evening light raking across the band's top - copper on a dusky rose sky
+# light - dimmed behind the title so the cream type keeps 3:1 and more.
 #
-#   python3 docs/tools/hz-relief.py <out dir>
+#   python3 docs/tools/hz-relief.py <out dir> [name ...]
+#     (with names, only those files: e.g. companies-fins-band)
 #     companies-fins{,-band}{,-640,-1024,-crop}.webp
 #     investors-flutes{,-band}{,-640,-1024,-crop}.webp
 #     founders-fins{,-1024,-crop}.webp
@@ -55,6 +59,12 @@ KEY = np.array([0.82, 0.28, 0.5]) / np.linalg.norm([0.82, 0.28, 0.5])         # 
 # (dark, sky light, key light) for each page
 COMPANIES = (np.array([20, 22, 30.0]), np.array([46, 50, 64.0]), np.array([235, 128, 72.0]))
 INVESTORS = (np.array([14, 18, 28.0]), np.array([34, 44, 66.0]), np.array([150, 176, 218.0]))
+COMPANIES_WARM = (np.array([36, 24, 24.0]), np.array([96, 70, 68.0]), np.array([255, 168, 100.0]))
+
+# the warm light's reach in Companies' How We Work: broad across the band's
+# top, strongest to the right, and low behind the title at the upper left
+warm = np.clip(1.1 * np.exp(-((x - 1300) / 1050) ** 2 - ((y - 1520) / 420) ** 2), 0, 1)
+warm *= 1 - 0.8 * np.exp(-((x - 470) / 620) ** 2 - ((y - 1500) / 260) ** 2)
 
 
 def light(nx, ny, nz, colours, reach=None):
@@ -86,12 +96,22 @@ def relief(vx, vy, step, depth, colours, reach=None):
 
 
 dst = sys.argv[1] if len(sys.argv) > 1 else '.'
-# companies: the fins meet far above the frame; investors: nearly upright
-for stem, make in (('companies-fins', lambda: relief(960.0, -1300.0, 0.019, 26, COMPANIES)),
-                   ('investors-flutes', lambda: relief(960.0, -7000.0, 0.0052, 22, INVESTORS))):
-    img = Image.fromarray(np.clip(make(), 0, 255).astype(np.uint8), 'RGB')
-    for name, box in ((stem, (0, 0, W, H // 2)), (f'{stem}-band', (0, H // 2, W, H))):
-        part = img.crop(box)
+only = set(sys.argv[2:])
+# companies: the fins meet far above the frame; investors: nearly upright;
+# Companies' band in its own warm light
+as_image = lambda a: Image.fromarray(np.clip(a, 0, 255).astype(np.uint8), 'RGB')
+for stem, make, make_band in (
+        ('companies-fins', lambda: relief(960.0, -1300.0, 0.019, 26, COMPANIES),
+         lambda: relief(960.0, -1300.0, 0.019, 26, COMPANIES_WARM, warm)),
+        ('investors-flutes', lambda: relief(960.0, -7000.0, 0.0052, 22, INVESTORS), None)):
+    if only and not ({stem, f'{stem}-band'} & only):
+        continue
+    img = as_image(make())
+    band = as_image(make_band()) if make_band else img
+    for name, src, box in ((stem, img, (0, 0, W, H // 2)), (f'{stem}-band', band, (0, H // 2, W, H))):
+        if only and name not in only:
+            continue
+        part = src.crop(box)
         part.save(os.path.join(dst, f'{name}.webp'), 'WEBP', quality=76, method=6)
         for w in (1024, 640):
             part.resize((w, round(w * part.height / part.width)), Image.LANCZOS).save(
@@ -101,6 +121,8 @@ for stem, make in (('companies-fins', lambda: relief(960.0, -1300.0, 0.019, 26, 
 
 # Founders: the fins' light and shade alone, evenly lit, centred on a middle
 # grey (no change on the soft-light blend) - only the hero's part
+if only and 'founders-fins' not in only:
+    sys.exit()
 grey = relief(960.0, -1300.0, 0.019, 26, (np.zeros(3), np.full(3, 1.0), np.full(3, 0.6)), np.ones_like(x))[..., 0]
 grey = np.clip(128 + 150 * (grey - grey.mean()), 0, 255).astype(np.uint8)
 part = Image.fromarray(grey[:H // 2], 'L')
