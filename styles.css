@@ -16500,8 +16500,9 @@ main {
      from the team's reference of 29.10 - long straight slopes to sharp
      tops, a high massif in the band's open middle - each a shade of the
      sky, flat along its crest and paling into mist towards its foot
-     (docs/tools/grow-layers.py). Shipped since 31.10, redrawn after the
-     reference on 1.11; ?mountains=none shows the band without them.
+     (docs/tools/grow-layers.py). Shipped from 31.10 to 5.11, redrawn
+     after the reference on 1.11; since the team's own skies took their
+     place (below) they are ?mountains=drawn.
      ?footer=up, where the band is the photograph (Home, and the audience
      pages with ?palette=lead): the photograph sits lower behind the
      walkers' ridge, so its nearest range goes under the ridge and the
@@ -16514,7 +16515,7 @@ main {
   display: none;
 }
 
-:root:not([data-palette="lead"], [data-mountains="none"]) :is(.page--founders, .page--companies, .page--investors) .grow-layers {
+:root[data-mountains="drawn"]:not([data-palette="lead"]) :is(.page--founders, .page--companies, .page--investors) .grow-layers {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -16528,7 +16529,7 @@ main {
 /* under 1024px the ridge art grows past the screen's edges (see the
    compact footer): the ranges take its size and place */
 @media (max-width: 1023px) {
-  :root:not([data-palette="lead"], [data-mountains="none"]) :is(.page--founders, .page--companies, .page--investors) .grow-layers {
+  :root[data-mountains="drawn"]:not([data-palette="lead"]) :is(.page--founders, .page--companies, .page--investors) .grow-layers {
     right: auto;
     left: min(0%, 50% - var(--ridge-art, 100%) * 0.37);
     width: var(--ridge-art, 100%);
@@ -16573,6 +16574,81 @@ main {
   background: var(--grow-range-3);
 }
 
+/* The team's own skies (5.11): haze and ranges painted in each page's
+   colour, without the walkers, laid under the band's navy ridge and its
+   walkers as the team composed them - one picture per page, the width of
+   the ridge's art and standing on its foot. Where a narrow screen makes
+   the band taller than the picture, the sky above it carries on in the
+   picture's top colour. The pictures are the team's files as sent. The
+   band's top on Founders comes out at the terracotta the growth curve's
+   area uses (#dc8a67), so the two still meet without a seam. Shipped since
+   5.11; the drawn ranges are ?mountains=drawn, the plain sky
+   ?mountains=none. */
+.grow-sky {
+  display: none;
+}
+
+:root:not([data-palette="lead"], [data-mountains]) :is(.page--founders, .page--companies, .page--investors) .grow-sky {
+  position: absolute;
+  inset: 0 0 calc(var(--grow-sky-drop, 0) * var(--grow-sky-w) * -1);
+  z-index: 0;
+  display: block;
+  background: var(--grow-sky-image) 50% 100% / 100% auto no-repeat, var(--grow-sky-fill);
+  pointer-events: none;
+}
+
+/* the picture's width (the ridge art's, which is the window's from 1024px)
+   and how far each picture sinks under the ridge's foot, as a share of
+   that width, so its ranges stand behind the walkers where the team's
+   composition has them: on Founders the team drew the walkers larger than
+   the picture's width allows here, so its picture goes down by as much as
+   that would have lifted the ridge */
+.grow-sky {
+  --grow-sky-w: 100vw;
+}
+
+.page--founders .grow-sky {
+  --grow-sky-image: url("grow-sky-founders.jpg");
+  --grow-sky-fill: #e59370;
+  --grow-sky-drop: 0.053;
+}
+
+.page--companies .grow-sky {
+  --grow-sky-image: url("grow-sky-companies.jpg");
+  --grow-sky-fill: #575965;
+}
+
+.page--investors .grow-sky {
+  --grow-sky-image: url("grow-sky-investors.jpg");
+  --grow-sky-fill: #32405b;
+  --grow-sky-drop: 0.009;
+}
+
+/* where the growth curve's area runs into the band (Founders, from
+   1024px), the band opens in that area's terracotta and eases into the
+   picture over its first 160px, so no edge shows where the two meet */
+@media (min-width: 1024px) {
+  :root:not([data-palette="lead"], [data-mountains], [data-graph="rail"]) .page--founders .grow-sky {
+    background:
+      linear-gradient(180deg, var(--fnd-sky-high) 0, rgb(220 138 103 / 0) 160px),
+      var(--grow-sky-image) 50% 100% / 100% auto no-repeat,
+      var(--grow-sky-fill);
+  }
+}
+
+/* under 1024px the ridge art grows past the screen's edges: the picture
+   takes its width and place, as the drawn ranges do */
+@media (max-width: 1023px) {
+  .grow-sky {
+    --grow-sky-w: max(100vw, min(190vw, 760px));
+  }
+
+  :root:not([data-palette="lead"], [data-mountains]) :is(.page--founders, .page--companies, .page--investors) .grow-sky {
+    right: auto;
+    left: min(0%, 50% - var(--ridge-art, 100%) * 0.37);
+    width: var(--ridge-art, 100%);
+  }
+}
 /* === end closing band mountains === */
 
 /* === ?founders=fins (a preview, 29.10) ===

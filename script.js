@@ -1165,8 +1165,9 @@ function setupPortraitProposal() {
    looming in Founders' sky in place of the truss, ?hww=columns
    How We Work on Companies and Investors on a facade's vertical
    divisions, ?footer=up the closing band's photograph lower behind
-   the walkers' ridge, ?mountains=none the audience pages' closing band
-   without the mountain ranges behind the ridge, ?graph=rail Founders'
+   the walkers' ridge, ?mountains=drawn|none the audience pages' closing
+   band with the drawn ranges behind the ridge (shipped 31.10-5.11, before
+   the team's own skies) or with neither, ?graph=rail Founders'
    Our Expertise as the list on the rail, as it was before the growth
    curve (31.10; the map of the road's stages, 10.10, was set aside then),
    ?rail=dots
@@ -1197,7 +1198,7 @@ const PREVIEW_SWITCHES = {
   founders: ["fins"],
   hww: ["columns"],
   footer: ["up"],
-  mountains: ["none"],
+  mountains: ["drawn", "none"],
   graph: ["rail"],
   rail: ["dots"],
   arch: ["help"],
@@ -1237,7 +1238,7 @@ const PREVIEW_PANEL = [
   ["arch", AUDIENCE_PAGES, "What We Help You Achieve", [["", "obecne"], ["help", "architektura z tła"]]],
   ["rail", AUDIENCE_PAGES, "Our Expertise: kropki przy punktach", [["", "tylko na końcach"], ["dots", "małe przy każdym punkcie"]]],
   ["graph", ["for-founders"], "Our Expertise: wykres", [["", "krzywa wzrostu"], ["rail", "lista z linią (jak było)"]]],
-  ["mountains", AUDIENCE_PAGES, "Pas „Want to Grow Together?”: góry w tle", [["", "z warstwami gór"], ["none", "bez gór"]]],
+  ["mountains", AUDIENCE_PAGES, "Pas „Want to Grow Together?”: góry w tle", [["", "tła od Was (zdjęcia)"], ["drawn", "rysowane pasma"], ["none", "bez gór"]]],
   ["palette", "all", "Kolory podstron", [["", "obecne"], ["lead", "kolor wiodący jako światło"]]],
   ["nav", "all", "Menu: kropka przy Founders / Companies / Investors", [["", "pomarańczowa"], ["colour", "w kolorze ścieżki"]]],
   ["footer", "all", "Pas „Want to Grow Together?”: zdjęcie", [["", "obecne"], ["up", "pierwszy plan wyżej (pas ze zdjęciem)"]]],
