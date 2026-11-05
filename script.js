@@ -1174,19 +1174,19 @@ function setupPortraitProposal() {
    ?rail=dots
    small dots on the audience pages' Our Expertise rail, ?arch=help
    architecture coming up out of the ground behind their What We Help You
-   Achieve, ?nav=colour the routes' dots in the menu in each route's
-   colour, ?order=work Our Expertise's How We Work above Our Areas,
+   Achieve, ?order=work Our Expertise's How We Work above Our Areas,
    ?stats=rows|grid Home's hero figures on a phone divided by dotted
-   rules, ?clients=center|right Who We Work With's head centred or on the
-   right and ?palette=lead the audience pages built as the rest of the
-   site, their colour as light on the navy land - each as a data
-   attribute on <html> the stylesheet answers. #titles-smaller and the
+   rules and ?clients=center|right Who We Work With's head centred or on
+   the right - each as a data attribute on <html> the stylesheet answers. #titles-smaller and the
    like do the same where a preview host drops the query. Without one the
    page is as it ships. (The titles in capitals and the ridges drawn
    straight were looked at and set aside, 7.10; Who we are on a light
    ground and Our Expertise's larger drawings, tiles and light grounds,
    25.10, the homepage staying dark; the Investors tints and the
-   Companies colours, 29.10, when both pages took their lit reliefs.)
+   Companies colours, 29.10, when both pages took their lit reliefs; the
+   audience pages built as the rest of the site, their colour as light on
+   the navy land, 5.11. The routes' dots in the menu in each route's
+   colour shipped on 5.11.)
    ?preview (or either of them) brings up a panel that switches them in
    place; while it is up, the links to the site's pages carry the choice
    and the panel, so the whole site can be walked in an alternative. */
@@ -1204,11 +1204,9 @@ const PREVIEW_SWITCHES = {
   graph: ["rail"],
   rail: ["dots"],
   arch: ["help"],
-  nav: ["colour"],
   order: ["work"],
   stats: ["rows", "grid"],
   clients: ["center", "right"],
-  palette: ["lead"],
 };
 
 /* The panel's words, in Polish as the client reviews in it. Each switch
@@ -1242,9 +1240,7 @@ const PREVIEW_PANEL = [
   ["rail", AUDIENCE_PAGES, "Our Expertise: kropki przy punktach", [["", "tylko na końcach"], ["dots", "małe przy każdym punkcie"]]],
   ["graph", AUDIENCE_PAGES, "Our Expertise: wykres", [["", "wykres (Founders krzywa, Companies węzeł, Investors grzbiet)"], ["rail", "lista z linią (jak było)"]]],
   ["mountains", AUDIENCE_PAGES, "Pas „Want to Grow Together?”: góry w tle", [["", "tła od Was (zdjęcia)"], ["drawn", "rysowane pasma"], ["none", "bez gór"]]],
-  ["palette", "all", "Kolory podstron", [["", "obecne"], ["lead", "kolor wiodący jako światło"]]],
-  ["nav", "all", "Menu: kropka przy Founders / Companies / Investors", [["", "pomarańczowa"], ["colour", "w kolorze ścieżki"]]],
-  ["footer", "all", "Pas „Want to Grow Together?”: zdjęcie", [["", "obecne"], ["up", "pierwszy plan wyżej (pas ze zdjęciem)"]]],
+  ["footer", ["index", "about-us", "expertise", "our-team"], "Pas końcowy: zdjęcie", [["", "obecne"], ["up", "pierwszy plan wyżej"]]],
   ["titles", "all", "Tytuły", [["", "obecne"], ["smaller", "mniejsze"]]],
 ];
 

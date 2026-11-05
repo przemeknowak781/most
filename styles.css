@@ -359,42 +359,39 @@ a {
   color: var(--light);
 }
 
-/* ?nav=colour (a preview, the meeting of 25.10): each route's dot, on
-   hover and on its own page, in the route's colour - the colours of the
-   routes' cards and of the phone menu's dots - rather than orange for all
-   three, a touch larger and lit. (While the panel is up the links are
-   written out whole, with the preview's query, hence *=.) On Founders' light sky, before the
-   bar turns navy, the three take their deep inks, as its type does: the
-   terracotta dot would vanish into the terracotta sky. */
-:root[data-nav="colour"] .top-nav .top-nav__menu--right a {
+/* The routes' dots (the meeting of 25.10, shipped 5.11): each route's
+   dot, on hover and on its own page, in the route's colour - the colours
+   of the routes' cards and of the phone menu's dots - rather than orange
+   for all three, a touch larger and lit. (While the preview panel is up
+   the links are written out whole, with the preview's query, hence *=.)
+   On Founders' light sky, before the bar turns navy, the three take their
+   deep inks, as its type does: the terracotta dot would vanish into the
+   terracotta sky. */
+.top-nav .top-nav__menu--right a {
   --route-dot: 209, 126, 95;
 }
 
-:root[data-nav="colour"] .top-nav .top-nav__menu--right a[href*="for-companies.html"] {
+.top-nav .top-nav__menu--right a[href*="for-companies.html"] {
   --route-dot: 171, 142, 130;
 }
 
-:root[data-nav="colour"][data-palette="lead"] .top-nav .top-nav__menu--right a[href*="for-companies.html"] {
-  --route-dot: 172, 138, 158;
-}
-
-:root[data-nav="colour"] .top-nav .top-nav__menu--right a[href*="for-investors.html"] {
+.top-nav .top-nav__menu--right a[href*="for-investors.html"] {
   --route-dot: 115, 145, 196;
 }
 
-:root[data-nav="colour"] .page--founders .top-nav:not(.is-scrolled) .top-nav__menu--right a {
+.page--founders .top-nav:not(.is-scrolled) .top-nav__menu--right a {
   --route-dot: 163, 57, 14;
 }
 
-:root[data-nav="colour"] .page--founders .top-nav:not(.is-scrolled) .top-nav__menu--right a[href*="for-companies.html"] {
+.page--founders .top-nav:not(.is-scrolled) .top-nav__menu--right a[href*="for-companies.html"] {
   --route-dot: 110, 84, 76;
 }
 
-:root[data-nav="colour"] .page--founders .top-nav:not(.is-scrolled) .top-nav__menu--right a[href*="for-investors.html"] {
+.page--founders .top-nav:not(.is-scrolled) .top-nav__menu--right a[href*="for-investors.html"] {
   --route-dot: 54, 84, 135;
 }
 
-:root[data-nav="colour"] .top-nav .top-nav__menu--right a::after {
+.top-nav .top-nav__menu--right a::after {
   bottom: -3px;
   width: 6px;
   height: 6px;
@@ -8540,7 +8537,8 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
    page above). Once the page moves, every page gets the same navy bar with
    light type, so the nav reads over cream and dark sections alike and the
    audience group stays a step quieter than the primary pages. The current
-   page keeps the orange dot that otherwise only shows on hover. */
+   page keeps the dot that otherwise only shows on hover (orange; the
+   three routes' in their own colours). */
 .top-nav__menu a[aria-current="page"]::after {
   opacity: 1;
   transform: translateX(-50%) scale(1);
@@ -16615,127 +16613,6 @@ main {
   display: none;
 }
 
-/* The audience pages close on a sky of their own colour and carry no
-   photograph there (fb-aud2); the image is in their markup for the preview
-   below only, lazy and hidden, so it is never fetched as shipped. */
-:is(.page--founders, .page--companies, .page--investors) .aud-grow .footer-ridge__bg {
-  display: none;
-}
-
-/* ============================================================
-   LEADING COLOUR AS LIGHT - a preview (?palette=lead, client 19.10:
-   Founders, Companies and Investors keep a clear leading colour; what
-   jars is how they sit beside the other pages)
-   The audit: every other page stands on the navy land and carries its
-   colour as light - Home's sunset, Our Team's and Our Expertise's aurora,
-   About's copper photographs - and closes on the same dusk photograph of
-   the walkers. Founders already does so (navy land, terracotta sky).
-   Companies and Investors paint the land itself (mauve #5f545b, slate
-   #313e59), How We Work's band and the closing sky in flat colour, and
-   Companies has no one colour: mauve on its page and in Three routes'
-   glow, taupe (#ab8e82, a greyed Founders terracotta) on its cards and
-   in the menu.
-   Here the three take the site's construction and keep their colour:
-   the land is the navy; the colour is the light - the sky and the
-   photograph's grade in the hero, the top of How We Work's band behind
-   its title (dissolving into the navy before the points), and the grade
-   of the closing photograph, the same dusk walkers as every other page.
-   Companies' colour is the mauve everywhere: its cards, glow and menu
-   take #ac8a9e, the mauve at the terracotta's and the slate's lightness.
-   ============================================================ */
-:root[data-palette="lead"] .page--founders {
-  --lead-rgb: 209, 126, 95;
-  --lead-grade: 0.42;
-}
-
-:root[data-palette="lead"] .page--companies {
-  --lead-rgb: 95, 84, 91;
-  --lead-light-rgb: 128, 106, 120;
-  --lead-grade: 0.8;
-}
-
-:root[data-palette="lead"] .page--investors {
-  --lead-rgb: 49, 62, 89;
-  --lead-light-rgb: 76, 95, 132;
-  --lead-grade: 0.8;
-  --hz-field: #161822;
-}
-
-/* How We Work on the navy ground too, the flutes along its top */
-:root[data-palette="lead"] .page--investors {
-  --aud-ground-rgb: 22, 24, 34;
-}
-
-/* the closing scene: the site's dusk photograph of the walkers, its veil,
-   and the page's colour laid over the photograph on the colour blend */
-:root[data-palette="lead"] :is(.page--founders, .page--companies, .page--investors) .aud-grow {
-  background: var(--navy-deep);
-  --focus-ring: var(--scene-cream);
-}
-
-:root[data-palette="lead"] :is(.page--founders, .page--companies, .page--investors) .aud-grow .footer-ridge__bg {
-  display: block;
-}
-
-:root[data-palette="lead"] :is(.page--founders, .page--companies, .page--investors) .aud-grow > .footer-ridge::before {
-  content: "";
-}
-
-:root[data-palette="lead"] :is(.page--founders, .page--companies, .page--investors) .aud-grow > .footer-ridge::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: rgb(var(--lead-rgb));
-  mix-blend-mode: color;
-  opacity: var(--lead-grade);
-  pointer-events: none;
-}
-
-:root[data-palette="lead"] .page--founders .aud-grow__title {
-  color: var(--scene-cream);
-}
-
-:root[data-palette="lead"] .page--founders .aud-grow__alt {
-  --link-ink: var(--scene-cream);
-}
-
-/* Companies in one colour: the mauve on Home's routes and in the menu */
-:root[data-palette="lead"] .audience-col--companies {
-  --col-accent: #ac8a9e;
-}
-
-:root[data-palette="lead"] .preview--companies {
-  --accent: #ac8a9e;
-}
-
-:root[data-palette="lead"] .routes-strip__card--companies {
-  --aud-tint-rgb: 172, 138, 158;
-}
-
-:root[data-palette="lead"] .mobile-menu__route--companies {
-  --route-tint: 172, 138, 158;
-}
-
-:root[data-palette="lead"] .audience-intro.is-audience-companies {
-  --audience-r: 172;
-  --audience-g: 138;
-  --audience-b: 158;
-}
-
-/* the second way out lands on the lit photograph on a phone or tablet, as
-   on About Us: the full cream with its halo and the night a little deeper */
-@media (max-width: 1023px) {
-  :root[data-palette="lead"] :is(.page--founders, .page--companies, .page--investors) .aud-grow__alt {
-    --link-ink: var(--light);
-    text-shadow: 0 1px 3px rgba(5, 8, 15, 0.6), 0 2px 12px rgba(5, 8, 15, 0.5);
-  }
-
-  :root[data-palette="lead"] :is(.page--founders, .page--companies, .page--investors) .aud-grow > .footer-ridge::before {
-    background: linear-gradient(180deg, var(--navy-deep) 0%, rgba(8, 11, 19, 0.97) 8%, rgba(8, 11, 19, 0.86) 17%, rgba(8, 11, 19, 0.7) 26%, rgba(8, 11, 19, 0.42) 52%, rgba(8, 11, 19, 0.14) 64%, transparent 72%);
-  }
-}
-
 /* === ?hww=columns (a preview, the meeting of 25.10) ===
    How We Work on Investors read too quiet - one slate band after the lit
    hero. This shows it on the facade with vertical divisions proposed
@@ -16800,10 +16677,9 @@ main {
      (docs/tools/grow-layers.py). Shipped from 31.10 to 5.11, redrawn
      after the reference on 1.11; since the team's own skies took their
      place (below) they are ?mountains=drawn.
-     ?footer=up, where the band is the photograph (Home, and the audience
-     pages with ?palette=lead): the photograph sits lower behind the
-     walkers' ridge, so its nearest range goes under the ridge and the
-     farther ones stay. */
+     ?footer=up, where the band is the photograph (every page but the
+     audience pages): the photograph sits lower behind the walkers' ridge,
+     so its nearest range goes under the ridge and the farther ones stay. */
 :root[data-footer="up"] .aud-grow > .footer-ridge .footer-ridge__bg {
   object-position: 50% calc(100% + 5.2vw);
 }
@@ -16812,7 +16688,7 @@ main {
   display: none;
 }
 
-:root[data-mountains="drawn"]:not([data-palette="lead"]) :is(.page--founders, .page--companies, .page--investors) .grow-layers {
+:root[data-mountains="drawn"] :is(.page--founders, .page--companies, .page--investors) .grow-layers {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -16826,7 +16702,7 @@ main {
 /* under 1024px the ridge art grows past the screen's edges (see the
    compact footer): the ranges take its size and place */
 @media (max-width: 1023px) {
-  :root[data-mountains="drawn"]:not([data-palette="lead"]) :is(.page--founders, .page--companies, .page--investors) .grow-layers {
+  :root[data-mountains="drawn"] :is(.page--founders, .page--companies, .page--investors) .grow-layers {
     right: auto;
     left: min(0%, 50% - var(--ridge-art, 100%) * 0.37);
     width: var(--ridge-art, 100%);
@@ -16885,7 +16761,7 @@ main {
   display: none;
 }
 
-:root:not([data-palette="lead"], [data-mountains]) :is(.page--founders, .page--companies, .page--investors) .grow-sky {
+:root:not([data-mountains]) :is(.page--founders, .page--companies, .page--investors) .grow-sky {
   position: absolute;
   inset: 0 0 calc(var(--grow-sky-drop, 0) * var(--grow-sky-w) * -1);
   z-index: 0;
@@ -16926,7 +16802,7 @@ main {
    into the picture over its first 160px, so no edge shows where the two
    meet */
 @media (min-width: 1024px) {
-  :root:not([data-palette="lead"], [data-mountains], [data-graph="rail"]) :is(.page--founders, .page--investors) .grow-sky {
+  :root:not([data-mountains], [data-graph="rail"]) :is(.page--founders, .page--investors) .grow-sky {
     background:
       linear-gradient(180deg, var(--curve-sky) 0, transparent 160px),
       var(--grow-sky-image) 50% 100% / 100% auto no-repeat,
@@ -16941,7 +16817,7 @@ main {
     --grow-sky-w: max(100vw, min(190vw, 760px));
   }
 
-  :root:not([data-palette="lead"], [data-mountains]) :is(.page--founders, .page--companies, .page--investors) .grow-sky {
+  :root:not([data-mountains]) :is(.page--founders, .page--companies, .page--investors) .grow-sky {
     right: auto;
     left: min(0%, 50% - var(--ridge-art, 100%) * 0.37);
     width: var(--ridge-art, 100%);
