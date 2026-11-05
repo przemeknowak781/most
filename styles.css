@@ -7239,6 +7239,9 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     /* a little past the window edge (the root clips x): the gutter alone
        stopped a pixel short and left a cream hairline at the right edge */
     width: calc(var(--aud-section-x) + 8px);
+    /* the border inside the height, so its 2px sit on the line's own
+       (they stood 2px above it, a step where the line meets the edge) */
+    box-sizing: border-box;
     height: calc(var(--curve-plot) * var(--curve-end) + 4px);
     border-top: 2px solid var(--aud-accent);
     background: var(--curve-sky);
