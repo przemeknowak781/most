@@ -6014,11 +6014,13 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
    and never the scene. */
 
 /* The client's ask (29.09): the architecture of the Companies and Investors
-   skies as a fragment in this one, so the three read as a set - proposal
-   B's treatment, with the scene, the ridge and the colours left as they
-   are. The layer paints the sky itself, so the photograph can take the
-   terracotta on the luminosity blend: the structure greyed and lifted,
-   fading out from the top right, over open sky and clear of the copy. */
+   skies in this one, so the three read as a set, with the scene, the ridge
+   and the colours left as they are. Since 10.11 (looked at as a preview
+   from 29.10, in place of a truss fragment) it is the fins of Companies
+   as light and shade alone (founders-fins, docs/tools/hz-relief.py), laid
+   over the terracotta on the soft-light blend, faintly, so the fins loom
+   in the sky - clearest at the top right, gone before the copy and
+   towards the ridge. The colour stays the sky's own. */
 .page--founders .fnd-photo {
   position: absolute;
   inset: 0;
@@ -6030,25 +6032,35 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     linear-gradient(179deg, var(--fnd-sky-high) 0%, var(--fnd-sky) 46%, var(--fnd-sky-low) 100%);
 }
 
-.page--founders .fnd-photo img {
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  object-fit: cover;
-  object-position: 50% 40%;
-  opacity: 0.42;
-  filter: saturate(0.2) contrast(0.95) brightness(1.18);
-  mix-blend-mode: luminosity;
-  -webkit-mask-image: radial-gradient(64% 86% at 90% 0%, #000 26%, transparent 76%);
-  mask-image: radial-gradient(64% 86% at 90% 0%, #000 26%, transparent 76%);
+.page--founders .fnd-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("founders-fins.webp") 50% 40% / cover no-repeat;
+  mix-blend-mode: soft-light;
+  opacity: 0.7;
+  -webkit-mask-image: radial-gradient(95% 120% at 88% 0%, #000 22%, rgba(0, 0, 0, 0.5) 52%, transparent 82%);
+  mask-image: radial-gradient(95% 120% at 88% 0%, #000 22%, rgba(0, 0, 0, 0.5) 52%, transparent 82%);
 }
 
-/* on a phone the copy fills the width: the fragment keeps to the corner */
+@media (max-width: 1023px) {
+  .page--founders .fnd-photo::after {
+    background-image: url("founders-fins-1024.webp");
+  }
+}
+
+/* on a phone the copy fills the width: the fins keep to the top */
 @media (max-width: 767px) {
-  .page--founders .fnd-photo img {
-    opacity: 0.32;
-    -webkit-mask-image: radial-gradient(70% 46% at 100% 0%, #000 20%, transparent 74%);
-    mask-image: radial-gradient(70% 46% at 100% 0%, #000 20%, transparent 74%);
+  .page--founders .fnd-photo::after {
+    opacity: 0.55;
+    -webkit-mask-image: radial-gradient(110% 60% at 80% 0%, #000 20%, transparent 80%);
+    mask-image: radial-gradient(110% 60% at 80% 0%, #000 20%, transparent 80%);
+  }
+}
+
+@media (max-width: 480px) and (max-aspect-ratio: 3/4) {
+  .page--founders .fnd-photo::after {
+    background-image: url("founders-fins-crop.webp");
   }
 }
 
@@ -6287,9 +6299,13 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
    Type and controls are cream on the night sky. Investors takes a cool
    light low in the lattice: the warm sunset on its blue read as a yellow
    cast. --hz-sky is the night the filled pills write their label in. */
+/* Companies' land (10.11): the grey of its closing sky, the team's
+   picture behind the walkers (#585a66), so the hero's mountains, How We
+   Work and the band read as one colour; the mauve of Figma it had before
+   is ?ground=mauve. */
 .page--companies {
   --hz-sky: #161822;
-  --hz-field: #5f545b;
+  --hz-field: #585a66;
   --hz-ink: 240, 235, 233;
   --hz-grade-top: #3a3452;
   --hz-grade-low: #d27a58;
@@ -6584,6 +6600,11 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 /* fb-aud2: the land of the Companies hero (--hz-field #5f545b), not the
    taupe #5f5853 it had been - the client saw the band's colour as off the page's */
 .page--companies {
+  --aud-ground-rgb: 88, 90, 102;
+}
+
+:root[data-ground="mauve"] .page--companies {
+  --hz-field: #5f545b;
   --aud-ground-rgb: 95, 84, 91;
 }
 
@@ -6709,56 +6730,6 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   margin: 0;
   color: rgba(28, 20, 25, 0.84);
   font: 400 var(--fs-body) / var(--lh-body) "Outfit", system-ui, sans-serif;
-}
-
-/* A preview, ?arch=help (the switch in script.js; the client, 10.10, of
-   the architecture behind About's Our Experience: "overlays coming up out
-   of the ground", more of them but not too many): a photograph of
-   architecture rises behind the points from the right, in greys under
-   the cream, so the page's accent and the copy keep the colour. Founders
-   have the warm slabs, Companies the facade grid, Investors the coffers.
-   Hidden, and so never fetched, without the switch. */
-.aud-help__arch {
-  display: none;
-}
-
-:root[data-arch="help"] :is(.page--founders, .page--companies, .page--investors) .aud-help {
-  isolation: isolate;
-  overflow: hidden;
-}
-
-:root[data-arch="help"] :is(.page--founders, .page--companies, .page--investors) .aud-help__arch {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  display: block;
-  pointer-events: none;
-  /* on the box, not the picture: the mask makes the box a group of its
-     own, and a picture multiplied inside it would only meet transparency */
-  mix-blend-mode: multiply;
-  -webkit-mask-image: radial-gradient(ellipse 72% 100% at 100% 62%, #000 18%, rgba(0, 0, 0, 0.5) 52%, transparent 86%);
-  mask-image: radial-gradient(ellipse 72% 100% at 100% 62%, #000 18%, rgba(0, 0, 0, 0.5) 52%, transparent 86%);
-}
-
-:root[data-arch="help"] :is(.page--founders, .page--companies, .page--investors) .aud-help__arch img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: grayscale(1) contrast(1.15);
-  opacity: 0.3;
-}
-
-/* a phone's tall single column: the picture covering it all was blown up
-   to a grey smear, so there it stands at the section's foot only, at its
-   own width, and rises out of the cream from below */
-@media (max-width: 767px) {
-  :root[data-arch="help"] :is(.page--founders, .page--companies, .page--investors) .aud-help__arch {
-    top: auto;
-    height: min(100%, 130vw);
-    -webkit-mask-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.6) 45%, #000);
-    mask-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.6) 45%, #000);
-  }
 }
 
 /* ---------- How We Work ---------- */
@@ -6971,6 +6942,17 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   filter: none;
 }
 
+/* Companies (10.11): the hero's photograph, mirrored (companies-arc-band),
+   held to its foot so the dusk's warm light is behind the title and the
+   arc of fins sweeps down on the right; a step darker so the title keeps
+   3:1 and more where the sky is lightest (3.45:1 at the least, on a
+   tablet). Neither the copper fins (not the page's colour) nor the
+   concrete fins (?hww=columns, read as bars) any more. */
+.page--companies .aud-work__photo img {
+  object-position: 50% 100%;
+  filter: brightness(0.88);
+}
+
 /* no veil: the fade is the mask's */
 :is(.page--companies, .page--investors) .aud-work__photo::after {
   content: none;
@@ -7150,8 +7132,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
    edge to window edge, along the foot at the left and the top at the
    right. The columns' rules and the lit column's band are drawn in the
    chart, under a mask of the cream above the curve, so they stop at the
-   line. From 1024px; under it, and with ?graph=rail, the list keeps the
-   rail. */
+   line. From 1024px; under it the list keeps the rail. */
 /* the sky under the line: the closing band's, at its top */
 .page--founders {
   --curve-sky: var(--fnd-sky-high);
@@ -7184,27 +7165,36 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 }
 
 @media (min-width: 1024px) {
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--companies, .page--investors) .aud-expertise__copy {
-    display: grid;
+  /* the head over the chart, the grey words under the title (10.11, as
+     What We Help's), so the chart has the section's whole width; beside
+     the title, on the columns of What We Help, as it was: ?excopy=side */
+  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__copy {
     grid-column: 1 / -1;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0 var(--aud-col-gap);
     max-width: none;
   }
 
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--companies, .page--investors) .aud-expertise__copy > p {
-    grid-column: 2 / -1;
+  :is(.page--founders, .page--companies, .page--investors) .aud-expertise__copy > p {
     max-width: 38rem;
+  }
+
+  :root[data-excopy="side"] :is(.page--founders, .page--companies, .page--investors) .aud-expertise__copy {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 var(--aud-col-gap);
+  }
+
+  :root[data-excopy="side"] :is(.page--founders, .page--companies, .page--investors) .aud-expertise__copy > p {
+    grid-column: 2 / -1;
   }
 
   /* the section ends at the curve's foot, over the band below so the
      line's lower half shows on it */
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-expertise {
+  :is(.page--founders, .page--investors) .aud-expertise {
     z-index: 1;
     padding-bottom: 0;
   }
 
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve {
+  :is(.page--founders, .page--investors) .aud-curve {
     --curve-plot: clamp(240px, 21vw, 330px);
     /* from a point up to its words: clear of the curve where it climbs
        most steeply across the column (an eighth of the plot) */
@@ -7222,15 +7212,15 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 
   /* past the column, out to the window's edges: the top at the right,
      with the band's sky under it, and the foot at the left */
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve::before,
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve::after {
+  :is(.page--founders, .page--investors) .aud-curve::before,
+  :is(.page--founders, .page--investors) .aud-curve::after {
     content: "";
     position: absolute;
     width: var(--aud-section-x);
     pointer-events: none;
   }
 
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve::before {
+  :is(.page--founders, .page--investors) .aud-curve::before {
     bottom: -3px;
     left: calc(100% - 1px);
     /* a little past the window edge (the root clips x): the gutter alone
@@ -7244,14 +7234,14 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     background: var(--curve-sky);
   }
 
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve::after {
+  :is(.page--founders, .page--investors) .aud-curve::after {
     right: 100%;
     bottom: -1px;
     height: 2px;
     background: var(--aud-accent);
   }
 
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve__chart {
+  :is(.page--founders, .page--investors) .aud-curve__chart {
     position: absolute;
     right: 0;
     bottom: 0;
@@ -7303,7 +7293,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     vector-effect: non-scaling-stroke;
   }
 
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list {
+  :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list {
     position: relative;
     z-index: 1;
     display: block;
@@ -7312,7 +7302,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 
   /* a column: the plot's height under the head's (its band and rule are
      in the chart) */
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li {
+  :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li {
     --curve-band: 0;
     position: absolute;
     top: calc(-1 * var(--curve-head));
@@ -7325,14 +7315,14 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     transition: --curve-band 360ms ease;
   }
 
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list:not(:hover) li:first-child,
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li:hover {
+  :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list:not(:hover) li:first-child,
+  :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li:hover {
     --curve-band: 1;
   }
 
   /* the point, on the curve: ringed in the cream so the line passes under
      it, and haloed in the lit column */
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li::before {
+  :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li::before {
     content: "";
     top: auto;
     bottom: calc(var(--curve-plot) * var(--y));
@@ -7348,13 +7338,13 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     transform: translate(-50%, 50%);
   }
 
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li::after {
+  :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li::after {
     content: none;
   }
 
   /* the words over the point, the number over the words, and a dotted lead
      down to the point */
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve__label {
+  :is(.page--founders, .page--investors) .aud-curve__label {
     position: absolute;
     right: clamp(6px, 0.7vw, 12px);
     bottom: calc(var(--curve-plot) * var(--y) + var(--curve-lead));
@@ -7370,7 +7360,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     transition: color 360ms ease;
   }
 
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve__label::after {
+  :is(.page--founders, .page--investors) .aud-curve__label::after {
     content: "";
     position: absolute;
     top: calc(100% + 8px);
@@ -7380,7 +7370,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     background: repeating-linear-gradient(180deg, rgba(var(--aud-accent-rgb), 0.7) 0 2px, transparent 2px 5px);
   }
 
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve__num {
+  :is(.page--founders, .page--investors) .aud-curve__num {
     display: block;
     color: var(--aud-ink-soft);
     font: 500 12px / 1 "Montserrat", system-ui, sans-serif;
@@ -7388,13 +7378,13 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     transition: color 360ms ease;
   }
 
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list:not(:hover) li:first-child .aud-curve__label,
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li:hover .aud-curve__label {
+  :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list:not(:hover) li:first-child .aud-curve__label,
+  :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li:hover .aud-curve__label {
     color: var(--aud-ink);
   }
 
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list:not(:hover) li:first-child .aud-curve__num,
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li:hover .aud-curve__num {
+  :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list:not(:hover) li:first-child .aud-curve__num,
+  :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li:hover .aud-curve__num {
     color: #b3401a;
   }
 }
@@ -7402,26 +7392,26 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 /* the drawing-in: the chart uncovered from the left over 1.8s, each point
    and its words a moment after the line passes their column */
 @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve__chart {
+  :is(.page--founders, .page--investors) .aud-curve__chart {
     clip-path: inset(0 100% 0 0);
     transition: clip-path 1800ms cubic-bezier(0.4, 0, 0.3, 1);
   }
 
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve.is-visible .aud-curve__chart {
+  :is(.page--founders, .page--investors) .aud-curve.is-visible .aud-curve__chart {
     clip-path: inset(-12px -8px -12px 0);
   }
 
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve::before {
+  :is(.page--founders, .page--investors) .aud-curve::before {
     clip-path: inset(-2px 100% 0 0);
     transition: clip-path 400ms linear 1700ms;
   }
 
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve.is-visible::before {
+  :is(.page--founders, .page--investors) .aud-curve.is-visible::before {
     clip-path: inset(-2px 0 0 0);
   }
 
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li::before,
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve__label {
+  :is(.page--founders, .page--investors) .aud-curve .aud-expertise__list li::before,
+  :is(.page--founders, .page--investors) .aud-curve__label {
     opacity: 0;
     transition:
       opacity 500ms ease calc(240ms + var(--i) * 230ms),
@@ -7429,8 +7419,8 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
       box-shadow 360ms ease;
   }
 
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve.is-visible .aud-expertise__list li::before,
-  :root:not([data-graph="rail"]) :is(.page--founders, .page--investors) .aud-curve.is-visible .aud-curve__label {
+  :is(.page--founders, .page--investors) .aud-curve.is-visible .aud-expertise__list li::before,
+  :is(.page--founders, .page--investors) .aud-curve.is-visible .aud-curve__label {
     opacity: 1;
   }
 }
@@ -7445,14 +7435,14 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
    list). The chosen circle is the lit one: white, ringed in the accent,
    its line drawn full. On arrival the core comes up first, then the
    circles round the ring with their lines drawing in to it. The head stands
-   over it on one row, as on Founders and Investors. From 1024px; under it,
-   with ?graph=rail and without script, the list keeps the rail. */
+   over it, as on Founders and Investors. From 1024px; under it
+   and without script, the list keeps the rail. */
 .aud-hub {
   display: none;
 }
 
 @media (min-width: 1024px) {
-  :root:not([data-graph="rail"]) .page--companies .aud-hub-wrap {
+  .page--companies .aud-hub-wrap {
     --hub-core: clamp(280px, 23vw, 340px);
     --hub-node: clamp(124px, 10.4vw, 152px);
     grid-column: 1 / -1;
@@ -7460,11 +7450,11 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     padding-left: 0;
   }
 
-  :root:not([data-graph="rail"]) .page--companies .aud-hub-wrap .aud-expertise__list {
+  .page--companies .aud-hub-wrap .aud-expertise__list {
     display: none;
   }
 
-  :root:not([data-graph="rail"]) .page--companies .aud-hub {
+  .page--companies .aud-hub {
     position: relative;
     display: block;
     height: clamp(600px, 50vw, 740px);
@@ -7596,8 +7586,8 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 /* the arrival: the core, then the circles round the ring, each line
    drawing in to the core as its circle comes */
 @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
-  :root:not([data-graph="rail"]) .page--companies .aud-hub__core,
-  :root:not([data-graph="rail"]) .page--companies .aud-hub__node {
+  .page--companies .aud-hub__core,
+  .page--companies .aud-hub__node {
     opacity: 0;
     scale: 0.86;
     transition:
@@ -7609,27 +7599,165 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
       box-shadow 360ms ease;
   }
 
-  :root:not([data-graph="rail"]) .page--companies .aud-hub__node {
+  .page--companies .aud-hub__node {
     --hub-delay: calc(260ms + var(--i) * 110ms);
   }
 
-  :root:not([data-graph="rail"]) .page--companies .aud-hub__link {
+  .page--companies .aud-hub__link {
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
     transition: stroke-dashoffset 700ms var(--ease-out) calc(420ms + var(--i) * 110ms), stroke 360ms ease;
   }
 
-  :root:not([data-graph="rail"]) .page--companies .aud-hub-wrap.is-visible .aud-hub__core,
-  :root:not([data-graph="rail"]) .page--companies .aud-hub-wrap.is-visible .aud-hub__node {
+  .page--companies .aud-hub-wrap.is-visible .aud-hub__core,
+  .page--companies .aud-hub-wrap.is-visible .aud-hub__node {
     opacity: 1;
     scale: 1;
   }
 
-  :root:not([data-graph="rail"]) .page--companies .aud-hub-wrap.is-visible .aud-hub__link {
+  .page--companies .aud-hub-wrap.is-visible .aud-hub__link {
     stroke-dashoffset: 0;
   }
 }
 /* === end Companies hub === */
+
+/* === Companies: the route on to the closing band (10.11) ===
+   The team liked how Founders' curve and Investors' ridge run into the
+   band below and missed it here. Under the hub, a ridge in the band's own
+   grey (the land's colour, --hz-field) with the orange route along its
+   crest: it draws in from the left as it comes into view, over three
+   summits lit by a dot each, as on the hero's route, and runs on at the
+   edges - along the foot at the left, at its height at the right - so
+   the section ends at the ridge's foot and the band rises out of it.
+   From 1024px; a phone keeps the list and the plain cream. */
+.page--companies {
+  --curve-sky: var(--hz-field);
+}
+
+.aud-ridge {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .page--companies .aud-expertise {
+    z-index: 1;
+    padding-bottom: 0;
+  }
+
+  .page--companies .aud-ridge {
+    --ridge-h: clamp(150px, 12.5vw, 200px);
+    position: relative;
+    display: block;
+    grid-column: 1 / -1;
+    height: var(--ridge-h);
+    margin-top: clamp(8px, 1.4vw, 24px);
+  }
+
+  .aud-ridge[data-reveal] {
+    opacity: 1;
+    translate: none;
+  }
+
+  /* past the column, out to the window's edges: at its height on the
+     right, with the band's sky under it, and along the foot on the left
+     (a little past the right edge, which the root clips) */
+  .page--companies .aud-ridge::before,
+  .page--companies .aud-ridge::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .page--companies .aud-ridge::before {
+    bottom: -3px;
+    left: calc(100% - 1px);
+    box-sizing: border-box;
+    width: calc(var(--aud-section-x) + 8px);
+    height: calc(var(--ridge-h) * var(--ridge-end) + 4px);
+    border-top: 2px solid var(--aud-accent);
+    background: var(--curve-sky);
+  }
+
+  .page--companies .aud-ridge::after {
+    right: 100%;
+    bottom: -1px;
+    width: var(--aud-section-x);
+    height: 2px;
+    background: var(--aud-accent);
+  }
+
+  .aud-ridge__chart {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .aud-ridge__area {
+    fill: var(--curve-sky);
+  }
+
+  .aud-ridge__line {
+    fill: none;
+    stroke: var(--aud-accent);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .aud-ridge__dot {
+    position: absolute;
+    bottom: calc(var(--ridge-h) * var(--y));
+    left: var(--x);
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--aud-accent);
+    box-shadow: 0 0 0 4px rgba(var(--aud-accent-rgb), 0.18), 0 0 16px rgba(var(--aud-accent-rgb), 0.6);
+    translate: -50% 50%;
+  }
+}
+
+/* the drawing-in, as the charts': uncovered from the left, each summit's
+   dot as the line reaches it, the run-on at the right last */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .aud-ridge__chart {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1800ms cubic-bezier(0.4, 0, 0.3, 1);
+  }
+
+  .aud-ridge.is-visible .aud-ridge__chart {
+    clip-path: inset(-12px -8px -12px 0);
+  }
+
+  .page--companies .aud-ridge::before {
+    clip-path: inset(-2px 100% 0 0);
+    transition: clip-path 400ms linear 1700ms;
+  }
+
+  .page--companies .aud-ridge.is-visible::before {
+    clip-path: inset(-2px 0 0 0);
+  }
+
+  .aud-ridge__dot {
+    opacity: 0;
+    scale: 0.4;
+    transition: opacity 500ms ease, scale 500ms cubic-bezier(0.3, 1.4, 0.5, 1);
+  }
+
+  .aud-ridge__dot:nth-of-type(1) { transition-delay: 380ms; }
+  .aud-ridge__dot:nth-of-type(2) { transition-delay: 860ms; }
+  .aud-ridge__dot:nth-of-type(3) { transition-delay: 1360ms; }
+
+  .aud-ridge.is-visible .aud-ridge__dot {
+    opacity: 1;
+    scale: 1;
+  }
+}
+/* === end Companies route on to the band === */
 
 /* ===================================================================
    ROUTE SHORTCUTS
@@ -15562,6 +15690,10 @@ main {
 .page--companies .aud-grow {
   --grow-sky-top: var(--hz-field);
   --grow-sky-mid: var(--hz-field);
+  --grow-sky-low: #646672;
+}
+
+:root[data-ground="mauve"] .page--companies .aud-grow {
   --grow-sky-low: #6a5e65;
 }
 
@@ -16616,30 +16748,29 @@ main {
 /* === ?hww=columns (a preview, the meeting of 25.10) ===
    How We Work on Investors read too quiet - one slate band after the lit
    hero. This shows it on the facade with vertical divisions proposed
-   earlier (Investors: the glass facade's mullions, band-investors;
-   Companies: the concrete facade's fins, band-companies), with as much
-   presence as the hero has: the photograph greyed and coloured by the
-   hero's own grade (--hz-grade-*, so it follows ?companies too), strong
+   earlier (the glass facade's mullions, band-investors; Companies' concrete
+   fins were set aside on 10.11), with as much presence as the hero has:
+   the photograph greyed and coloured by the hero's own grade (--hz-grade-*), strong
    behind the title and fading through the points into the page's ground,
    so neither band reads saturated next to a washed-out one. Founders
    keeps its own section. */
-:root[data-hww="columns"] :is(.page--companies, .page--investors) .aud-work__photo:not(.aud-work__photo--facade) {
+:root[data-hww="columns"] .page--investors .aud-work__photo:not(.aud-work__photo--facade) {
   display: none;
 }
 
-:root[data-hww="columns"] :is(.page--companies, .page--investors) .aud-work__photo--facade {
+:root[data-hww="columns"] .page--investors .aud-work__photo--facade {
   display: block;
   -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 30%, rgba(0, 0, 0, 0.6) 52%, rgba(0, 0, 0, 0.28) 76%, transparent 100%);
   mask-image: linear-gradient(180deg, #000 0%, #000 30%, rgba(0, 0, 0, 0.6) 52%, rgba(0, 0, 0, 0.28) 76%, transparent 100%);
 }
 
-:root[data-hww="columns"] :is(.page--companies, .page--investors) .aud-work__photo--facade img {
+:root[data-hww="columns"] .page--investors .aud-work__photo--facade img {
   filter: grayscale(1) contrast(1.08) brightness(0.62);
   mix-blend-mode: normal;
   opacity: 1;
 }
 
-:root[data-hww="columns"] :is(.page--companies, .page--investors) .aud-work__photo--facade::after {
+:root[data-hww="columns"] .page--investors .aud-work__photo--facade::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -16650,14 +16781,14 @@ main {
 }
 
 /* the title's band a touch deeper on the left, where the title stands */
-:root[data-hww="columns"] :is(.page--companies, .page--investors) .aud-work__photo--facade picture::after {
+:root[data-hww="columns"] .page--investors .aud-work__photo--facade picture::after {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(90deg, rgba(var(--aud-ground-rgb), 0.55), rgba(var(--aud-ground-rgb), 0.15) 50%, transparent 80%);
 }
 
-:root[data-hww="columns"] :is(.page--companies, .page--investors) .aud-work__photo--facade picture {
+:root[data-hww="columns"] .page--investors .aud-work__photo--facade picture {
   position: absolute;
   inset: 0;
 }
@@ -16797,12 +16928,12 @@ main {
   --grow-sky-drop: 0.009;
 }
 
-/* where the expertise chart's area runs into the band (Founders and
-   Investors, from 1024px), the band opens in that area's colour and eases
+/* where the expertise chart's area runs into the band (Founders,
+   Investors and Companies' ridge, from 1024px), the band opens in that area's colour and eases
    into the picture over its first 160px, so no edge shows where the two
    meet */
 @media (min-width: 1024px) {
-  :root:not([data-mountains], [data-graph="rail"]) :is(.page--founders, .page--investors) .grow-sky {
+  :root:not([data-mountains]) :is(.page--founders, .page--companies, .page--investors) .grow-sky {
     background:
       linear-gradient(180deg, var(--curve-sky) 0, transparent 160px),
       var(--grow-sky-image) 50% 100% / 100% auto no-repeat,
@@ -16825,50 +16956,6 @@ main {
 }
 /* === end closing band mountains === */
 
-/* === ?founders=fins (a preview, 29.10) ===
-   Founders with the fins of Companies (and the flutes of Investors) in
-   place of the truss fragment: the same relief as light and shade alone
-   (founders-fins, docs/tools/hz-relief.py), laid over the terracotta on
-   the soft-light blend, faintly, so the fins loom in the sky - clearest
-   at the top right, gone before the copy and towards the ridge. The
-   colour stays the sky's own. A CSS background, so only the preview
-   downloads it. */
-:root[data-founders="fins"] .page--founders .fnd-photo img {
-  display: none;
-}
-
-:root[data-founders="fins"] .page--founders .fnd-photo::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url("founders-fins.webp") 50% 40% / cover no-repeat;
-  mix-blend-mode: soft-light;
-  opacity: 0.7;
-  -webkit-mask-image: radial-gradient(95% 120% at 88% 0%, #000 22%, rgba(0, 0, 0, 0.5) 52%, transparent 82%);
-  mask-image: radial-gradient(95% 120% at 88% 0%, #000 22%, rgba(0, 0, 0, 0.5) 52%, transparent 82%);
-}
-
-@media (max-width: 1023px) {
-  :root[data-founders="fins"] .page--founders .fnd-photo::after {
-    background-image: url("founders-fins-1024.webp");
-  }
-}
-
-/* on a phone the copy fills the width: the fins keep to the top */
-@media (max-width: 767px) {
-  :root[data-founders="fins"] .page--founders .fnd-photo::after {
-    opacity: 0.55;
-    -webkit-mask-image: radial-gradient(110% 60% at 80% 0%, #000 20%, transparent 80%);
-    mask-image: radial-gradient(110% 60% at 80% 0%, #000 20%, transparent 80%);
-  }
-}
-
-@media (max-width: 480px) and (max-aspect-ratio: 3/4) {
-  :root[data-founders="fins"] .page--founders .fnd-photo::after {
-    background-image: url("founders-fins-crop.webp");
-  }
-}
-/* === end ?founders === */
 
 /* === ?hero=low (a preview, the meeting of 25.10) ===
    Optional, not for the launch: the photograph behind Home's headline a
@@ -16949,3 +17036,349 @@ main {
 }
 
 /* === end the copy of 25.10 === */
+
+/* === Contact: the coming-soon hero (10.11) ===
+   The team's wish: the hero of the coming-soon page here - the same dusk
+   photograph (background.webp) and its grade, the low sun breathing on the
+   left, faint stars, the warm overlay and the walker on the outcrop
+   looking out over the ranges (soon-mountains.svg, soon-overlay.svg, from
+   that page as they are). The hero takes the screen's height so the walker
+   has his ground under the copy; the copy keeps its place at the top left,
+   on the night sky and the dark slope. With reduced motion it stands still. */
+.page--contact .page-hero {
+  min-height: clamp(640px, 100svh, 980px);
+  align-items: start;
+  padding-top: clamp(150px, 23vh, 230px);
+  background: #080b13;
+}
+
+.soon-scene,
+.soon-scene::before,
+.soon-scene::after,
+.soon-scene__photo,
+.soon-scene__sun,
+.soon-scene__stars,
+.soon-scene__overlay,
+.soon-scene__mountains,
+.soon-scene__aurora {
+  position: absolute;
+  inset: 0;
+}
+
+.soon-scene {
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.soon-scene__photo {
+  background: url("background.webp") 55% 50% / cover no-repeat;
+  filter: saturate(1.04) contrast(1.08) brightness(0.94);
+  transform: scale(1.045);
+}
+
+.soon-scene__sun {
+  z-index: 3;
+  top: auto;
+  right: auto;
+  bottom: -10%;
+  left: -34vw;
+  width: min(96vw, 1240px);
+  height: min(84%, 860px);
+  border-radius: 999px;
+  background: radial-gradient(ellipse at 43% 40%, rgba(246, 146, 88, 0.94), rgba(204, 96, 52, 0.78) 26%, rgba(139, 66, 39, 0.42) 48%, rgba(86, 38, 26, 0.18) 66%, transparent 84%);
+  filter: blur(26px) saturate(0.78);
+  mix-blend-mode: plus-lighter;
+  opacity: 0.62;
+  transform-origin: 42% 50%;
+}
+
+.soon-scene::before {
+  content: "";
+  z-index: 2;
+  background:
+    linear-gradient(180deg, rgba(5, 13, 25, 0.9) 0%, rgba(8, 17, 31, 0.8) 28%, rgba(41, 36, 42, 0.62) 48%, rgba(121, 64, 43, 0.58) 68%, rgba(55, 24, 17, 0.68) 100%),
+    radial-gradient(980px 620px at 12% 60%, rgba(164, 84, 52, 0.36), rgba(104, 48, 32, 0.2) 48%, transparent 74%),
+    radial-gradient(900px 520px at 80% 38%, rgba(9, 18, 33, 0.56), rgba(8, 11, 19, 0.16) 58%, transparent 82%),
+    linear-gradient(90deg, rgba(8, 11, 19, 0.72), rgba(8, 11, 19, 0.32) 46%, rgba(8, 11, 19, 0.1) 76%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 55%, rgba(0, 0, 0, 0.42) 67%, transparent 82%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 55%, rgba(0, 0, 0, 0.42) 67%, transparent 82%);
+}
+
+.soon-scene::after {
+  content: "";
+  z-index: 7;
+  background:
+    linear-gradient(180deg, rgba(6, 12, 23, 0.5), rgba(6, 12, 23, 0.2) 24%, transparent 46%, rgba(8, 11, 19, 0.52) 100%),
+    radial-gradient(1120px 680px at 48% -8%, rgba(5, 13, 25, 0.66), transparent 70%),
+    radial-gradient(circle at 16% 58%, rgba(8, 11, 19, 0.22), transparent 48%),
+    linear-gradient(90deg, rgba(8, 11, 19, 0.24), transparent 52%);
+  -webkit-mask-image:
+    radial-gradient(ellipse 58% 48% at 16% 74%, transparent 0%, transparent 34%, rgba(0, 0, 0, 0.42) 52%, #000 74%),
+    linear-gradient(180deg, #000 0%, #000 55%, rgba(0, 0, 0, 0.28) 68%, transparent 82%);
+  mask-image:
+    radial-gradient(ellipse 58% 48% at 16% 74%, transparent 0%, transparent 34%, rgba(0, 0, 0, 0.42) 52%, #000 74%),
+    linear-gradient(180deg, #000 0%, #000 55%, rgba(0, 0, 0, 0.28) 68%, transparent 82%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+.soon-scene__aurora {
+  z-index: 4;
+  width: 54vw;
+  height: 38%;
+  border-radius: 999px;
+  filter: blur(34px);
+  opacity: 0.36;
+  mix-blend-mode: screen;
+}
+
+.soon-scene__aurora--one {
+  top: 46%;
+  left: -18vw;
+  background: rgba(172, 92, 58, 0.18);
+}
+
+.soon-scene__aurora--two {
+  top: 6%;
+  right: -22vw;
+  left: auto;
+  background: rgba(48, 84, 122, 0.28);
+}
+
+.soon-scene__stars {
+  z-index: 5;
+  -webkit-mask-image: linear-gradient(180deg, #000 0 50%, transparent 78%);
+  mask-image: linear-gradient(180deg, #000 0 50%, transparent 78%);
+}
+
+.soon-scene__stars span {
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  width: calc(2px * var(--s));
+  height: calc(2px * var(--s));
+  border-radius: 50%;
+  background: rgba(243, 239, 237, var(--a));
+  box-shadow: 0 0 calc(8px * var(--s)) rgba(255, 176, 119, calc(var(--a) * 0.7));
+  opacity: calc(var(--a) * 0.52);
+  transform: translate(-50%, -50%) scale(0.86);
+}
+
+.soon-scene__overlay {
+  z-index: 6;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  opacity: 0.2;
+  filter: sepia(0.22) saturate(1.8) hue-rotate(-26deg) brightness(0.92);
+  mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 48%, rgba(0, 0, 0, 0.5) 64%, transparent 82%);
+  mask-image: linear-gradient(90deg, #000 0%, #000 48%, rgba(0, 0, 0, 0.5) 64%, transparent 82%);
+}
+
+.soon-scene__mountains {
+  z-index: 7;
+  top: auto;
+  right: auto;
+  bottom: clamp(-148px, -13.2vh, -74px);
+  left: 50%;
+  width: max(100vw, 1443px);
+  height: auto;
+  max-width: none;
+  transform: translate3d(-50%, 0, 0);
+  opacity: 0.98;
+  filter: saturate(1.04) contrast(1.08) brightness(1.02) drop-shadow(0 -28px 58px rgba(8, 11, 19, 0.4));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .soon-scene__photo {
+    animation: soon-breathe 28s ease-in-out infinite alternate;
+  }
+
+  .soon-scene__sun {
+    animation: soon-sun 7.5s ease-in-out infinite alternate;
+  }
+
+  .soon-scene__aurora--one {
+    animation: soon-drift-one 16s ease-in-out infinite alternate;
+  }
+
+  .soon-scene__aurora--two {
+    animation: soon-drift-two 20s ease-in-out infinite alternate;
+  }
+
+  .soon-scene__stars {
+    animation: soon-stars 24s ease-in-out infinite alternate;
+  }
+
+  .soon-scene__stars span {
+    animation: soon-star var(--d) ease-in-out var(--delay) infinite;
+  }
+
+  .soon-scene__overlay {
+    animation: soon-overlay 26s ease-in-out infinite alternate;
+  }
+
+  .soon-scene__mountains {
+    animation: soon-mountains 14s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes soon-breathe {
+  from { transform: scale(1.045) translate3d(-0.18%, -0.14%, 0); }
+  to { transform: scale(1.06) translate3d(0.24%, 0.18%, 0); }
+}
+
+@keyframes soon-sun {
+  from { opacity: 0.54; transform: translate3d(-1.5vw, 1.8vh, 0) scale(0.96); }
+  48% { opacity: 1; }
+  to { opacity: 0.68; transform: translate3d(2.4vw, -1.2vh, 0) scale(1.18); }
+}
+
+@keyframes soon-drift-one {
+  from { transform: translate3d(0, 0, 0) rotate(-8deg); }
+  to { transform: translate3d(10vw, -5vh, 0) rotate(5deg); }
+}
+
+@keyframes soon-drift-two {
+  from { transform: translate3d(0, 0, 0) rotate(8deg); }
+  to { transform: translate3d(-8vw, 6vh, 0) rotate(-6deg); }
+}
+
+@keyframes soon-stars {
+  from { transform: translate3d(-0.55vw, -0.32vh, 0); }
+  to { transform: translate3d(0.68vw, 0.42vh, 0); }
+}
+
+@keyframes soon-star {
+  0%, 100% { opacity: calc(var(--a) * 0.24); transform: translate(-50%, -50%) scale(0.72); }
+  34% { opacity: calc(var(--a) * 0.72); transform: translate(-50%, -50%) scale(1); }
+  53% { opacity: 1; transform: translate(-50%, -50%) scale(1.42); }
+  76% { opacity: calc(var(--a) * 0.16); transform: translate(-50%, -50%) scale(0.82); }
+}
+
+@keyframes soon-overlay {
+  from { transform: translate3d(-1.5%, -1%, 0) scale(1.03); }
+  to { transform: translate3d(1.5%, 1%, 0) scale(1.06); }
+}
+
+@keyframes soon-mountains {
+  from { transform: translate3d(-50%, 0, 0) scale(1); }
+  to { transform: translate3d(-50%, 1.2vh, 0) scale(1.012); }
+}
+
+/* From a laptop the ways to reach the firm stand as on the coming-soon
+   page: in one row at the hero's lower right, on the dark ground in front
+   of the walker, the LinkedIn badge closing it; over the sunset under the
+   heading they fell to 2.2:1. The copy box takes the hero's height (its
+   paddings aside), so the row is set from its foot. */
+@media (min-width: 1024px) {
+  .page--contact .page-hero__content {
+    align-self: stretch;
+    width: 100%;
+    max-width: none;
+  }
+
+  .page--contact .contact-channels {
+    position: absolute;
+    right: calc(36px + clamp(32px, 3vw, 48px));
+    bottom: calc(clamp(28px, 5vh, 56px) - clamp(80px, 12vh, 140px));
+    display: flex;
+    align-items: flex-start;
+    gap: clamp(32px, 3.4vw, 56px);
+    margin: 0;
+  }
+
+  .page--contact .contact-social {
+    position: absolute;
+    right: 0;
+    bottom: calc(clamp(28px, 5vh, 56px) - clamp(80px, 12vh, 140px) + 6px);
+    margin: 0;
+  }
+}
+
+/* a phone or tablet: the page's lighter file, the photograph held a little
+   right, the ranges wider as on the coming-soon page, and room under the
+   copy for the walker and his outcrop */
+@media (max-width: 1023px) {
+  .page--contact .page-hero {
+    min-height: 0;
+    padding-bottom: clamp(300px, 64vw, 470px);
+  }
+
+  .soon-scene__photo {
+    background-image: url("background-1920.webp");
+    background-position: 63% 50%;
+  }
+
+  .soon-scene::before {
+    background:
+      linear-gradient(180deg, rgba(5, 13, 25, 0.92) 0%, rgba(8, 17, 31, 0.84) 30%, rgba(38, 32, 38, 0.66) 50%, rgba(92, 44, 32, 0.6) 70%, rgba(40, 18, 14, 0.72) 100%),
+      radial-gradient(720px 520px at 4% 64%, rgba(130, 61, 42, 0.3), rgba(76, 35, 27, 0.2) 50%, transparent 76%),
+      radial-gradient(560px 360px at 80% 30%, rgba(9, 18, 33, 0.58), transparent 78%),
+      linear-gradient(90deg, rgba(8, 11, 19, 0.7), rgba(8, 11, 19, 0.28) 58%, transparent 100%);
+  }
+
+  .soon-scene__sun {
+    bottom: -18%;
+    left: -48vw;
+    width: 152vw;
+    height: 66%;
+  }
+
+  .soon-scene__mountains {
+    bottom: clamp(-108px, -12vw, -62px);
+    width: max(150vw, 1060px);
+    opacity: 0.9;
+  }
+}
+
+@media (max-width: 520px) {
+  .soon-scene__sun {
+    bottom: -14%;
+    left: -68vw;
+    width: 178vw;
+    height: 58%;
+    filter: blur(23px);
+  }
+}
+
+/* the ways to reach the firm stand in the sun's reach on a phone or
+   tablet: it breathes there at the depth it rests at, so the small type
+   keeps 4.5:1 and more at its brightest */
+@media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+  .soon-scene__sun {
+    animation-name: soon-sun-soft;
+  }
+}
+
+@keyframes soon-sun-soft {
+  from { opacity: 0.46; transform: translate3d(-1.5vw, 1.8vh, 0) scale(0.96); }
+  48% { opacity: 0.62; }
+  to { opacity: 0.5; transform: translate3d(2.4vw, -1.2vh, 0) scale(1.08); }
+}
+
+/* a phone on its side: one short screen, the walker's outcrop lower, and
+   the copy across the sunset's middle, so the photograph a step darker
+   and the sun lower */
+@media (max-width: 1023px) and (max-height: 500px) and (orientation: landscape) {
+  .page--contact .page-hero {
+    padding-bottom: clamp(200px, 30vw, 260px);
+  }
+
+  .soon-scene__photo {
+    filter: saturate(1.04) contrast(1.08) brightness(0.66);
+  }
+
+  .soon-scene__sun {
+    bottom: -40%;
+    opacity: 0.4;
+  }
+
+  .soon-scene__mountains {
+    width: max(110vw, 900px);
+  }
+}
+/* === end Contact coming-soon hero === */

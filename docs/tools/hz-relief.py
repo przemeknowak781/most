@@ -14,13 +14,13 @@
 #                      about a middle grey and lit evenly: the Founders
 #                      sky lays it over its terracotta on the soft-light
 #                      blend, faintly, so the fins loom in the sky
-#                      (?founders=fins, a preview)
+#                      (Founders' hero since 10.11)
 #
 # One tall frame, 1920 x 2742: the top half is the hero, the bottom half
-# How We Work. On Companies How We Work has a light of its own (5.11, the
-# team found the cool band "a little sad"): the same fins in a warm, low
-# evening light raking across the band's top - copper on a dusky rose sky
-# light - dimmed behind the title so the cream type keeps 3:1 and more.
+# How We Work. Since 10.11 Companies' hero and How We Work are a photograph
+# (companies-arc*.webp): companies-fins stays as the preview
+# ?companies=fins, and companies-fins-band - the same fins in a warm, low
+# evening light (5.11) - is no longer on the site; it can still be made.
 #
 #   python3 docs/tools/hz-relief.py <out dir> [name ...]
 #     (with names, only those files: e.g. companies-fins-band)

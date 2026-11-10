@@ -1157,36 +1157,36 @@ function setupPortraitProposal() {
 
 /* Alternatives for the client to look at, off by default (client, 6.10):
    ?titles=smaller the titles a size smaller, ?hero=low Home's mountain
-   photograph lower behind the headline, ?expertise=top the
-   drawing above the name on Home's Our Expertise cards, as it was before
-   it moved beside the words (31.10), ?excta=next|most
-   a call to action under them, ?scroll=peek|cue
-   a cue to scroll on Our Team's hero, ?founders=fins Companies' fins
-   looming in Founders' sky in place of the truss, ?hww=columns
-   How We Work on Companies and Investors on a facade's vertical
-   divisions, ?footer=up the closing band's photograph lower behind
-   the walkers' ridge, ?mountains=drawn|none the audience pages' closing
-   band with the drawn ranges behind the ridge (shipped 31.10-5.11, before
-   the team's own skies) or with neither, ?graph=rail the audience
-   pages' Our Expertise as the list on the rail, as it was before Founders'
-   growth curve (31.10), Investors' ridge and Companies' hub (5.11; the map
-   of the road's stages, 10.10, was set aside on 31.10),
-   ?rail=dots
-   small dots on the audience pages' Our Expertise rail, ?arch=help
-   architecture coming up out of the ground behind their What We Help You
-   Achieve, ?order=work Our Expertise's How We Work above Our Areas,
-   ?stats=rows|grid Home's hero figures on a phone divided by dotted
-   rules and ?clients=center|right Who We Work With's head centred or on
-   the right - each as a data attribute on <html> the stylesheet answers. #titles-smaller and the
-   like do the same where a preview host drops the query. Without one the
-   page is as it ships. (The titles in capitals and the ridges drawn
-   straight were looked at and set aside, 7.10; Who we are on a light
-   ground and Our Expertise's larger drawings, tiles and light grounds,
-   25.10, the homepage staying dark; the Investors tints and the
-   Companies colours, 29.10, when both pages took their lit reliefs; the
-   audience pages built as the rest of the site, their colour as light on
-   the navy land, 5.11. The routes' dots in the menu in each route's
-   colour shipped on 5.11.)
+   photograph lower behind the headline, ?expertise=top the drawing above
+   the name on Home's Our Expertise cards, as it was before it moved beside
+   the words (31.10), ?excopy=side the audience pages' Our Expertise words
+   beside the title, as they were before they went under it (10.11),
+   ?excta=next|most a call to action under Home's cards, ?scroll=peek|cue
+   a cue to scroll on Our Team's hero, ?companies=fins Companies' hero on
+   the generated fins (29.10) rather than the team's photograph of the arc
+   (5.11), ?ground=mauve Companies' land in Figma's mauve rather than the
+   closing band's grey (10.11), ?hww=columns How We Work on Investors on a
+   glass facade's mullions, ?footer=up the closing band's photograph lower
+   behind the walkers' ridge, ?mountains=drawn|none the audience pages'
+   closing band with the drawn ranges behind the ridge (shipped 31.10-5.11,
+   before the team's own skies) or with neither, ?rail=dots small dots on
+   the audience pages' Our Expertise rail (a phone's list), ?order=work Our
+   Expertise's How We Work above Our Areas, ?stats=rows|grid Home's hero
+   figures on a phone divided by dotted rules and ?clients=center|right Who
+   We Work With's head centred or on the right - each as a data attribute
+   on <html> the stylesheet answers. #titles-smaller and the like do the
+   same where a preview host drops the query. Without one the page is as
+   it ships. (Set aside: the titles in capitals and the ridges drawn
+   straight, 7.10; Who we are on a light ground and Our Expertise's larger
+   drawings, tiles and light grounds, 25.10, the homepage staying dark; the
+   Investors tints and the Companies colours, 29.10, when both pages took
+   their lit reliefs; the audience pages built as the rest of the site,
+   their colour as light on the navy land, 5.11; on 10.11 the truss in
+   Founders' sky, the architecture behind What We Help You Achieve, the
+   list on the rail in place of the audience pages' charts on a laptop,
+   and the concrete fins behind Companies' How We Work. Shipped: the
+   routes' dots in the menu in each route's colour, 5.11; the fins looming
+   in Founders' sky, 10.11.)
    ?preview (or either of them) brings up a panel that switches them in
    place; while it is up, the links to the site's pages carry the choice
    and the panel, so the whole site can be walked in an alternative. */
@@ -1194,16 +1194,15 @@ const PREVIEW_SWITCHES = {
   titles: ["smaller"],
   hero: ["low"],
   expertise: ["top"],
+  excopy: ["side"],
   excta: ["next", "most"],
   scroll: ["peek", "cue"],
-  founders: ["fins"],
   companies: ["fins"],
+  ground: ["mauve"],
   hww: ["columns"],
   footer: ["up"],
   mountains: ["drawn", "none"],
-  graph: ["rail"],
   rail: ["dots"],
-  arch: ["help"],
   order: ["work"],
   stats: ["rows", "grid"],
   clients: ["center", "right"],
@@ -1233,12 +1232,11 @@ const PREVIEW_PANEL = [
   ["clients", ["index"], "Who We Work With: tekst", [["", "po lewej"], ["center", "na środku"], ["right", "po prawej"]]],
   ["scroll", ["our-team"], "Zachęta do przewinięcia w hero", [["", "bez"], ["peek", "portrety spod hero"], ["cue", "napis ze strzałką"]]],
   ["order", ["expertise"], "Kolejność sekcji", [["", "obszary, potem How We Work"], ["work", "najpierw How We Work"]]],
-  ["founders", ["for-founders"], "Hero: architektura w niebie", [["", "fragment kratownicy"], ["fins", "lamele majaczące w tle"]]],
   ["companies", ["for-companies"], "Hero: tło", [["", "zdjęcie lameli na łuku (5.11)"], ["fins", "lamele generowane (jak było)"]]],
-  ["hww", ["for-companies", "for-investors"], "How We Work: tło", [["", "obecne"], ["columns", "fasada z pionowymi podziałami"]]],
-  ["arch", AUDIENCE_PAGES, "What We Help You Achieve", [["", "obecne"], ["help", "architektura z tła"]]],
-  ["rail", AUDIENCE_PAGES, "Our Expertise: kropki przy punktach", [["", "tylko na końcach"], ["dots", "małe przy każdym punkcie"]]],
-  ["graph", AUDIENCE_PAGES, "Our Expertise: wykres", [["", "wykres (Founders krzywa, Companies węzeł, Investors grzbiet)"], ["rail", "lista z linią (jak było)"]]],
+  ["ground", ["for-companies"], "Kolor gór i tła strony", [["", "szary jak w stopce"], ["mauve", "śliwkowy (jak było)"]]],
+  ["hww", ["for-investors"], "How We Work: tło", [["", "obecne"], ["columns", "fasada z pionowymi podziałami"]]],
+  ["excopy", AUDIENCE_PAGES, "Our Expertise: szary tekst", [["", "pod tytułem"], ["side", "obok tytułu (jak było)"]]],
+  ["rail", AUDIENCE_PAGES, "Our Expertise na telefonie: kropki przy punktach", [["", "tylko na końcach"], ["dots", "małe przy każdym punkcie"]]],
   ["mountains", AUDIENCE_PAGES, "Pas „Want to Grow Together?”: góry w tle", [["", "tła od Was (zdjęcia)"], ["drawn", "rysowane pasma"], ["none", "bez gór"]]],
   ["footer", ["index", "about-us", "expertise", "our-team"], "Pas końcowy: zdjęcie", [["", "obecne"], ["up", "pierwszy plan wyżej"]]],
   ["titles", "all", "Tytuły", [["", "obecne"], ["smaller", "mniejsze"]]],
@@ -1537,8 +1535,7 @@ function markCopyReview(data) {
    the nine areas stand on a ring round a core, each with a line to it, and
    the core tells the chosen one's detail. Built from the list in the markup
    (each item's .aud-hub__name is its circle's words, its .aud-hub__more the
-   detail), which stays what a phone, ?graph=rail and a page without script
-   show. While the section is in view the hub shows the areas in turn, one
+   detail), which stays what a phone and a page without script show. While the section is in view the hub shows the areas in turn, one
    every 4.5s; pointing at one, focusing or clicking it chooses it and stops
    the round, and from then on the core is a polite live region. With
    reduced motion it does not go round. The lines are measured in pixels,

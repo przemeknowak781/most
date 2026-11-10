@@ -220,10 +220,6 @@
 
       <!-- WHAT WE HELP YOU ACHIEVE: the Figma list, a rule beside each point -->
       <section class="aud-help" id="what-we-help" aria-labelledby="aud-help-title">
-        <!-- ?arch=help: architecture coming up out of the ground (preview) -->
-        <div class="aud-help__arch" aria-hidden="true">
-          <img src="band-companies.webp" srcset="band-companies-640.webp 640w, band-companies-1024.webp 1024w, band-companies.webp 1920w" sizes="100vw" alt="" width="1920" height="688" loading="lazy" decoding="async">
-        </div>
         <header class="aud-help__head">
           <h2 class="aud-help__title" id="aud-help-title">What We Help You Achieve</h2>
           <p class="aud-help__lede">From operations and hiring to capital raises and cross-border&nbsp;expansion.</p>
@@ -241,25 +237,13 @@
         </ul>
       </section>
 
-      <!-- HOW WE WORK: on the page's colour, with the hero's architecture (the
-           same relief, continued) along its top - the
-           wireframe's "photo in the section background"; the points sit on one
-           trail. -->
+      <!-- HOW WE WORK: on the page's colour, with the hero's photograph along
+           its top, mirrored (10.11): the dusk sky behind the title, the arc
+           of fins sweeping down on the right - the wireframe's "photo in
+           the section background"; the points sit on one trail. -->
       <section class="aud-work aud-work--companies" aria-labelledby="aud-work-title">
         <div class="aud-work__photo" aria-hidden="true">
-          <picture>
-            <source media="(max-width: 480px) and (max-aspect-ratio: 3/4)" srcset="companies-fins-band-crop.webp" width="992" height="1371" />
-            <img src="companies-fins-band.webp" srcset="companies-fins-band-640.webp 640w, companies-fins-band-1024.webp 1024w, companies-fins-band.webp 1920w" sizes="(min-width: 1024px) 1920px, (orientation: portrait) 1000px, 100vw" width="1920" height="1371" alt="" loading="lazy" decoding="async" />
-          </picture>
-        </div>
-        <!-- the concrete facade's vertical fins, shown only by ?hww=columns
-             (styles.css); below a laptop its 2.8:1 band covers a box about
-             70vw tall, hence 196vw -->
-        <div class="aud-work__photo aud-work__photo--facade" aria-hidden="true">
-          <picture>
-            <source media="(max-width: 639px) and (orientation: portrait)" srcset="band-companies-crop.webp" width="928" height="688" />
-            <img src="band-companies.webp" srcset="band-companies-640.webp 640w, band-companies-1024.webp 1024w, band-companies.webp 1920w" sizes="(min-width: 1024px) 1920px, 196vw" width="1920" height="688" alt="" loading="lazy" decoding="async" />
-          </picture>
+          <img src="companies-arc-band.webp" srcset="companies-arc-band-640.webp 640w, companies-arc-band-1024.webp 1024w, companies-arc-band.webp 1600w" sizes="(min-width: 1024px) 1920px, 100vw" width="1600" height="900" alt="" loading="lazy" decoding="async" />
         </div>
         <header class="aud-work__head">
           <h2 class="aud-work__title" id="aud-work-title">How We Work with Companies</h2>
@@ -311,7 +295,7 @@
                the chosen one's detail (script.js, "Expertise hub", builds it
                from this list). It shows them in turn while the section is in
                view; pointing at one, focusing or clicking it chooses it and
-               stops the round. The list is what a phone, ?graph=rail and a
+               stops the round. The list is what a phone and a
                page without script show, on the rail. Each item's name is what
                its circle says, the rest is the core's detail. -->
           <div class="aud-expertise__list-wrap aud-hub-wrap" data-reveal>
@@ -326,6 +310,20 @@
               <li><span class="aud-hub__name">IP protection, licensing, and technology&nbsp;agreements</span></li>
               <li><span class="aud-hub__name">M&amp;A, corporate transactions, and due&nbsp;diligence</span></li>
             </ol>
+          </div>
+          <!-- the route on to the closing band (10.11): under the hub a ridge
+               in the band's grey, its line drawn in from the left, rising
+               over three summits to the right edge; the section ends at its
+               foot, so the band rises out of it as on Founders and Investors
+               (styles.css). From 1024px. -->
+          <div class="aud-ridge" style="--ridge-end: 0.62" aria-hidden="true" data-reveal>
+            <svg class="aud-ridge__chart" viewBox="0 0 700 100" preserveAspectRatio="none" focusable="false">
+              <path class="aud-ridge__area" d="M0 104 L0 100 C55 100 55 66 110 66 C152.5 66 152.5 85 195 85 C247.5 85 247.5 48 300 48 C347.5 48 347.5 70 395 70 C457.5 70 457.5 20 520 20 C562.5 20 562.5 48 605 48 C652.5 48 652.5 38 700 38 L700 40 L704 40 L704 104 Z" />
+              <path class="aud-ridge__line" d="M0 100 C55 100 55 66 110 66 C152.5 66 152.5 85 195 85 C247.5 85 247.5 48 300 48 C347.5 48 347.5 70 395 70 C457.5 70 457.5 20 520 20 C562.5 20 562.5 48 605 48 C652.5 48 652.5 38 700 38" />
+            </svg>
+            <span class="aud-ridge__dot" style="--x: 15.71%; --y: 0.34; --i: 0"></span>
+            <span class="aud-ridge__dot" style="--x: 42.86%; --y: 0.52; --i: 1"></span>
+            <span class="aud-ridge__dot" style="--x: 74.29%; --y: 0.8; --i: 2"></span>
           </div>
         </div>
       </section>
