@@ -1185,12 +1185,11 @@ function setupPortraitProposal() {
    (5.11), ?ground=mauve Companies' land in Figma's mauve rather than the
    closing band's grey (10.11), ?hww=columns How We Work on Investors on a
    glass facade's mullions, ?footer=up the closing band's photograph lower
-   behind the walkers' ridge, ?mountains=drawn|none the audience pages'
-   closing band with the drawn ranges behind the ridge (shipped 31.10-5.11,
-   before the team's own skies) or with neither, ?rail=dots small dots on
+   behind the walkers' ridge, ?rail=dots small dots on
    the audience pages' Our Expertise rail (a phone's list), ?order=work Our
-   Expertise's How We Work above Our Areas and ?clients=center|right Who
-   We Work With's head centred or on the right - each as a data attribute
+   Expertise's How We Work above Our Areas, ?clients=center|right Who We
+   Work With's head centred or on the right and ?m=outfit|raleway a straight
+   capital M in the headings, as the logo's - each as a data attribute
    on <html> the stylesheet answers. #titles-smaller and the like do the
    same where a preview host drops the query. Without one the page is as
    it ships. (Set aside: the titles in capitals and the ridges drawn
@@ -1201,7 +1200,8 @@ function setupPortraitProposal() {
    their colour as light on the navy land, 5.11; on 10.11 the truss in
    Founders' sky, the architecture behind What We Help You Achieve, the
    list on the rail in place of the audience pages' charts on a laptop,
-   and the concrete fins behind Companies' How We Work. Shipped: the
+   and the concrete fins behind Companies' How We Work; on 16.11 the
+   audience pages' closing band with drawn ranges or a plain sky. Shipped: the
    routes' dots in the menu in each route's colour, 5.11; the fins looming
    in Founders' sky, 10.11; Our Expertise's words under its title and
    Home's hero figures in rows on a phone, 16.11.)
@@ -1218,10 +1218,10 @@ const PREVIEW_SWITCHES = {
   ground: ["mauve"],
   hww: ["columns"],
   footer: ["up"],
-  mountains: ["drawn", "none"],
   rail: ["dots"],
   order: ["work"],
   clients: ["center", "right"],
+  m: ["outfit", "raleway"],
 };
 
 /* The panel's words, in Polish as the client reviews in it. Each switch
@@ -1251,10 +1251,52 @@ const PREVIEW_PANEL = [
   ["ground", ["for-companies"], "Kolor gór i tła strony", [["", "szary jak w stopce"], ["mauve", "śliwkowy (jak było)"]]],
   ["hww", ["for-investors"], "How We Work: tło", [["", "obecne"], ["columns", "fasada z pionowymi podziałami"]]],
   ["rail", AUDIENCE_PAGES, "Our Expertise na telefonie: kropki przy punktach", [["", "tylko na końcach"], ["dots", "małe przy każdym punkcie"]]],
-  ["mountains", AUDIENCE_PAGES, "Pas „Want to Grow Together?”: góry w tle", [["", "tła od Was (zdjęcia)"], ["drawn", "rysowane pasma"], ["none", "bez gór"]]],
   ["footer", ["index", "about-us", "expertise", "our-team"], "Pas końcowy: zdjęcie", [["", "obecne"], ["up", "pierwszy plan wyżej"]]],
   ["titles", "all", "Tytuły", [["", "obecne"], ["smaller", "mniejsze"]]],
+  ["m", "all", "Wielka litera M w nagłówkach", [["", "obecna (Urbanist)"], ["outfit", "prosta, z kroju Outfit (jak w logo)"], ["raleway", "prosta, z kroju Raleway"]]],
 ];
+
+/* ?m=outfit|raleway (a preview, 16.11): the team found the headings'
+   capital M - Urbanist's, its legs splayed - unlike the logo's, whose legs
+   stand upright and whose middle runs down to the baseline. The body's
+   Outfit and the labels' Montserrat already draw it so. These put a
+   straight M in Urbanist's place and nothing else: an extra Urbanist face
+   holding only that letter (unicode-range), the M of Outfit (as the logo)
+   or of Raleway (the team's find), each a few kilobytes and scaled to
+   Urbanist's capitals (70% of the em: Outfit's are 67.6%, Raleway's 71%).
+   Faces cannot answer a selector, so the face is written in while the
+   switch is on, and taken out again when it is turned off. */
+function setupCapitalM() {
+  const root = document.documentElement;
+  /* per weight the site loads: Outfit drawn a step lighter (400 beside
+     Urbanist's 500, 500 beside its 600) so its strokes match; Raleway's
+     variable file at the same weights */
+  const faces = {
+    outfit: { 500: "m-outfit-400.woff2", 600: "m-outfit-500.woff2", size: "103.5%" },
+    raleway: { 500: "m-raleway.woff2", 600: "m-raleway.woff2", size: "98.6%" },
+  };
+  let style = null;
+  const apply = () => {
+    const face = faces[root.dataset.m];
+    if (!face) {
+      if (style) style.remove();
+      style = null;
+      return;
+    }
+    if (!style) {
+      style = document.createElement("style");
+      document.head.appendChild(style);
+    }
+    /* one face for each weight the site loads, as Google's own faces are
+       declared: the browser takes the last face that covers a letter only
+       among faces declared alike */
+    style.textContent = [500, 600].map((weight) =>
+      `@font-face{font-family:"Urbanist";src:url("${face[weight]}") format("woff2");font-weight:${weight};font-style:normal;unicode-range:U+004D;size-adjust:${face.size};font-display:swap}`
+    ).join("");
+  };
+  apply();
+  new MutationObserver(apply).observe(root, { attributes: true, attributeFilter: ["data-m"] });
+}
 
 /* ?order=work (a preview, the review of 16.10): on Our Expertise, How We
    Work comes before Our Areas, so a reader who stops in the long areas
@@ -1821,6 +1863,7 @@ setupAudienceTriptych();
 setupAudienceConnectors();
 setupMemberReadmore();
 setupPreviewSwitches();
+setupCapitalM();
 setupExpertiseOrder();
 setupExpertiseHub();
 setupPortraitProposal();
