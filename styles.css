@@ -17343,3 +17343,139 @@ main {
   }
 }
 /* === end Contact coming-soon hero === */
+
+/* === Hero variants (16.11, a preview) ===
+   The team found the lines in Founders' and Investors' skies too alike and
+   asked to look at two directions, keeping today's three heroes as they
+   are, and at a few more ideas for Companies:
+     ?hero=same      one pattern on all three pages: the arc of fins of
+                     Companies' hero, in Founders' sky as light and shade
+                     on the terracotta (mirrored, so the copy stands on
+                     open sky) and on Investors in its slate blue
+     ?hero=distinct  a picture of its own on each page: Founders a
+                     concrete staircase climbing to the right (light and
+                     shade on the terracotta), Companies its arc of fins,
+                     Investors glass towers seen from below, in slate blue
+     ?companies=grid|lattice|slabs  Companies' hero on a grid facade, a
+                     glass roof's lattice or stepped floor slabs, in the
+                     page's grey (beside ?companies=fins, the generated fins)
+   Photographs from the project's library graded into each page's palette
+   (scratchpad tool, grade.py: luminance mapped through the page's
+   colours, or as light and shade about a middle grey for Founders' soft-
+   light sky). Each lies over the hero's own picture, which stays as it
+   ships without the switch. */
+:root[data-hero="same"] .page--founders .fnd-photo::after {
+  background-image: url("hero-founders-arc.webp");
+  background-position: 70% 30%;
+  opacity: 0.85;
+}
+
+:root[data-hero="distinct"] .page--founders .fnd-photo::after {
+  background-image: url("hero-founders-stairs.webp");
+  background-position: 60% 40%;
+  opacity: 0.9;
+  -webkit-mask-image: radial-gradient(110% 130% at 88% 4%, #000 26%, rgba(0, 0, 0, 0.55) 56%, transparent 86%);
+  mask-image: radial-gradient(110% 130% at 88% 4%, #000 26%, rgba(0, 0, 0, 0.55) 56%, transparent 86%);
+}
+
+/* a small laptop: the tagline reaches under the stairs, a step fainter */
+@media (min-width: 1024px) and (max-width: 1365px) {
+  :root[data-hero="distinct"] .page--founders .fnd-photo::after {
+    opacity: 0.72;
+  }
+}
+
+@media (max-width: 1023px) {
+  :root[data-hero="same"] .page--founders .fnd-photo::after {
+    background-image: url("hero-founders-arc-1024.webp");
+  }
+
+  /* the copy runs wider: the stairs keep to the top right */
+  :root[data-hero="distinct"] .page--founders .fnd-photo::after {
+    background-image: url("hero-founders-stairs-1024.webp");
+    opacity: 0.7;
+    -webkit-mask-image: radial-gradient(90% 70% at 100% 0%, #000 20%, rgba(0, 0, 0, 0.4) 55%, transparent 82%);
+    mask-image: radial-gradient(90% 70% at 100% 0%, #000 20%, rgba(0, 0, 0, 0.4) 55%, transparent 82%);
+  }
+}
+
+:root[data-hero] .page--investors .hz-photo::before,
+:root[data-companies]:not([data-companies="fins"]) .page--companies .hz-photo--arc::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  /* the picture under a shade of the night where the copy stands, deeper
+     than the hero's own (these pictures carry more light across) */
+  background:
+    radial-gradient(ellipse 62% 64% at 26% 36%, rgba(var(--hz-shade), 0.62), rgba(var(--hz-shade), 0.34) 58%, transparent 86%),
+    var(--hero-art) var(--hero-art-pos, 50% 50%) / cover no-repeat;
+  transform-origin: 0 100%;
+}
+
+/* below a laptop the copy runs the width of the screen: the shade too */
+@media (max-width: 1023px) {
+  :root[data-hero] .page--investors .hz-photo::before,
+  :root[data-companies]:not([data-companies="fins"]) .page--companies .hz-photo--arc::before {
+    background:
+      linear-gradient(180deg, rgba(var(--hz-shade), 0.5) 0%, rgba(var(--hz-shade), 0.42) 45%, rgba(var(--hz-shade), 0.1) 75%, transparent 90%),
+      var(--hero-art) var(--hero-art-pos, 50% 50%) / cover no-repeat;
+  }
+}
+
+:root[data-hero="same"] .page--investors .hz-photo::before {
+  --hero-art: url("hero-investors-arc.webp");
+  --hero-art-pos: 0% 100%;
+}
+
+:root[data-hero="distinct"] .page--investors .hz-photo::before {
+  --hero-art: url("hero-investors-towers.webp");
+  --hero-art-pos: 50% 30%;
+}
+
+:root[data-companies="grid"] .page--companies .hz-photo--arc::before {
+  --hero-art: url("hero-companies-grid.webp");
+  --hero-art-pos: 50% 40%;
+}
+
+:root[data-companies="lattice"] .page--companies .hz-photo--arc::before {
+  --hero-art: url("hero-companies-lattice.webp");
+  --hero-art-pos: 50% 40%;
+}
+
+:root[data-companies="slabs"] .page--companies .hz-photo--arc::before {
+  --hero-art: url("hero-companies-slabs.webp");
+  --hero-art-pos: 30% 50%;
+}
+
+/* from a laptop the arc is drawn a tenth over its cover size from the
+   lower left, as Companies' own */
+@media (min-width: 1024px) {
+  :root[data-hero="same"] .page--investors .hz-photo::before {
+    transform: scale(1.1);
+  }
+}
+
+@media (max-width: 1023px) {
+  :root[data-hero="same"] .page--investors .hz-photo::before {
+    --hero-art: url("hero-investors-arc-1024.webp");
+    --hero-art-pos: 58% 50%;
+  }
+
+  :root[data-hero="distinct"] .page--investors .hz-photo::before {
+    --hero-art: url("hero-investors-towers-1024.webp");
+  }
+
+  :root[data-companies="grid"] .page--companies .hz-photo--arc::before {
+    --hero-art: url("hero-companies-grid-1024.webp");
+  }
+
+  :root[data-companies="lattice"] .page--companies .hz-photo--arc::before {
+    --hero-art: url("hero-companies-lattice-1024.webp");
+  }
+
+  :root[data-companies="slabs"] .page--companies .hz-photo--arc::before {
+    --hero-art: url("hero-companies-slabs-1024.webp");
+  }
+}
+/* === end hero variants === */
