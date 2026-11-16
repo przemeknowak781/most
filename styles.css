@@ -7166,8 +7166,8 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 
 @media (min-width: 1024px) {
   /* the head over the chart, the grey words under the title (10.11, as
-     What We Help's), so the chart has the section's whole width; beside
-     the title, on the columns of What We Help, as it was: ?excopy=side */
+     What We Help's; the team kept it, 16.11), so the chart has the
+     section's whole width */
   :is(.page--founders, .page--companies, .page--investors) .aud-expertise__copy {
     grid-column: 1 / -1;
     max-width: none;
@@ -7175,16 +7175,6 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 
   :is(.page--founders, .page--companies, .page--investors) .aud-expertise__copy > p {
     max-width: 38rem;
-  }
-
-  :root[data-excopy="side"] :is(.page--founders, .page--companies, .page--investors) .aud-expertise__copy {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0 var(--aud-col-gap);
-  }
-
-  :root[data-excopy="side"] :is(.page--founders, .page--companies, .page--investors) .aud-expertise__copy > p {
-    grid-column: 2 / -1;
   }
 
   /* the section ends at the curve's foot, over the band below so the
@@ -11593,6 +11583,110 @@ main {
   }
 }
 
+/* === Three routes on a phone or tablet: folded cards (16.11) ===
+   The team's ask: each card folded to its number, name and line, with its
+   drawing and a "+" that opens the copy, the list and the link (script.js
+   folds them and sets .is-folding; without it the three stay open). The
+   "+" is a 44px ring in the route's colour, a minus once open; a tap
+   anywhere on a folded card opens it as well. */
+@media (max-width: 1023px) {
+  .audience-intro .is-folding .preview[data-audience-card] {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      "head chart toggle"
+      "copy copy copy"
+      "list list list"
+      "cta cta cta";
+  }
+
+  .audience-intro .is-folding .preview[data-audience-card]:not(.is-expanded) {
+    cursor: pointer;
+  }
+
+  /* a phone: the drawing a little smaller beside the ring, so the line
+     under the name keeps to two lines */
+  .audience-intro .is-folding .preview[data-audience-card] .preview__chart {
+    width: clamp(56px, 17vw, 84px);
+  }
+
+  .audience-intro .is-folding .preview[data-audience-card]:not(.is-expanded) .preview__body {
+    display: none;
+  }
+
+  .audience-intro .is-folding .preview__toggle {
+    position: static;
+    grid-area: toggle;
+    align-self: center;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+    border-radius: 50%;
+    background: rgba(8, 11, 19, 0.28);
+    color: var(--accent);
+    transform: none;
+  }
+
+  .audience-intro .is-folding .preview[data-audience-card].is-expanded .preview__toggle {
+    border-color: var(--accent);
+    color: var(--light);
+  }
+
+  .audience-intro .is-folding .preview__toggle:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 3px;
+    border-radius: 50%;
+  }
+
+  .audience-intro .is-folding .preview__toggle-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .audience-intro .is-folding .preview[data-audience-card] .preview__chart {
+    width: 128px;
+  }
+
+  .audience-intro .is-folding .preview[data-audience-card] {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+    grid-template-areas:
+      "head chart toggle"
+      "copy list list"
+      "cta cta cta";
+  }
+}
+
+@media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+  .audience-intro .is-folding .preview[data-audience-card].is-expanded .preview__body > * {
+    animation: route-open 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .audience-intro .is-folding .preview[data-audience-card].is-expanded .preview__list {
+    animation-delay: 60ms;
+  }
+
+  .audience-intro .is-folding .preview[data-audience-card].is-expanded .preview__cta {
+    animation-delay: 120ms;
+  }
+}
+
+@keyframes route-open {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+/* === end Three routes folded cards === */
+
 /* A laptop under 1181px stacks the three cards full width (the scroll
    still opens one at a time), so the route runs as it does on a tablet:
    down the left of the stack on the cards' text edge, from the open ring
@@ -11864,18 +11958,15 @@ main {
   }
 }
 
-/* ---------- Home hero figures on a phone: two previews ----------
+/* ---------- Home hero figures on a phone: in rows ----------
    The review (16.10) found the four figures and their notes hard to read
-   on a phone and drew two layouts that divide them with the desktop's
-   dotted leader line (rgba(255, 168, 110, 0.42), 2px dashes 4px apart):
-   ?stats=rows sets each figure as a row - the figure and its label on the
-   left, the note beside them, all set left - under a dotted rule;
-   ?stats=grid keeps the two columns, centred, crossed by a dotted rule
-   down the middle and one between the rows (one column with rules under
-   375px, where two columns squeeze each note to seven lines). The switch
-   is in script.js; without it the figures are as they ship. */
+   on a phone; of the two layouts drawn then, the team kept the rows
+   (16.11, the 2x2 grid and the grid crossed by dotted rules removed):
+   each figure a row - the figure and its label on the left, the note
+   beside them, all set left - under the desktop's dotted leader line
+   (rgba(255, 168, 110, 0.42), 2px dashes 4px apart). */
 @media (max-width: 767px) {
-  :root[data-stats="rows"] .page--home .hero-stats {
+  .page--home .hero-stats {
     grid-template-columns: minmax(0, 1fr);
     row-gap: 0;
   }
@@ -11883,18 +11974,18 @@ main {
   /* the four rows share their two columns, so the notes start on one line
      down the list whatever each label's longest word */
   @supports (grid-template-columns: subgrid) {
-    :root[data-stats="rows"] .page--home .hero-stats {
+    .page--home .hero-stats {
       grid-template-columns: minmax(min-content, 0.85fr) minmax(0, 1.15fr);
       column-gap: 20px;
     }
 
-    :root[data-stats="rows"] .page--home .hero-stats > .hero-stat {
+    .page--home .hero-stats > .hero-stat {
       grid-column: 1 / -1;
       grid-template-columns: subgrid;
     }
   }
 
-  :root[data-stats="rows"] .page--home .hero-stat {
+  .page--home .hero-stat {
     position: relative;
     display: grid;
     grid-row: auto;
@@ -11910,15 +12001,15 @@ main {
     text-align: left;
   }
 
-  :root[data-stats="rows"] .page--home .hero-stat strong {
+  .page--home .hero-stat strong {
     grid-area: 1 / 1;
   }
 
-  :root[data-stats="rows"] .page--home .hero-stat span {
+  .page--home .hero-stat span {
     grid-area: 2 / 1;
   }
 
-  :root[data-stats="rows"] .page--home .hero-stat__copy {
+  .page--home .hero-stat__copy {
     grid-area: 1 / 2 / 3 / 3;
     align-self: center;
     max-width: none;
@@ -11927,7 +12018,7 @@ main {
     text-wrap: pretty;
   }
 
-  :root[data-stats="rows"] .page--home .hero-stat + .hero-stat::before {
+  .page--home .hero-stat + .hero-stat::before {
     content: "";
     position: absolute;
     top: 0;
@@ -11936,78 +12027,20 @@ main {
     height: 1px;
     background: repeating-linear-gradient(90deg, rgba(255, 168, 110, 0.42) 0 2px, transparent 2px 6px);
   }
-
-  :root[data-stats="grid"] .page--home .hero-stats {
-    gap: 48px 32px;
-  }
-
-  :root[data-stats="grid"] .page--home .hero-stat {
-    position: relative;
-  }
-
-  /* down the middle: from the first row's top to the last row's foot */
-  :root[data-stats="grid"] .page--home .hero-stat:nth-child(odd)::after {
-    content: "";
-    position: absolute;
-    top: -12px;
-    bottom: -24px;
-    right: -16px;
-    width: 1px;
-    background: repeating-linear-gradient(180deg, rgba(255, 168, 110, 0.42) 0 2px, transparent 2px 6px);
-  }
-
-  :root[data-stats="grid"] .page--home .hero-stat:nth-child(n + 3)::after {
-    top: -24px;
-    bottom: -12px;
-  }
-
-  /* between the rows, across both columns */
-  :root[data-stats="grid"] .page--home .hero-stat:nth-child(n + 3)::before {
-    content: "";
-    position: absolute;
-    top: -24px;
-    left: 0;
-    right: -16px;
-    height: 1px;
-    background: repeating-linear-gradient(90deg, rgba(255, 168, 110, 0.42) 0 2px, transparent 2px 6px);
-  }
-
-  :root[data-stats="grid"] .page--home .hero-stat:nth-child(4)::before {
-    left: -16px;
-    right: 0;
-  }
 }
 
 @media (max-width: 374px) {
   /* "EU · US · UK" outgrows the left column: the note goes under its
      figure, still set left */
-  :root[data-stats="rows"] .page--home .hero-stats,
-  :root[data-stats="rows"] .page--home .hero-stats > .hero-stat {
+  .page--home .hero-stats,
+  .page--home .hero-stats > .hero-stat {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto auto auto;
   }
 
-  :root[data-stats="rows"] .page--home .hero-stat__copy {
+  .page--home .hero-stat__copy {
     grid-area: 3 / 1;
     margin-top: 6px;
-  }
-
-  :root[data-stats="grid"] .page--home .hero-stats {
-    gap: 48px;
-  }
-
-  :root[data-stats="grid"] .page--home .hero-stat::after {
-    display: none;
-  }
-
-  :root[data-stats="grid"] .page--home .hero-stat:nth-child(n + 2)::before {
-    content: "";
-    position: absolute;
-    top: -24px;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: repeating-linear-gradient(90deg, rgba(255, 168, 110, 0.42) 0 2px, transparent 2px 6px);
   }
 }
 

@@ -819,27 +819,39 @@ function setupAudienceTriptych() {
   }
 
   /* Below 1024px there is no stage: the three cards are read one after
-     another, every one of them open (the stylesheet lays them out and hides
-     the toggles), and the backdrop holds still. The scroll is not asked
-     anything. Growing past 1024px hands the cards back to the scroll, which
-     sets every class and attribute again from where the reader is - the
-     same state a fresh load at that position would have. */
+     another and the backdrop holds still; the scroll is not asked anything.
+     Each card starts folded to its number, name and line, with a "+" that
+     opens it - its copy, list and link - and closes it again, each card on
+     its own (the team, 16.11: a cleaner list to browse on a phone). A tap
+     anywhere on a folded card opens it too. The fold is the stylesheet's,
+     keyed on .is-folding, which only this sets, so without the script the
+     three stay open. Growing past 1024px hands the cards back to the
+     scroll, which sets every class and attribute again from where the
+     reader is - the same state a fresh load at that position would have. */
   let compactMode = null;
 
-  function openAll() {
+  function setFolded(card, open) {
+    card.classList.toggle("is-expanded", open);
+    const toggle = card.querySelector("[data-audience-toggle]");
+    if (toggle) toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    const body = card.querySelector(".preview__body");
+    if (body) {
+      if (!open && toggle && body.contains(document.activeElement)) toggle.focus({ preventScroll: true });
+      body.inert = !open;
+    }
+    const label = toggle?.querySelector(".preview__toggle-label");
+    if (label) label.textContent = open ? "show less" : "read more";
+  }
+
+  function foldAll() {
     activeIndex = null;
     chosen = null;
     root.classList.remove("has-no-active");
+    root.classList.add("is-folding");
     cards.forEach((card, idx) => {
       root.classList.remove(`is-active-${idx}`);
-      card.classList.add("is-expanded");
       card.classList.remove("is-active");
-      const toggle = card.querySelector("[data-audience-toggle]");
-      if (toggle) toggle.setAttribute("aria-expanded", "true");
-      const body = card.querySelector(".preview__body");
-      if (body) body.inert = false;
-      const label = toggle?.querySelector(".preview__toggle-label");
-      if (label) label.textContent = "show less";
+      setFolded(card, false);
     });
     audienceThemes.forEach((theme) => section.classList.remove(`is-audience-${theme}`));
     ["--audience-bg-x", "--audience-bg-y", "--audience-bg-sweep", "--audience-title-bg-x", "--audience-title-bg-y", "--audience-title-bg-sweep", "--audience-bg-alpha"]
@@ -851,9 +863,10 @@ function setupAudienceTriptych() {
     if (compact === compactMode) return;
     compactMode = compact;
     if (compact) {
-      openAll();
+      foldAll();
       return;
     }
+    root.classList.remove("is-folding");
     activeIndex = null;
     chosen = null;
     measure();
@@ -915,21 +928,28 @@ function setupAudienceTriptych() {
     });
     toggle.addEventListener("click", (e) => {
       e.preventDefault();
-      if (compactMode) return;
+      if (compactMode) {
+        setFolded(card, !card.classList.contains("is-expanded"));
+        return;
+      }
       /* show less closes the card; read more opens it */
       chosen = card.classList.contains("is-expanded") ? -1 : cards.indexOf(card);
       setActiveCard(chosen);
     });
     /* A folded card opens on a click anywhere on it, not only on its "+"
-       (the review, 16.10), so the reader moves between the three with one
-       click each. An open card ignores clicks on its copy - a stray click
+       (the review, 16.10; on a phone too, 16.11), so the reader moves
+       between the three with one click each. An open card ignores clicks on its copy - a stray click
        or a text selection never folds it - and its link and toggle keep
        their own jobs. The toggle stays the keyboard's control. */
     card.addEventListener("click", (e) => {
-      if (compactMode || card.classList.contains("is-expanded")) return;
+      if (card.classList.contains("is-expanded")) return;
       if (e.target.closest("a, button")) return;
       const selection = window.getSelection && window.getSelection();
       if (selection && !selection.isCollapsed) return;
+      if (compactMode) {
+        setFolded(card, true);
+        return;
+      }
       chosen = cards.indexOf(card);
       setActiveCard(chosen);
     });
@@ -1159,9 +1179,7 @@ function setupPortraitProposal() {
    ?titles=smaller the titles a size smaller, ?hero=low Home's mountain
    photograph lower behind the headline, ?expertise=top the drawing above
    the name on Home's Our Expertise cards, as it was before it moved beside
-   the words (31.10), ?excopy=side the audience pages' Our Expertise words
-   beside the title, as they were before they went under it (10.11),
-   ?excta=next|most a call to action under Home's cards, ?scroll=peek|cue
+   the words (31.10), ?excta=next|most a call to action under Home's cards, ?scroll=peek|cue
    a cue to scroll on Our Team's hero, ?companies=fins Companies' hero on
    the generated fins (29.10) rather than the team's photograph of the arc
    (5.11), ?ground=mauve Companies' land in Figma's mauve rather than the
@@ -1171,8 +1189,7 @@ function setupPortraitProposal() {
    closing band with the drawn ranges behind the ridge (shipped 31.10-5.11,
    before the team's own skies) or with neither, ?rail=dots small dots on
    the audience pages' Our Expertise rail (a phone's list), ?order=work Our
-   Expertise's How We Work above Our Areas, ?stats=rows|grid Home's hero
-   figures on a phone divided by dotted rules and ?clients=center|right Who
+   Expertise's How We Work above Our Areas and ?clients=center|right Who
    We Work With's head centred or on the right - each as a data attribute
    on <html> the stylesheet answers. #titles-smaller and the like do the
    same where a preview host drops the query. Without one the page is as
@@ -1186,7 +1203,8 @@ function setupPortraitProposal() {
    list on the rail in place of the audience pages' charts on a laptop,
    and the concrete fins behind Companies' How We Work. Shipped: the
    routes' dots in the menu in each route's colour, 5.11; the fins looming
-   in Founders' sky, 10.11.)
+   in Founders' sky, 10.11; Our Expertise's words under its title and
+   Home's hero figures in rows on a phone, 16.11.)
    ?preview (or either of them) brings up a panel that switches them in
    place; while it is up, the links to the site's pages carry the choice
    and the panel, so the whole site can be walked in an alternative. */
@@ -1194,7 +1212,6 @@ const PREVIEW_SWITCHES = {
   titles: ["smaller"],
   hero: ["low"],
   expertise: ["top"],
-  excopy: ["side"],
   excta: ["next", "most"],
   scroll: ["peek", "cue"],
   companies: ["fins"],
@@ -1204,7 +1221,6 @@ const PREVIEW_SWITCHES = {
   mountains: ["drawn", "none"],
   rail: ["dots"],
   order: ["work"],
-  stats: ["rows", "grid"],
   clients: ["center", "right"],
 };
 
@@ -1226,7 +1242,6 @@ const PREVIEW_PAGES = {
 const AUDIENCE_PAGES = ["for-founders", "for-companies", "for-investors"];
 const PREVIEW_PANEL = [
   ["hero", ["index"], "Hero: zdjęcie gór (od 1024 px)", [["", "obecne"], ["low", "niżej, więcej granatu za napisem"]]],
-  ["stats", ["index"], "Liczby w hero (na telefonie)", [["", "obecne"], ["rows", "wiersze z linią"], ["grid", "siatka z liniami"]]],
   ["expertise", ["index"], "Our Expertise: ikona na karcie", [["", "po prawej, tekst po lewej"], ["top", "nad nazwą (jak było)"]]],
   ["excta", ["index"], "Our Expertise: przycisk pod kartami", [["", "bez przycisku"], ["next", "What's your next move?"], ["most", "Making the most of your next move"]]],
   ["clients", ["index"], "Who We Work With: tekst", [["", "po lewej"], ["center", "na środku"], ["right", "po prawej"]]],
@@ -1235,7 +1250,6 @@ const PREVIEW_PANEL = [
   ["companies", ["for-companies"], "Hero: tło", [["", "zdjęcie lameli na łuku (5.11)"], ["fins", "lamele generowane (jak było)"]]],
   ["ground", ["for-companies"], "Kolor gór i tła strony", [["", "szary jak w stopce"], ["mauve", "śliwkowy (jak było)"]]],
   ["hww", ["for-investors"], "How We Work: tło", [["", "obecne"], ["columns", "fasada z pionowymi podziałami"]]],
-  ["excopy", AUDIENCE_PAGES, "Our Expertise: szary tekst", [["", "pod tytułem"], ["side", "obok tytułu (jak było)"]]],
   ["rail", AUDIENCE_PAGES, "Our Expertise na telefonie: kropki przy punktach", [["", "tylko na końcach"], ["dots", "małe przy każdym punkcie"]]],
   ["mountains", AUDIENCE_PAGES, "Pas „Want to Grow Together?”: góry w tle", [["", "tła od Was (zdjęcia)"], ["drawn", "rysowane pasma"], ["none", "bez gór"]]],
   ["footer", ["index", "about-us", "expertise", "our-team"], "Pas końcowy: zdjęcie", [["", "obecne"], ["up", "pierwszy plan wyżej"]]],
