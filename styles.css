@@ -11618,6 +11618,7 @@ main {
     grid-area: toggle;
     align-self: center;
     display: grid;
+    place-content: center;
     place-items: center;
     width: 44px;
     height: 44px;
