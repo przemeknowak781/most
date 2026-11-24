@@ -1191,7 +1191,8 @@ function setupPortraitProposal() {
    sketch of faceted towers (24.11), ?ground=mauve Companies' land in Figma's mauve rather than the
    closing band's grey (10.11), ?hww=flutes|columns How We Work on
    Investors on the fluted glass (29.10) or a glass facade's mullions
-   rather than the sketch of the towers' faces (24.11), ?footer=up the closing band's photograph lower
+   rather than the sketch of the towers' faces (24.11), ?hww=diagrid
+   Founders' on the roof's diagrid rather than the sketch of steps (24.11), ?footer=up the closing band's photograph lower
    behind the walkers' ridge, ?rail=dots small dots on
    the audience pages' Our Expertise rail (a phone's list), ?order=work Our
    Expertise's How We Work above Our Areas, ?clients=center|right Who We
@@ -1228,7 +1229,7 @@ const PREVIEW_SWITCHES = {
   curve: ["s"],
   investors: ["flutes", "towers"],
   ground: ["mauve"],
-  hww: ["flutes", "columns"],
+  hww: ["flutes", "columns", "diagrid"],
   footer: ["up"],
   rail: ["dots"],
   order: ["work"],
@@ -1263,6 +1264,7 @@ const PREVIEW_PANEL = [
   ["investors", ["for-investors"], "Hero Investors: tło", [["", "szkic: wieże (24.11)"], ["flutes", "szkło ryflowane (jak było)"], ["towers", "szklane wieżowce"]]],
   ["companies", ["for-companies"], "Hero Companies: tło", [["", "szkic: wysunięte stropy (24.11)"], ["arc", "zdjęcie lameli na łuku (jak było)"], ["fins", "lamele generowane"], ["grid", "fasada z siatką okien"], ["lattice", "kratownica szklanego dachu"], ["slabs", "schodkowe płyty stropów"]]],
   ["ground", ["for-companies"], "Kolor gór i tła strony", [["", "szary jak w stopce"], ["mauve", "śliwkowy (jak było)"]]],
+  ["hww", ["for-founders"], "How We Work: tło", [["", "szkic: schody (24.11)"], ["diagrid", "dach z kratownicą (jak było)"]]],
   ["hww", ["for-investors"], "How We Work: tło", [["", "szkic: fasady wież (24.11)"], ["flutes", "szkło ryflowane (jak było)"], ["columns", "fasada z pionowymi podziałami"]]],
   ["curve", ["for-founders"], "Our Expertise: linia", [["", "schody"], ["s", "krzywa S (jak było)"]]],
   ["rail", AUDIENCE_PAGES, "Our Expertise na telefonie: kropki przy punktach", [["", "tylko na końcach"], ["dots", "małe przy każdym punkcie"]]],
@@ -1432,7 +1434,7 @@ function setupPreviewSwitches() {
   window.addEventListener("resize", showSettings);
   panel.querySelector(".variant-panel__copy").addEventListener("click", async () => {
     const names = chosen().map((name) => {
-      const row = PREVIEW_PANEL.find(([n]) => n === name);
+      const row = own.concat(shared).find(([n]) => n === name) || PREVIEW_PANEL.find(([n]) => n === name);
       const pick = row && row[3].find(([value]) => value === root.dataset[name]);
       return row && pick ? `${row[2]} – ${pick[1]}` : `${name}=${root.dataset[name]}`;
     });

@@ -6972,8 +6972,20 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   display: block;
 }
 
-:root[data-hww] .page--investors .aud-work__photo--sketch {
+:root:is([data-hww="flutes"], [data-hww="columns"]) .page--investors .aud-work__photo--sketch {
   display: none;
+}
+
+/* Founders (24.11): a flight of steps in terracotta chalk on the dark
+   ground, the hero's stairs in other lines; the roof's diagrid it had
+   is ?hww=diagrid */
+.page--founders .aud-work__photo--diagrid,
+:root[data-hww="diagrid"] .page--founders .aud-work__photo--sketch {
+  display: none;
+}
+
+:root[data-hww="diagrid"] .page--founders .aud-work__photo--diagrid {
+  display: block;
 }
 
 /* Companies' slabs catch the chalk low in the drawing: that part stands
