@@ -6958,15 +6958,28 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   filter: none;
 }
 
-/* Companies (10.11): the hero's photograph, mirrored (companies-arc-band),
-   held to its foot so the dusk's warm light is behind the title and the
-   arc of fins sweeps down on the right; a step darker so the title keeps
-   3:1 and more where the sky is lightest (3.45:1 at the least, on a
-   tablet). Neither the copper fins (not the page's colour) nor the
-   concrete fins (?hww=columns, read as bars) any more. */
+/* Companies and Investors (24.11): a pencil and chalk sketch that takes
+   up the hero's drawing - Companies' slabs seen from under their edges,
+   Investors' tower faces close to - on paper of the page's ground, the
+   chalk kept to the right of the title. Before it Companies had the
+   hero's photograph mirrored (10.11), now gone; Investors' fluted glass
+   is ?hww=flutes. */
+.page--investors .aud-work__photo--flutes {
+  display: none;
+}
+
+:root[data-hww="flutes"] .page--investors .aud-work__photo--flutes {
+  display: block;
+}
+
+:root[data-hww] .page--investors .aud-work__photo--sketch {
+  display: none;
+}
+
+/* Companies' slabs catch the chalk low in the drawing: that part stands
+   behind the title */
 .page--companies .aud-work__photo img {
-  object-position: 50% 100%;
-  filter: brightness(0.88);
+  object-position: 50% 78%;
 }
 
 /* no veil: the fade is the mask's */
@@ -17375,6 +17388,89 @@ main {
 }
 /* === end Contact coming-soon hero === */
 
+/* === Sketch heroes (24.11) ===
+   The team liked the hand-drawn character of Founders' stairs and asked
+   for pictures in the same spirit on Companies and Investors, lighter
+   than the dark concrete and navy they had tried, and preferably not
+   generated. So these are drawn: a small scene of slabs and prisms put
+   in perspective and drawn in pencil and white chalk on paper in the
+   page's colour - edges that overshoot their corners, hatching under the
+   slabs, chalk on the lit planes and in the glass (sketch.py in the
+   private repository's docs/tools). Companies: floor slabs overhanging a
+   building's corner; Investors: faceted towers from their foot. Each is
+   the hero's own picture now; the pictures they replace stay as previews
+   (?companies=arc, ?investors=flutes), loaded only when chosen. */
+.page--companies .hz-photo--arc,
+.page--investors .hz-photo--flutes {
+  display: none;
+}
+
+:root[data-companies]:not([data-companies="fins"]) .page--companies .hz-photo--arc,
+:root:is([data-investors="flutes"], [data-investors="towers"]) .page--investors .hz-photo--flutes {
+  display: block;
+}
+
+:root[data-companies] .page--companies .hz-photo--sketch,
+:root[data-investors] .page--investors .hz-photo--sketch {
+  display: none;
+}
+/* from a laptop the drawing is held to the right, the building clear of
+   the copy, and a soft shade sits where the headline and the tagline end
+   (chalk under white type would cost it its contrast) */
+@media (min-width: 1024px) {
+  .page--horizon .hz-photo--sketch img {
+    object-position: 100% 50%;
+  }
+
+  .page--horizon .hz-photo--sketch::after {
+    background:
+      radial-gradient(ellipse var(--sk-shade-w, 30%) var(--sk-shade-h, 30%) at var(--sk-shade-x, 46%) var(--sk-shade-y, 32%), rgba(var(--hz-shade), var(--sk-shade-a, 0.55)), rgba(var(--hz-shade), 0.25) 55%, transparent),
+      radial-gradient(ellipse 56% 58% at 24% 40%, rgba(var(--hz-shade), 0.42), rgba(var(--hz-shade), 0.26) 55%, transparent 84%),
+      linear-gradient(180deg, rgba(var(--hz-shade), 0.4) 0%, rgba(var(--hz-shade), 0.22) 26%, rgba(var(--hz-shade), 0.08) 50%, transparent 76%, rgba(var(--hz-shade), 0.1) 100%),
+      linear-gradient(90deg, rgba(var(--hz-shade), 0.3), rgba(var(--hz-shade), 0.08) 44%, transparent 74%);
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1365px) {
+  .page--horizon .hz-photo--sketch {
+    --sk-shade-x: 54%;
+    --sk-shade-w: 36%;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .page--horizon .hz-photo--sketch {
+    --sk-shade-x: 62%;
+    --sk-shade-y: 36%;
+    --sk-shade-w: 38%;
+    --sk-shade-h: 36%;
+    --sk-shade-a: 0.72;
+  }
+}
+
+/* an upright tablet takes the phone's upright drawing, filling the box */
+@media (min-width: 481px) and (max-width: 1023px) and (max-aspect-ratio: 3/4) {
+  .page--horizon .hz-photo--sketch img {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+  }
+}
+/* How We Work's sketches below a laptop: the title runs the width of the
+   drawing, so a veil of the ground keeps the chalk under it at 3:1 */
+@media (max-width: 1023px) {
+  .page--companies .aud-work__photo::after,
+  .page--investors .aud-work__photo--sketch::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(var(--aud-ground-rgb), var(--sk-veil, 0.62));
+  }
+}
+/* === end Sketch heroes === */
+
 /* === Hero variants (16.11, 24.11; previews) ===
    The team found the lines in Founders' and Investors' skies too alike and
    looked at other pictures, keeping today's heroes as they are:
@@ -17387,8 +17483,8 @@ main {
    library graded into each page's palette (docs/tools/hero-grade.py in
    the private repository); each lies over the hero's own picture with a
    shade where the copy stands. */
-:root[data-investors="towers"] .page--investors .hz-photo::before,
-:root[data-companies]:not([data-companies="fins"]) .page--companies .hz-photo--arc::before {
+:root[data-investors="towers"] .page--investors .hz-photo--flutes::before,
+:root[data-companies]:not([data-companies="fins"]):not([data-companies="arc"]) .page--companies .hz-photo--arc::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -17403,15 +17499,15 @@ main {
 
 /* below a laptop the copy runs the width of the screen: the shade too */
 @media (max-width: 1023px) {
-  :root[data-investors="towers"] .page--investors .hz-photo::before,
-  :root[data-companies]:not([data-companies="fins"]) .page--companies .hz-photo--arc::before {
+  :root[data-investors="towers"] .page--investors .hz-photo--flutes::before,
+  :root[data-companies]:not([data-companies="fins"]):not([data-companies="arc"]) .page--companies .hz-photo--arc::before {
     background:
       linear-gradient(180deg, rgba(var(--hz-shade), 0.5) 0%, rgba(var(--hz-shade), 0.42) 45%, rgba(var(--hz-shade), 0.1) 75%, transparent 90%),
       var(--hero-art) var(--hero-art-pos, 50% 50%) / cover no-repeat;
   }
 }
 
-:root[data-investors="towers"] .page--investors .hz-photo::before {
+:root[data-investors="towers"] .page--investors .hz-photo--flutes::before {
   --hero-art: url("hero-investors-towers.webp");
   --hero-art-pos: 50% 30%;
 }
@@ -17433,7 +17529,7 @@ main {
 
 @media (max-width: 1023px) {
 
-  :root[data-investors="towers"] .page--investors .hz-photo::before {
+  :root[data-investors="towers"] .page--investors .hz-photo--flutes::before {
     --hero-art: url("hero-investors-towers-1024.webp");
   }
 

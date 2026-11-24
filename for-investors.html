@@ -112,10 +112,21 @@
            scene runs straight into the page instead of stopping at a panel. -->
       <div class="hz-scene">
         <section class="hero" aria-labelledby="hero-title">
-          <div class="hz-photo" aria-hidden="true">
+          <!-- The sky (24.11): a pencil and chalk sketch of faceted towers
+               seen from their foot, on the page's navy (in the spirit of
+               Founders' stairs; drawn, not generated or photographed). The
+               fluted glass (29.10) is the preview ?investors=flutes, loaded
+               only then. -->
+          <div class="hz-photo hz-photo--sketch" aria-hidden="true">
+            <picture>
+              <source media="(max-width: 1023px) and (max-aspect-ratio: 3/4)" srcset="hero-investors-sketch-crop.webp" width="992" height="1371" />
+              <img src="hero-investors-sketch.webp" srcset="hero-investors-sketch-640.webp 640w, hero-investors-sketch-1024.webp 1024w, hero-investors-sketch.webp 1920w" sizes="(min-width: 1024px) 1920px, (orientation: portrait) 1000px, 100vw" width="1920" height="1371" alt="" fetchpriority="high" decoding="async" />
+            </picture>
+          </div>
+          <div class="hz-photo hz-photo--flutes" aria-hidden="true">
             <picture>
               <source media="(max-width: 480px) and (max-aspect-ratio: 3/4)" srcset="investors-flutes-crop.webp" width="992" height="1371" />
-              <img src="investors-flutes.webp" srcset="investors-flutes-640.webp 640w, investors-flutes-1024.webp 1024w, investors-flutes.webp 1920w" sizes="(min-width: 1024px) 1920px, (orientation: portrait) 1000px, 100vw" width="1920" height="1371" alt="" fetchpriority="high" decoding="async" />
+              <img src="investors-flutes.webp" srcset="investors-flutes-640.webp 640w, investors-flutes-1024.webp 1024w, investors-flutes.webp 1920w" sizes="(min-width: 1024px) 1920px, (orientation: portrait) 1000px, 100vw" width="1920" height="1371" alt="" loading="lazy" decoding="async" />
             </picture>
           </div>
           <div class="hero-noise" aria-hidden="true"></div>
@@ -229,12 +240,16 @@
         </ul>
       </section>
 
-      <!-- HOW WE WORK: on the page's colour, with the hero's architecture (the
-           same relief, continued) along its top - the
-           wireframe's "photo in the section background"; the points sit on one
-           trail. -->
+      <!-- HOW WE WORK: on the page's colour, with a sketch along its top that
+           takes up the hero's lines (24.11): the towers' faces close to,
+           their mullions and floors in pencil and chalk. The fluted glass it
+           had is the preview ?hww=flutes, loaded only then; the points sit
+           on one trail. -->
       <section class="aud-work aud-work--investors" aria-labelledby="aud-work-title">
-        <div class="aud-work__photo" aria-hidden="true">
+        <div class="aud-work__photo aud-work__photo--sketch" aria-hidden="true">
+          <img src="hww-investors-sketch.webp" srcset="hww-investors-sketch-640.webp 640w, hww-investors-sketch-1024.webp 1024w, hww-investors-sketch.webp 1920w" sizes="(min-width: 1024px) 1920px, 100vw" width="1920" height="1080" alt="" loading="lazy" decoding="async" />
+        </div>
+        <div class="aud-work__photo aud-work__photo--flutes" aria-hidden="true">
           <picture>
             <source media="(max-width: 480px) and (max-aspect-ratio: 3/4)" srcset="investors-flutes-band-crop.webp" width="992" height="1371" />
             <img src="investors-flutes-band.webp" srcset="investors-flutes-band-640.webp 640w, investors-flutes-band-1024.webp 1024w, investors-flutes-band.webp 1920w" sizes="(min-width: 1024px) 1920px, (orientation: portrait) 1000px, 100vw" width="1920" height="1371" alt="" loading="lazy" decoding="async" />

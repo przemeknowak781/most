@@ -112,11 +112,20 @@
            scene runs straight into the page instead of stopping at a panel. -->
       <div class="hz-scene">
         <section class="hero" aria-labelledby="hero-title">
-          <!-- The sky (5.11): a photo of a fin facade sweeping up in an arc
-               against a dusk sky, used as sent. The generated fins of
-               29.10 stay as a preview (?companies=fins), loaded only then. -->
+          <!-- The sky (24.11): a pencil and chalk sketch of floor slabs
+               overhanging a building's corner, drawn on the page's grey
+               (in the spirit of Founders' stairs; drawn, not generated or
+               photographed). The team's photo of the arc of fins (5.11,
+               ?companies=arc) and the generated fins of 29.10
+               (?companies=fins) stay as previews, loaded only then. -->
+          <div class="hz-photo hz-photo--sketch" aria-hidden="true">
+            <picture>
+              <source media="(max-width: 1023px) and (max-aspect-ratio: 3/4)" srcset="hero-companies-sketch-crop.webp" width="992" height="1371" />
+              <img src="hero-companies-sketch.webp" srcset="hero-companies-sketch-640.webp 640w, hero-companies-sketch-1024.webp 1024w, hero-companies-sketch.webp 1920w" sizes="(min-width: 1024px) 1920px, (orientation: portrait) 1000px, 100vw" width="1920" height="1371" alt="" fetchpriority="high" decoding="async" />
+            </picture>
+          </div>
           <div class="hz-photo hz-photo--arc" aria-hidden="true">
-            <img src="companies-arc.webp" srcset="companies-arc-640.webp 640w, companies-arc-1024.webp 1024w, companies-arc.webp 1600w" sizes="(min-width: 1024px) 1920px, (orientation: portrait) 1300px, 100vw" width="1600" height="900" alt="" fetchpriority="high" decoding="async" />
+            <img src="companies-arc.webp" srcset="companies-arc-640.webp 640w, companies-arc-1024.webp 1024w, companies-arc.webp 1600w" sizes="(min-width: 1024px) 1920px, (orientation: portrait) 1300px, 100vw" width="1600" height="900" alt="" loading="lazy" decoding="async" />
           </div>
           <div class="hz-photo hz-photo--fins" aria-hidden="true">
             <picture>
@@ -237,13 +246,13 @@
         </ul>
       </section>
 
-      <!-- HOW WE WORK: on the page's colour, with the hero's photograph along
-           its top, mirrored (10.11): the dusk sky behind the title, the arc
-           of fins sweeping down on the right - the wireframe's "photo in
-           the section background"; the points sit on one trail. -->
+      <!-- HOW WE WORK: on the page's colour, with a sketch of the hero's
+           architecture along its top (24.11): the overhanging slabs again,
+           seen from under their edges, drawn in pencil and chalk; the
+           points sit on one trail. -->
       <section class="aud-work aud-work--companies" aria-labelledby="aud-work-title">
         <div class="aud-work__photo" aria-hidden="true">
-          <img src="companies-arc-band.webp" srcset="companies-arc-band-640.webp 640w, companies-arc-band-1024.webp 1024w, companies-arc-band.webp 1600w" sizes="(min-width: 1024px) 1920px, 100vw" width="1600" height="900" alt="" loading="lazy" decoding="async" />
+          <img src="hww-companies-sketch.webp" srcset="hww-companies-sketch-640.webp 640w, hww-companies-sketch-1024.webp 1024w, hww-companies-sketch.webp 1920w" sizes="(min-width: 1024px) 1920px, 100vw" width="1920" height="1080" alt="" loading="lazy" decoding="async" />
         </div>
         <header class="aud-work__head">
           <h2 class="aud-work__title" id="aud-work-title">How We Work with Companies</h2>
