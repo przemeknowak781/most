@@ -2310,7 +2310,6 @@ main:focus {
   }
 }
 
-
 @media (min-width: 1024px) and (max-height: 780px) {
   .preview.is-expanded {
     gap: 10px;
@@ -3765,7 +3764,6 @@ main:focus {
   text-align: center;
 }
 
-
 .aud-grow__inner {
   position: relative;
   z-index: 3;
@@ -3804,8 +3802,6 @@ main:focus {
   width: 14px;
   height: 14px;
 }
-
-
 
 @media (max-width: 760px) {
   .aud-grow__inner {
@@ -4109,15 +4105,12 @@ a.contact-channels__value:focus-visible {
   transition: background 220ms ease, transform 220ms ease, box-shadow 220ms ease;
 }
 
-
-
 .contact-form__submit:disabled {
   background: rgba(28, 20, 25, 0.32);
   cursor: default;
   transform: none;
   box-shadow: none;
 }
-
 
 .page--contact .site-footer {
   margin-top: 0;
@@ -4566,7 +4559,6 @@ a.contact-channels__value:focus-visible {
 
 /* The homepage sun glow is orange; under plus-lighter that reads as a
    dirty warm patch on the cool palettes - retint the added light per page. */
-
 
 .aud-grow__sub {
   margin: 14px auto 26px;
@@ -5564,7 +5556,6 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 }
 /* === end fb-expertise === */
 
-
 /* Figma one-line teaser icons: Our Expertise's six drawings on Home, 64px
    tall in the 1440 frame (home-icon-1..6) */
 .ex-icon {
@@ -6015,12 +6006,12 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 
 /* The client's ask (29.09): the architecture of the Companies and Investors
    skies in this one, so the three read as a set, with the scene, the ridge
-   and the colours left as they are. Since 10.11 (looked at as a preview
-   from 29.10, in place of a truss fragment) it is the fins of Companies
-   as light and shade alone (founders-fins, docs/tools/hz-relief.py), laid
-   over the terracotta on the soft-light blend, faintly, so the fins loom
-   in the sky - clearest at the top right, gone before the copy and
-   towards the ridge. The colour stays the sky's own. */
+   and the colours left as they are. Since 24.11 (the team's pick from the
+   previews of 16.11) it is a concrete staircase climbing to the right,
+   as light and shade alone (hero-founders-stairs), laid over the
+   terracotta on the soft-light blend so the steps rise in the sky's own
+   colour - clearest at the top right, fading before the copy. The fins
+   of Companies that stood there from 10.11 are ?founders=fins. */
 .page--founders .fnd-photo {
   position: absolute;
   inset: 0;
@@ -6036,22 +6027,47 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   content: "";
   position: absolute;
   inset: 0;
-  background: url("founders-fins.webp") 50% 40% / cover no-repeat;
+  background: url("hero-founders-stairs.webp") 60% 40% / cover no-repeat;
   mix-blend-mode: soft-light;
+  opacity: 0.9;
+  -webkit-mask-image: radial-gradient(110% 130% at 88% 4%, #000 26%, rgba(0, 0, 0, 0.55) 56%, transparent 86%);
+  mask-image: radial-gradient(110% 130% at 88% 4%, #000 26%, rgba(0, 0, 0, 0.55) 56%, transparent 86%);
+}
+
+/* a small laptop: the tagline reaches under the stairs, a step fainter */
+@media (min-width: 1024px) and (max-width: 1365px) {
+  .page--founders .fnd-photo::after {
+    opacity: 0.72;
+  }
+}
+
+/* below a laptop the copy runs wider: the stairs keep to the top right */
+@media (max-width: 1023px) {
+  .page--founders .fnd-photo::after {
+    background-image: url("hero-founders-stairs-1024.webp");
+    opacity: 0.7;
+    -webkit-mask-image: radial-gradient(90% 70% at 100% 0%, #000 20%, rgba(0, 0, 0, 0.4) 55%, transparent 82%);
+    mask-image: radial-gradient(90% 70% at 100% 0%, #000 20%, rgba(0, 0, 0, 0.4) 55%, transparent 82%);
+  }
+}
+
+/* ?founders=fins: the fins of Companies, faint, as from 10.11 to 24.11 */
+:root[data-founders="fins"] .page--founders .fnd-photo::after {
+  background-image: url("founders-fins.webp");
+  background-position: 50% 40%;
   opacity: 0.7;
   -webkit-mask-image: radial-gradient(95% 120% at 88% 0%, #000 22%, rgba(0, 0, 0, 0.5) 52%, transparent 82%);
   mask-image: radial-gradient(95% 120% at 88% 0%, #000 22%, rgba(0, 0, 0, 0.5) 52%, transparent 82%);
 }
 
 @media (max-width: 1023px) {
-  .page--founders .fnd-photo::after {
+  :root[data-founders="fins"] .page--founders .fnd-photo::after {
     background-image: url("founders-fins-1024.webp");
   }
 }
 
-/* on a phone the copy fills the width: the fins keep to the top */
 @media (max-width: 767px) {
-  .page--founders .fnd-photo::after {
+  :root[data-founders="fins"] .page--founders .fnd-photo::after {
     opacity: 0.55;
     -webkit-mask-image: radial-gradient(110% 60% at 80% 0%, #000 20%, transparent 80%);
     mask-image: radial-gradient(110% 60% at 80% 0%, #000 20%, transparent 80%);
@@ -6059,7 +6075,7 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
 }
 
 @media (max-width: 480px) and (max-aspect-ratio: 3/4) {
-  .page--founders .fnd-photo::after {
+  :root[data-founders="fins"] .page--founders .fnd-photo::after {
     background-image: url("founders-fins-crop.webp");
   }
 }
@@ -7414,6 +7430,28 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
     opacity: 1;
   }
 }
+/* Founders' chart as a staircase (24.11), matching the hero's stairs:
+   the steps and their points (--y-steps); the S-curve of 31.10 with its
+   points is ?curve=s (script.js) */
+.page--founders .aud-curve .aud-expertise__list li {
+  --y: var(--y-steps);
+}
+
+.aud-curve__shape--s {
+  display: none;
+}
+
+:root[data-curve="s"] .page--founders .aud-curve .aud-expertise__list li {
+  --y: var(--y-s);
+}
+
+:root[data-curve="s"] .aud-curve__shape--steps {
+  display: none;
+}
+
+:root[data-curve="s"] .aud-curve__shape--s {
+  display: inline;
+}
 /* === end Founders and Investors charts === */
 
 /* === Companies: Our Expertise as a hub (5.11, after the team's reference) ===
@@ -8301,7 +8339,6 @@ html:has(.ex-areas.is-track .ex-areas__cta:focus) {
   }
 }
 /* === end WHO WE ARE === */
-
 
 /* === OUR EXPERTISE on Home ===
    The meeting of 25.10: the section stays dark and shows the six areas as
@@ -11054,7 +11091,6 @@ main {
     max-width: 50vw;
   }
 
-
   .page--home .hero-stats {
     position: relative;
     left: auto;
@@ -11785,8 +11821,6 @@ main {
     transform: none;
   }
 }
-
-
 
 /* ============================================================
    MOBILE & TABLET (<=1023px) — PAGES
@@ -13680,7 +13714,6 @@ main {
     font-size: clamp(40px, 11.5vw, 60px);
     line-height: 1;
   }
-
 
   .big-stat__copy {
     max-width: 30em;
@@ -16401,7 +16434,6 @@ main {
   background: var(--aurora-veil);
 }
 
-
 /* the scene stands on the hero's foot, as tall as the hero lets it: the
    drawing covers its box from the bottom right (xMaxYMax slice), so a
    narrower window loses the left of the slope, never the people */
@@ -16917,7 +16949,6 @@ main {
 }
 /* === end closing band mountains === */
 
-
 /* === ?hero=low (a preview, the meeting of 25.10) ===
    Optional, not for the launch: the photograph behind Home's headline a
    little lower again, for more navy behind "Your Legal Partner for
@@ -17344,62 +17375,19 @@ main {
 }
 /* === end Contact coming-soon hero === */
 
-/* === Hero variants (16.11, a preview) ===
+/* === Hero variants (16.11, 24.11; previews) ===
    The team found the lines in Founders' and Investors' skies too alike and
-   asked to look at two directions, keeping today's three heroes as they
-   are, and at a few more ideas for Companies:
-     ?hero=same      one pattern on all three pages: the arc of fins of
-                     Companies' hero, in Founders' sky as light and shade
-                     on the terracotta (mirrored, so the copy stands on
-                     open sky) and on Investors in its slate blue
-     ?hero=distinct  a picture of its own on each page: Founders a
-                     concrete staircase climbing to the right (light and
-                     shade on the terracotta), Companies its arc of fins,
-                     Investors glass towers seen from below, in slate blue
+   looked at other pictures, keeping today's heroes as they are:
+     ?investors=towers  glass towers seen from below, in slate blue
      ?companies=grid|lattice|slabs  Companies' hero on a grid facade, a
                      glass roof's lattice or stepped floor slabs, in the
                      page's grey (beside ?companies=fins, the generated fins)
-   Photographs from the project's library graded into each page's palette
-   (scratchpad tool, grade.py: luminance mapped through the page's
-   colours, or as light and shade about a middle grey for Founders' soft-
-   light sky). Each lies over the hero's own picture, which stays as it
-   ships without the switch. */
-:root[data-hero="same"] .page--founders .fnd-photo::after {
-  background-image: url("hero-founders-arc.webp");
-  background-position: 70% 30%;
-  opacity: 0.85;
-}
-
-:root[data-hero="distinct"] .page--founders .fnd-photo::after {
-  background-image: url("hero-founders-stairs.webp");
-  background-position: 60% 40%;
-  opacity: 0.9;
-  -webkit-mask-image: radial-gradient(110% 130% at 88% 4%, #000 26%, rgba(0, 0, 0, 0.55) 56%, transparent 86%);
-  mask-image: radial-gradient(110% 130% at 88% 4%, #000 26%, rgba(0, 0, 0, 0.55) 56%, transparent 86%);
-}
-
-/* a small laptop: the tagline reaches under the stairs, a step fainter */
-@media (min-width: 1024px) and (max-width: 1365px) {
-  :root[data-hero="distinct"] .page--founders .fnd-photo::after {
-    opacity: 0.72;
-  }
-}
-
-@media (max-width: 1023px) {
-  :root[data-hero="same"] .page--founders .fnd-photo::after {
-    background-image: url("hero-founders-arc-1024.webp");
-  }
-
-  /* the copy runs wider: the stairs keep to the top right */
-  :root[data-hero="distinct"] .page--founders .fnd-photo::after {
-    background-image: url("hero-founders-stairs-1024.webp");
-    opacity: 0.7;
-    -webkit-mask-image: radial-gradient(90% 70% at 100% 0%, #000 20%, rgba(0, 0, 0, 0.4) 55%, transparent 82%);
-    mask-image: radial-gradient(90% 70% at 100% 0%, #000 20%, rgba(0, 0, 0, 0.4) 55%, transparent 82%);
-  }
-}
-
-:root[data-hero] .page--investors .hz-photo::before,
+   (The arc of fins on all three pages was set aside on 24.11, the
+   staircase became Founders' own hero.) Photographs from the project's
+   library graded into each page's palette (docs/tools/hero-grade.py in
+   the private repository); each lies over the hero's own picture with a
+   shade where the copy stands. */
+:root[data-investors="towers"] .page--investors .hz-photo::before,
 :root[data-companies]:not([data-companies="fins"]) .page--companies .hz-photo--arc::before {
   content: "";
   position: absolute;
@@ -17415,7 +17403,7 @@ main {
 
 /* below a laptop the copy runs the width of the screen: the shade too */
 @media (max-width: 1023px) {
-  :root[data-hero] .page--investors .hz-photo::before,
+  :root[data-investors="towers"] .page--investors .hz-photo::before,
   :root[data-companies]:not([data-companies="fins"]) .page--companies .hz-photo--arc::before {
     background:
       linear-gradient(180deg, rgba(var(--hz-shade), 0.5) 0%, rgba(var(--hz-shade), 0.42) 45%, rgba(var(--hz-shade), 0.1) 75%, transparent 90%),
@@ -17423,12 +17411,7 @@ main {
   }
 }
 
-:root[data-hero="same"] .page--investors .hz-photo::before {
-  --hero-art: url("hero-investors-arc.webp");
-  --hero-art-pos: 0% 100%;
-}
-
-:root[data-hero="distinct"] .page--investors .hz-photo::before {
+:root[data-investors="towers"] .page--investors .hz-photo::before {
   --hero-art: url("hero-investors-towers.webp");
   --hero-art-pos: 50% 30%;
 }
@@ -17448,21 +17431,9 @@ main {
   --hero-art-pos: 30% 50%;
 }
 
-/* from a laptop the arc is drawn a tenth over its cover size from the
-   lower left, as Companies' own */
-@media (min-width: 1024px) {
-  :root[data-hero="same"] .page--investors .hz-photo::before {
-    transform: scale(1.1);
-  }
-}
-
 @media (max-width: 1023px) {
-  :root[data-hero="same"] .page--investors .hz-photo::before {
-    --hero-art: url("hero-investors-arc-1024.webp");
-    --hero-art-pos: 58% 50%;
-  }
 
-  :root[data-hero="distinct"] .page--investors .hz-photo::before {
+  :root[data-investors="towers"] .page--investors .hz-photo::before {
     --hero-art: url("hero-investors-towers-1024.webp");
   }
 

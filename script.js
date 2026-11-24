@@ -1180,9 +1180,13 @@ function setupPortraitProposal() {
    photograph lower behind the headline, ?expertise=top the drawing above
    the name on Home's Our Expertise cards, as it was before it moved beside
    the words (31.10), ?excta=next|most a call to action under Home's cards, ?scroll=peek|cue
-   a cue to scroll on Our Team's hero, ?companies=fins Companies' hero on
-   the generated fins (29.10) rather than the team's photograph of the arc
-   (5.11), ?ground=mauve Companies' land in Figma's mauve rather than the
+   a cue to scroll on Our Team's hero, ?companies=fins|grid|lattice|slabs
+   Companies' hero on the generated fins (29.10) or a façade (16.11) rather
+   than the team's photograph of the arc (5.11), ?founders=fins Founders'
+   hero on the fins in its sky (10.11) rather than the stairs (24.11),
+   ?curve=s Founders' Our Expertise on the S curve rather than the stairs
+   that answer its hero (24.11), ?investors=towers Investors' hero on glass
+   towers (16.11), ?ground=mauve Companies' land in Figma's mauve rather than the
    closing band's grey (10.11), ?hww=columns How We Work on Investors on a
    glass facade's mullions, ?footer=up the closing band's photograph lower
    behind the walkers' ridge, ?rail=dots small dots on
@@ -1201,7 +1205,8 @@ function setupPortraitProposal() {
    Founders' sky, the architecture behind What We Help You Achieve, the
    list on the rail in place of the audience pages' charts on a laptop,
    and the concrete fins behind Companies' How We Work; on 16.11 the
-   audience pages' closing band with drawn ranges or a plain sky. Shipped: the
+   audience pages' closing band with drawn ranges or a plain sky; on 24.11
+   the one arc of louvres behind all three audience heroes. Shipped: the
    routes' dots in the menu in each route's colour, 5.11; the fins looming
    in Founders' sky, 10.11; Our Expertise's words under its title and
    Home's hero figures in rows on a phone, 16.11.)
@@ -1215,7 +1220,9 @@ const PREVIEW_SWITCHES = {
   excta: ["next", "most"],
   scroll: ["peek", "cue"],
   companies: ["fins", "grid", "lattice", "slabs"],
-  hero: ["same", "distinct"],
+  founders: ["fins"],
+  curve: ["s"],
+  investors: ["towers"],
   ground: ["mauve"],
   hww: ["columns"],
   footer: ["up"],
@@ -1248,10 +1255,12 @@ const PREVIEW_PANEL = [
   ["clients", ["index"], "Who We Work With: tekst", [["", "po lewej"], ["center", "na środku"], ["right", "po prawej"]]],
   ["scroll", ["our-team"], "Zachęta do przewinięcia w hero", [["", "bez"], ["peek", "portrety spod hero"], ["cue", "napis ze strzałką"]]],
   ["order", ["expertise"], "Kolejność sekcji", [["", "obszary, potem How We Work"], ["work", "najpierw How We Work"]]],
-  ["hero", AUDIENCE_PAGES, "Hero: obrazy na trzech stronach", [["", "obecne"], ["same", "jeden wzór – łuk lameli na wszystkich"], ["distinct", "każda strona inny obraz"]]],
+  ["founders", ["for-founders"], "Hero Founders: tło", [["", "schody"], ["fins", "lamele w niebie (jak było)"]]],
+  ["investors", ["for-investors"], "Hero Investors: tło", [["", "szkło ryflowane"], ["towers", "szklane wieżowce"]]],
   ["companies", ["for-companies"], "Hero Companies: tło", [["", "zdjęcie lameli na łuku (5.11)"], ["fins", "lamele generowane (jak było)"], ["grid", "fasada z siatką okien"], ["lattice", "kratownica szklanego dachu"], ["slabs", "schodkowe płyty stropów"]]],
   ["ground", ["for-companies"], "Kolor gór i tła strony", [["", "szary jak w stopce"], ["mauve", "śliwkowy (jak było)"]]],
   ["hww", ["for-investors"], "How We Work: tło", [["", "obecne"], ["columns", "fasada z pionowymi podziałami"]]],
+  ["curve", ["for-founders"], "Our Expertise: linia", [["", "schody"], ["s", "krzywa S (jak było)"]]],
   ["rail", AUDIENCE_PAGES, "Our Expertise na telefonie: kropki przy punktach", [["", "tylko na końcach"], ["dots", "małe przy każdym punkcie"]]],
   ["footer", ["index", "about-us", "expertise", "our-team"], "Pas końcowy: zdjęcie", [["", "obecne"], ["up", "pierwszy plan wyżej"]]],
   ["titles", "all", "Tytuły", [["", "obecne"], ["smaller", "mniejsze"]]],

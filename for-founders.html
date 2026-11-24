@@ -266,21 +266,22 @@
               Whether you are forming your first company, hiring talent, protecting IP, raising capital, acquiring a business, or building partnerships, we help build the legal foundations that support your&nbsp;strategy.
             </p>
           </div>
-          <!-- Our Expertise as a growth curve (the review of 31.10): the seven
-               areas as points on an S-curve, the first on the base line and
-               the last at the top, each area's words over its point. The
-               curve is a cubic smoothstep from the first column's centre to
-               the last one's, so the points stand on it at the columns'
-               centres; --y is each point's height on it (3u² - 2u³ at u = i/6).
-               Under the curve the page is the closing band's sky, so the
-               curve is the edge it rises to; the line runs on to the
-               window's edges. Under 1024px it is the
-               list on the rail, as on Companies and Investors (styles.css). -->
+          <!-- Our Expertise as a staircase (24.11, after the hero's stairs;
+               the S-curve of 31.10 is ?curve=s): the seven areas each a
+               step, the first on the base line and the last at the top, a
+               column wide and a sixth of the plot higher than the one
+               before, each area's words over its point at the step's middle
+               (--y-steps; --y-s its height on the S-curve, 3u² - 2u³ at
+               u = i/6). Under the line the page is the closing band's sky,
+               so the stairs are the edge it rises to; the line runs on to
+               the window's edges. Under 1024px it is the list on the rail,
+               as on Companies and Investors (styles.css). -->
           <div class="aud-expertise__list-wrap aud-curve" data-reveal>
             <svg class="aud-curve__chart" viewBox="0 0 700 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
               <defs>
                 <mask id="aud-curve-sky" maskUnits="userSpaceOnUse" x="0" y="0" width="700" height="100">
-                  <path d="M0 0 L700 0 L650 0 C450 0 250 100 50 100 L0 100 Z" fill="#fff" />
+                  <path class="aud-curve__shape aud-curve__shape--steps" d="M0 0 H700 V0 H600 V16.67 H500 V33.33 H400 V50 H300 V66.67 H200 V83.33 H100 V100 H0 Z" fill="#fff" />
+                  <path class="aud-curve__shape aud-curve__shape--s" d="M0 0 L700 0 L650 0 C450 0 250 100 50 100 L0 100 Z" fill="#fff" />
                 </mask>
               </defs>
               <g mask="url(#aud-curve-sky)">
@@ -293,17 +294,19 @@
                 <rect class="aud-curve__band" x="600" y="0" width="100" height="100" />
                 <path class="aud-curve__rules" d="M100 0 V100 M200 0 V100 M300 0 V100 M400 0 V100 M500 0 V100 M600 0 V100" />
               </g>
-              <path class="aud-curve__area" d="M0 104 L0 100 L50 100 C250 100 450 0 650 0 L700 0 L700 2 L704 2 L704 104 Z" />
-              <path class="aud-curve__line" d="M0 100 L50 100 C250 100 450 0 650 0 L700 0" />
+              <path class="aud-curve__area aud-curve__shape aud-curve__shape--steps" d="M0 104 L0 100 H100 V83.33 H200 V66.67 H300 V50 H400 V33.33 H500 V16.67 H600 V0 H700 V2 H704 V104 Z" />
+              <path class="aud-curve__line aud-curve__shape aud-curve__shape--steps" d="M0 100 H100 V83.33 H200 V66.67 H300 V50 H400 V33.33 H500 V16.67 H600 V0 H700" />
+              <path class="aud-curve__area aud-curve__shape aud-curve__shape--s" d="M0 104 L0 100 L50 100 C250 100 450 0 650 0 L700 0 L700 2 L704 2 L704 104 Z" />
+              <path class="aud-curve__line aud-curve__shape aud-curve__shape--s" d="M0 100 L50 100 C250 100 450 0 650 0 L700 0" />
             </svg>
             <ol class="aud-expertise__list">
-              <li style="--i: 0; --y: 0"><span class="aud-curve__label"><span class="aud-curve__num">01</span> <span class="aud-curve__text">Company formation, founders' agreements, cap table planning</span></span></li>
-              <li style="--i: 1; --y: 0.0741"><span class="aud-curve__label"><span class="aud-curve__num">02</span> <span class="aud-curve__text">Funding rounds (<span class="nowrap">pre-seed</span>, seed, Series A, B, C and so on)</span></span></li>
-              <li style="--i: 2; --y: 0.2593"><span class="aud-curve__label"><span class="aud-curve__num">03</span> <span class="aud-curve__text">Commercial contracts and customer/<wbr>supplier agreements</span></span></li>
-              <li style="--i: 3; --y: 0.5"><span class="aud-curve__label"><span class="aud-curve__num">04</span> <span class="aud-curve__text">Hiring documentation, contractor agreements, ESOPs</span></span></li>
-              <li style="--i: 4; --y: 0.7407"><span class="aud-curve__label"><span class="aud-curve__num">05</span> <span class="aud-curve__text">IP strategy, licensing, technology agreements</span></span></li>
-              <li style="--i: 5; --y: 0.9259"><span class="aud-curve__label"><span class="aud-curve__num">06</span> <span class="aud-curve__text">Cross-border expansion and subsidiaries</span></span></li>
-              <li style="--i: 6; --y: 1"><span class="aud-curve__label"><span class="aud-curve__num">07</span> <span class="aud-curve__text">M&amp;A, exits, and due diligence support</span></span></li>
+              <li style="--i: 0; --y-steps: 0; --y-s: 0"><span class="aud-curve__label"><span class="aud-curve__num">01</span> <span class="aud-curve__text">Company formation, founders' agreements, cap table planning</span></span></li>
+              <li style="--i: 1; --y-steps: 0.1667; --y-s: 0.0741"><span class="aud-curve__label"><span class="aud-curve__num">02</span> <span class="aud-curve__text">Funding rounds (<span class="nowrap">pre-seed</span>, seed, Series A, B, C and so on)</span></span></li>
+              <li style="--i: 2; --y-steps: 0.3333; --y-s: 0.2593"><span class="aud-curve__label"><span class="aud-curve__num">03</span> <span class="aud-curve__text">Commercial contracts and customer/<wbr>supplier agreements</span></span></li>
+              <li style="--i: 3; --y-steps: 0.5; --y-s: 0.5"><span class="aud-curve__label"><span class="aud-curve__num">04</span> <span class="aud-curve__text">Hiring documentation, contractor agreements, ESOPs</span></span></li>
+              <li style="--i: 4; --y-steps: 0.6667; --y-s: 0.7407"><span class="aud-curve__label"><span class="aud-curve__num">05</span> <span class="aud-curve__text">IP strategy, licensing, technology agreements</span></span></li>
+              <li style="--i: 5; --y-steps: 0.8333; --y-s: 0.9259"><span class="aud-curve__label"><span class="aud-curve__num">06</span> <span class="aud-curve__text">Cross-border expansion and subsidiaries</span></span></li>
+              <li style="--i: 6; --y-steps: 1; --y-s: 1"><span class="aud-curve__label"><span class="aud-curve__num">07</span> <span class="aud-curve__text">M&amp;A, exits, and due diligence support</span></span></li>
             </ol>
           </div>
         </div>
